@@ -7,6 +7,7 @@ export interface ResumeBuilderState {
   aiSuggestions: Record<string, string[]>;
   pdfPreviewUrl: string | null;
   customization: ResumeCustomization;
+  atsMode: boolean;
 }
 
 export interface ResumeCustomization {

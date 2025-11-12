@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { ArrowLeft, Calendar, MapPin, Users, Briefcase, Target, TrendingUp } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { useParams } from "next/navigation";
 import { getExperienceById } from "@/utils/getLocalizedData";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -81,6 +82,22 @@ export default function ExperienceDetailPage() {
               transition={{ duration: 0.6 }}
               className="mb-6"
             >
+              {/* Company Logo */}
+              {experience.companyLogo && experience.companyLogo.startsWith('/logos/') && (
+                <div className="mb-8">
+                  <div className="inline-block p-4 rounded-2xl bg-white/5 backdrop-blur-sm border border-cyber-gray-light">
+                    <Image
+                      src={experience.companyLogo}
+                      alt={`${experience.company} logo`}
+                      width={120}
+                      height={120}
+                      unoptimized
+                      className="rounded-xl object-contain"
+                    />
+                  </div>
+                </div>
+              )}
+
               <div className="flex flex-wrap items-center gap-4 mb-4">
                 <div className="flex items-center gap-2 text-text-secondary">
                   <Calendar className="w-4 h-4" />

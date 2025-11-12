@@ -14,6 +14,7 @@ interface ResumeBuilderContextType extends ResumeBuilderState {
   generatePDFPreview: () => Promise<void>;
   resetToOriginal: () => void;
   exportData: () => CVData;
+  setAtsMode: (atsMode: boolean) => void;
 }
 
 const ResumeBuilderContext = createContext<ResumeBuilderContextType | undefined>(undefined);
@@ -30,6 +31,7 @@ export function ResumeBuilderProvider({
   const [editingField, setEditingField] = useState<string | null>(null);
   const [aiSuggestions, setAiSuggestions] = useState<Record<string, string[]>>({});
   const [pdfPreviewUrl, setPdfPreviewUrl] = useState<string | null>(null);
+  const [atsMode, setAtsMode] = useState(false);
   const [customization, setCustomization] = useState<ResumeCustomization>({
     colorScheme: "default",
     fontFamily: "inter",
@@ -148,6 +150,7 @@ export function ResumeBuilderProvider({
         aiSuggestions,
         pdfPreviewUrl,
         customization,
+        atsMode,
         updateCVData,
         setIsEditing,
         setEditingField,
@@ -157,6 +160,7 @@ export function ResumeBuilderProvider({
         generatePDFPreview,
         resetToOriginal,
         exportData,
+        setAtsMode,
       }}
     >
       {children}

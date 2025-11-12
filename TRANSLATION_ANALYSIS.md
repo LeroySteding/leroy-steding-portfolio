@@ -95,7 +95,7 @@ const navigation = [
 // Paragraph 1
 "I'm a Dutch full-stack developer and entrepreneur with a passion for building 
 cutting-edge web platforms that leverage the power of AI automation. 
-As the founder of STEDING Digital / STEDING AI & Automation, I specialize 
+As the founder of Hifive, I specialize 
 in creating scalable, intelligent solutions that transform how businesses operate."
 
 // → Dutch translation needed

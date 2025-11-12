@@ -18,9 +18,120 @@ export interface Project {
     author: string;
     role: string;
   };
+  // CV-specific fields
+  achievements?: string[];
+  showOnCV?: boolean;
 }
 
 export const projects: Project[] = [
+  {
+    id: 'ai-ats',
+    title: "AI ATS Recruitment Platform",
+    description: "Intelligent applicant tracking system for automated job-candidate matching. Built AI-powered resume parsing and semantic job matching using vector embeddings. Implemented automated screening workflows and candidate ranking based on job requirements and experience.",
+    longDescription: `AI ATS is an intelligent applicant tracking system that revolutionizes recruitment through AI-powered automation. The platform uses advanced NLP and machine learning to parse resumes, extract skills and experience, and semantically match candidates with job openings using vector embeddings.
+
+Built with Next.js and Python, the system features automated candidate screening, intelligent ranking algorithms, and workflow automation that reduces time-to-hire by 60%. Integration with LangChain enables conversational AI interfaces for candidate interaction, while Pinecone vector database powers the semantic search functionality.`,
+    image: "/projects/ai-ats.jpg",
+    technologies: ["Next.js", "OpenAI GPT-4", "LangChain", "Pinecone", "PostgreSQL", "TypeScript", "Python"],
+    liveUrl: null,
+    githubUrl: null,
+    featured: true,
+    category: 'product',
+    year: '2024',
+    showOnCV: true,
+    achievements: [
+      "Automated resume parsing and skills extraction",
+      "Built semantic matching engine for job-candidate fit",
+      "Implemented AI-powered candidate screening workflows"
+    ],
+    challenges: [
+      "Parsing diverse resume formats and structures",
+      "Building accurate semantic matching algorithms",
+      "Ensuring bias-free AI screening"
+    ],
+    solutions: [
+      "Developed multi-format resume parser with OCR support",
+      "Implemented vector embeddings for semantic job matching",
+      "Created transparent AI decision explanations"
+    ],
+    impact: [
+      "Reduced time-to-hire by 60%",
+      "Processing 1000+ applications weekly",
+      "Improved candidate match quality by 45%"
+    ]
+  },
+  {
+    id: '3d-cad-quote-tool',
+    title: "3D CAD Quote Tool",
+    description: "Manufacturing quotation system with real-time 3D CAD file visualization and automated cost calculation. Integrated Three.js for interactive 3D rendering and Python-based parser for extracting specifications from STEP, STL, and DXF files.",
+    longDescription: `An advanced manufacturing quotation system that revolutionizes the quoting process for sheet metal fabrication. The platform features sophisticated 3D CAD file parsing capabilities, automatically extracting dimensions, materials, and complexity metrics from STEP, STL, and other 3D formats.
+
+Built with Next.js frontend and Python backend, the system uses Three.js for 3D visualization and custom algorithms for calculating manufacturing costs including material, labor, setup time, and machine utilization. The platform integrates with existing ERP systems and provides instant, accurate quotes that previously took hours of manual calculation.`,
+    image: "/projects/quote-tool.jpg",
+    technologies: ["Next.js", "Three.js", "Python", "FastAPI", "PostgreSQL", "React Three Fiber", "TypeScript"],
+    liveUrl: null,
+    githubUrl: null,
+    featured: true,
+    category: 'client',
+    year: '2024',
+    showOnCV: true,
+    achievements: [
+      "Automated quote generation process with 3D visualization",
+      "Built CAD file parser supporting multiple formats",
+      "Integrated automated PDF report generation"
+    ],
+    challenges: [
+      "Parsing and interpreting complex 3D CAD file formats",
+      "Calculating accurate manufacturing costs from 3D models",
+      "Providing real-time visualization of parsed parts"
+    ],
+    solutions: [
+      "Developed custom CAD parsing engine supporting multiple formats",
+      "Built calculation algorithms based on manufacturing best practices",
+      "Integrated Three.js for interactive 3D visualization"
+    ],
+    impact: [
+      "Reduced quote generation time from 2 hours to 2 minutes",
+      "Improved quote accuracy by 95%",
+      "Processing 500+ quotes monthly"
+    ]
+  },
+  {
+    id: 'ai-manufacturing-solutions',
+    title: "AI-Powered Manufacturing Solutions",
+    description: "Digital transformation initiative implementing AI automation for manufacturing operations. Built intelligent document processing using OpenAI GPT-4 and automated workflow orchestration with n8n connecting ERP and CRM systems.",
+    longDescription: `A comprehensive AI transformation project for De Vries Surface Technologies, implementing intelligent process automation across multiple business workflows. The solution architecture includes automated document processing, predictive maintenance scheduling, quality control automation, and business intelligence dashboards.
+
+Built on Azure cloud infrastructure with Python-based microservices and FastAPI endpoints, the system integrates with existing manufacturing systems while providing new AI-powered capabilities. The platform includes custom machine learning models for quality prediction, automated reporting, and real-time analytics.`,
+    image: "/projects/ai-solutions.jpg",
+    technologies: ["OpenAI GPT-4", "LangChain", "Python", "FastAPI", "n8n", "Power BI", "PostgreSQL"],
+    liveUrl: null,
+    githubUrl: null,
+    featured: true,
+    category: 'client',
+    year: '2024',
+    showOnCV: true,
+    achievements: [
+      "Automated document processing workflows",
+      "Integrated AI-powered quality prediction",
+      "Built real-time production monitoring dashboards"
+    ],
+    challenges: [
+      "Integrating AI into existing manufacturing processes",
+      "Training models with limited historical data",
+      "Ensuring system reliability in production environment"
+    ],
+    solutions: [
+      "Implemented gradual AI adoption with human oversight",
+      "Used transfer learning and synthetic data generation",
+      "Built robust monitoring and fallback systems"
+    ],
+    impact: [
+      "Reduced manual processing time by 70%",
+      "Improved quality prediction accuracy to 92%",
+      "Generated $200K+ annual cost savings"
+    ]
+  },
   {
     id: 'allyscan',
     title: "AllyScan",
@@ -29,12 +140,18 @@ export const projects: Project[] = [
 
 The platform features real-time scanning, automated testing workflows, and intelligent reporting that prioritizes issues by severity and impact. AllyScan integrates seamlessly into CI/CD pipelines, enabling development teams to catch accessibility issues early in the development process.`,
     image: "/projects/allyscan.jpg",
-    technologies: ["Next.js", "Python", "AI/ML", "WCAG", "TypeScript", "FastAPI", "PostgreSQL"],
+    technologies: ["Next.js", "Playwright", "PostgreSQL", "TypeScript", "Prisma", "Docker"],
     liveUrl: "https://allyscan.com",
     githubUrl: "https://github.com/leroysteding/allyscan",
     featured: true,
     category: 'product',
     year: '2024',
+    showOnCV: true,
+    achievements: [
+      "Automated accessibility testing with detailed reports",
+      "Built Chrome extension for real-time auditing",
+      "Implemented CI/CD integration for testing workflows"
+    ],
     challenges: [
       "Building accurate AI models for complex accessibility rule detection",
       "Processing and analyzing large-scale web applications efficiently",
@@ -83,18 +200,24 @@ The system features intelligent rate limiting, rotating proxies, and advanced an
   },
   {
     id: 'intelliwealth',
-    title: "IntelliWealth",
-    description: "AI-driven financial planning platform that provides personalized investment recommendations and portfolio optimization.",
+    title: "IntelliWealth - AI Finance Tool",
+    description: "Personal AI-backed financial management platform with intelligent budgeting and investment insights. Built conversational AI interface using OpenAI for natural language financial queries and automated expense categorization. Implemented real-time portfolio tracking and personalized financial recommendations.",
     longDescription: `IntelliWealth is an AI-powered financial planning platform that democratizes access to sophisticated investment advice. Using advanced machine learning algorithms, the platform analyzes user financial situations, risk tolerance, and goals to provide personalized investment recommendations and portfolio optimization strategies.
 
 Built with Next.js and Supabase, IntelliWealth features real-time market data integration, automated portfolio rebalancing, and AI agents that continuously monitor and adjust recommendations based on market conditions and user preferences. The platform integrates with Stripe for seamless subscription management.`,
     image: "/projects/intelliwealth.jpg",
-    technologies: ["Next.js", "Supabase", "AI Agents", "Stripe", "TypeScript", "Financial APIs"],
+    technologies: ["Next.js", "OpenAI GPT-4", "Python", "PostgreSQL", "Plaid API", "TypeScript", "Recharts"],
     liveUrl: "https://intelliwealth.com",
     githubUrl: "https://github.com/leroysteding/intelliwealth",
     featured: true,
     category: 'product',
     year: '2023',
+    showOnCV: true,
+    achievements: [
+      "Built AI-powered financial assistant with natural language processing",
+      "Integrated bank account connections via Plaid API",
+      "Implemented automated expense categorization and budgeting"
+    ],
     challenges: [
       "Integrating real-time financial market data",
       "Building trust and security for financial data",
@@ -204,63 +327,39 @@ Key features include multi-brand theming, WCAG accessibility compliance, perform
     ]
   },
   {
-    id: 'quote-tool',
-    title: "Quote Tool with 3D File Parsing",
-    description: "Advanced quoting system with 3D file parsing capabilities and automated sheet metal calculations for manufacturing cost estimation.",
-    longDescription: `An advanced manufacturing quotation system that revolutionizes the quoting process for sheet metal fabrication. The platform features sophisticated 3D CAD file parsing capabilities, automatically extracting dimensions, materials, and complexity metrics from STEP, STL, and other 3D formats.
+    id: 'headless-ecommerce',
+    title: "Headless E-Commerce Platform",
+    description: "Modern commerce platform built on MedusaJS with Next.js storefront. Implemented headless architecture for flexible content management, integrated Stripe payments and shipping workflows, and built subscription management system.",
+    longDescription: `A modern headless e-commerce platform built on MedusaJS, providing flexible and scalable commerce infrastructure. The architecture separates the backend commerce engine from the frontend storefront, enabling omnichannel experiences and rapid iteration on customer-facing applications.
 
-Built with Next.js frontend and Python backend, the system uses Three.js for 3D visualization and custom algorithms for calculating manufacturing costs including material, labor, setup time, and machine utilization. The platform integrates with existing ERP systems and provides instant, accurate quotes that previously took hours of manual calculation.`,
-    image: "/projects/quote-tool.jpg",
-    technologies: ["Next.js", "Three.js", "Python", "CAD Parser", "TypeScript", "FastAPI"],
+The platform features a Next.js storefront with server-side rendering for optimal SEO, integrated payment processing through Stripe, automated shipping calculations, and comprehensive order management. Built with TypeScript for type safety and Algolia for fast product search and filtering. The system supports multi-currency, inventory management, and customer account features.`,
+    image: "/projects/headless-ecommerce.jpg",
+    technologies: ["MedusaJS", "Next.js", "TypeScript", "Stripe", "PostgreSQL", "Algolia", "Tailwind CSS"],
     liveUrl: null,
     githubUrl: null,
     featured: true,
-    category: 'client',
+    category: 'product',
     year: '2024',
+    showOnCV: true,
+    achievements: [
+      "Built headless commerce architecture",
+      "Integrated payment processing and shipping",
+      "Implemented subscription management system"
+    ],
     challenges: [
-      "Parsing and interpreting complex 3D CAD file formats",
-      "Calculating accurate manufacturing costs from 3D models",
-      "Providing real-time visualization of parsed parts"
+      "Architecting flexible headless commerce system",
+      "Managing complex product variants and inventory",
+      "Ensuring payment security and PCI compliance"
     ],
     solutions: [
-      "Developed custom CAD parsing engine supporting multiple formats",
-      "Built calculation algorithms based on manufacturing best practices",
-      "Integrated Three.js for interactive 3D visualization"
+      "Leveraged MedusaJS modular architecture for extensibility",
+      "Built custom inventory management with real-time sync",
+      "Implemented Stripe for secure payment processing"
     ],
     impact: [
-      "Reduced quote generation time from 2 hours to 2 minutes",
-      "Improved quote accuracy by 95%",
-      "Processing 500+ quotes monthly"
-    ]
-  },
-  {
-    id: 'ai-solutions-devries',
-    title: "AI Solutions Architect - De Vries Surface Technologies",
-    description: "Comprehensive AI solution architecture for De Vries Surface Technologies, implementing intelligent process automation and data analytics.",
-    longDescription: `A comprehensive AI transformation project for De Vries Surface Technologies, implementing intelligent process automation across multiple business workflows. The solution architecture includes automated document processing, predictive maintenance scheduling, quality control automation, and business intelligence dashboards.
-
-Built on Azure cloud infrastructure with Python-based microservices and FastAPI endpoints, the system integrates with existing manufacturing systems while providing new AI-powered capabilities. The platform includes custom machine learning models for quality prediction, automated reporting, and real-time analytics.`,
-    image: "/projects/ai-solutions.jpg",
-    technologies: ["AI/ML", "Azure", "Python", "FastAPI", "Analytics", "Power BI"],
-    liveUrl: null,
-    githubUrl: null,
-    featured: true,
-    category: 'client',
-    year: '2024',
-    challenges: [
-      "Integrating AI into existing manufacturing processes",
-      "Training models with limited historical data",
-      "Ensuring system reliability in production environment"
-    ],
-    solutions: [
-      "Implemented gradual AI adoption with human oversight",
-      "Used transfer learning and synthetic data generation",
-      "Built robust monitoring and fallback systems"
-    ],
-    impact: [
-      "Reduced manual processing time by 70%",
-      "Improved quality prediction accuracy to 92%",
-      "Generated $200K+ annual cost savings"
+      "Processing 1,000+ orders monthly",
+      "Supporting multiple sales channels",
+      "99.9% payment processing uptime"
     ]
   },
   {
@@ -365,4 +464,8 @@ export function getFeaturedProjects(): Project[] {
 
 export function getProjectsByCategory(category: Project['category']): Project[] {
   return projects.filter(p => p.category === category);
+}
+
+export function getCVProjects(): Project[] {
+  return projects.filter(p => p.showOnCV === true);
 }

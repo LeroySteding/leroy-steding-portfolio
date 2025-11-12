@@ -30,7 +30,7 @@ export const nl: Translations = {
   about: {
     title: "Over",
     titleHighlight: "Mij",
-    intro: "Ik ben een <highlight>Nederlandse full-stack developer</highlight> en ondernemer met een passie voor het bouwen van geavanceerde webplatforms die de kracht van <highlight>AI-automatisering</highlight> benutten. Als oprichter van <strong>STEDING Digital / STEDING AI & Automation</strong>, specialiseer ik me in het creëren van schaalbare, intelligente oplossingen die transformeren hoe bedrijven opereren.",
+    intro: "Ik ben een <highlight>Nederlandse full-stack developer</highlight> en ondernemer met een passie voor het bouwen van geavanceerde webplatforms die de kracht van <highlight>AI-automatisering</highlight> benutten. Als oprichter van <strong>Hifive</strong>, specialiseer ik me in het creëren van schaalbare, intelligente oplossingen die transformeren hoe bedrijven opereren.",
     expertise: "Mijn expertise omvat de moderne web development stack, inclusief <highlight>Next.js 17</highlight>, <highlight>React 19</highlight>, <highlight>TypeScript</highlight>, en <highlight>Supabase</highlight> op de frontend, gecombineerd met <highlight>Python</highlight>, <highlight>FastAPI</highlight>, en <highlight>PostgreSQL</highlight> op de backend. Ik ben vooral gefocust op AI-automatisering, het bouwen van intelligente agents, en het creëren van naadloze workflows met tools zoals <strong>n8n</strong>.",
     experience: "Van het architecteren van <highlight>monorepo SaaS-platforms</highlight> zoals het SURF Whitelabel Platform (Edusources & MBOdata) tot het bouwen van <highlight>AI-aangedreven offertes pipelines</highlight> voor industriële klanten, ik floreer bij het oplossen van complexe technische uitdagingen en het leveren van productie-klare oplossingen die schalen.",
     highlights: {
@@ -158,7 +158,7 @@ export const nl: Translations = {
     },
   },
   footer: {
-    copyright: "© 2024 Leroy Steding. Alle rechten voorbehouden.",
+    copyright: "© 2025 Leroy Steding. Alle rechten voorbehouden.",
     builtWith: "Gebouwd met Next.js, TypeScript, Tailwind CSS en Framer Motion",
     links: {
       privacy: "Privacybeleid",

@@ -20,7 +20,7 @@ const orbitron = Orbitron({
 export const metadata: Metadata = {
   title: "Leroy Steding | Full-Stack Developer & AI Automation Architect",
   description: "Building scalable AI-driven web platforms & digital automation solutions. Full-stack developer specializing in Next.js, TypeScript, React, and AI automation.",
-  keywords: ["Leroy Steding", "Full-Stack Developer", "AI Automation", "Next.js", "TypeScript", "React", "STEDING Digital", "Web Development", "Netherlands"],
+  keywords: ["Leroy Steding", "Full-Stack Developer", "AI Automation", "Next.js", "TypeScript", "React", "Hifive", "Web Development", "Netherlands"],
   authors: [{ name: "Leroy Steding" }],
   creator: "Leroy Steding",
   metadataBase: new URL("https://leroysteding.nl"),

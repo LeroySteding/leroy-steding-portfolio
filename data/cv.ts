@@ -21,6 +21,7 @@ export interface CVData {
   experience: {
     title: string;
     company: string;
+    companyLogo?: string;
     location: string;
     period: string;
     description: string;
@@ -184,9 +185,10 @@ export const cvData: CVData = {
     }
   ],
   
-  experience: experiences.slice(0, 7).map(exp => ({
+  experience: experiences.map(exp => ({
     title: exp.title,
     company: exp.company,
+    companyLogo: exp.companyLogo,
     location: exp.location,
     period: exp.period,
     description: exp.description,
@@ -196,80 +198,63 @@ export const cvData: CVData = {
   
   projects: [
     {
-      name: "SURF Whitelabel Platform (Edusources & MBOdata)",
-      description: "Enterprise-grade whitelabel platform architecture supporting multiple Next.js 14 applications within a Turborepo monorepo. Designed and implemented a comprehensive shared UI component library with 80+ reusable components, serving over 50,000 educational resources to students and educators across the Netherlands. Built scalable infrastructure with automated deployments, comprehensive testing suite, and full WCAG 2.1 AA accessibility compliance. Architected multi-tenant system supporting multiple educational institutions with customizable branding and theming.",
-      technologies: ["Next.js 14", "Turborepo", "TypeScript", "React 18", "Tailwind CSS", "Storybook 8", "GitLab CI/CD", "Docker", "PostgreSQL", "Elasticsearch", "Redis"],
+      name: "IntelliWealth - AI Finance Tool",
+      description: "Personal AI-backed financial management platform with intelligent budgeting and investment insights. Built conversational AI interface using OpenAI for natural language financial queries and automated expense categorization. Implemented real-time portfolio tracking and personalized financial recommendations.",
+      technologies: ["Next.js", "OpenAI GPT-4", "Python", "PostgreSQL", "Plaid API", "TypeScript", "Recharts"],
       achievements: [
-        "Reduced development time by 40% through comprehensive shared component library and design system",
-        "Achieved 100% WCAG 2.1 AA compliance with automated accessibility testing using axe-core and Pa11y",
-        "Implemented GitLab CI/CD pipelines with automated testing, linting, and deployment reducing deployment time by 60%",
-        "Built Storybook documentation with 150+ component stories improving team collaboration and development velocity",
-        "Optimized bundle size by 35% through code splitting and lazy loading strategies",
-        "Established TypeScript strict mode across entire monorepo ensuring type safety and reducing runtime errors by 45%"
+        "Built AI-powered financial assistant with natural language processing",
+        "Integrated bank account connections via Plaid API",
+        "Implemented automated expense categorization and budgeting"
       ]
     },
     {
-      name: "Quote Tool with Advanced 3D CAD File Parsing",
-      description: "Sophisticated manufacturing quotation system featuring real-time 3D CAD file analysis and automated cost calculation for sheet metal fabrication. Integrated Three.js for 3D visualization and Python-based CAD parser for extracting manufacturing specifications from STEP, STL, and DXF files. Built intelligent pricing engine considering material costs, manufacturing complexity, labor hours, and machine time. Implemented FastAPI backend with async processing for handling large CAD files up to 500MB. Created intuitive UI for reviewing parsed specifications, adjusting parameters, and generating detailed quotation PDFs.",
-      technologies: ["Next.js 15", "Three.js", "Python 3.11", "FastAPI", "CAD Parser", "PostgreSQL", "Redis", "AWS S3", "Docker", "React Three Fiber", "TypeScript"],
+      name: "AI ATS Recruitment Platform",
+      description: "Intelligent applicant tracking system for automated job-candidate matching. Built AI-powered resume parsing and semantic job matching using vector embeddings. Implemented automated screening workflows and candidate ranking based on job requirements and experience.",
+      technologies: ["Next.js", "OpenAI GPT-4", "LangChain", "Pinecone", "PostgreSQL", "TypeScript", "Python"],
       achievements: [
-        "Reduced quote generation time from 2+ hours of manual calculation to under 2 minutes with 98% accuracy",
-        "Improved quote accuracy by 95% through automated CAD parsing eliminating human measurement errors",
-        "Processing 500+ quotes monthly with average file size of 50MB handling complex multi-part assemblies",
-        "Achieved 3-second load time for 3D visualization of files up to 100MB through optimized rendering pipeline",
-        "Built automated PDF report generation including technical drawings, material specifications, and cost breakdowns",
-        "Implemented real-time collaboration features allowing multiple team members to review and adjust quotes simultaneously"
+        "Automated resume parsing and skills extraction",
+        "Built semantic matching engine for job-candidate fit",
+        "Implemented AI-powered candidate screening workflows"
       ]
     },
     {
-      name: "AI Solutions Architecture - De Vries Surface Technologies",
-      description: "Led comprehensive digital transformation initiative implementing AI-powered automation across manufacturing, quality control, and business operations. Architected intelligent document processing system using OpenAI GPT-4 for extracting structured data from technical specifications and quality reports. Built predictive analytics platform for surface treatment quality prediction using machine learning models trained on historical data. Developed automated workflow orchestration with n8n connecting ERP, CRM, and manufacturing systems. Created Power BI dashboards providing real-time insights into production efficiency, quality metrics, and cost optimization opportunities.",
-      technologies: ["OpenAI API (GPT-4)", "LangChain", "Azure AI Services", "Python", "FastAPI", "n8n", "Power BI", "Azure DevOps", "PostgreSQL", "Docker", "Redis", "TensorFlow"],
+      name: "3D CAD Quote Tool",
+      description: "Manufacturing quotation system with real-time 3D CAD file visualization and automated cost calculation. Integrated Three.js for interactive 3D rendering and Python-based parser for extracting specifications from STEP, STL, and DXF files. Built intelligent pricing engine and automated PDF quotation generation.",
+      technologies: ["Next.js", "Three.js", "Python", "FastAPI", "PostgreSQL", "React Three Fiber", "TypeScript"],
       achievements: [
-        "Reduced manual document processing time by 70% automating data extraction from 1000+ technical documents monthly",
-        "Improved quality prediction accuracy to 92% through ML models preventing defects and reducing waste by 25%",
-        "Generated $200K+ annual cost savings through optimized resource allocation and reduced rework",
-        "Automated 15 critical business workflows reducing administrative overhead by 45 hours per week",
-        "Built real-time monitoring dashboard tracking 50+ KPIs providing actionable insights to management",
-        "Implemented AI-powered customer support chatbot handling 80% of routine inquiries reducing response time by 60%"
+        "Automated quote generation process with 3D visualization",
+        "Built CAD file parser supporting multiple formats",
+        "Integrated automated PDF report generation"
       ]
     },
     {
-      name: "VodafoneZiggo Mobile Application",
-      description: "Enterprise-scale cross-platform mobile application serving 3M+ active users with comprehensive account management, real-time usage tracking, and self-service capabilities. Architected scalable React Native solution with Expo, implementing offline-first architecture for seamless user experience. Built comprehensive design system with 100+ components documented in Storybook enabling rapid feature development. Implemented advanced state management with Redux Toolkit and RTK Query for efficient data fetching and caching. Integrated push notifications, deep linking, and biometric authentication. Established 90%+ test coverage with Jest and React Native Testing Library.",
-      technologies: ["React Native", "Expo SDK 50", "TypeScript", "Redux Toolkit", "RTK Query", "Storybook", "Jest", "React Native Testing Library", "Firebase", "GraphQL", "Apollo Client"],
+      name: "AI-Powered Manufacturing Solutions",
+      description: "Digital transformation initiative implementing AI automation for manufacturing operations. Built intelligent document processing using OpenAI GPT-4 and automated workflow orchestration with n8n connecting ERP and CRM systems. Created dashboards for production monitoring and quality control.",
+      technologies: ["OpenAI GPT-4", "LangChain", "Python", "FastAPI", "n8n", "Power BI", "PostgreSQL"],
       achievements: [
-        "Achieved 4.7-star rating on App Store and 4.5 on Google Play with 500K+ reviews and 99.9% uptime SLA",
-        "Maintained 90%+ test coverage across 200+ components with comprehensive unit and integration tests",
-        "Built scalable design system with Storybook containing 100+ documented components reducing development time by 50%",
-        "Optimized app performance reducing initial load time by 60% and improving Time to Interactive to under 2 seconds",
-        "Implemented offline-first architecture with intelligent sync ensuring seamless experience on poor connections",
-        "Reduced crash rate to <0.1% through comprehensive error handling and monitoring with Sentry"
+        "Automated document processing workflows",
+        "Integrated AI-powered quality prediction",
+        "Built real-time production monitoring dashboards"
       ]
     },
     {
-      name: "AllyScan - AI-Powered Accessibility Scanner & Compliance Platform",
-      description: "Comprehensive SaaS platform for automated web accessibility testing and WCAG compliance management. Built intelligent scanning engine using Playwright for cross-browser testing and machine learning models for identifying accessibility issues beyond rule-based detection. Developed Chrome extension for real-time accessibility auditing during development. Created detailed reporting dashboard with prioritized remediation recommendations, code examples, and compliance tracking. Implemented multi-tenant architecture supporting enterprise teams with role-based access control and audit trails. Integrated with CI/CD pipelines for automated accessibility testing in development workflows.",
-      technologies: ["Next.js 15", "Python", "TensorFlow", "Playwright", "PostgreSQL", "Redis", "OpenAI API", "TypeScript", "Prisma", "AWS", "Docker", "Kubernetes"],
+      name: "AllyScan - Accessibility Testing Platform",
+      description: "SaaS platform for automated web accessibility testing and WCAG compliance. Built scanning engine using Playwright for cross-browser testing with detailed reporting and remediation recommendations. Developed Chrome extension for real-time accessibility auditing during development.",
+      technologies: ["Next.js", "Playwright", "PostgreSQL", "TypeScript", "Prisma", "Docker"],
       achievements: [
-        "Reduced accessibility testing time by 80% compared to manual audits through automated scanning and intelligent issue detection",
-        "Identified and helped remediate over 10,000 accessibility issues across 50+ enterprise organizations",
-        "Helped 30+ organizations achieve WCAG 2.1 AA compliance with detailed remediation guidance and code examples",
-        "Built AI-powered recommendation engine providing context-aware fixes with 95% accuracy improving developer productivity",
-        "Processed 100K+ page scans monthly with average scan time of 15 seconds per page",
-        "Achieved 98% customer satisfaction score with enterprise customers including government agencies and Fortune 500 companies"
+        "Automated accessibility testing with detailed reports",
+        "Built Chrome extension for real-time auditing",
+        "Implemented CI/CD integration for testing workflows"
       ]
     },
     {
-      name: "Enterprise E-Commerce Platform with MedusaJS",
-      description: "Headless commerce platform built on MedusaJS with custom Next.js storefront supporting B2B and B2C operations. Architected multi-currency, multi-language solution with complex pricing rules, bulk ordering, and quote management. Integrated Stripe for payment processing, Shippo for shipping, and Algolia for product search. Built custom admin dashboard for inventory management, order processing, and customer analytics. Implemented advanced product catalog with configurable variants, bundles, and subscriptions.",
-      technologies: ["MedusaJS", "Next.js 15", "TypeScript", "Stripe", "PostgreSQL", "Redis", "Algolia", "Docker", "AWS", "Tailwind CSS"],
+      name: "Headless E-Commerce Platform",
+      description: "Modern commerce platform built on MedusaJS with custom Next.js storefront. Architected multi-currency solution with Stripe payment processing and Algolia product search. Built admin dashboard for inventory and order management with subscription support.",
+      technologies: ["MedusaJS", "Next.js", "TypeScript", "Stripe", "PostgreSQL", "Algolia", "Tailwind CSS"],
       achievements: [
-        "Processed $2M+ in monthly transactions with 99.99% uptime and sub-second page load times",
-        "Reduced cart abandonment by 35% through optimized checkout flow and real-time shipping calculations",
-        "Implemented advanced product search with Algolia handling 1M+ searches monthly with <50ms response time",
-        "Built subscription management system supporting 5,000+ recurring customers with automated billing",
-        "Integrated multi-warehouse inventory system with real-time stock updates across 3 distribution centers"
+        "Built headless commerce architecture",
+        "Integrated payment processing and shipping",
+        "Implemented subscription management system"
       ]
     }
   ],
@@ -292,16 +277,6 @@ export const cvData: CVData = {
   ],
   
   certifications: [
-    {
-      name: "AWS Certified Solutions Architect - Associate",
-      issuer: "Amazon Web Services",
-      date: "2023"
-    },
-    {
-      name: "Professional Scrum Master I (PSM I)",
-      issuer: "Scrum.org",
-      date: "2022"
-    },
     {
       name: "Next.js & React - The Complete Guide",
       issuer: "Udemy",

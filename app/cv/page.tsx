@@ -2,25 +2,28 @@
 
 import { cvData } from "@/data/cv";
 import { cvDataNL } from "@/data/cv-nl";
+import { getCVProjects } from "@/data/projects";
 import Image from "next/image";
 import Link from "next/link";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { ArrowLeft, Moon, Sun, Briefcase, FolderGit2, GraduationCap, Award, Languages } from "lucide-react";
+import { ArrowLeft, Moon, Sun, Briefcase, FolderGit2, GraduationCap, Award, Languages, Download, Eye } from "lucide-react";
 import { useTheme } from "next-themes";
+import { useState } from "react";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
-import CVDownloadOptions, { type CVVersion } from "@/components/cv/CVDownloadOptions";
 import { generateCVPDF } from "@/utils/generatePDF";
 
 export default function CVPage() {
   const { language } = useLanguage();
   const { theme, setTheme } = useTheme();
   const data = language === "nl" ? cvDataNL : cvData;
+  const [atsMode, setAtsMode] = useState(false);
+  const cvProjects = getCVProjects();
 
-  const handleDownload = async (version: CVVersion) => {
+  const handleDownload = async () => {
     try {
       await generateCVPDF(
         data,
-        version,
+        atsMode ? "ats" : "design",
         language,
         "/leroy-profile-pic.jpeg" // Profile picture URL
       );
@@ -67,72 +70,105 @@ export default function CVPage() {
             {/* Back Button */}
             <Link 
               href="/"
-              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-cyber-black/50 hover:bg-cyber-black transition-all duration-300 border border-cyber-gray-light hover:border-neon-cyan group"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-cyber-black/50 hover:bg-cyber-black transition-all duration-300 border border-cyan-500/30 hover:border-neon-cyan group"
             >
-              <ArrowLeft className="w-5 h-5 text-cyber-gray group-hover:text-neon-cyan transition-colors" />
-              <span className="text-sm font-medium text-cyber-gray group-hover:text-neon-cyan transition-colors">
+              <ArrowLeft className="w-5 h-5 text-cyan-400 group-hover:text-neon-cyan transition-colors" />
+              <span className="text-sm font-medium text-cyan-300 group-hover:text-neon-cyan transition-colors">
                 {language === "nl" ? "Terug naar Portfolio" : "Back to Portfolio"}
               </span>
             </Link>
 
             {/* Page Title */}
-            <h1 className="text-xl font-bold text-neon-cyan">
+            <h1 className="text-xl font-bold text-neon-cyan hidden sm:block">
               {language === "nl" ? "Curriculum Vitae" : "Curriculum Vitae"}
             </h1>
 
-            {/* Theme and Language Switchers */}
+            {/* Controls */}
             <div className="flex items-center gap-3">
-              <LanguageSwitcher />
+              {/* ATS Mode Toggle */}
               <button
-                onClick={toggleTheme}
-                className="p-2 rounded-lg bg-cyber-black/50 hover:bg-cyber-black transition-all duration-300 border border-cyber-gray-light hover:border-neon-cyan"
-                aria-label="Toggle theme"
+                onClick={() => setAtsMode(!atsMode)}
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-300 border ${
+                  atsMode
+                    ? "bg-blue-500 border-blue-400 text-white"
+                    : "bg-cyber-black/50 border-cyan-500/30 text-cyan-300 hover:border-neon-cyan hover:text-neon-cyan"
+                }`}
+                title={language === "nl" ? "ATS Modus (zonder kleuren/iconen)" : "ATS Mode (no colors/icons)"}
               >
-                {theme === "dark" ? (
-                  <Sun className="w-5 h-5 text-neon-cyan" />
-                ) : (
-                  <Moon className="w-5 h-5 text-neon-violet" />
-                )}
+                <Eye className="w-4 h-4" />
+                <span className="hidden sm:inline text-sm font-medium">
+                  {atsMode ? "ATS" : language === "nl" ? "Standaard" : "Standard"}
+                </span>
               </button>
+
+              {/* Download Button */}
+              <button
+                onClick={handleDownload}
+                className="flex items-center gap-2 px-4 py-2 rounded-lg bg-green-600 hover:bg-green-500 text-white transition-all duration-300 border border-green-500"
+                title={atsMode 
+                  ? (language === "nl" ? "Download ATS PDF" : "Download ATS PDF")
+                  : (language === "nl" ? "Download Standaard PDF" : "Download Standard PDF")
+                }
+              >
+                <Download className="w-4 h-4" />
+                <span className="hidden sm:inline text-sm font-medium">
+                  {language === "nl" ? "Download PDF" : "Download PDF"}
+                </span>
+              </button>
+
+              {/* Theme and Language Switchers */}
+              <div className="flex items-center gap-2 border-l border-cyan-500/30 pl-3">
+                <LanguageSwitcher />
+                <button
+                  onClick={toggleTheme}
+                  className="p-2 rounded-lg bg-cyber-black/50 hover:bg-cyber-black transition-all duration-300 border border-cyan-500/30 hover:border-neon-cyan"
+                  aria-label="Toggle theme"
+                >
+                  {theme === "dark" ? (
+                    <Sun className="w-5 h-5 text-cyan-400" />
+                  ) : (
+                    <Moon className="w-5 h-5 text-violet-400" />
+                  )}
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      
-      {/* Download Options */}
-      <CVDownloadOptions onDownload={handleDownload} language={language} />
 
       {/* CV Content */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16">
         <div className="max-w-5xl mx-auto bg-white text-black shadow-2xl rounded-lg overflow-hidden">
-          {/* Header Background Accent */}
-          <div className="h-2 bg-gradient-to-r from-cyan-500 via-violet-500 to-blue-600"></div>
+          {/* Header Background Accent - Hidden in ATS mode */}
+          {!atsMode && <div className="h-2 bg-gradient-to-r from-cyan-500 via-violet-500 to-blue-600"></div>}
           
           <div className="p-10 sm:p-14">
           {/* Header with Profile Picture */}
           <header className="mb-10 pb-8 border-b-2 border-gray-200 relative">
-            {/* Profile Picture with Ring */}
-            <div className="absolute top-0 right-0 print:block">
-              <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-br from-cyan-500 to-violet-600 rounded-full blur-sm opacity-30"></div>
-                <div className="relative w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-2xl bg-gray-100 ring-2 ring-gray-200">
-                  <Image
-                    src="/leroy-profile-pic.jpeg"
-                    alt={data.personalInfo.name}
-                    fill
-                    className="object-cover"
-                    priority
-                  />
+            {/* Profile Picture with Ring - Hidden in ATS mode */}
+            {!atsMode && (
+              <div className="absolute top-0 right-0 print:block">
+                <div className="relative">
+                  <div className="absolute inset-0 bg-gradient-to-br from-cyan-500 to-violet-600 rounded-full blur-sm opacity-30"></div>
+                  <div className="relative w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-2xl bg-gray-100 ring-2 ring-gray-200">
+                    <Image
+                      src="/leroy-profile-pic.jpeg"
+                      alt={data.personalInfo.name}
+                      fill
+                      className="object-cover"
+                      priority
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
 
-            <div className="pr-36">
+            <div className={atsMode ? "" : "pr-36"}>
               <h1 className="text-5xl font-bold mb-3 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 bg-clip-text text-transparent leading-tight">
                 {data.personalInfo.name}
               </h1>
               <h2 className="text-xl text-gray-600 mb-6 font-medium flex items-center gap-2">
-                <span className="w-12 h-0.5 bg-gradient-to-r from-cyan-500 to-violet-500"></span>
+                {!atsMode && <span className="w-12 h-0.5 bg-gradient-to-r from-cyan-500 to-violet-500"></span>}
                 {data.personalInfo.title}
               </h2>
               <div className="flex flex-wrap gap-x-5 gap-y-2 text-sm text-gray-700">
@@ -149,7 +185,7 @@ export default function CVPage() {
         <section className="mb-10">
           <h3 className="text-2xl font-bold mb-4 text-gray-900 pb-3 border-b-2 border-gradient">
             <span className="inline-flex items-center gap-2">
-              <span className="w-1 h-8 bg-gradient-to-b from-cyan-500 to-blue-600 rounded-full"></span>
+              {!atsMode && <span className="w-1 h-8 bg-gradient-to-b from-cyan-500 to-blue-600 rounded-full"></span>}
               {t.summary}
             </span>
           </h3>
@@ -162,7 +198,7 @@ export default function CVPage() {
         <section className="mb-10">
           <h3 className="text-2xl font-bold mb-4 text-gray-900 pb-3 border-b-2 border-gray-200">
             <span className="inline-flex items-center gap-2">
-              <span className="w-1 h-8 bg-gradient-to-b from-violet-500 to-purple-600 rounded-full"></span>
+              {!atsMode && <span className="w-1 h-8 bg-gradient-to-b from-violet-500 to-purple-600 rounded-full"></span>}
               {t.skills}
             </span>
           </h3>
@@ -184,13 +220,13 @@ export default function CVPage() {
         <section className="mb-10">
           <h3 className="text-2xl font-bold mb-4 text-gray-900 pb-3 border-b-2 border-gray-200">
             <span className="inline-flex items-center gap-2">
-              <Briefcase className="w-6 h-6 text-cyan-600" />
+              {!atsMode && <Briefcase className="w-6 h-6 text-cyan-600" />}
               {t.experience}
             </span>
           </h3>
           <div className="space-y-7 pl-4">
           {data.experience.map((exp, index) => (
-            <div key={index}>
+            <div key={index} className="relative">
               <div className="flex justify-between items-start mb-3">
                 <div>
                   <h4 className="text-lg font-bold text-gray-900 mb-1.5">
@@ -200,7 +236,7 @@ export default function CVPage() {
                     {exp.company} | {exp.location}
                   </p>
                 </div>
-                <p className="text-sm text-gray-600 font-semibold whitespace-nowrap ml-4 bg-gray-50 px-3 py-1 rounded">
+                <p className={atsMode ? "text-sm text-gray-600 font-semibold whitespace-nowrap ml-4" : "text-sm text-gray-600 font-semibold whitespace-nowrap ml-4 bg-gray-50 px-3 py-1 rounded"}>
                   {exp.period}
                 </p>
               </div>
@@ -214,20 +250,33 @@ export default function CVPage() {
                   ))}
                 </ul>
               )}
-              <div className="mt-3">
+              <div className="mt-3 relative">
                 <p className="text-xs font-semibold text-gray-700 mb-2">{t.technologies}</p>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-2 pr-24">
                   {exp.technologies.slice(0, 8).map((tech, techIndex) => (
-                    <span key={techIndex} className="px-2.5 py-1 bg-gradient-to-r from-cyan-50 to-violet-50 text-gray-700 text-xs rounded-full border border-cyan-100">
+                    <span key={techIndex} className={atsMode ? "px-2.5 py-1 text-gray-700 text-xs" : "px-2.5 py-1 bg-gradient-to-r from-cyan-50 to-violet-50 text-gray-700 text-xs rounded-full border border-cyan-100"}>
                       {tech}
                     </span>
                   ))}
-                  {exp.technologies.length > 8 && (
+                  {!atsMode && exp.technologies.length > 8 && (
                     <span className="px-2.5 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">
                       +{exp.technologies.length - 8} more
                     </span>
                   )}
                 </div>
+                {/* Company Logo - Bottom Right */}
+                {!atsMode && exp.companyLogo && exp.companyLogo.startsWith('/logos/') && (
+                  <div className="absolute bottom-0 right-0 w-20 h-20">
+                    <Image
+                      src={exp.companyLogo}
+                      alt={`${exp.company} logo`}
+                      width={80}
+                      height={80}
+                      unoptimized
+                      className="rounded-lg object-contain bg-white p-2 border border-gray-200 shadow-sm"
+                    />
+                  </div>
+                )}
               </div>
             </div>
           ))}
@@ -238,21 +287,21 @@ export default function CVPage() {
         <section className="mb-10">
           <h3 className="text-2xl font-bold mb-4 text-gray-900 pb-3 border-b-2 border-gray-200">
             <span className="inline-flex items-center gap-2">
-              <FolderGit2 className="w-6 h-6 text-violet-600" />
+              {!atsMode && <FolderGit2 className="w-6 h-6 text-violet-600" />}
               {t.projects}
             </span>
           </h3>
           <div className="space-y-6 pl-4">
-          {data.projects.map((project, index) => (
-            <div key={index}>
+          {cvProjects.map((project, index) => (
+            <div key={project.id}>
               <h4 className="text-base font-bold text-gray-900 mb-2.5">
-                {project.name}
+                {project.title}
               </h4>
               <p className="text-gray-700 text-sm mb-3" style={{ lineHeight: '1.7' }}>
                 {project.description}
               </p>
               <ul className="list-disc list-outside space-y-1.5 text-sm text-gray-700 ml-5 mb-3">
-                {project.achievements.map((achievement, i) => (
+                {project.achievements?.map((achievement, i) => (
                   <li key={i} style={{ lineHeight: '1.6' }}>{achievement}</li>
                 ))}
               </ul>
@@ -260,7 +309,7 @@ export default function CVPage() {
                 <p className="text-xs font-semibold text-gray-700 mb-2">{t.technologies}</p>
                 <div className="flex flex-wrap gap-2">
                   {project.technologies.map((tech, techIndex) => (
-                    <span key={techIndex} className="px-2.5 py-1 bg-gradient-to-r from-violet-50 to-blue-50 text-gray-700 text-xs rounded-full border border-violet-100">
+                    <span key={techIndex} className={atsMode ? "px-2.5 py-1 text-gray-700 text-xs" : "px-2.5 py-1 bg-gradient-to-r from-violet-50 to-blue-50 text-gray-700 text-xs rounded-full border border-violet-100"}>
                       {tech}
                     </span>
                   ))}
@@ -275,7 +324,7 @@ export default function CVPage() {
         <section className="mb-10">
           <h3 className="text-2xl font-bold mb-4 text-gray-900 pb-3 border-b-2 border-gray-200">
             <span className="inline-flex items-center gap-2">
-              <GraduationCap className="w-6 h-6 text-blue-600" />
+              {!atsMode && <GraduationCap className="w-6 h-6 text-blue-600" />}
               {t.education}
             </span>
           </h3>
@@ -291,7 +340,7 @@ export default function CVPage() {
                     {edu.institution}, {edu.location}
                   </p>
                 </div>
-                <p className="text-sm text-gray-600 font-semibold whitespace-nowrap ml-4 bg-gray-50 px-3 py-1 rounded">
+                <p className={atsMode ? "text-sm text-gray-600 font-semibold whitespace-nowrap ml-4" : "text-sm text-gray-600 font-semibold whitespace-nowrap ml-4 bg-gray-50 px-3 py-1 rounded"}>
                   {edu.period}
                 </p>
               </div>
@@ -307,7 +356,7 @@ export default function CVPage() {
         <section className="mb-10">
           <h3 className="text-2xl font-bold mb-4 text-gray-900 pb-3 border-b-2 border-gray-200">
             <span className="inline-flex items-center gap-2">
-              <Award className="w-6 h-6 text-amber-600" />
+              {!atsMode && <Award className="w-6 h-6 text-amber-600" />}
               {t.certifications}
             </span>
           </h3>
@@ -332,13 +381,13 @@ export default function CVPage() {
         <section className="mb-0">
           <h3 className="text-2xl font-bold mb-4 text-gray-900 pb-3 border-b-2 border-gray-200">
             <span className="inline-flex items-center gap-2">
-              <Languages className="w-6 h-6 text-green-600" />
+              {!atsMode && <Languages className="w-6 h-6 text-green-600" />}
               {t.languages}
             </span>
           </h3>
           <div className="flex gap-8 pl-4">
             {data.languages.map((lang, index) => (
-              <div key={index} className="bg-gray-50 px-4 py-2 rounded">
+              <div key={index} className={atsMode ? "px-4 py-2" : "bg-gray-50 px-4 py-2 rounded"}>
                 <span className="font-bold text-gray-900">{lang.language}</span>
                 <span className="text-gray-600 ml-2">• {lang.proficiency}</span>
               </div>

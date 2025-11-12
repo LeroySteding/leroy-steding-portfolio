@@ -28,7 +28,7 @@ export const en = {
   about: {
     title: "About",
     titleHighlight: "Me",
-    intro: "I'm a <highlight>Dutch full-stack developer</highlight> and entrepreneur with a passion for building cutting-edge web platforms that leverage the power of <highlight>AI automation</highlight>. As the founder of <strong>STEDING Digital / STEDING AI & Automation</strong>, I specialize in creating scalable, intelligent solutions that transform how businesses operate.",
+    intro: "I'm a <highlight>Dutch full-stack developer</highlight> and entrepreneur with a passion for building cutting-edge web platforms that leverage the power of <highlight>AI automation</highlight>. As the founder of <strong>Hifive</strong>, I specialize in creating scalable, intelligent solutions that transform how businesses operate.",
     expertise: "My expertise spans the modern web development stack, including <highlight>Next.js 17</highlight>, <highlight>React 19</highlight>, <highlight>TypeScript</highlight>, and <highlight>Supabase</highlight> on the frontend, paired with <highlight>Python</highlight>, <highlight>FastAPI</highlight>, and <highlight>PostgreSQL</highlight> on the backend. I'm particularly focused on AI automation, building intelligent agents, and creating seamless workflows with tools like <strong>n8n</strong>.",
     experience: "From architecting <highlight>monorepo SaaS platforms</highlight> like the SURF Whitelabel Platform (Edusources & MBOdata) to building <highlight>AI-powered quotation pipelines</highlight> for industrial clients, I thrive on solving complex technical challenges and delivering production-ready solutions that scale.",
     highlights: {
@@ -156,7 +156,7 @@ export const en = {
     },
   },
   footer: {
-    copyright: "© 2024 Leroy Steding. All rights reserved.",
+    copyright: "© 2025 Leroy Steding. All rights reserved.",
     builtWith: "Built with Next.js, TypeScript, Tailwind CSS, and Framer Motion",
     links: {
       privacy: "Privacy Policy",

@@ -135,9 +135,10 @@ elijkheid (WCAG 2.1 AA/AAA), prestatie-optimalisatie en het creëren van uitzond
     }
   ],
   
-  experience: experiences.slice(0, 7).map(exp => ({
+  experience: experiences.map(exp => ({
     title: exp.title,
     company: exp.company,
+    companyLogo: exp.companyLogo,
     location: exp.location,
     period: exp.period,
     description: exp.description,
@@ -147,80 +148,63 @@ elijkheid (WCAG 2.1 AA/AAA), prestatie-optimalisatie en het creëren van uitzond
   
   projects: [
     {
-      name: "SURF Whitelabel Platform (Edusources & MBOdata)",
-      description: "Enterprise-grade whitelabel platform architectuur die meerdere Next.js 14 applicaties ondersteunt binnen een Turborepo monorepo. Ontworpen en geïmplementeerd een uitgebreide gedeelde UI component bibliotheek met 80+ herbruikbare componenten, die meer dan 50.000 educatieve bronnen bedient aan studenten en docenten in heel Nederland. Schaalbare infrastructuur gebouwd met geautomatiseerde deployments, uitgebreide testsuite en volledige WCAG 2.1 AA toegankelijkheidscompliance. Multi-tenant systeem gearchitectureerd dat meerdere onderwijsinstellingen ondersteunt met aanpasbare branding en theming.",
-      technologies: ["Next.js 14", "Turborepo", "TypeScript", "React 18", "Tailwind CSS", "Storybook 8", "GitLab CI/CD", "Docker", "PostgreSQL", "Elasticsearch", "Redis"],
+      name: "IntelliWealth - AI Financiële Tool",
+      description: "Persoonlijk AI-ondersteund financieel beheerplatform met intelligente budgettering en beleggingsinzichten. Conversationele AI interface gebouwd met OpenAI voor natuurlijke financiële vragen en geautomatiseerde uitgavencategorisatie. Realtime portfolio tracking en gepersonaliseerde financiële aanbevelingen geïmplementeerd.",
+      technologies: ["Next.js", "OpenAI GPT-4", "Python", "PostgreSQL", "Plaid API", "TypeScript", "Recharts"],
       achievements: [
-        "Ontwikkeltijd verminderd met 40% door uitgebreide gedeelde component bibliotheek en design systeem",
-        "100% WCAG 2.1 AA compliance bereikt met geautomatiseerde toegankelijkheidstesting via axe-core en Pa11y",
-        "GitLab CI/CD pipelines geïmplementeerd met geautomatiseerde testing, linting en deployment, deployment tijd verminderd met 60%",
-        "Storybook documentatie gebouwd met 150+ component stories, teamsamenwerking en ontwikkelsnelheid verbeterd",
-        "Bundle size geoptimaliseerd met 35% door code splitting en lazy loading strategieën",
-        "TypeScript strict mode geïmplementeerd in hele monorepo, type veiligheid gewaarborgd en runtime errors verminderd met 45%"
+        "AI-powered financiële assistent gebouwd met natuurlijke taalverwerking",
+        "Bankrekening connecties geïntegreerd via Plaid API",
+        "Geautomatiseerde uitgavencategorisatie en budgettering geïmplementeerd"
       ]
     },
     {
-      name: "Quote Tool met Geavanceerde 3D CAD Bestandsparsing",
-      description: "Geavanceerd productie-offertes systeem met realtime 3D CAD bestandsanalyse en geautomatiseerde kostenberekening voor plaatwerk fabricage. Three.js geïntegreerd voor 3D visualisatie en Python-gebaseerde CAD parser voor het extraheren van fabricage specificaties uit STEP, STL en DXF bestanden. Intelligente pricing engine gebouwd rekening houdend met materiaalkosten, fabricage complexiteit, arbeidsuren en machine tijd. FastAPI backend geïmplementeerd met async processing voor het verwerken van grote CAD bestanden tot 500MB. Intuïtieve UI gecreëerd voor het beoordelen van geparseerde specificaties, aanpassen van parameters en genereren van gedetailleerde offerte PDF's.",
-      technologies: ["Next.js 15", "Three.js", "Python 3.11", "FastAPI", "CAD Parser", "PostgreSQL", "Redis", "AWS S3", "Docker", "React Three Fiber", "TypeScript"],
+      name: "AI ATS Recruitment Platform",
+      description: "Intelligent applicant tracking systeem voor geautomatiseerde vacature-kandidaat matching. AI-powered cv parsing en semantische job matching gebouwd met vector embeddings. Geautomatiseerde screening workflows en kandidaat ranking geïmplementeerd op basis van functie-eisen en ervaring.",
+      technologies: ["Next.js", "OpenAI GPT-4", "LangChain", "Pinecone", "PostgreSQL", "TypeScript", "Python"],
       achievements: [
-        "Offerte generatie tijd verminderd van 2+ uur handmatige berekening naar onder 2 minuten met 98% nauwkeurigheid",
-        "Offerte nauwkeurigheid verbeterd met 95% door geautomatiseerde CAD parsing, menselijke meetfouten geëlimineerd",
-        "500+ offertes per maand verwerkt met gemiddelde bestandsgrootte van 50MB, complexe multi-part assemblies verwerkt",
-        "3-seconden laadtijd bereikt voor 3D visualisatie van bestanden tot 100MB door geoptimaliseerde rendering pipeline",
-        "Geautomatiseerde PDF rapport generatie gebouwd inclusief technische tekeningen, materiaal specificaties en kostenopstelling",
-        "Realtime samenwerkingsfuncties geïmplementeerd waarmee meerdere teamleden gelijktijdig offertes kunnen beoordelen en aanpassen"
+        "Geautomatiseerde cv parsing en skills extractie",
+        "Semantische matching engine gebouwd voor job-kandidaat fit",
+        "AI-powered kandidaat screening workflows geïmplementeerd"
       ]
     },
     {
-      name: "AI Oplossingen Architectuur - De Vries Surface Technologies",
-      description: "Leidde uitgebreide digitale transformatie-initiatief met implementatie van AI-powered automatisering in productie, kwaliteitscontrole en bedrijfsoperaties. Intelligente documentverwerkingssysteem gearchitectureerd met OpenAI GPT-4 voor het extraheren van gestructureerde data uit technische specificaties en kwaliteitsrapporten. Predictive analytics platform gebouwd voor oppervlaktebehandeling kwaliteitsvoorspelling met machine learning modellen getraind op historische data. Geautomatiseerde workflow orchestratie ontwikkeld met n8n die ERP, CRM en productiesystemen verbindt. Power BI dashboards gecreëerd met realtime inzichten in productie-efficiëntie, kwaliteitsmetrics en kostenoptimalisatie mogelijkheden.",
-      technologies: ["OpenAI API (GPT-4)", "LangChain", "Azure AI Services", "Python", "FastAPI", "n8n", "Power BI", "Azure DevOps", "PostgreSQL", "Docker", "Redis", "TensorFlow"],
+      name: "3D CAD Offerte Tool",
+      description: "Productie-offertesysteem met realtime 3D CAD bestand visualisatie en geautomatiseerde kostenberekening. Three.js geïntegreerd voor interactieve 3D rendering en Python-gebaseerde parser voor het extraheren van specificaties uit STEP, STL en DXF bestanden. Intelligente pricing engine en geautomatiseerde PDF offerte generatie gebouwd.",
+      technologies: ["Next.js", "Three.js", "Python", "FastAPI", "PostgreSQL", "React Three Fiber", "TypeScript"],
       achievements: [
-        "Handmatige documentverwerking tijd verminderd met 70%, automatisering van data-extractie uit 1000+ technische documenten per maand",
-        "Kwaliteitsvoorspelling nauwkeurigheid verbeterd naar 92% door ML modellen, defecten voorkomen en afval verminderd met 25%",
-        "€200K+ jaarlijkse kostenbesparing gegenereerd door geoptimaliseerde resource allocatie en verminderd herwerk",
-        "15 kritieke bedrijfsworkflows geautomatiseerd, administratieve overhead verminderd met 45 uur per week",
-        "Realtime monitoring dashboard gebouwd dat 50+ KPI's volgt, bruikbare inzichten aan management biedt",
-        "AI-powered klantenservice chatbot geïmplementeerd die 80% van routine vragen afhandelt, responstijd verminderd met 60%"
+        "Offerte generatie proces geautomatiseerd met 3D visualisatie",
+        "CAD bestand parser gebouwd die meerdere formaten ondersteunt",
+        "Geautomatiseerde PDF rapport generatie geïntegreerd"
       ]
     },
     {
-      name: "VodafoneZiggo Mobiele Applicatie",
-      description: "Enterprise-scale cross-platform mobiele applicatie die 3M+ actieve gebruikers bedient met uitgebreid accountbeheer, realtime gebruik tracking en self-service mogelijkheden. Schaalbare React Native oplossing gearchitectureerd met Expo, offline-first architectuur geïmplementeerd voor naadloze gebruikerservaring. Uitgebreid design systeem gebouwd met 100+ componenten gedocumenteerd in Storybook, snelle feature ontwikkeling mogelijk gemaakt. Geavanceerd state management geïmplementeerd met Redux Toolkit en RTK Query voor efficiënte data fetching en caching. Push notificaties, deep linking en biometrische authenticatie geïntegreerd. 90%+ test coverage vastgesteld met Jest en React Native Testing Library.",
-      technologies: ["React Native", "Expo SDK 50", "TypeScript", "Redux Toolkit", "RTK Query", "Storybook", "Jest", "React Native Testing Library", "Firebase", "GraphQL", "Apollo Client"],
+      name: "AI-Powered Productieoplossingen",
+      description: "Digitale transformatie-initiatief met implementatie van AI automatisering voor productieoperaties. Intelligente documentverwerking gebouwd met OpenAI GPT-4 en geautomatiseerde workflow orchestratie met n8n die ERP en CRM systemen verbindt. Dashboards gecreëerd voor productie monitoring en kwaliteitscontrole.",
+      technologies: ["OpenAI GPT-4", "LangChain", "Python", "FastAPI", "n8n", "Power BI", "PostgreSQL"],
       achievements: [
-        "4.7-sterren beoordeling bereikt op App Store en 4.5 op Google Play met 500K+ reviews en 99.9% uptime SLA",
-        "90%+ test coverage behouden voor 200+ componenten met uitgebreide unit en integration tests",
-        "Schaalbaar design systeem gebouwd met Storybook met 100+ gedocumenteerde componenten, ontwikkeltijd verminderd met 50%",
-        "App performance geoptimaliseerd, initiële laadtijd verminderd met 60% en Time to Interactive verbeterd naar onder 2 seconden",
-        "Offline-first architectuur geïmplementeerd met intelligente sync, naadloze ervaring op slechte verbindingen gewaarborgd",
-        "Crash rate verminderd naar <0.1% door uitgebreide error handling en monitoring met Sentry"
+        "Documentverwerking workflows geautomatiseerd",
+        "AI-powered kwaliteitsvoorspelling geïntegreerd",
+        "Realtime productie monitoring dashboards gebouwd"
       ]
     },
     {
-      name: "AllyScan - AI-Powered Toegankelijkheidsscanner & Compliance Platform",
-      description: "Uitgebreid SaaS platform voor geautomatiseerde webtoegang elijksheidstesting en WCAG compliance management. Intelligente scanning engine gebouwd met Playwright voor cross-browser testing en machine learning modellen voor het identificeren van toegankelijkheidsproblemen buiten regel-gebaseerde detectie. Chrome extensie ontwikkeld voor realtime toegankelijkheidsaudit tijdens ontwikkeling. Gedetailleerd rapportage dashboard gecreëerd met geprioritiseerde hersteladvies, code voorbeelden en compliance tracking. Multi-tenant architectuur geïmplementeerd die enterprise teams ondersteunt met role-based access control en audit trails. Geïntegreerd met CI/CD pipelines voor geautomatiseerde toegankelijkheidstesting in ontwikkelworkflows.",
-      technologies: ["Next.js 15", "Python", "TensorFlow", "Playwright", "PostgreSQL", "Redis", "OpenAI API", "TypeScript", "Prisma", "AWS", "Docker", "Kubernetes"],
+      name: "AllyScan - Toegankelijkheidstest Platform",
+      description: "SaaS platform voor geautomatiseerde webtoegang elijksheidstesting en WCAG compliance. Scanning engine gebouwd met Playwright voor cross-browser testing met gedetailleerde rapportage en hersteladvies. Chrome extensie ontwikkeld voor realtime toegankelijkheidsaudit tijdens ontwikkeling.",
+      technologies: ["Next.js", "Playwright", "PostgreSQL", "TypeScript", "Prisma", "Docker"],
       achievements: [
-        "Toegankelijkheidstesting tijd verminderd met 80% vergeleken met handmatige audits door geautomatiseerde scanning en intelligente issue detectie",
-        "Meer dan 10.000 toegankelijkheidsproblemen geïdentificeerd en geholpen verhelpen bij 50+ enterprise organisaties",
-        "30+ organisaties geholpen WCAG 2.1 AA compliance te bereiken met gedetailleerde hersteladvies en code voorbeelden",
-        "AI-powered aanbevelingsengine gebouwd die contextbewuste fixes biedt met 95% nauwkeurigheid, ontwikkelaarsproductiviteit verbeterd",
-        "100K+ pagina scans per maand verwerkt met gemiddelde scan tijd van 15 seconden per pagina",
-        "98% klanttevredenheidsscore bereikt bij enterprise klanten inclusief overheidsinstanties en Fortune 500 bedrijven"
+        "Toegankelijkheidstesting geautomatiseerd met gedetailleerde rapporten",
+        "Chrome extensie gebouwd voor realtime auditing",
+        "CI/CD integratie geïmplementeerd voor testworkflows"
       ]
     },
     {
-      name: "Enterprise E-Commerce Platform met MedusaJS",
-      description: "Headless commerce platform gebouwd op MedusaJS met aangepaste Next.js storefront die B2B en B2C operaties ondersteunt. Multi-valuta, multi-taal oplossing gearchitectureerd met complexe prijsregels, bulk ordering en quote management. Stripe geïntegreerd voor betalingsverwerking, Shippo voor verzending en Algolia voor product search. Aangepast admin dashboard gebouwd voor voorraadbeheer, order processing en klant analytics. Geavanceerde productcatalogus geïmplementeerd met configureerbare varianten, bundles en abonnementen.",
-      technologies: ["MedusaJS", "Next.js 15", "TypeScript", "Stripe", "PostgreSQL", "Redis", "Algolia", "Docker", "AWS", "Tailwind CSS"],
+      name: "Headless E-Commerce Platform",
+      description: "Modern commerce platform gebouwd op MedusaJS met aangepaste Next.js storefront. Multi-valuta oplossing gearchitectureerd met Stripe betalingsverwerking en Algolia product search. Admin dashboard gebouwd voor voorraad- en orderbeheer met abonnement ondersteuning.",
+      technologies: ["MedusaJS", "Next.js", "TypeScript", "Stripe", "PostgreSQL", "Algolia", "Tailwind CSS"],
       achievements: [
-        "€2M+ in maandelijkse transacties verwerkt met 99.99% uptime en sub-seconde pagina laadtijden",
-        "Winkelwagen abandonment verminderd met 35% door geoptimaliseerde checkout flow en realtime verzendberekeningen",
-        "Geavanceerde product search geïmplementeerd met Algolia, 1M+ zoekopdrachten per maand verwerkt met <50ms responstijd",
-        "Abonnement management systeem gebouwd dat 5.000+ terugkerende klanten ondersteunt met geautomatiseerde facturering",
-        "Multi-warehouse voorraad systeem geïntegreerd met realtime voorraad updates voor 3 distributiecentra"
+        "Headless commerce architectuur gebouwd",
+        "Betalingsverwerking en verzending geïntegreerd",
+        "Abonnement management systeem geïmplementeerd"
       ]
     }
   ],
@@ -243,16 +227,6 @@ elijkheid (WCAG 2.1 AA/AAA), prestatie-optimalisatie en het creëren van uitzond
   ],
   
   certifications: [
-    {
-      name: "AWS Certified Solutions Architect - Associate",
-      issuer: "Amazon Web Services",
-      date: "2023"
-    },
-    {
-      name: "Professional Scrum Master I (PSM I)",
-      issuer: "Scrum.org",
-      date: "2022"
-    },
     {
       name: "Next.js & React - The Complete Guide",
       issuer: "Udemy",
