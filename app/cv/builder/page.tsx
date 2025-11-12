@@ -300,7 +300,7 @@ function ResumeBuilderContent() {
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg">
               <div
                 id="cv-preview"
-                className="max-w-[210mm] mx-auto bg-white p-12 sm:p-16"
+                className="max-w-[210mm] mx-auto bg-white dark:bg-gray-900 p-12 sm:p-16"
                 style={{
                   ...customStyles,
                   lineHeight: customization.spacing === 'compact' ? '1.5' : customization.spacing === 'relaxed' ? '1.8' : '1.7',
@@ -315,15 +315,15 @@ function ResumeBuilderContent() {
                     <EditableField
                       path="personalInfo.name"
                       value={data.personalInfo.name}
-                      className="text-4xl font-bold text-gray-900 mb-2"
+                      className="text-4xl font-bold text-gray-900 dark:text-white mb-2"
                     />
                     <EditableField
                       path="personalInfo.title"
                       value={data.personalInfo.title}
-                      className="text-xl text-gray-600 mb-4"
+                      className="text-xl text-gray-600 dark:text-gray-300 mb-4"
                     />
 
-                    <div className="flex flex-wrap gap-x-4 gap-y-2 text-sm text-gray-600">
+                    <div className="flex flex-wrap gap-x-4 gap-y-2 text-sm text-gray-600 dark:text-gray-400">
                       <EditableField
                         path="personalInfo.email"
                         value={data.personalInfo.email}
@@ -350,7 +350,7 @@ function ResumeBuilderContent() {
                   <div className="absolute top-0 right-0">
                     <div className="relative">
                       <div className="absolute inset-0 bg-gradient-to-br from-cyan-500 to-violet-600 rounded-full blur-sm opacity-30" />
-                      <div className="relative w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-2xl bg-gray-100 ring-2 ring-gray-200">
+                      <div className="relative w-32 h-32 rounded-full overflow-hidden border-4 border-white dark:border-gray-700 shadow-2xl bg-gray-100 dark:bg-gray-800 ring-2 ring-gray-200 dark:ring-gray-700">
                         <Image
                           src="/leroy-profile-pic.jpeg"
                           alt={data.personalInfo.name}
@@ -365,9 +365,9 @@ function ResumeBuilderContent() {
 
                 {/* Professional Summary */}
                 <section className="mb-12">
-                  <h3 className="text-2xl font-bold mb-5 text-gray-900 pb-3 border-b-2 border-gray-200">
+                  <h3 className="text-2xl font-bold mb-5 text-gray-900 dark:text-white pb-3 border-b-2 border-gray-200 dark:border-gray-700">
                     <span className="inline-flex items-center gap-2">
-                      <Sparkles className="w-6 h-6 text-violet-600" />
+                      <Sparkles className="w-6 h-6 text-violet-600 dark:text-violet-400" />
                       {t.summary}
                     </span>
                   </h3>
@@ -375,13 +375,13 @@ function ResumeBuilderContent() {
                     path="summary"
                     value={data.summary}
                     multiline
-                    className="text-gray-700 leading-relaxed"
+                    className="text-gray-700 dark:text-gray-300 leading-relaxed"
                   />
                 </section>
 
                 {/* Core Competencies */}
                 <section className="mb-12">
-                  <h3 className="text-2xl font-bold mb-5 text-gray-900 pb-3 border-b-2 border-gray-200">
+                  <h3 className="text-2xl font-bold mb-5 text-gray-900 dark:text-white pb-3 border-b-2 border-gray-200 dark:border-gray-700">
                     {t.coreCompetencies}
                   </h3>
                   <div className="grid grid-cols-1 gap-6">
@@ -390,18 +390,18 @@ function ResumeBuilderContent() {
                         <EditableField
                           path={`skills[${index}].category`}
                           value={skillGroup.category}
-                          className="font-semibold text-gray-900 mb-2"
+                          className="font-semibold text-gray-900 dark:text-white mb-2"
                         />
                         <EditableList
                           path={`skills[${index}].items`}
                           items={skillGroup.items}
                           className="flex flex-wrap gap-2"
-                          itemClassName="px-2.5 py-1 bg-gradient-to-r from-cyan-50 to-violet-50 text-gray-700 text-xs rounded-full border border-cyan-100"
+                          itemClassName="px-2.5 py-1 bg-gradient-to-r from-cyan-50 to-violet-50 dark:from-cyan-900/30 dark:to-violet-900/30 text-gray-700 dark:text-gray-200 text-xs rounded-full border border-cyan-100 dark:border-cyan-800"
                           renderItem={(item, itemIndex) => (
                             <EditableField
                               path={`skills[${index}].items[${itemIndex}]`}
                               value={item}
-                              className="px-2.5 py-1 bg-gradient-to-r from-cyan-50 to-violet-50 text-gray-700 text-xs rounded-full border border-cyan-100"
+                              className="px-2.5 py-1 bg-gradient-to-r from-cyan-50 to-violet-50 dark:from-cyan-900/30 dark:to-violet-900/30 text-gray-700 dark:text-gray-200 text-xs rounded-full border border-cyan-100 dark:border-cyan-800"
                             />
                           )}
                         />
@@ -412,9 +412,9 @@ function ResumeBuilderContent() {
 
                 {/* Professional Experience */}
                 <section className="mb-12">
-                  <h3 className="text-2xl font-bold mb-5 text-gray-900 pb-3 border-b-2 border-gray-200">
+                  <h3 className="text-2xl font-bold mb-5 text-gray-900 dark:text-white pb-3 border-b-2 border-gray-200 dark:border-gray-700">
                     <span className="inline-flex items-center gap-2">
-                      <Briefcase className="w-6 h-6 text-cyan-600" />
+                      <Briefcase className="w-6 h-6 text-cyan-600 dark:text-cyan-400" />
                       {t.experience}
                     </span>
                   </h3>
@@ -425,46 +425,46 @@ function ResumeBuilderContent() {
                           <EditableField
                             path={`experience[${index}].title`}
                             value={exp.title}
-                            className="text-lg font-bold text-gray-900"
+                            className="text-lg font-bold text-gray-900 dark:text-white"
                           />
                           <EditableField
                             path={`experience[${index}].company`}
                             value={exp.company}
-                            className="text-base font-semibold text-cyan-600"
+                            className="text-base font-semibold text-cyan-600 dark:text-cyan-400"
                           />
                           <EditableField
                             path={`experience[${index}].location`}
                             value={exp.location}
-                            className="text-sm text-gray-600"
+                            className="text-sm text-gray-600 dark:text-gray-400"
                           />
                         </div>
                         <EditableField
                           path={`experience[${index}].period`}
                           value={exp.period}
-                          className="text-sm font-medium text-gray-600 bg-gray-100 px-3 py-1 rounded-full whitespace-nowrap ml-4"
+                          className="text-sm font-medium text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-full whitespace-nowrap ml-4"
                         />
                       </div>
                       <EditableField
                         path={`experience[${index}].description`}
                         value={exp.description}
                         multiline
-                        className="text-sm text-gray-700 mb-3 leading-relaxed"
+                        className="text-sm text-gray-700 dark:text-gray-300 mb-3 leading-relaxed"
                       />
                       {exp.achievements && exp.achievements.length > 0 && (
                         <div className="mb-3">
-                          <p className="text-xs font-semibold text-gray-700 mb-2">
+                          <p className="text-xs font-semibold text-gray-700 dark:text-gray-300 mb-2">
                             {t.achievements}:
                           </p>
                           <EditableList
                             path={`experience[${index}].achievements`}
                             items={exp.achievements}
-                            itemClassName="text-sm text-gray-700 leading-relaxed"
+                            itemClassName="text-sm text-gray-700 dark:text-gray-300 leading-relaxed"
                           />
                         </div>
                       )}
                       {exp.technologies && exp.technologies.length > 0 && (
                         <div className="mt-3">
-                          <p className="text-xs font-semibold text-gray-700 mb-2">
+                          <p className="text-xs font-semibold text-gray-700 dark:text-gray-300 mb-2">
                             {t.technologies}:
                           </p>
                           <div className="flex flex-wrap gap-2">
@@ -473,11 +473,11 @@ function ResumeBuilderContent() {
                                 key={techIndex}
                                 path={`experience[${index}].technologies[${techIndex}]`}
                                 value={tech}
-                                className="px-2.5 py-1 bg-gradient-to-r from-cyan-50 to-violet-50 text-gray-700 text-xs rounded-full border border-cyan-100"
+                                className="px-2.5 py-1 bg-gradient-to-r from-cyan-50 to-violet-50 dark:from-cyan-900/30 dark:to-violet-900/30 text-gray-700 dark:text-gray-200 text-xs rounded-full border border-cyan-100 dark:border-cyan-800"
                               />
                             ))}
                             {exp.technologies.length > 8 && (
-                              <span className="px-2.5 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">
+                              <span className="px-2.5 py-1 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 text-xs rounded-full">
                                 +{exp.technologies.length - 8} more
                               </span>
                             )}
@@ -490,9 +490,9 @@ function ResumeBuilderContent() {
 
                 {/* Key Projects */}
                 <section className="mb-12">
-                  <h3 className="text-2xl font-bold mb-5 text-gray-900 pb-3 border-b-2 border-gray-200">
+                  <h3 className="text-2xl font-bold mb-5 text-gray-900 dark:text-white pb-3 border-b-2 border-gray-200 dark:border-gray-700">
                     <span className="inline-flex items-center gap-2">
-                      <FolderGit2 className="w-6 h-6 text-violet-600" />
+                      <FolderGit2 className="w-6 h-6 text-violet-600 dark:text-violet-400" />
                       {t.projects}
                     </span>
                   </h3>
@@ -501,29 +501,29 @@ function ResumeBuilderContent() {
                       <EditableField
                         path={`projects[${index}].name`}
                         value={project.name}
-                        className="text-lg font-bold text-gray-900 mb-2"
+                        className="text-lg font-bold text-gray-900 dark:text-white mb-2"
                       />
                       <EditableField
                         path={`projects[${index}].description`}
                         value={project.description}
                         multiline
-                        className="text-sm text-gray-700 mb-3 leading-relaxed"
+                        className="text-sm text-gray-700 dark:text-gray-300 mb-3 leading-relaxed"
                       />
                       {project.achievements && project.achievements.length > 0 && (
                         <div className="mb-3">
-                          <p className="text-xs font-semibold text-gray-700 mb-2">
+                          <p className="text-xs font-semibold text-gray-700 dark:text-gray-300 mb-2">
                             {t.achievements}:
                           </p>
                           <EditableList
                             path={`projects[${index}].achievements`}
                             items={project.achievements}
-                            itemClassName="text-sm text-gray-700 leading-relaxed"
+                            itemClassName="text-sm text-gray-700 dark:text-gray-300 leading-relaxed"
                           />
                         </div>
                       )}
                       {project.technologies && project.technologies.length > 0 && (
                         <div className="mt-3">
-                          <p className="text-xs font-semibold text-gray-700 mb-2">
+                          <p className="text-xs font-semibold text-gray-700 dark:text-gray-300 mb-2">
                             {t.technologies}:
                           </p>
                           <div className="flex flex-wrap gap-2">
@@ -532,7 +532,7 @@ function ResumeBuilderContent() {
                                 key={techIndex}
                                 path={`projects[${index}].technologies[${techIndex}]`}
                                 value={tech}
-                                className="px-2.5 py-1 bg-gradient-to-r from-violet-50 to-blue-50 text-gray-700 text-xs rounded-full border border-violet-100"
+                                className="px-2.5 py-1 bg-gradient-to-r from-violet-50 to-blue-50 dark:from-violet-900/30 dark:to-blue-900/30 text-gray-700 dark:text-gray-200 text-xs rounded-full border border-violet-100 dark:border-violet-800"
                               />
                             ))}
                           </div>
@@ -544,9 +544,9 @@ function ResumeBuilderContent() {
 
                 {/* Education */}
                 <section className="mb-12">
-                  <h3 className="text-2xl font-bold mb-5 text-gray-900 pb-3 border-b-2 border-gray-200">
+                  <h3 className="text-2xl font-bold mb-5 text-gray-900 dark:text-white pb-3 border-b-2 border-gray-200 dark:border-gray-700">
                     <span className="inline-flex items-center gap-2">
-                      <GraduationCap className="w-6 h-6 text-blue-600" />
+                      <GraduationCap className="w-6 h-6 text-blue-600 dark:text-blue-400" />
                       {t.education}
                     </span>
                   </h3>
@@ -557,30 +557,30 @@ function ResumeBuilderContent() {
                           <EditableField
                             path={`education[${index}].degree`}
                             value={edu.degree}
-                            className="text-base font-bold text-gray-900"
+                            className="text-base font-bold text-gray-900 dark:text-white"
                           />
                           <EditableField
                             path={`education[${index}].institution`}
                             value={edu.institution}
-                            className="text-sm font-semibold text-blue-600"
+                            className="text-sm font-semibold text-blue-600 dark:text-blue-400"
                           />
                           <EditableField
                             path={`education[${index}].location`}
                             value={edu.location}
-                            className="text-sm text-gray-600"
+                            className="text-sm text-gray-600 dark:text-gray-400"
                           />
                         </div>
                         <EditableField
                           path={`education[${index}].period`}
                           value={edu.period}
-                          className="text-sm font-medium text-gray-600 bg-gray-100 px-3 py-1 rounded-full whitespace-nowrap ml-4"
+                          className="text-sm font-medium text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-full whitespace-nowrap ml-4"
                         />
                       </div>
                       {edu.description && (
                         <EditableField
                           path={`education[${index}].description`}
                           value={edu.description}
-                          className="text-sm text-gray-600 italic"
+                          className="text-sm text-gray-600 dark:text-gray-400 italic"
                         />
                       )}
                     </div>
@@ -589,9 +589,9 @@ function ResumeBuilderContent() {
 
                 {/* Certifications */}
                 <section className="mb-12">
-                  <h3 className="text-2xl font-bold mb-5 text-gray-900 pb-3 border-b-2 border-gray-200">
+                  <h3 className="text-2xl font-bold mb-5 text-gray-900 dark:text-white pb-3 border-b-2 border-gray-200 dark:border-gray-700">
                     <span className="inline-flex items-center gap-2">
-                      <Award className="w-6 h-6 text-amber-600" />
+                      <Award className="w-6 h-6 text-amber-600 dark:text-amber-400" />
                       {t.certifications}
                     </span>
                   </h3>
@@ -602,18 +602,18 @@ function ResumeBuilderContent() {
                           <EditableField
                             path={`certifications[${index}].name`}
                             value={cert.name}
-                            className="text-sm font-semibold text-gray-900"
+                            className="text-sm font-semibold text-gray-900 dark:text-white"
                           />
                           <EditableField
                             path={`certifications[${index}].issuer`}
                             value={cert.issuer}
-                            className="text-xs text-gray-600"
+                            className="text-xs text-gray-600 dark:text-gray-400"
                           />
                         </div>
                         <EditableField
                           path={`certifications[${index}].date`}
                           value={cert.date}
-                          className="text-xs text-gray-600 bg-amber-50 px-2 py-1 rounded whitespace-nowrap ml-2"
+                          className="text-xs text-gray-600 dark:text-gray-300 bg-amber-50 dark:bg-amber-900/30 px-2 py-1 rounded whitespace-nowrap ml-2"
                         />
                       </div>
                     ))}
@@ -622,9 +622,9 @@ function ResumeBuilderContent() {
 
                 {/* Languages */}
                 <section>
-                  <h3 className="text-2xl font-bold mb-4 text-gray-900 pb-3 border-b-2 border-gray-200">
+                  <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white pb-3 border-b-2 border-gray-200 dark:border-gray-700">
                     <span className="inline-flex items-center gap-2">
-                      <Languages className="w-6 h-6 text-green-600" />
+                      <Languages className="w-6 h-6 text-green-600 dark:text-green-400" />
                       {t.languages}
                     </span>
                   </h3>
@@ -632,19 +632,19 @@ function ResumeBuilderContent() {
                     {data.languages.map((lang, index) => (
                       <div
                         key={index}
-                        className="flex items-center gap-2 bg-green-50 px-4 py-2 rounded-lg border border-green-100"
+                        className="flex items-center gap-2 bg-green-50 dark:bg-green-900/30 px-4 py-2 rounded-lg border border-green-100 dark:border-green-800"
                       >
-                        <Globe className="w-4 h-4 text-green-600" />
+                        <Globe className="w-4 h-4 text-green-600 dark:text-green-400" />
                         <div>
                           <EditableField
                             path={`languages[${index}].language`}
                             value={lang.language}
-                            className="text-sm font-semibold text-gray-900"
+                            className="text-sm font-semibold text-gray-900 dark:text-white"
                           />
                           <EditableField
                             path={`languages[${index}].proficiency`}
                             value={lang.proficiency}
-                            className="text-xs text-gray-600"
+                            className="text-xs text-gray-600 dark:text-gray-400"
                           />
                         </div>
                       </div>
