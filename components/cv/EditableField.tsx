@@ -103,7 +103,7 @@ export function EditableField({
               onChange={(e) => setLocalValue(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder={placeholder}
-              className={`${className} w-full min-h-[100px] px-3 py-2 bg-white dark:bg-gray-800 border-2 border-cyan-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500`}
+              className="w-full min-h-[100px] px-3 py-2 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 border-2 border-cyan-500 dark:border-cyan-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 dark:focus:ring-cyan-400"
               rows={4}
             />
           ) : (
@@ -114,7 +114,7 @@ export function EditableField({
               onChange={(e) => setLocalValue(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder={placeholder}
-              className={`${className} w-full px-3 py-2 bg-white dark:bg-gray-800 border-2 border-cyan-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500`}
+              className="w-full px-3 py-2 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 border-2 border-cyan-500 dark:border-cyan-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 dark:focus:ring-cyan-400"
             />
           )}
           
@@ -163,7 +163,7 @@ export function EditableField({
                 <button
                   key={index}
                   onClick={() => handleApplySuggestion(suggestion)}
-                  className="w-full text-left p-3 bg-white dark:bg-gray-800 hover:bg-violet-100 dark:hover:bg-violet-900/30 border border-violet-200 dark:border-violet-700 rounded-lg transition-colors text-sm"
+                  className="w-full text-left p-3 bg-white dark:bg-gray-800 hover:bg-violet-100 dark:hover:bg-violet-900/30 border border-violet-200 dark:border-violet-700 rounded-lg transition-colors text-sm text-gray-900 dark:text-white"
                 >
                   {suggestion}
                 </button>
