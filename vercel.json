@@ -4,7 +4,6 @@
   "devCommand": "pnpm dev",
   "installCommand": "pnpm install",
   "framework": "nextjs",
-  "regions": ["ams1"],
   "headers": [
     {
       "source": "/(.*)",
