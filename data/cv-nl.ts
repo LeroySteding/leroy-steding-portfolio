@@ -12,23 +12,21 @@ export const cvDataNL: CVData = {
     website: "leroysteding.nl"
   },
   
-  summary: `Zeer bekwame Senior Full-Stack Developer en AI Automation Architect met 12+ jaar progressieve ervaring in het bouwen van enterprise-scale webplatformen, mobiele applicaties en intelligente automatiseringsoplossingen. Diepgaande expertise in het moderne JavaScript-ecosysteem (React 19, Next.js 16, TypeScript 5.x) met bewezen vermogen om complexe systemen te architectureren en te leveren die miljoenen gebruikers bedienen. Gespecialiseerd in AI-integratie (OpenAI, LangChain), microservices-architectuur en headless commerce-platforms. Bewezen staat van dienst in het leiden van cross-functionele teams, het mentoren van junior developers en het stimuleren van technische innovatie die meetbare bedrijfswaarde oplevert. Expert in full-stack ontwikkeling (Node.js, Python, Java), cloud-infrastructuur (AWS, Azure, Vercel) en moderne DevOps-praktijken (Docker, Kubernetes, CI/CD). Gepassioneerd over webtoegang
-
-elijkheid (WCAG 2.1 AA/AAA), prestatie-optimalisatie en het creëren van uitzonderlijke gebruikerservaringen door schone, onderhoudbare code. Bedreven in het vertalen van complexe bedrijfsvereisten naar schaalbare technische oplossingen met focus op codekwaliteit, beveiliging en best practices.`,
+  summary: `Zeer bekwame Senior Full-Stack Developer en AI Automation Architect met 12+ jaar progressieve ervaring in het bouwen van enterprise-scale webplatformen, mobiele applicaties en intelligente automatiseringsoplossingen. Diepgaande expertise in het moderne JavaScript-ecosysteem (React, Next.js, TypeScript) met bewezen vermogen om complexe systemen te architectureren en te leveren die miljoenen gebruikers bedienen. Gespecialiseerd in AI-integratie (OpenAI, LangChain), microservices-architectuur en headless commerce-platforms. Bewezen staat van dienst in het leiden van cross-functionele teams, het mentoren van junior developers en het stimuleren van technische innovatie die meetbare bedrijfswaarde oplevert. Expert in full-stack ontwikkeling (Node.js, Python, Java), cloud-infrastructuur (AWS, Azure, Vercel) en moderne DevOps-praktijken (Docker, Kubernetes, CI/CD). Gepassioneerd over webtoegankelijkheid (WCAG 2.1 AA/AAA), prestatie-optimalisatie en het creëren van uitzonderlijke gebruikerservaringen door schone, onderhoudbare code. Bedreven in het vertalen van complexe bedrijfsvereisten naar schaalbare technische oplossingen met focus op codekwaliteit, beveiliging en best practices.`,
   
   skills: [
     {
       category: "Frontend Ontwikkeling",
       items: [
-        "React 19 (Hooks, Context API, Server Components)", "Next.js 16 (App Router, Server Actions, Middleware)",
-        "TypeScript 5.x", "JavaScript (ES6+, ES2023)", "Vue.js 3 (Composition API)", "Angular 14+",
+        "React (Hooks, Context API, Server Components)", "Next.js (App Router, Server Actions, Middleware)",
+        "TypeScript", "JavaScript (ES6+)", "Vue.js (Composition API)", "Angular",
         "HTML5 (Semantische Markup, Toegankelijkheid)", "CSS3 (Grid, Flexbox, Custom Properties)",
-        "Tailwind CSS v4", "SASS/SCSS (Modules, Mixins)", "Styled Components", "CSS-in-JS",
+        "Tailwind CSS", "SASS/SCSS (Modules, Mixins)", "Styled Components", "CSS-in-JS",
         "Responsive Design (Mobile-First)", "Progressive Web Apps (PWA, Service Workers)",
         "Web Toegankelijkheid (WCAG 2.1 AA/AAA, ARIA)", "SEO Optimalisatie",
-        "Storybook 8 (Component Documentatie)", "Framer Motion (Animatie)", "GSAP",
+        "Storybook (Component Documentatie)", "Framer Motion (Animatie)", "GSAP",
         "React Native", "Expo SDK", "React Query/TanStack Query", "Zustand/Redux Toolkit",
-        "Webpack 5", "Vite", "Turbopack", "SWC Compiler", "Babel"
+        "Webpack", "Vite", "Turbopack", "SWC Compiler", "Babel"
       ]
     },
     {

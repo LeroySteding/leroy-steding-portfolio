@@ -83,17 +83,23 @@ export default function ExperienceDetailPage() {
               className="mb-6"
             >
               {/* Company Logo */}
-              {experience.companyLogo && experience.companyLogo.startsWith('/logos/') && (
+              {experience.companyLogo && (
                 <div className="mb-8">
                   <div className="inline-block p-4 rounded-2xl bg-white/5 backdrop-blur-sm border border-cyber-gray-light">
-                    <Image
-                      src={experience.companyLogo}
-                      alt={`${experience.company} logo`}
-                      width={120}
-                      height={120}
-                      unoptimized
-                      className="rounded-xl object-contain"
-                    />
+                    {experience.companyLogo.startsWith('/') ? (
+                      <Image
+                        src={experience.companyLogo}
+                        alt={`${experience.company} logo`}
+                        width={120}
+                        height={120}
+                        unoptimized
+                        className="rounded-xl object-contain"
+                      />
+                    ) : (
+                      <span className="text-8xl block w-[120px] h-[120px] flex items-center justify-center">
+                        {experience.companyLogo}
+                      </span>
+                    )}
                   </div>
                 </div>
               )}

@@ -64,21 +64,21 @@ export const cvData: CVData = {
     website: "leroysteding.nl"
   },
   
-  summary: `Highly accomplished Senior Full-Stack Developer and AI Automation Architect with 12+ years of progressive experience building enterprise-scale web platforms, mobile applications, and intelligent automation solutions. Deep expertise in modern JavaScript ecosystem (React 19, Next.js 16, TypeScript 5.x) with proven ability to architect and deliver complex systems serving millions of users. Specialized in AI integration (OpenAI, LangChain), microservices architecture, and headless commerce platforms. Track record of leading cross-functional teams, mentoring junior developers, and driving technical innovation that delivers measurable business value. Expert in full-stack development (Node.js, Python, Java), cloud infrastructure (AWS, Azure, Vercel), and modern DevOps practices (Docker, Kubernetes, CI/CD). Passionate about web accessibility (WCAG 2.1 AA/AAA), performance optimization, and creating exceptional user experiences through clean, maintainable code. Adept at translating complex business requirements into scalable technical solutions while maintaining focus on code quality, security, and best practices.`,
+  summary: `Highly accomplished Senior Full-Stack Developer and AI Automation Architect with 12+ years of progressive experience building enterprise-scale web platforms, mobile applications, and intelligent automation solutions. Deep expertise in modern JavaScript ecosystem (React, Next.js, TypeScript) with proven ability to architect and deliver complex systems serving millions of users. Specialized in AI integration (OpenAI, LangChain), microservices architecture, and headless commerce platforms. Track record of leading cross-functional teams, mentoring junior developers, and driving technical innovation that delivers measurable business value. Expert in full-stack development (Node.js, Python, Java), cloud infrastructure (AWS, Azure, Vercel), and modern DevOps practices (Docker, Kubernetes, CI/CD). Passionate about web accessibility (WCAG 2.1 AA/AAA), performance optimization, and creating exceptional user experiences through clean, maintainable code. Adept at translating complex business requirements into scalable technical solutions while maintaining focus on code quality, security, and best practices.`,
   
   skills: [
     {
       category: "Frontend Development",
       items: [
-        "React 19 (Hooks, Context API, Server Components)", "Next.js 16 (App Router, Server Actions, Middleware)",
-        "TypeScript 5.x", "JavaScript (ES6+, ES2023)", "Vue.js 3 (Composition API)", "Angular 14+",
+        "React (Hooks, Context API, Server Components)", "Next.js (App Router, Server Actions, Middleware)",
+        "TypeScript", "JavaScript (ES6+)", "Vue.js (Composition API)", "Angular",
         "HTML5 (Semantic Markup, Accessibility)", "CSS3 (Grid, Flexbox, Custom Properties)",
-        "Tailwind CSS v4", "SASS/SCSS (Modules, Mixins)", "Styled Components", "CSS-in-JS",
+        "Tailwind CSS", "SASS/SCSS (Modules, Mixins)", "Styled Components", "CSS-in-JS",
         "Responsive Design (Mobile-First)", "Progressive Web Apps (PWA, Service Workers)",
         "Web Accessibility (WCAG 2.1 AA/AAA, ARIA)", "SEO Optimization",
-        "Storybook 8 (Component Documentation)", "Framer Motion (Animation)", "GSAP",
+        "Storybook (Component Documentation)", "Framer Motion (Animation)", "GSAP",
         "React Native", "Expo SDK", "React Query/TanStack Query", "Zustand/Redux Toolkit",
-        "Webpack 5", "Vite", "Turbopack", "SWC Compiler", "Babel"
+        "Webpack", "Vite", "Turbopack", "SWC Compiler", "Babel"
       ]
     },
     {
