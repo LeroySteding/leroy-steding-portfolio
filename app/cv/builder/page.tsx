@@ -300,14 +300,17 @@ function ResumeBuilderContent() {
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg">
               <div
                 id="cv-preview"
-                className="max-w-[210mm] mx-auto bg-white p-10 sm:p-14"
-                style={customStyles}
+                className="max-w-[210mm] mx-auto bg-white p-12 sm:p-16"
+                style={{
+                  ...customStyles,
+                  lineHeight: customization.spacing === 'compact' ? '1.5' : customization.spacing === 'relaxed' ? '1.8' : '1.7',
+                }}
               >
                 {/* Gradient Header Bar */}
-                <div className="h-0.5 w-full bg-gradient-to-r from-cyan-500 via-violet-500 to-blue-500 mb-8" />
+                <div className="h-0.5 w-full bg-gradient-to-r from-cyan-500 via-violet-500 to-blue-500 mb-10" />
 
                 {/* Header Section */}
-                <div className="relative mb-10">
+                <div className="relative mb-12">
                   <div className="pr-36">
                     <EditableField
                       path="personalInfo.name"
@@ -361,8 +364,8 @@ function ResumeBuilderContent() {
                 </div>
 
                 {/* Professional Summary */}
-                <section className="mb-10">
-                  <h3 className="text-2xl font-bold mb-4 text-gray-900 pb-3 border-b-2 border-gray-200">
+                <section className="mb-12">
+                  <h3 className="text-2xl font-bold mb-5 text-gray-900 pb-3 border-b-2 border-gray-200">
                     <span className="inline-flex items-center gap-2">
                       <Sparkles className="w-6 h-6 text-violet-600" />
                       {t.summary}
@@ -377,8 +380,8 @@ function ResumeBuilderContent() {
                 </section>
 
                 {/* Core Competencies */}
-                <section className="mb-10">
-                  <h3 className="text-2xl font-bold mb-4 text-gray-900 pb-3 border-b-2 border-gray-200">
+                <section className="mb-12">
+                  <h3 className="text-2xl font-bold mb-5 text-gray-900 pb-3 border-b-2 border-gray-200">
                     {t.coreCompetencies}
                   </h3>
                   <div className="grid grid-cols-1 gap-6">
@@ -408,15 +411,15 @@ function ResumeBuilderContent() {
                 </section>
 
                 {/* Professional Experience */}
-                <section className="mb-10">
-                  <h3 className="text-2xl font-bold mb-4 text-gray-900 pb-3 border-b-2 border-gray-200">
+                <section className="mb-12">
+                  <h3 className="text-2xl font-bold mb-5 text-gray-900 pb-3 border-b-2 border-gray-200">
                     <span className="inline-flex items-center gap-2">
                       <Briefcase className="w-6 h-6 text-cyan-600" />
                       {t.experience}
                     </span>
                   </h3>
                   {data.experience.map((exp, index) => (
-                    <div key={index} className="mb-6 last:mb-0">
+                    <div key={index} className="mb-8 last:mb-0">
                       <div className="flex justify-between items-start mb-2">
                         <div className="flex-1">
                           <EditableField
@@ -486,15 +489,15 @@ function ResumeBuilderContent() {
                 </section>
 
                 {/* Key Projects */}
-                <section className="mb-10">
-                  <h3 className="text-2xl font-bold mb-4 text-gray-900 pb-3 border-b-2 border-gray-200">
+                <section className="mb-12">
+                  <h3 className="text-2xl font-bold mb-5 text-gray-900 pb-3 border-b-2 border-gray-200">
                     <span className="inline-flex items-center gap-2">
                       <FolderGit2 className="w-6 h-6 text-violet-600" />
                       {t.projects}
                     </span>
                   </h3>
                   {data.projects.map((project, index) => (
-                    <div key={index} className="mb-6 last:mb-0">
+                    <div key={index} className="mb-8 last:mb-0">
                       <EditableField
                         path={`projects[${index}].name`}
                         value={project.name}
@@ -540,8 +543,8 @@ function ResumeBuilderContent() {
                 </section>
 
                 {/* Education */}
-                <section className="mb-10">
-                  <h3 className="text-2xl font-bold mb-4 text-gray-900 pb-3 border-b-2 border-gray-200">
+                <section className="mb-12">
+                  <h3 className="text-2xl font-bold mb-5 text-gray-900 pb-3 border-b-2 border-gray-200">
                     <span className="inline-flex items-center gap-2">
                       <GraduationCap className="w-6 h-6 text-blue-600" />
                       {t.education}
@@ -585,8 +588,8 @@ function ResumeBuilderContent() {
                 </section>
 
                 {/* Certifications */}
-                <section className="mb-10">
-                  <h3 className="text-2xl font-bold mb-4 text-gray-900 pb-3 border-b-2 border-gray-200">
+                <section className="mb-12">
+                  <h3 className="text-2xl font-bold mb-5 text-gray-900 pb-3 border-b-2 border-gray-200">
                     <span className="inline-flex items-center gap-2">
                       <Award className="w-6 h-6 text-amber-600" />
                       {t.certifications}
