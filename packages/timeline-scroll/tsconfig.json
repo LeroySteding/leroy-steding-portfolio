@@ -1,0 +1,10 @@
+{
+  "extends": "@steding/tsconfig/react-library.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "src",
+    "lib": ["ES2017", "DOM", "DOM.Iterable"]
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
+}

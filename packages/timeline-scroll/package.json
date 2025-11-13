@@ -1,0 +1,61 @@
+{
+  "name": "@steding/timeline-scroll",
+  "version": "0.1.0",
+  "description": "A horizontal scroll-jacking timeline carousel for React with Framer Motion - accepts any React components as cards",
+  "author": "Leroy Steding",
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./styles.css": "./dist/styles.css"
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm --dts --external react --external react-dom --external framer-motion",
+    "dev": "tsup src/index.ts --format cjs,esm --dts --watch --external react --external react-dom --external framer-motion",
+    "clean": "rm -rf dist"
+  },
+  "peerDependencies": {
+    "framer-motion": "^12.0.0",
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0"
+  },
+  "devDependencies": {
+    "@steding/tsconfig": "workspace:*",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
+    "framer-motion": "^12.23.24",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "tsup": "^8.5.1",
+    "typescript": "^5"
+  },
+  "keywords": [
+    "react",
+    "timeline",
+    "scroll",
+    "horizontal-scroll",
+    "framer-motion",
+    "animation",
+    "scroll-jacking",
+    "component"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/steding/timeline-scroll"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

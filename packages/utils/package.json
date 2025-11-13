@@ -1,0 +1,30 @@
+{
+  "name": "@steding/utils",
+  "version": "0.1.0",
+  "description": "Shared utility functions for Steding projects",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm --dts",
+    "dev": "tsup src/index.ts --format cjs,esm --dts --watch",
+    "lint": "biome check src",
+    "clean": "rm -rf dist"
+  },
+  "devDependencies": {
+    "@steding/tsconfig": "workspace:*",
+    "@types/node": "^20",
+    "tsup": "^8.0.1",
+    "typescript": "^5"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

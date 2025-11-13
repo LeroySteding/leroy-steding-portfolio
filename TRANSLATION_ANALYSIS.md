@@ -559,8 +559,8 @@ export const nl = {
     tagline: "Bouwt schaalbare AI-gedreven webplatforms & digitale automatiseringsoplossingen.",
     cta: {
       projects: "Bekijk Projecten",
-      cv: "Download CV",
-      contact: "Neem Contact Op",
+      cv: "CV",
+      contact: "Contact",
     },
     stats: {
       experience: "Jaar Ervaring",

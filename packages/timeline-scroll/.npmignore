@@ -1,0 +1,16 @@
+# Source files
+src/
+tsconfig.json
+tsup.config.ts
+
+# Development files
+*.log
+*.tsbuildinfo
+node_modules/
+
+# Examples and docs
+EXAMPLE.tsx
+
+# Version control
+.git/
+.gitignore

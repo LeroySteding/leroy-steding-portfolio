@@ -1,0 +1,28 @@
+/* Base styles for TimelineScroll component */
+.timeline-scroll-section {
+  position: relative;
+  background: transparent;
+}
+
+.timeline-scroll-section * {
+  box-sizing: border-box;
+}
+
+/* Ensure smooth scrolling */
+.timeline-scroll-section {
+  scroll-behavior: smooth;
+}
+
+/* Default animation for pulse effect */
+@keyframes timeline-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-pulse {
+  animation: timeline-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
