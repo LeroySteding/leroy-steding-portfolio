@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useRef, ReactNode } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import React, { useRef, ReactNode, useState, useEffect } from "react";
+import { motion, useScroll, useTransform, useMotionValue } from "framer-motion";
 
 export interface CarouselItem {
   id: string | number;
@@ -39,10 +39,10 @@ export interface HorizontalTimelineCarouselProps {
    */
   startXOffset?: string;
   /**
-   * Ending X position as percentage
+   * Ending X position as percentage or "auto" to center last card
    * @default "-95%"
    */
-  endX?: string;
+  endX?: string | "auto";
   /**
    * Gap between cards in rem units
    * @default 1 (16px)
@@ -125,14 +125,52 @@ export const HorizontalTimelineCarousel: React.FC<
       : baseStartX;
 
   const x = useTransform(scrollYProgress, [0, 1], [calculatedStartX, endX]);
+  
+  // Track which card is currently centered based on viewport position
+  const [centeredIndex, setCenteredIndex] = useState(0);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  
+  // Calculate which card is closest to viewport center
+  useEffect(() => {
+    const updateCenteredCard = () => {
+      if (typeof window === "undefined") return;
+      
+      const viewportCenter = window.innerWidth / 2;
+      let closestIndex = 0;
+      let closestDistance = Infinity;
+      
+      cardRefs.current.forEach((card, index) => {
+        if (!card) return;
+        
+        const rect = card.getBoundingClientRect();
+        const cardCenter = rect.left + rect.width / 2;
+        const distance = Math.abs(cardCenter - viewportCenter);
+        
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          closestIndex = index;
+        }
+      });
+      
+      setCenteredIndex(closestIndex);
+    };
+    
+    // Update on scroll
+    const unsubscribe = scrollYProgress.on("change", updateCenteredCard);
+    
+    // Initial calculation
+    updateCenteredCard();
+    
+    return unsubscribe;
+  }, [scrollYProgress]);
 
   // Convert rem to pixels for inline styles (assuming 16px = 1rem)
   const gapPx = cardGap * 16;
   const paddingPx = sidePadding * 16;
 
   // Auto-calculate scroll height based on items
-  // Formula: Each item needs enough scroll distance to move across the viewport
-  // Optimized formula: 100vh (for section) + (items.length - 1) * 20vh (reduced for smoother scrolling and earlier exit)
+  // Formula: Base height (100vh for sticky section) + scroll distance for each card
+  // Optimized: 100vh base + (items.length - 1) * 20vh for smooth scrolling
   const calculatedScrollHeight =
     scrollHeight === "auto" ? 100 + (items.length - 1) * 20 : scrollHeight;
 
@@ -184,13 +222,12 @@ export const HorizontalTimelineCarousel: React.FC<
 
           {/* Cards Container - Takes remaining space, centered */}
           <div className="flex-1 flex items-center justify-center relative overflow-hidden">
-            {/* Connecting Line */}
+            {/* Connecting Line - Behind cards */}
             {showLine && (
               <div
-                className="absolute top-1/2 left-0 right-0 h-0.5 -translate-y-1/2 pointer-events-none"
+                className="absolute top-1/2 left-0 right-0 h-0.5 -translate-y-1/2 pointer-events-none z-0"
                 style={{
                   backgroundColor: lineColor,
-                  zIndex: 0,
                 }}
               />
             )}
@@ -204,9 +241,26 @@ export const HorizontalTimelineCarousel: React.FC<
               }}
               className={`flex items-center relative z-10 ${cardsContainerClassName}`}
             >
-              {items.map((item) => (
-                <div key={item.id}>{item.content}</div>
-              ))}
+              {items.map((item, index) => {
+                const isCentered = index === centeredIndex;
+                
+                return (
+                  <motion.div
+                    key={item.id}
+                    ref={(el) => {
+                      cardRefs.current[index] = el;
+                    }}
+                    className="relative z-20"
+                    animate={{
+                      scale: isCentered ? 1.05 : 1,
+                      opacity: isCentered ? 1 : 0.75,
+                    }}
+                    transition={{ duration: 0.3, ease: "easeOut" }}
+                  >
+                    {item.content}
+                  </motion.div>
+                );
+              })}
             </motion.div>
           </div>
 

@@ -126,145 +126,145 @@ export const TimelineCard: React.FC<TimelineCardProps> = ({
   const widthStyle = typeof width === 'number' ? `${width}px` : width;
   const heightStyle = typeof height === 'number' ? `${height}px` : height;
 
-  // Image variant - full background image
-  if (variant === 'image' && imageUrl) {
-    return (
-      <div
-        className={`relative overflow-hidden rounded-lg group ${className}`}
-        style={{ width: widthStyle, height: heightStyle }}
-      >
-        {/* Background Image */}
-        <div
-          style={{
-            backgroundImage: `url(${imageUrl})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
-          className="absolute inset-0 z-0 transition-transform duration-300 group-hover:scale-110"
-        />
+  // // Image variant - full background image
+  // if (variant === 'image' && imageUrl) {
+  //   return (
+  //     <div
+  //       className={`relative overflow-hidden rounded-lg group ${className}`}
+  //       style={{ width: widthStyle, height: heightStyle }}
+  //     >
+  //       {/* Background Image */}
+  //       <div
+  //         style={{
+  //           backgroundImage: `url(${imageUrl})`,
+  //           backgroundSize: 'cover',
+  //           backgroundPosition: 'center',
+  //         }}
+  //         className="absolute inset-0 z-0 transition-transform duration-300 group-hover:scale-110"
+  //       />
         
-        {/* Overlay Content */}
-        <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/60 via-transparent to-black/40 flex flex-col justify-end p-8">
-          {period && (
-            <span className="text-sm font-bold text-white/90 uppercase tracking-wide mb-2">
-              {period}
-            </span>
-          )}
-          <h3 className="text-4xl font-black uppercase text-white mb-2 drop-shadow-lg">
-            {title}
-          </h3>
-          {subtitle && (
-            <p className="text-xl font-semibold text-white/90 mb-4">
-              {subtitle}
-            </p>
-          )}
-          {description && (
-            <p className="text-white/80 text-sm leading-relaxed backdrop-blur-sm bg-white/10 p-3 rounded">
-              {description}
-            </p>
-          )}
-        </div>
+  //       {/* Overlay Content */}
+  //       <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/60 via-transparent to-black/40 flex flex-col justify-end p-8">
+  //         {period && (
+  //           <span className="text-sm font-bold text-white/90 uppercase tracking-wide mb-2">
+  //             {period} minimal
+  //           </span>
+  //         )}
+  //         <h3 className="text-4xl font-black uppercase text-white mb-2 drop-shadow-lg">
+  //           {title}
+  //         </h3>
+  //         {subtitle && (
+  //           <p className="text-xl font-semibold text-white/90 mb-4">
+  //             {subtitle}
+  //           </p>
+  //         )}
+  //         {description && (
+  //           <p className="text-white/80 text-sm leading-relaxed backdrop-blur-sm bg-white/10 p-3 rounded">
+  //             {description}
+  //           </p>
+  //         )}
+  //       </div>
         
-        {children}
-      </div>
-    );
-  }
+  //       {children}
+  //     </div>
+  //   );
+  // }
 
-  // Gradient variant - colorful gradient background
-  if (variant === 'gradient') {
-    return (
-      <div
-        className={`p-8 rounded-2xl bg-gradient-to-br ${backgroundGradient || colors.bg} border-2 ${colors.border} transition-all duration-300 hover:scale-105 hover:shadow-xl ${className}`}
-        style={{ width: widthStyle, height: heightStyle }}
-      >
-        {period && (
-          <div className="mb-4">
-            <span className={`text-sm font-bold ${colors.text} uppercase tracking-wide`}>
-              {period}
-            </span>
-          </div>
-        )}
+  // // Gradient variant - colorful gradient background
+  // if (variant === 'gradient') {
+  //   return (
+  //     <div
+  //       className={`p-8 rounded-2xl bg-gradient-to-br ${backgroundGradient || colors.bg} border-2 ${colors.border} transition-all duration-300 hover:scale-105 hover:shadow-xl ${className}`}
+  //       style={{ width: widthStyle, height: heightStyle }}
+  //     >
+  //       {period && (
+  //         <div className="mb-4">
+  //           <span className={`text-sm font-bold ${colors.text} uppercase tracking-wide`}>
+  //             {period} gradient
+  //           </span>
+  //         </div>
+  //       )}
         
-        <h3 className="text-3xl font-bold mb-2 text-gray-900">{title}</h3>
+  //       <h3 className="text-3xl font-bold mb-2 text-gray-900">{title}</h3>
         
-        {subtitle && (
-          <h4 className={`text-xl font-semibold ${colors.text} mb-4`}>
-            {subtitle}
-          </h4>
-        )}
+  //       {subtitle && (
+  //         <h4 className={`text-xl font-semibold ${colors.text} mb-4`}>
+  //           {subtitle}
+  //         </h4>
+  //       )}
         
-        {location && (
-          <p className="text-gray-600 text-sm mb-4 flex items-center gap-2">
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-            </svg>
-            {location}
-          </p>
-        )}
+  //       {location && (
+  //         <p className="text-gray-600 text-sm mb-4 flex items-center gap-2">
+  //           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+  //             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+  //             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+  //           </svg>
+  //           {location}
+  //         </p>
+  //       )}
         
-        {description && (
-          <p className="text-gray-700 mb-6 leading-relaxed">{description}</p>
-        )}
+  //       {description && (
+  //         <p className="text-gray-700 mb-6 leading-relaxed">{description}</p>
+  //       )}
         
-        {tags.length > 0 && (
-          <div className="flex flex-wrap gap-2">
-            {tags.map((tag, index) => (
-              <span
-                key={index}
-                className={`px-3 py-1 text-sm font-semibold rounded-full ${colors.tagBg} ${colors.tagText}`}
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-        )}
+  //       {tags.length > 0 && (
+  //         <div className="flex flex-wrap gap-2">
+  //           {tags.map((tag, index) => (
+  //             <span
+  //               key={index}
+  //               className={`px-3 py-1 text-sm font-semibold rounded-full ${colors.tagBg} ${colors.tagText}`}
+  //             >
+  //               {tag}
+  //             </span>
+  //           ))}
+  //         </div>
+  //       )}
         
-        {children}
-      </div>
-    );
-  }
+  //       {children}
+  //     </div>
+  //   );
+  // }
 
-  // Minimal variant - clean and simple
-  if (variant === 'minimal') {
-    return (
-      <div
-        className={`p-8 rounded-xl bg-white border border-gray-200 shadow-md hover:shadow-xl transition-all duration-300 ${className}`}
-        style={{ width: widthStyle, height: heightStyle }}
-      >
-        {period && (
-          <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3 block">
-            {period}
-          </span>
-        )}
+  // // Minimal variant - clean and simple
+  // if (variant === 'minimal') {
+  //   return (
+  //     <div
+  //       className={`p-8 rounded-xl bg-white border border-gray-200 shadow-md hover:shadow-xl transition-all duration-300 ${className}`}
+  //       style={{ width: widthStyle, height: heightStyle }}
+  //     >
+  //       {period && (
+  //         <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3 block">
+  //           {period}minimal 
+  //         </span>
+  //       )}
         
-        <h3 className="text-2xl font-bold mb-2 text-gray-900">{title}</h3>
+  //       <h3 className="text-2xl font-bold mb-2 text-gray-900">{title}</h3>
         
-        {subtitle && (
-          <p className="text-lg text-gray-600 mb-4">{subtitle}</p>
-        )}
+  //       {subtitle && (
+  //         <p className="text-lg text-gray-600 mb-4">{subtitle}</p>
+  //       )}
         
-        {description && (
-          <p className="text-gray-600 text-sm leading-relaxed mb-4">{description}</p>
-        )}
+  //       {description && (
+  //         <p className="text-gray-600 text-sm leading-relaxed mb-4">{description}</p>
+  //       )}
         
-        {tags.length > 0 && (
-          <div className="flex flex-wrap gap-2 mt-auto">
-            {tags.map((tag, index) => (
-              <span
-                key={index}
-                className="px-3 py-1 text-xs font-medium rounded-md bg-gray-100 text-gray-700"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-        )}
+  //       {tags.length > 0 && (
+  //         <div className="flex flex-wrap gap-2 mt-auto">
+  //           {tags.map((tag, index) => (
+  //             <span
+  //               key={index}
+  //               className="px-3 py-1 text-xs font-medium rounded-md bg-gray-100 text-gray-700"
+  //             >
+  //               {tag}
+  //             </span>
+  //           ))}
+  //         </div>
+  //       )}
         
-        {children}
-      </div>
-    );
-  }
+  //       {children}
+  //     </div>
+  //   );
+  // }
 
   // Default variant - balanced design
   return (
