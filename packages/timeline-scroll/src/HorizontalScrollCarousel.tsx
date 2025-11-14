@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import React, { useRef, ReactNode } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import React, { useRef, ReactNode } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 export interface CarouselItem {
   id: string | number;
@@ -14,15 +14,24 @@ export interface HorizontalTimelineCarouselProps {
    */
   items: CarouselItem[];
   /**
-   * Height of the scroll section in viewport heights
+   * Height of the scroll section in viewport heights or CSS value
+   * Use 'auto' to calculate based on number of items
    * @default 300
    */
-  scrollHeight?: number;
+  scrollHeight?: number | string | "auto";
+  /**
+   * Optional header content to display at top of sticky viewport
+   */
+  header?: ReactNode;
+  /**
+   * Optional footer content to display at bottom of sticky viewport
+   */
+  footer?: ReactNode;
   /**
    * Starting X position as percentage or "center" to center first card
    * @default "1%"
    */
-  startX?: string | 'center';
+  startX?: string | "center";
   /**
    * Additional offset to apply to startX (e.g., "100px", "10%", "-50px")
    * Useful for fine-tuning the center position
@@ -78,21 +87,25 @@ export interface HorizontalTimelineCarouselProps {
   cardsContainerClassName?: string;
 }
 
-export const HorizontalTimelineCarousel: React.FC<HorizontalTimelineCarouselProps> = ({
+export const HorizontalTimelineCarousel: React.FC<
+  HorizontalTimelineCarouselProps
+> = ({
   items,
   scrollHeight = 300,
-  startX = '1%',
-  startXOffset = '0px',
-  endX = '-95%',
+  header,
+  footer,
+  startX = "1%",
+  startXOffset = "0px",
+  endX = "-95%",
   cardGap = 1,
   sidePadding = 4,
   showLine = false,
-  lineColor = 'rgba(139, 92, 246, 0.3)',
+  lineColor = "rgba(139, 92, 246, 0.3)",
   showProgressBar = false,
-  progressBarColor = 'rgba(139, 92, 246, 0.8)',
-  sectionClassName = '',
-  containerClassName = '',
-  cardsContainerClassName = '',
+  progressBarColor = "rgba(139, 92, 246, 0.8)",
+  sectionClassName = "",
+  containerClassName = "",
+  cardsContainerClassName = "",
 }) => {
   const targetRef = useRef<HTMLDivElement>(null);
 
@@ -100,25 +113,39 @@ export const HorizontalTimelineCarousel: React.FC<HorizontalTimelineCarouselProp
     target: targetRef,
   });
 
-  const isCentered = startX === 'center';
-  
+  const isCentered = startX === "center";
+
   // For centering: use offset from center (50vw - half card width)
   // Average card width ~575px, so half is ~287px
   // Then apply user offset on top
-  const baseStartX = isCentered ? 'calc(50vw - 287px)' : startX;
-  const calculatedStartX = startXOffset !== '0px' ? `calc(${baseStartX} + ${startXOffset})` : baseStartX;
-  
+  const baseStartX = isCentered ? "calc(50vw - 287px)" : startX;
+  const calculatedStartX =
+    startXOffset !== "0px"
+      ? `calc(${baseStartX} + ${startXOffset})`
+      : baseStartX;
+
   const x = useTransform(scrollYProgress, [0, 1], [calculatedStartX, endX]);
 
   // Convert rem to pixels for inline styles (assuming 16px = 1rem)
   const gapPx = cardGap * 16;
   const paddingPx = sidePadding * 16;
 
+  // Auto-calculate scroll height based on items
+  // Formula: Each item needs enough scroll distance to move across the viewport
+  // Optimized formula: 100vh (for section) + (items.length - 1) * 20vh (reduced for smoother scrolling and earlier exit)
+  const calculatedScrollHeight =
+    scrollHeight === "auto" ? 100 + (items.length - 1) * 20 : scrollHeight;
+
+  const heightValue =
+    typeof calculatedScrollHeight === "string"
+      ? calculatedScrollHeight
+      : `${calculatedScrollHeight}vh`;
+
   return (
     <section
       ref={targetRef}
       className={`relative ${sectionClassName}`}
-      style={{ height: `${scrollHeight}vh`, position: 'relative' }}
+      style={{ height: heightValue, position: "relative" }}
     >
       {/* Progress Dots */}
       {showProgressBar && (
@@ -128,7 +155,7 @@ export const HorizontalTimelineCarousel: React.FC<HorizontalTimelineCarouselProp
             const opacity = useTransform(
               scrollYProgress,
               [dotProgress - 0.05, dotProgress, dotProgress + 0.05],
-              [0.2, 1, 0.2]
+              [0.2, 1, 0.2],
             );
             return (
               <motion.div
@@ -144,36 +171,57 @@ export const HorizontalTimelineCarousel: React.FC<HorizontalTimelineCarouselProp
         </div>
       )}
 
-      <div className={`sticky top-0 flex h-screen items-center overflow-hidden ${containerClassName}`}>
-        {/* Connecting Line */}
-        {showLine && (
-          <div
-            className="absolute top-1/2 left-0 right-0 h-0.5 -translate-y-1/2 pointer-events-none"
-            style={{
-              backgroundColor: lineColor,
-              zIndex: 0,
-            }}
-          />
-        )}
-
-        <motion.div
-          style={{ 
-            x,
-            gap: `${gapPx}px`,
-            paddingLeft: `${paddingPx}px`,
-            paddingRight: `${paddingPx}px`,
-          }}
-          className={`flex relative z-10 ${cardsContainerClassName}`}
-        >
-          {items.map((item) => (
-            <div key={item.id}>
-              {item.content}
+      <div className={`sticky top-0 overflow-hidden ${containerClassName}`} style={{ height: '100vh' }}>
+        <div className="flex flex-col justify-between h-full">
+          {/* Header - Fixed at top */}
+          {header && (
+            <div className="flex-shrink-0 w-full pt-24 pb-4">
+              <div className="container mx-auto px-6">
+                {header}
+              </div>
             </div>
-          ))}
-        </motion.div>
+          )}
+
+          {/* Cards Container - Takes remaining space, centered */}
+          <div className="flex-1 flex items-center justify-center relative overflow-hidden">
+            {/* Connecting Line */}
+            {showLine && (
+              <div
+                className="absolute top-1/2 left-0 right-0 h-0.5 -translate-y-1/2 pointer-events-none"
+                style={{
+                  backgroundColor: lineColor,
+                  zIndex: 0,
+                }}
+              />
+            )}
+
+            <motion.div
+              style={{
+                x,
+                gap: `${gapPx}px`,
+                paddingLeft: `${paddingPx}px`,
+                paddingRight: `${paddingPx}px`,
+              }}
+              className={`flex items-center relative z-10 ${cardsContainerClassName}`}
+            >
+              {items.map((item) => (
+                <div key={item.id}>{item.content}</div>
+              ))}
+            </motion.div>
+          </div>
+
+          {/* Footer - Fixed at bottom */}
+          {footer && (
+            <div className="flex-shrink-0 w-full pb-8 pointer-events-none">
+              <div className="container mx-auto px-6">
+                {footer}
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </section>
   );
 };
 
-HorizontalTimelineCarousel.displayName = 'HorizontalTimelineCarousel';
+HorizontalTimelineCarousel.displayName = "HorizontalTimelineCarousel";
