@@ -1,0 +1,41 @@
+{
+  "name": "@steding/storybook",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Component documentation and design system for Steding projects",
+  "scripts": {
+    "dev": "storybook dev -p 6006",
+    "build": "storybook build",
+    "preview": "serve storybook-static",
+    "lint": "biome check"
+  },
+  "dependencies": {
+    "@steding/timeline-scroll": "workspace:*",
+    "@steding/ui": "workspace:*",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.2.0",
+    "@steding/tsconfig": "workspace:*",
+    "@storybook/react-vite": "^10.0.7",
+    "@tailwindcss/postcss": "^4",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
+    "@vitejs/plugin-react": "^5.1.1",
+    "autoprefixer": "^10.4.20",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.23.24",
+    "lucide-react": "^0.546.0",
+    "next": "14",
+    "postcss": "^8.4.49",
+    "storybook": "^10.0.7",
+    "storybook-addon-next": "^1.8.0",
+    "tailwind-merge": "^3.3.1",
+    "tailwindcss": "^4",
+    "typescript": "^5",
+    "vite": "^6.0.1"
+  }
+}

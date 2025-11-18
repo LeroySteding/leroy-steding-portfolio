@@ -79,69 +79,65 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="relative py-24 bg-cyber-dark overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-px bg-gradient-to-r from-transparent via-neon-cyan to-transparent" />
-      
-      {/* Gradient orbs */}
-      <div className="absolute top-1/3 -left-48 w-96 h-96 bg-neon-cyan/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-1/3 -right-48 w-96 h-96 bg-neon-violet/10 rounded-full blur-3xl" />
+    <section id="contact" className="section relative bg-secondary-bg overflow-hidden">
+      {/* Subtle accent line */}
+      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-accent-secondary to-transparent" />
 
-      <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="container relative z-10 mx-auto px-8 lg:px-16">
         {/* Section header */}
-        <div className="text-center mb-16">
+        <div className="mb-20">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="text-4xl sm:text-5xl font-display font-bold mb-4"
+            className="font-display font-black mb-6"
           >
-            {t.contact.title} <span className="bg-gradient-to-r from-neon-cyan to-neon-violet bg-clip-text text-transparent">{t.contact.titleHighlight}</span>
+            {t.contact.title} <span className="text-gradient">{t.contact.titleHighlight}</span>
           </motion.h2>
           <motion.div
             initial={{ opacity: 0, scaleX: 0 }}
             whileInView={{ opacity: 1, scaleX: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
             viewport={{ once: true }}
-            className="w-24 h-1 bg-gradient-to-r from-neon-cyan to-neon-violet mx-auto rounded-full"
+            className="w-32 h-2 bg-accent-secondary rounded-full mb-8"
           />
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
-            className="mt-6 text-lg text-text-secondary max-w-2xl mx-auto"
+            className="text-xl text-text-secondary max-w-3xl"
           >
             {t.contact.subtitle}
           </motion.p>
         </div>
 
-        <div className="grid lg:grid-cols-5 gap-12">
+        <div className="grid lg:grid-cols-5 gap-16">
           {/* Contact Info */}
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
+            initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
-            className="lg:col-span-2 space-y-8"
+            className="lg:col-span-2 space-y-12"
           >
             <div>
-              <h3 className="text-2xl font-display font-bold mb-6 text-neon-cyan">
+              <h3 className="text-3xl font-display font-bold mb-8 text-accent-primary">
                 {t.contact.info.title}
               </h3>
               
-              <div className="space-y-4">
+              <div className="space-y-6">
                 {contactInfo.map((item) => {
                   const Icon = item.icon;
                   const content = (
-                    <div className="flex items-start gap-4 p-4 rounded-lg bg-cyber-darker border border-cyber-gray-light glass hover:border-neon-cyan/50 transition-all duration-300">
-                      <div className="p-3 rounded-lg bg-neon-cyan/10 border border-neon-cyan/20">
-                        <Icon className="w-5 h-5 text-neon-cyan" />
+                    <div className="card p-6 flex items-start gap-6">
+                      <div className="p-4 rounded-xl bg-accent-primary/10">
+                        <Icon className="w-7 h-7 text-accent-primary" />
                       </div>
                       <div>
-                        <div className="text-sm text-text-muted mb-1">{item.label}</div>
-                        <div className="text-text-primary font-semibold">{item.value}</div>
+                        <div className="text-sm text-text-muted mb-2 font-semibold uppercase tracking-wide">{item.label}</div>
+                        <div className="text-text-primary font-bold text-lg">{item.value}</div>
                       </div>
                     </div>
                   );
@@ -158,7 +154,7 @@ export default function Contact() {
             </div>
 
             <div>
-              <h3 className="text-2xl font-display font-bold mb-6 text-neon-violet">
+              <h3 className="text-3xl font-display font-bold mb-8 text-accent-secondary">
                 Social Links
               </h3>
               
@@ -171,10 +167,10 @@ export default function Contact() {
                       href={social.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-4 rounded-lg bg-cyber-darker border border-cyber-gray-light glass hover:border-neon-violet/50 hover:scale-110 transition-all duration-300 group"
+                      className="card p-5 hover:scale-110 transition-all duration-300 group"
                       aria-label={social.label}
                     >
-                      <Icon className="w-6 h-6 text-text-secondary group-hover:text-neon-violet transition-colors duration-300" />
+                      <Icon className="w-8 h-8 text-text-secondary group-hover:text-accent-secondary transition-colors duration-300" />
                     </a>
                   );
                 })}
@@ -184,16 +180,16 @@ export default function Contact() {
 
           {/* Contact Form */}
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
+            initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
             viewport={{ once: true }}
             className="lg:col-span-3"
           >
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-8">
               <div className="grid sm:grid-cols-2 gap-6">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-semibold mb-2 text-text-primary">
+                  <label htmlFor="name" className="block text-base font-bold mb-3 text-text-primary">
                     Your Name
                   </label>
                   <input
@@ -203,13 +199,13 @@ export default function Contact() {
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 rounded-lg bg-cyber-darker border border-cyber-gray-light text-text-primary placeholder:text-text-muted focus:outline-none focus:border-neon-cyan transition-colors duration-300"
+                    className="w-full px-6 py-4 text-lg rounded-lg bg-tertiary-bg border-2 border-surface text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent-primary transition-colors duration-300"
                     placeholder={t.contact.form.namePlaceholder}
                   />
                 </div>
                 
                 <div>
-                  <label htmlFor="email" className="block text-sm font-semibold mb-2 text-text-primary">
+                  <label htmlFor="email" className="block text-base font-bold mb-3 text-text-primary">
                     Your Email
                   </label>
                   <input
@@ -219,14 +215,14 @@ export default function Contact() {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 rounded-lg bg-cyber-darker border border-cyber-gray-light text-text-primary placeholder:text-text-muted focus:outline-none focus:border-neon-cyan transition-colors duration-300"
+                    className="w-full px-6 py-4 text-lg rounded-lg bg-tertiary-bg border-2 border-surface text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent-primary transition-colors duration-300"
                     placeholder={t.contact.form.emailPlaceholder}
                   />
                 </div>
               </div>
 
               <div>
-                <label htmlFor="subject" className="block text-sm font-semibold mb-2 text-text-primary">
+                <label htmlFor="subject" className="block text-base font-bold mb-3 text-text-primary">
                   Subject
                 </label>
                 <input
@@ -236,13 +232,13 @@ export default function Contact() {
                   value={formData.subject}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 rounded-lg bg-cyber-darker border border-cyber-gray-light text-text-primary placeholder:text-text-muted focus:outline-none focus:border-neon-cyan transition-colors duration-300"
+                  className="w-full px-6 py-4 text-lg rounded-lg bg-tertiary-bg border-2 border-surface text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent-primary transition-colors duration-300"
                   placeholder={t.contact.form.subjectPlaceholder}
                 />
               </div>
 
               <div>
-                <label htmlFor="message" className="block text-sm font-semibold mb-2 text-text-primary">
+                <label htmlFor="message" className="block text-base font-bold mb-3 text-text-primary">
                   Message
                 </label>
                 <textarea
@@ -252,7 +248,7 @@ export default function Contact() {
                   onChange={handleChange}
                   required
                   rows={6}
-                  className="w-full px-4 py-3 rounded-lg bg-cyber-darker border border-cyber-gray-light text-text-primary placeholder:text-text-muted focus:outline-none focus:border-neon-cyan transition-colors duration-300 resize-none"
+                  className="w-full px-6 py-4 text-lg rounded-lg bg-tertiary-bg border-2 border-surface text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent-primary transition-colors duration-300 resize-none"
                   placeholder={t.contact.form.messagePlaceholder}
                 />
               </div>
@@ -260,30 +256,30 @@ export default function Contact() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full sm:w-auto px-8 py-4 bg-neon-cyan text-cyber-black font-semibold rounded-lg hover:bg-neon-cyan-dark transition-all duration-300 neon-border-cyan hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center gap-2"
+                className="btn-primary w-full sm:w-auto disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center gap-3"
               >
                 {isSubmitting ? (
                   <>
-                    <div className="w-5 h-5 border-2 border-cyber-black border-t-transparent rounded-full animate-spin" />
+                    <div className="w-6 h-6 border-3 border-primary-bg border-t-transparent rounded-full animate-spin" />
                     Sending...
                   </>
                 ) : (
                   <>
                     Send Message
-                    <Send className="w-5 h-5" />
+                    <Send className="w-6 h-6" />
                   </>
                 )}
               </button>
 
               {/* Status messages */}
               {submitStatus === "success" && (
-                <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/50 text-green-500">
+                <div className="p-6 rounded-lg bg-green-500/10 border-2 border-green-500/50 text-green-500 font-bold text-lg">
                   {t.contact.form.success}
                 </div>
               )}
               
               {submitStatus === "error" && (
-                <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/50 text-red-500">
+                <div className="p-6 rounded-lg bg-red-500/10 border-2 border-red-500/50 text-red-500 font-bold text-lg">
                   {t.contact.form.error}
                 </div>
               )}

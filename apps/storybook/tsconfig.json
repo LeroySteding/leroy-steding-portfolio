@@ -1,0 +1,19 @@
+{
+  "extends": "@steding/tsconfig/react-library.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./stories/*"],
+      "@steding/ui": ["../../packages/ui/src"],
+      "@steding/timeline-scroll": ["../../packages/timeline-scroll/src"]
+    }
+  },
+  "include": [
+    "stories",
+    ".storybook",
+    "../../packages/*/src",
+    "../../apps/portfolio/components"
+  ],
+  "exclude": ["node_modules", "dist", "storybook-static"]
+}

@@ -24,14 +24,14 @@ export default function ExperienceDetailPage() {
 
   if (!experience) {
     return (
-      <div className="min-h-screen bg-cyber-black flex items-center justify-center">
+      <div className="min-h-screen bg-primary-bg flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-4xl font-display font-bold text-text-primary mb-4">
             {t.experience.detail.notFound}
           </h1>
           <Link
             href="/#experience"
-            className="inline-flex items-center gap-2 text-neon-cyan hover:text-neon-violet transition-colors"
+            className="inline-flex items-center gap-2 text-accent-primary hover:text-accent-hover transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
             {t.experience.detail.backToExperience}
@@ -49,13 +49,13 @@ export default function ExperienceDetailPage() {
         url={pageUrl}
         keywords={experience?.technologies || []}
       />
-      <div className="min-h-screen bg-cyber-black">
+      <div className="min-h-screen bg-primary-bg">
       {/* Hero Section */}
-      <section className="relative py-32 bg-cyber-darker overflow-hidden">
+      <section className="relative py-32 bg-secondary-bg overflow-hidden">
         {/* Background decoration */}
-        <div className="absolute top-0 left-0 w-full h-full opacity-30">
-          <div className={`absolute top-1/4 -left-48 w-96 h-96 bg-neon-${experience.color}/20 rounded-full blur-3xl`} />
-          <div className={`absolute bottom-1/4 -right-48 w-96 h-96 bg-neon-${experience.color === 'cyan' ? 'violet' : 'cyan'}/20 rounded-full blur-3xl`} />
+        <div className="absolute top-0 left-0 w-full h-full opacity-20">
+          <div className="absolute top-1/4 -left-48 w-96 h-96 bg-accent-primary/30 rounded-full blur-3xl" />
+          <div className="absolute bottom-1/4 -right-48 w-96 h-96 bg-accent-secondary/30 rounded-full blur-3xl" />
         </div>
 
         <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
@@ -67,7 +67,7 @@ export default function ExperienceDetailPage() {
           >
             <Link
               href="/#experience"
-              className="inline-flex items-center gap-2 text-text-secondary hover:text-neon-cyan transition-colors mb-8"
+              className="inline-flex items-center gap-2 text-text-secondary hover:text-accent-primary transition-colors mb-8 font-semibold"
             >
               <ArrowLeft className="w-4 h-4" />
               {t.experience.detail.backToExperience}
@@ -84,8 +84,8 @@ export default function ExperienceDetailPage() {
             >
               {/* Company Logo */}
               {experience.companyLogo && (
-                <div className="mb-8">
-                  <div className="inline-block p-4 rounded-2xl bg-white/5 backdrop-blur-sm border border-cyber-gray-light">
+                <div className="mb-10">
+                  <div className="inline-block p-6 rounded-2xl bg-surface/50 backdrop-blur-sm border-2 border-surface-light">
                     {experience.companyLogo.startsWith('/') ? (
                       <Image
                         src={experience.companyLogo}
@@ -104,32 +104,32 @@ export default function ExperienceDetailPage() {
                 </div>
               )}
 
-              <div className="flex flex-wrap items-center gap-4 mb-4">
-                <div className="flex items-center gap-2 text-text-secondary">
-                  <Calendar className="w-4 h-4" />
-                  <span>{experience.period}</span>
+              <div className="flex flex-wrap items-center gap-4 mb-6">
+                <div className="flex items-center gap-2 text-text-secondary font-semibold">
+                  <Calendar className="w-5 h-5" />
+                  <span className="text-base">{experience.period}</span>
                 </div>
-                <div className="flex items-center gap-2 text-text-secondary">
-                  <MapPin className="w-4 h-4" />
-                  <span>{experience.location}</span>
+                <div className="flex items-center gap-2 text-text-secondary font-semibold">
+                  <MapPin className="w-5 h-5" />
+                  <span className="text-base">{experience.location}</span>
                 </div>
                 {experience.teamSize && (
-                  <div className="flex items-center gap-2 text-text-secondary">
-                    <Users className="w-4 h-4" />
-                    <span>Team: {experience.teamSize}</span>
+                  <div className="flex items-center gap-2 text-text-secondary font-semibold">
+                    <Users className="w-5 h-5" />
+                    <span className="text-base">Team: {experience.teamSize}</span>
                   </div>
                 )}
               </div>
               
-              <h1 className="text-5xl sm:text-6xl font-display font-bold mb-4">
+              <h1 className="text-6xl sm:text-7xl lg:text-8xl font-display font-black mb-6 leading-none">
                 {experience.title}
               </h1>
               
-              <h2 className={`text-3xl font-display font-semibold mb-6 text-neon-${experience.color}`}>
+              <h2 className="text-4xl sm:text-5xl font-display font-bold mb-8 text-accent-primary">
                 {experience.company}
               </h2>
               
-              <p className="text-xl text-text-secondary leading-relaxed">
+              <p className="text-xl sm:text-2xl text-text-secondary leading-relaxed max-w-4xl">
                 {experience.description}
               </p>
             </motion.div>
@@ -147,17 +147,17 @@ export default function ExperienceDetailPage() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
-              className="mb-16"
+              className="mb-20"
             >
-              <h2 className="text-3xl font-display font-bold mb-6 flex items-center gap-3">
-                <Briefcase className={`w-8 h-8 text-neon-${experience.color}`} />
+              <h2 className="text-4xl md:text-5xl font-display font-black mb-8 flex items-center gap-4">
+                <Briefcase className="w-10 h-10 text-accent-primary" />
                 {t.experience.detail.technologies}
               </h2>
               <div className="flex flex-wrap gap-3">
                 {experience.technologies.map((tech) => (
                   <span
                     key={tech}
-                    className={`px-4 py-2 text-sm font-semibold rounded-lg bg-cyber-darker border border-cyber-gray-light text-text-secondary hover:border-neon-${experience.color} hover:text-neon-${experience.color} transition-all duration-300`}
+                    className="px-5 py-2.5 text-base font-bold rounded-xl bg-surface border-2 border-surface-light text-text-secondary hover:border-accent-primary hover:text-accent-primary hover:bg-surface-light transition-all duration-300"
                   >
                     {tech}
                   </span>
@@ -171,12 +171,12 @@ export default function ExperienceDetailPage() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
-              className="mb-16"
+              className="mb-20"
             >
-              <h2 className="text-3xl font-display font-bold mb-6">{t.experience.detail.aboutRole}</h2>
+              <h2 className="text-4xl md:text-5xl font-display font-black mb-8">{t.experience.detail.aboutRole}</h2>
               <div className="prose prose-invert max-w-none">
                 {experience.longDescription.split('\n\n').map((paragraph, index) => (
-                  <p key={index} className="text-text-secondary leading-relaxed mb-4">
+                  <p key={index} className="text-lg text-text-secondary leading-relaxed mb-6">
                     {paragraph}
                   </p>
                 ))}
@@ -190,20 +190,20 @@ export default function ExperienceDetailPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
                 viewport={{ once: true }}
-                className="mb-16"
+                className="mb-20"
               >
-                <h2 className="text-3xl font-display font-bold mb-6 flex items-center gap-3">
-                  <Target className={`w-8 h-8 text-neon-${experience.color}`} />
+                <h2 className="text-4xl md:text-5xl font-display font-black mb-8 flex items-center gap-4">
+                  <Target className="w-10 h-10 text-accent-primary" />
                   {t.experience.detail.responsibilities}
                 </h2>
                 <ul className="space-y-4">
                   {experience.responsibilities.map((responsibility, index) => (
                     <li
                       key={index}
-                      className="flex gap-4 p-4 rounded-lg bg-cyber-darker border border-cyber-gray-light"
+                      className="card flex gap-4 p-6"
                     >
-                      <span className={`text-neon-${experience.color} font-bold text-xl`}>✓</span>
-                      <span className="text-text-secondary">{responsibility}</span>
+                      <span className="text-accent-primary font-bold text-2xl">✓</span>
+                      <span className="text-text-secondary text-base leading-relaxed">{responsibility}</span>
                     </li>
                   ))}
                 </ul>
@@ -217,17 +217,17 @@ export default function ExperienceDetailPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
                 viewport={{ once: true }}
-                className="mb-16"
+                className="mb-20"
               >
-                <h2 className="text-3xl font-display font-bold mb-6">Highlights</h2>
-                <div className="grid sm:grid-cols-2 gap-4">
+                <h2 className="text-4xl md:text-5xl font-display font-black mb-8">Highlights</h2>
+                <div className="grid sm:grid-cols-2 gap-6">
                   {experience.highlights.map((highlight, index) => (
                     <div
                       key={index}
-                      className={`p-6 rounded-xl bg-gradient-to-br from-neon-${experience.color}/10 to-neon-${experience.color === 'cyan' ? 'violet' : 'cyan'}/10 border border-cyber-gray-light hover:border-neon-${experience.color}/50 transition-all duration-300`}
+                      className="card p-8 hover:border-accent-primary/50 transition-all duration-300"
                     >
-                      <div className="text-3xl mb-2">⭐</div>
-                      <p className="text-text-secondary">{highlight}</p>
+                      <div className="text-4xl mb-4">⭐</div>
+                      <p className="text-text-secondary text-base leading-relaxed">{highlight}</p>
                     </div>
                   ))}
                 </div>
@@ -241,20 +241,20 @@ export default function ExperienceDetailPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
                 viewport={{ once: true }}
-                className="mb-16"
+                className="mb-20"
               >
-                <h2 className="text-3xl font-display font-bold mb-6 flex items-center gap-3">
-                  <TrendingUp className={`w-8 h-8 text-neon-${experience.color}`} />
+                <h2 className="text-4xl md:text-5xl font-display font-black mb-8 flex items-center gap-4">
+                  <TrendingUp className="w-10 h-10 text-accent-primary" />
                   {t.experience.detail.achievements}
                 </h2>
                 <ul className="space-y-4">
                   {experience.achievements.map((achievement, index) => (
                     <li
                       key={index}
-                      className="flex gap-4 p-4 rounded-lg bg-cyber-darker border border-cyber-gray-light"
+                      className="card flex gap-4 p-6"
                     >
-                      <span className={`text-neon-${experience.color} font-bold text-xl`}>🏆</span>
-                      <span className="text-text-secondary">{achievement}</span>
+                      <span className="text-accent-secondary font-bold text-2xl">🏆</span>
+                      <span className="text-text-secondary text-base leading-relaxed">{achievement}</span>
                     </li>
                   ))}
                 </ul>
@@ -268,17 +268,17 @@ export default function ExperienceDetailPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
                 viewport={{ once: true }}
-                className="mb-16"
+                className="mb-20"
               >
-                <h2 className="text-3xl font-display font-bold mb-6">{t.experience.detail.impact}</h2>
+                <h2 className="text-4xl md:text-5xl font-display font-black mb-8">{t.experience.detail.impact}</h2>
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                   {experience.impact.map((item, index) => (
                     <div
                       key={index}
-                      className={`p-6 rounded-xl bg-gradient-to-br from-neon-${experience.color}/10 to-neon-${experience.color === 'cyan' ? 'violet' : 'cyan'}/10 border border-cyber-gray-light hover:border-neon-${experience.color}/50 transition-all duration-300`}
+                      className="card p-8 hover:border-accent-primary/50 transition-all duration-300"
                     >
-                      <div className="text-4xl mb-2">📈</div>
-                      <p className="text-text-secondary">{item}</p>
+                      <div className="text-5xl mb-4">📈</div>
+                      <p className="text-text-secondary text-base leading-relaxed">{item}</p>
                     </div>
                   ))}
                 </div>
@@ -291,17 +291,17 @@ export default function ExperienceDetailPage() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
-              className="text-center p-8 rounded-xl bg-gradient-to-r from-neon-violet/10 to-neon-cyan/10 border border-cyber-gray-light"
+              className="card text-center p-12"
             >
-              <h3 className="text-2xl font-display font-bold mb-4">
+              <h3 className="text-3xl md:text-4xl font-display font-black mb-6">
                 {t.experience.detail.cta.title}
               </h3>
-              <p className="text-text-secondary mb-6">
+              <p className="text-text-secondary text-lg mb-8 max-w-2xl mx-auto">
                 {t.experience.detail.cta.subtitle}
               </p>
               <Link
                 href="/#contact"
-                className={`inline-flex items-center gap-2 px-8 py-4 bg-neon-${experience.color} text-cyber-black font-semibold rounded-lg hover:scale-105 transition-transform duration-200`}
+                className="btn-primary inline-flex items-center gap-3"
               >
                 {t.experience.detail.cta.button}
               </Link>

@@ -16,72 +16,67 @@ export default function Projects() {
   const projects = allProjects.filter(p => p.featured);
 
   return (
-    <section id="projects" className="relative py-24 bg-cyber-black overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-px bg-gradient-to-r from-transparent via-neon-violet to-transparent" />
-      
-      {/* Gradient orbs */}
-      <div className="absolute top-1/4 -left-48 w-96 h-96 bg-neon-violet/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-1/4 -right-48 w-96 h-96 bg-neon-cyan/10 rounded-full blur-3xl" />
+    <section id="projects" className="section relative bg-primary-bg overflow-hidden">
+      {/* Subtle accent line */}
+      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-accent-primary to-transparent" />
 
-      <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="container relative z-10 mx-auto px-8 lg:px-16">
         {/* Section header */}
-        <div className="text-center mb-16">
+        <div className="mb-20">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="text-4xl sm:text-5xl font-display font-bold mb-4"
+            className="font-display font-black mb-6"
           >
-            {t.projects.title} <span className="bg-gradient-to-r from-neon-violet to-neon-cyan bg-clip-text text-transparent">{t.projects.titleHighlight}</span>
+            {t.projects.title} <span className="text-gradient">{t.projects.titleHighlight}</span>
           </motion.h2>
           <motion.div
             initial={{ opacity: 0, scaleX: 0 }}
             whileInView={{ opacity: 1, scaleX: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
             viewport={{ once: true }}
-            className="w-24 h-1 bg-gradient-to-r from-neon-violet to-neon-cyan mx-auto rounded-full"
+            className="w-32 h-2 bg-accent-primary rounded-full"
           />
         </div>
 
         {/* Projects grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
           {projects.map((project, index) => (
             <motion.div
               key={project.id}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
               viewport={{ once: true }}
-              whileHover={{ y: -10 }}
-              className="group relative rounded-xl bg-cyber-darker border border-cyber-gray-light glass overflow-hidden hover:border-neon-cyan/50 transition-all duration-300"
+              className="card group overflow-hidden"
             >
               {/* Image */}
-              <div className="relative h-48 bg-cyber-gray overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-neon-cyan/20 to-neon-violet/20" />
+              <div className="relative h-64 bg-secondary-bg overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-accent-primary/10 to-accent-secondary/10" />
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-6xl opacity-50">🚀</span>
+                  <span className="text-8xl opacity-40">🚀</span>
                 </div>
                 
                 {/* Overlay on hover */}
-                <div className="absolute inset-0 bg-cyber-black/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
+                <div className="absolute inset-0 bg-primary-bg/95 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
                   <Link
                     href={`/projects/${project.id}`}
-                    className="p-3 rounded-lg bg-neon-cyan text-cyber-black hover:scale-110 transition-transform duration-200"
+                    className="p-4 rounded-lg bg-accent-primary text-primary-bg hover:scale-110 transition-transform duration-200 font-bold"
                     aria-label={t.projects.viewLive}
                   >
-                    <ArrowRight className="w-5 h-5" />
+                    <ArrowRight className="w-6 h-6" />
                   </Link>
                   {project.liveUrl && (
                     <Link
                       href={project.liveUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-3 rounded-lg bg-neon-violet text-white hover:scale-110 transition-transform duration-200"
+                      className="p-4 rounded-lg bg-accent-secondary text-primary-bg hover:scale-110 transition-transform duration-200 font-bold"
                       aria-label={t.projects.viewSite}
                     >
-                      <ExternalLink className="w-5 h-5" />
+                      <ExternalLink className="w-6 h-6" />
                     </Link>
                   )}
                   {project.githubUrl && (
@@ -89,10 +84,10 @@ export default function Projects() {
                       href={project.githubUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-3 rounded-lg bg-cyber-gray text-white hover:scale-110 transition-transform duration-200"
+                      className="p-4 rounded-lg bg-surface text-text-primary hover:scale-110 transition-transform duration-200 font-bold"
                       aria-label={t.projects.viewGithub}
                     >
-                      <Github className="w-5 h-5" />
+                      <Github className="w-6 h-6" />
                     </Link>
                   )}
                 </div>
@@ -100,42 +95,42 @@ export default function Projects() {
 
               {/* Content */}
               <Link href={`/projects/${project.id}`}>
-                <div className="p-6">
-                  <h3 className="text-xl font-display font-bold mb-2 text-text-primary group-hover:text-neon-cyan transition-colors duration-300">
+                <div className="p-8">
+                  <h3 className="text-2xl font-display font-bold mb-3 text-text-primary group-hover:text-accent-primary transition-colors duration-300">
                     {project.title}
                   </h3>
                   
-                  <p className="text-text-secondary text-sm leading-relaxed mb-4">
+                  <p className="text-text-secondary text-base leading-relaxed mb-6">
                     {project.description}
                   </p>
                   
                   {/* Technologies */}
-                  <div className="flex flex-wrap gap-2 mb-4">
+                  <div className="flex flex-wrap gap-2 mb-6">
                     {project.technologies.slice(0, 3).map((tech) => (
                       <span
                         key={tech}
-                        className="px-3 py-1 text-xs font-semibold rounded-full bg-cyber-gray text-text-secondary border border-cyber-gray-light group-hover:border-neon-cyan/30 group-hover:text-neon-cyan transition-all duration-300"
+                        className="px-4 py-2 text-sm font-bold rounded-lg bg-surface text-text-secondary border-2 border-surface group-hover:border-accent-primary group-hover:text-accent-primary transition-all duration-300"
                       >
                         {tech}
                       </span>
                     ))}
                     {project.technologies.length > 3 && (
-                      <span className="px-3 py-1 text-xs font-semibold rounded-full bg-cyber-gray text-text-secondary border border-cyber-gray-light">
-                        +{project.technologies.length - 3} more
+                      <span className="px-4 py-2 text-sm font-bold rounded-lg bg-surface text-text-muted border-2 border-surface">
+                        +{project.technologies.length - 3}
                       </span>
                     )}
                   </div>
 
                   {/* View Details Link */}
-                  <div className="flex items-center gap-2 text-neon-cyan text-sm font-semibold">
+                  <div className="flex items-center gap-2 text-accent-primary text-base font-bold">
                     {t.projects.viewDetails}
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
+                    <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform duration-200" />
                   </div>
                 </div>
               </Link>
 
               {/* Category badge */}
-              <div className="absolute top-4 right-4 px-3 py-1 rounded-full bg-neon-cyan/20 border border-neon-cyan text-neon-cyan text-xs font-semibold backdrop-blur-sm">
+              <div className="absolute top-6 right-6 px-4 py-2 rounded-lg bg-accent-primary text-primary-bg text-sm font-bold">
                 {project.category === 'product' ? t.projects.categories.product : project.category === 'client' ? t.projects.categories.client : t.projects.categories.internal}
               </div>
             </motion.div>
@@ -146,22 +141,22 @@ export default function Projects() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
           viewport={{ once: true }}
-          className="mt-16 text-center"
+          className="text-center"
         >
-          <p className="text-text-secondary mb-6">
+          <p className="text-xl text-text-secondary mb-8 font-medium">
             {t.projects.moreProjects.text}
           </p>
           <Link
             href="https://github.com/leroysteding"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-8 py-4 text-lg font-semibold text-text-primary bg-cyber-gray hover:bg-cyber-gray-light border-2 border-neon-violet rounded-lg transition-all duration-300 hover:scale-105 neon-border-violet"
+            className="btn-secondary inline-flex items-center gap-3"
           >
-            <Github className="w-5 h-5" />
+            <Github className="w-6 h-6" />
             {t.projects.moreProjects.button}
-            <ExternalLink className="w-4 h-4" />
+            <ExternalLink className="w-5 h-5" />
           </Link>
         </motion.div>
       </div>

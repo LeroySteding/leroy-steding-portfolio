@@ -37,31 +37,31 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="bg-cyber-darker border-t border-cyber-gray-light">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+    <footer className="bg-tertiary-bg border-t-2 border-surface">
+      <div className="container mx-auto px-8 lg:px-16 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
           {/* Branding */}
-          <div className="space-y-4">
-            <h3 className="text-2xl font-display font-bold bg-gradient-to-r from-neon-cyan to-neon-violet bg-clip-text text-transparent">
+          <div className="space-y-6">
+            <h3 className="text-3xl font-display font-black text-gradient">
               Leroy Steding
             </h3>
-            <p className="text-text-secondary text-sm leading-relaxed">
+            <p className="text-text-secondary text-lg leading-relaxed font-medium">
               Full-Stack Developer & AI Automation Architect building scalable
               AI-driven web platforms and digital automation solutions.
             </p>
           </div>
 
           {/* Quick Links */}
-          <div className="space-y-4">
-            <h4 className="text-lg font-display font-semibold text-neon-cyan">
+          <div className="space-y-6">
+            <h4 className="text-2xl font-display font-bold text-accent-primary">
               {t.nav.about === "Over Mij" ? "Snelle Links" : "Quick Links"}
             </h4>
-            <ul className="space-y-2">
+            <ul className="space-y-3">
               {footerLinks.map((link) => (
                 <li key={link.name}>
                   <Link
                     href={link.href}
-                    className="text-text-secondary hover:text-neon-cyan transition-colors duration-200 text-sm"
+                    className="text-text-secondary hover:text-accent-primary transition-colors duration-200 text-base font-semibold"
                   >
                     {link.name}
                   </Link>
@@ -71,8 +71,8 @@ export default function Footer() {
           </div>
 
           {/* Social Links */}
-          <div className="space-y-4">
-            <h4 className="text-lg font-display font-semibold text-neon-violet">
+          <div className="space-y-6">
+            <h4 className="text-2xl font-display font-bold text-accent-secondary">
               {t.nav.about === "Over Mij" ? "Verbinden" : "Connect"}
             </h4>
             <div className="flex space-x-4">
@@ -84,10 +84,10 @@ export default function Footer() {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-3 rounded-lg bg-cyber-gray hover:bg-cyber-gray-light transition-all duration-200 group neon-border-cyan hover:scale-110"
+                    className="card p-4 hover:scale-110 transition-all duration-200 group"
                     aria-label={social.name}
                   >
-                    <Icon className="w-5 h-5 text-text-secondary group-hover:text-neon-cyan transition-colors duration-200" />
+                    <Icon className="w-7 h-7 text-text-secondary group-hover:text-accent-primary transition-colors duration-200" />
                   </a>
                 );
               })}
@@ -96,8 +96,8 @@ export default function Footer() {
         </div>
 
         {/* Copyright */}
-        <div className="pt-8 border-t border-cyber-gray-light">
-          <p className="text-center text-text-muted text-sm">
+        <div className="pt-8 border-t-2 border-surface">
+          <p className="text-center text-text-muted text-base font-semibold">
             © {currentYear} Leroy Steding — {t.nav.about === "Over Mij" ? "Alle rechten voorbehouden" : "All rights reserved"}
           </p>
         </div>

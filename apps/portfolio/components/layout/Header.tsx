@@ -45,32 +45,32 @@ export default function Header() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-cyber-dark/90 backdrop-blur-md border-b border-cyber-gray-light"
+          ? "bg-primary-bg/95 backdrop-blur-md border-b-2 border-surface"
           : "bg-transparent"
       }`}
     >
-      <nav className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 md:h-20">
+      <nav className="container mx-auto px-8 lg:px-16">
+        <div className="flex items-center justify-between h-20 md:h-24">
           {/* Logo */}
           <Link
             href="/"
             className="flex items-center space-x-2 group"
           >
-            <span className="text-2xl md:text-3xl font-display font-bold bg-gradient-to-r from-neon-cyan to-neon-violet bg-clip-text text-transparent group-hover:animate-glow-pulse transition-all">
+            <span className="text-3xl md:text-4xl font-display font-black text-gradient transition-all">
               LS
             </span>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-10">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
-                className="text-text-secondary hover:text-neon-cyan transition-colors duration-200 font-medium relative group"
+                className="text-text-secondary hover:text-accent-primary transition-colors duration-200 font-bold text-lg relative group"
               >
                 {item.name}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-neon-cyan transition-all duration-300 group-hover:w-full" />
+                <span className="absolute -bottom-1 left-0 w-0 h-1 bg-accent-primary transition-all duration-300 group-hover:w-full rounded-full" />
               </Link>
             ))}
           </div>
@@ -84,26 +84,26 @@ export default function Header() {
 
             <button
               onClick={toggleTheme}
-              className="p-2 rounded-lg bg-cyber-gray hover:bg-cyber-gray-light transition-colors duration-200 neon-border-cyan"
+              className="p-3 rounded-lg bg-surface hover:bg-accent-primary hover:text-primary-bg transition-all duration-200 border-2 border-surface hover:border-accent-primary"
               aria-label={t.nav.toggleTheme}
             >
               {theme === "dark" ? (
-                <Sun className="w-5 h-5 text-neon-cyan" />
+                <Sun className="w-6 h-6 text-accent-primary" />
               ) : (
-                <Moon className="w-5 h-5 text-neon-violet" />
+                <Moon className="w-6 h-6 text-accent-secondary" />
               )}
             </button>
 
             {/* Mobile menu button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden p-2 rounded-lg bg-cyber-gray hover:bg-cyber-gray-light transition-colors duration-200"
+              className="md:hidden p-3 rounded-lg bg-surface hover:bg-accent-primary hover:text-primary-bg transition-all duration-200 border-2 border-surface hover:border-accent-primary"
               aria-label={t.nav.toggleMenu}
             >
               {isMobileMenuOpen ? (
-                <X className="w-6 h-6 text-neon-cyan" />
+                <X className="w-6 h-6" />
               ) : (
-                <Menu className="w-6 h-6 text-neon-cyan" />
+                <Menu className="w-6 h-6" />
               )}
             </button>
           </div>
@@ -111,19 +111,19 @@ export default function Header() {
 
         {/* Mobile Navigation */}
         {isMobileMenuOpen && (
-          <div className="md:hidden py-4 space-y-2 border-t border-cyber-gray-light">
+          <div className="md:hidden py-6 space-y-3 border-t-2 border-surface">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="block px-4 py-2 text-text-secondary hover:text-neon-cyan hover:bg-cyber-gray rounded-lg transition-all duration-200"
+                className="block px-6 py-3 text-lg font-bold text-text-secondary hover:text-accent-primary hover:bg-surface rounded-lg transition-all duration-200"
               >
                 {item.name}
               </Link>
             ))}
             {/* Language Switcher - Mobile */}
-            <div className="px-4 pt-4 border-t border-cyber-gray-light">
+            <div className="px-6 pt-4 border-t-2 border-surface">
               <LanguageSwitcher />
             </div>
           </div>

@@ -23,14 +23,14 @@ export default function ProjectDetailPage() {
 
   if (!project) {
     return (
-      <div className="min-h-screen bg-cyber-black flex items-center justify-center">
+      <div className="min-h-screen bg-primary-bg flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-4xl font-display font-bold text-text-primary mb-4">
             {t.projects.detail.notFound}
           </h1>
           <Link
             href="/#projects"
-            className="inline-flex items-center gap-2 text-neon-cyan hover:text-neon-violet transition-colors"
+            className="inline-flex items-center gap-2 text-accent-primary hover:text-accent-hover transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
             {t.projects.detail.backToProjects}
@@ -48,13 +48,13 @@ export default function ProjectDetailPage() {
         url={pageUrl}
         keywords={project?.technologies || []}
       />
-      <div className="min-h-screen bg-cyber-black">
+      <div className="min-h-screen bg-primary-bg">
       {/* Hero Section */}
-      <section className="relative py-32 bg-cyber-darker overflow-hidden">
+      <section className="relative py-32 bg-secondary-bg overflow-hidden">
         {/* Background decoration */}
-        <div className="absolute top-0 left-0 w-full h-full opacity-30">
-          <div className="absolute top-1/4 -left-48 w-96 h-96 bg-neon-violet/20 rounded-full blur-3xl" />
-          <div className="absolute bottom-1/4 -right-48 w-96 h-96 bg-neon-cyan/20 rounded-full blur-3xl" />
+        <div className="absolute top-0 left-0 w-full h-full opacity-20">
+          <div className="absolute top-1/4 -left-48 w-96 h-96 bg-accent-primary/30 rounded-full blur-3xl" />
+          <div className="absolute bottom-1/4 -right-48 w-96 h-96 bg-accent-secondary/30 rounded-full blur-3xl" />
         </div>
 
         <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
@@ -66,7 +66,7 @@ export default function ProjectDetailPage() {
           >
             <Link
               href="/#projects"
-              className="inline-flex items-center gap-2 text-text-secondary hover:text-neon-cyan transition-colors mb-8"
+              className="inline-flex items-center gap-2 text-text-secondary hover:text-accent-primary transition-colors mb-8 font-semibold"
             >
               <ArrowLeft className="w-4 h-4" />
               {t.projects.detail.backToProjects}
@@ -81,21 +81,21 @@ export default function ProjectDetailPage() {
               transition={{ duration: 0.6 }}
               className="mb-6"
             >
-              <div className="flex flex-wrap items-center gap-4 mb-4">
-                <span className="px-4 py-2 rounded-full bg-neon-cyan/10 border border-neon-cyan text-neon-cyan text-sm font-semibold">
+              <div className="flex flex-wrap items-center gap-4 mb-6">
+                <span className="px-5 py-2.5 rounded-full bg-accent-primary/10 border-2 border-accent-primary text-accent-primary text-sm font-bold">
                   {project.category === 'product' ? `🚀 ${t.projects.categories.product}` : project.category === 'client' ? `💼 ${t.projects.categories.client}` : `🏢 ${t.projects.categories.internal}`}
                 </span>
-                <div className="flex items-center gap-2 text-text-secondary">
-                  <Calendar className="w-4 h-4" />
-                  <span>{project.year}</span>
+                <div className="flex items-center gap-2 text-text-secondary font-semibold">
+                  <Calendar className="w-5 h-5" />
+                  <span className="text-base">{project.year}</span>
                 </div>
               </div>
               
-              <h1 className="text-5xl sm:text-6xl font-display font-bold mb-6">
+              <h1 className="text-6xl sm:text-7xl lg:text-8xl font-display font-black mb-8 leading-none">
                 {project.title}
               </h1>
               
-              <p className="text-xl text-text-secondary leading-relaxed">
+              <p className="text-xl sm:text-2xl text-text-secondary leading-relaxed max-w-4xl">
                 {project.description}
               </p>
             </motion.div>
@@ -112,7 +112,7 @@ export default function ProjectDetailPage() {
                   href={project.liveUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-neon-cyan text-cyber-black font-semibold rounded-lg hover:scale-105 transition-transform duration-200"
+                  className="btn-primary inline-flex items-center gap-3"
                 >
                   <ExternalLink className="w-5 h-5" />
                   View Live Site
@@ -123,7 +123,7 @@ export default function ProjectDetailPage() {
                   href={project.githubUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-cyber-gray border-2 border-neon-violet text-text-primary font-semibold rounded-lg hover:scale-105 transition-transform duration-200"
+                  className="btn-secondary inline-flex items-center gap-3"
                 >
                   <Github className="w-5 h-5" />
                   View on GitHub
@@ -144,17 +144,17 @@ export default function ProjectDetailPage() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
-              className="mb-16"
+              className="mb-20"
             >
-              <h2 className="text-3xl font-display font-bold mb-6 flex items-center gap-3">
-                <Tag className="w-8 h-8 text-neon-cyan" />
+              <h2 className="text-4xl md:text-5xl font-display font-black mb-8 flex items-center gap-4">
+                <Tag className="w-10 h-10 text-accent-primary" />
                 {t.projects.detail.technologies}
               </h2>
               <div className="flex flex-wrap gap-3">
                 {project.technologies.map((tech) => (
                   <span
                     key={tech}
-                    className="px-4 py-2 text-sm font-semibold rounded-lg bg-cyber-darker border border-cyber-gray-light text-text-secondary hover:border-neon-cyan hover:text-neon-cyan transition-all duration-300"
+                    className="px-5 py-2.5 text-base font-bold rounded-xl bg-surface border-2 border-surface-light text-text-secondary hover:border-accent-primary hover:text-accent-primary hover:bg-surface-light transition-all duration-300"
                   >
                     {tech}
                   </span>
@@ -168,12 +168,12 @@ export default function ProjectDetailPage() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
-              className="mb-16"
+              className="mb-20"
             >
-              <h2 className="text-3xl font-display font-bold mb-6">Overview</h2>
+              <h2 className="text-4xl md:text-5xl font-display font-black mb-8">Overview</h2>
               <div className="prose prose-invert max-w-none">
                 {project.longDescription.split('\n\n').map((paragraph, index) => (
-                  <p key={index} className="text-text-secondary leading-relaxed mb-4">
+                  <p key={index} className="text-lg text-text-secondary leading-relaxed mb-6">
                     {paragraph}
                   </p>
                 ))}
@@ -187,17 +187,17 @@ export default function ProjectDetailPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
                 viewport={{ once: true }}
-                className="mb-16"
+                className="mb-20"
               >
-                <h2 className="text-3xl font-display font-bold mb-6">{t.projects.detail.challenges}</h2>
+                <h2 className="text-4xl md:text-5xl font-display font-black mb-8">{t.projects.detail.challenges}</h2>
                 <ul className="space-y-4">
                   {project.challenges.map((challenge, index) => (
                     <li
                       key={index}
-                      className="flex gap-4 p-4 rounded-lg bg-cyber-darker border border-cyber-gray-light"
+                      className="card flex gap-4 p-6"
                     >
-                      <span className="text-neon-violet font-bold text-xl">⚠️</span>
-                      <span className="text-text-secondary">{challenge}</span>
+                      <span className="text-accent-secondary font-bold text-2xl">⚠️</span>
+                      <span className="text-text-secondary text-base leading-relaxed">{challenge}</span>
                     </li>
                   ))}
                 </ul>
@@ -211,17 +211,17 @@ export default function ProjectDetailPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
                 viewport={{ once: true }}
-                className="mb-16"
+                className="mb-20"
               >
-                <h2 className="text-3xl font-display font-bold mb-6">{t.projects.detail.solutions}</h2>
+                <h2 className="text-4xl md:text-5xl font-display font-black mb-8">{t.projects.detail.solutions}</h2>
                 <ul className="space-y-4">
                   {project.solutions.map((solution, index) => (
                     <li
                       key={index}
-                      className="flex gap-4 p-4 rounded-lg bg-cyber-darker border border-cyber-gray-light"
+                      className="card flex gap-4 p-6"
                     >
-                      <span className="text-neon-cyan font-bold text-xl">✅</span>
-                      <span className="text-text-secondary">{solution}</span>
+                      <span className="text-accent-primary font-bold text-2xl">✅</span>
+                      <span className="text-text-secondary text-base leading-relaxed">{solution}</span>
                     </li>
                   ))}
                 </ul>
@@ -235,17 +235,17 @@ export default function ProjectDetailPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
                 viewport={{ once: true }}
-                className="mb-16"
+                className="mb-20"
               >
-                <h2 className="text-3xl font-display font-bold mb-6">{t.projects.detail.impact}</h2>
+                <h2 className="text-4xl md:text-5xl font-display font-black mb-8">{t.projects.detail.impact}</h2>
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                   {project.impact.map((item, index) => (
                     <div
                       key={index}
-                      className="p-6 rounded-xl bg-gradient-to-br from-neon-cyan/10 to-neon-violet/10 border border-cyber-gray-light hover:border-neon-cyan/50 transition-all duration-300"
+                      className="card p-8 hover:border-accent-primary/50 transition-all duration-300"
                     >
-                      <div className="text-4xl mb-2">📈</div>
-                      <p className="text-text-secondary">{item}</p>
+                      <div className="text-5xl mb-4">📈</div>
+                      <p className="text-text-secondary text-base leading-relaxed">{item}</p>
                     </div>
                   ))}
                 </div>
@@ -259,18 +259,18 @@ export default function ProjectDetailPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
                 viewport={{ once: true }}
-                className="mb-16"
+                className="mb-20"
               >
-                <div className="p-8 rounded-xl bg-cyber-darker border-l-4 border-neon-cyan">
-                  <p className="text-xl text-text-secondary italic mb-4">
+                <div className="card p-10 border-l-8 border-accent-primary">
+                  <p className="text-2xl text-text-secondary italic mb-6 leading-relaxed">
                     "{project.testimonial.quote}"
                   </p>
                   <div className="flex items-center gap-4">
                     <div>
-                      <div className="font-semibold text-text-primary">
+                      <div className="font-bold text-text-primary text-lg">
                         {project.testimonial.author}
                       </div>
-                      <div className="text-sm text-text-secondary">
+                      <div className="text-base text-text-muted font-medium">
                         {project.testimonial.role}
                       </div>
                     </div>
@@ -285,17 +285,17 @@ export default function ProjectDetailPage() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
-              className="text-center p-8 rounded-xl bg-gradient-to-r from-neon-violet/10 to-neon-cyan/10 border border-cyber-gray-light"
+              className="card text-center p-12"
             >
-              <h3 className="text-2xl font-display font-bold mb-4">
+              <h3 className="text-3xl md:text-4xl font-display font-black mb-6">
                 {t.projects.detail.cta.title}
               </h3>
-              <p className="text-text-secondary mb-6">
+              <p className="text-text-secondary text-lg mb-8 max-w-2xl mx-auto">
                 {t.projects.detail.cta.subtitle}
               </p>
               <Link
                 href="/#contact"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-neon-cyan text-cyber-black font-semibold rounded-lg hover:scale-105 transition-transform duration-200"
+                className="btn-primary inline-flex items-center gap-3"
               >
                 {t.projects.detail.cta.button}
               </Link>

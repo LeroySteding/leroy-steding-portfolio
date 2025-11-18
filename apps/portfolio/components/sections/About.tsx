@@ -26,34 +26,34 @@ export default function About() {
     },
   ];
   return (
-    <section id="about" className="relative py-24 bg-cyber-dark overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-px bg-gradient-to-r from-transparent via-neon-cyan to-transparent" />
+    <section id="about" className="section relative bg-secondary-bg overflow-hidden">
+      {/* Subtle accent line */}
+      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-accent-primary to-transparent" />
       
-      <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="container relative z-10 mx-auto px-8 lg:px-16">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
           {/* Section header */}
-          <div className="text-center mb-16">
+          <div className="mb-20">
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.1 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
               viewport={{ once: true }}
-              className="text-4xl sm:text-5xl font-display font-bold mb-4"
+              className="font-display font-black mb-6"
             >
-              {t.about.title} <span className="bg-gradient-to-r from-neon-cyan to-neon-violet bg-clip-text text-transparent">{t.about.titleHighlight}</span>
+              {t.about.title} <span className="text-gradient">{t.about.titleHighlight}</span>
             </motion.h2>
             <motion.div
               initial={{ opacity: 0, scaleX: 0 }}
               whileInView={{ opacity: 1, scaleX: 1 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
               viewport={{ once: true }}
-              className="w-24 h-1 bg-gradient-to-r from-neon-cyan to-neon-violet mx-auto rounded-full"
+              className="w-32 h-2 bg-accent-primary rounded-full"
             />
           </div>
 
@@ -61,17 +61,17 @@ export default function About() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
-            className="space-y-6 text-lg text-text-secondary leading-relaxed mb-12"
+            className="space-y-8 text-xl text-text-secondary leading-relaxed mb-20 max-w-4xl"
           >
-            <p>{parseTranslation(t.about.intro)}</p>
+            <p className="text-2xl font-semibold">{parseTranslation(t.about.intro)}</p>
             <p>{parseTranslation(t.about.expertise)}</p>
             <p>{parseTranslation(t.about.experience)}</p>
           </motion.div>
 
           {/* Highlights grid */}
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-3 gap-8">
             {highlights.map((item, index) => {
               const Icon = item.icon;
               return (
@@ -79,18 +79,17 @@ export default function About() {
                   key={item.title}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.4 + index * 0.1 }}
+                  transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
                   viewport={{ once: true }}
-                  whileHover={{ scale: 1.05 }}
-                  className="p-6 rounded-xl bg-cyber-darker border border-cyber-gray-light glass hover:border-neon-cyan/50 transition-all duration-300 group"
+                  className="card p-8 group"
                 >
-                  <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-neon-cyan/20 to-neon-violet/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                    <Icon className="w-6 h-6 text-neon-cyan" />
+                  <div className="w-16 h-16 rounded-xl bg-tertiary-bg flex items-center justify-center mb-6 group-hover:bg-accent-primary transition-all duration-300">
+                    <Icon className="w-8 h-8 text-accent-primary group-hover:text-primary-bg transition-colors duration-300" />
                   </div>
-                  <h3 className="text-xl font-display font-semibold mb-2 text-text-primary">
+                  <h3 className="text-2xl font-display font-bold mb-4 text-text-primary">
                     {item.title}
                   </h3>
-                  <p className="text-text-secondary text-sm leading-relaxed">
+                  <p className="text-text-secondary text-lg leading-relaxed">
                     {item.description}
                   </p>
                 </motion.div>

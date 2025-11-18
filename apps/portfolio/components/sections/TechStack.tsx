@@ -17,39 +17,35 @@ export default function TechStack() {
     : techStack.flatMap(cat => cat.technologies);
 
   return (
-    <section id="skills" className="relative py-24 bg-cyber-darker overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-px bg-gradient-to-r from-transparent via-neon-cyan to-transparent" />
-      
-      {/* Gradient orbs */}
-      <div className="absolute top-1/4 -right-48 w-96 h-96 bg-neon-cyan/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-1/4 -left-48 w-96 h-96 bg-neon-violet/10 rounded-full blur-3xl" />
+    <section id="skills" className="section relative bg-tertiary-bg overflow-hidden">
+      {/* Subtle accent line */}
+      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-accent-secondary to-transparent" />
 
-      <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="container relative z-10 mx-auto px-8 lg:px-16">
         {/* Section header */}
-        <div className="text-center mb-16">
+        <div className="mb-20">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="text-4xl sm:text-5xl font-display font-bold mb-4"
+            className="font-display font-black mb-6"
           >
-            {t.techStack.title} <span className="bg-gradient-to-r from-neon-cyan to-neon-violet bg-clip-text text-transparent">{t.techStack.titleHighlight}</span>
+            {t.techStack.title} <span className="text-gradient">{t.techStack.titleHighlight}</span>
           </motion.h2>
           <motion.div
             initial={{ opacity: 0, scaleX: 0 }}
             whileInView={{ opacity: 1, scaleX: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
             viewport={{ once: true }}
-            className="w-24 h-1 bg-gradient-to-r from-neon-cyan to-neon-violet mx-auto rounded-full mb-6"
+            className="w-32 h-2 bg-accent-secondary rounded-full mb-8"
           />
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
-            className="text-text-secondary max-w-2xl mx-auto"
+            className="text-xl text-text-secondary max-w-3xl"
           >
             {t.techStack.description}
           </motion.p>
@@ -61,14 +57,14 @@ export default function TechStack() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="flex flex-wrap justify-center gap-3 mb-12"
+          className="flex flex-wrap gap-4 mb-16"
         >
           <button
             onClick={() => setSelectedCategory(null)}
-            className={`px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${
+            className={`px-8 py-4 rounded-lg font-bold text-lg transition-all duration-300 ${
               selectedCategory === null
-                ? "bg-neon-cyan text-cyber-black"
-                : "bg-cyber-gray text-text-secondary hover:bg-cyber-gray-light"
+                ? "btn-primary"
+                : "btn-secondary"
             }`}
           >
             {t.techStack.all}
@@ -77,20 +73,20 @@ export default function TechStack() {
             <button
               key={category.name}
               onClick={() => setSelectedCategory(category.name)}
-              className={`px-6 py-3 rounded-lg font-semibold transition-all duration-300 flex items-center gap-2 ${
+              className={`px-8 py-4 rounded-lg font-bold text-lg transition-all duration-300 flex items-center gap-3 ${
                 selectedCategory === category.name
-                  ? "bg-neon-cyan text-cyber-black"
-                  : "bg-cyber-gray text-text-secondary hover:bg-cyber-gray-light"
+                  ? "btn-primary"
+                  : "btn-secondary"
               }`}
             >
-              <span>{category.icon}</span>
+              <span className="text-2xl">{category.icon}</span>
               <span>{language === 'nl' ? category.nameNL : category.name}</span>
             </button>
           ))}
         </motion.div>
 
         {/* Technologies grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6 mb-16">
           {(selectedCategory 
             ? techStack.filter(cat => cat.name === selectedCategory)
             : techStack
@@ -98,12 +94,11 @@ export default function TechStack() {
             category.technologies.map((tech, index) => (
               <motion.div
                 key={`${category.name}-${tech.name}`}
-                initial={{ opacity: 0, scale: 0.8 }}
+                initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: index * 0.05 }}
+                transition={{ duration: 0.4, delay: index * 0.03 }}
                 viewport={{ once: true }}
-                whileHover={{ scale: 1.05, y: -5 }}
-                className="group relative p-6 rounded-xl bg-cyber-dark border border-cyber-gray-light hover:border-neon-cyan/50 transition-all duration-300 flex flex-col items-center justify-center gap-3 cursor-pointer"
+                className="card group p-6 flex flex-col items-center justify-center gap-4 cursor-pointer"
               >
                 {/* Tech icon */}
                 <div className="relative w-16 h-16 flex items-center justify-center">
@@ -121,34 +116,26 @@ export default function TechStack() {
                 </div>
 
                 {/* Tech name */}
-                <h3 className="text-sm font-semibold text-text-primary text-center group-hover:text-neon-cyan transition-colors">
+                <h3 className="text-base font-bold text-text-primary text-center group-hover:text-accent-primary transition-colors">
                   {tech.name}
                 </h3>
 
                 {/* Proficiency bar */}
-                <div className="w-full bg-cyber-gray-light rounded-full h-1.5 overflow-hidden">
+                <div className="w-full bg-surface rounded-full h-2 overflow-hidden">
                   <motion.div
                     initial={{ width: 0 }}
                     whileInView={{ width: `${tech.proficiency}%` }}
-                    transition={{ duration: 1, delay: index * 0.05 }}
+                    transition={{ duration: 0.8, delay: index * 0.03 }}
                     viewport={{ once: true }}
-                    className="h-full bg-gradient-to-r from-neon-cyan to-neon-violet rounded-full"
+                    className="h-full bg-gradient-to-r from-accent-primary to-accent-secondary rounded-full"
                   />
                 </div>
 
-                {/* Proficiency tooltip */}
-                <div className="absolute -top-2 -right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <span className="px-2 py-1 text-xs font-bold rounded-full bg-neon-cyan text-cyber-black">
+                {/* Proficiency percentage */}
+                <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <span className="px-3 py-1.5 text-sm font-bold rounded-full bg-accent-primary text-primary-bg">
                     {tech.proficiency}%
                   </span>
-                </div>
-
-                {/* Glow effect on hover */}
-                <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-                  <div 
-                    className="absolute inset-0 rounded-xl blur-xl" 
-                    style={{ backgroundColor: `${tech.color}20` }}
-                  />
                 </div>
               </motion.div>
             ))
@@ -159,33 +146,33 @@ export default function TechStack() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
           viewport={{ once: true }}
-          className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6"
+          className="grid grid-cols-2 md:grid-cols-4 gap-6"
         >
-          <div className="p-6 rounded-xl bg-gradient-to-br from-neon-cyan/10 to-neon-violet/10 border border-cyber-gray-light text-center">
-            <div className="text-4xl font-display font-bold text-neon-cyan mb-2">
+          <div className="card p-8 text-center">
+            <div className="text-5xl font-black text-accent-primary mb-3">
               {techStack.flatMap(cat => cat.technologies).length}+
             </div>
-            <div className="text-text-secondary text-sm">Technologies</div>
+            <div className="text-text-muted text-base font-semibold uppercase tracking-wide">Technologies</div>
           </div>
-          <div className="p-6 rounded-xl bg-gradient-to-br from-neon-violet/10 to-neon-cyan/10 border border-cyber-gray-light text-center">
-            <div className="text-4xl font-display font-bold text-neon-violet mb-2">
+          <div className="card p-8 text-center">
+            <div className="text-5xl font-black text-accent-secondary mb-3">
               {techStack.length}
             </div>
-            <div className="text-text-secondary text-sm">Categories</div>
+            <div className="text-text-muted text-base font-semibold uppercase tracking-wide">Categories</div>
           </div>
-          <div className="p-6 rounded-xl bg-gradient-to-br from-neon-cyan/10 to-neon-violet/10 border border-cyber-gray-light text-center">
-            <div className="text-4xl font-display font-bold text-neon-cyan mb-2">
+          <div className="card p-8 text-center">
+            <div className="text-5xl font-black text-accent-primary mb-3">
               12+
             </div>
-            <div className="text-text-secondary text-sm">{t.techStack.stats.experience}</div>
+            <div className="text-text-muted text-base font-semibold uppercase tracking-wide">{t.techStack.stats.experience}</div>
           </div>
-          <div className="p-6 rounded-xl bg-gradient-to-br from-neon-violet/10 to-neon-cyan/10 border border-cyber-gray-light text-center">
-            <div className="text-4xl font-display font-bold text-neon-violet mb-2">
+          <div className="card p-8 text-center">
+            <div className="text-5xl font-black text-accent-secondary mb-3">
               100+
             </div>
-            <div className="text-text-secondary text-sm">{t.techStack.stats.projects}</div>
+            <div className="text-text-muted text-base font-semibold uppercase tracking-wide">{t.techStack.stats.projects}</div>
           </div>
         </motion.div>
       </div>

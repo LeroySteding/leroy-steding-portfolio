@@ -7,13 +7,13 @@ export default function LanguageSwitcher() {
   const { language, setLanguage } = useLanguage();
 
   return (
-    <div className="flex items-center gap-1 p-1 rounded-lg bg-cyber-gray border border-cyber-gray-light">
+    <div className="flex items-center gap-1 p-1 rounded-lg bg-surface border-2 border-surface">
       <motion.button
         onClick={() => setLanguage("en")}
-        className={`px-3 py-1.5 text-sm font-semibold rounded transition-all duration-300 ${
+        className={`px-4 py-2 text-sm font-bold rounded transition-all duration-300 ${
           language === "en"
-            ? "bg-neon-cyan text-cyber-black"
-            : "text-text-secondary hover:text-text-primary"
+            ? "bg-accent-primary text-primary-bg"
+            : "text-text-secondary hover:text-text-primary hover:bg-surface-light"
         }`}
         whileTap={{ scale: 0.95 }}
       >
@@ -21,10 +21,10 @@ export default function LanguageSwitcher() {
       </motion.button>
       <motion.button
         onClick={() => setLanguage("nl")}
-        className={`px-3 py-1.5 text-sm font-semibold rounded transition-all duration-300 ${
+        className={`px-4 py-2 text-sm font-bold rounded transition-all duration-300 ${
           language === "nl"
-            ? "bg-neon-cyan text-cyber-black"
-            : "text-text-secondary hover:text-text-primary"
+            ? "bg-accent-primary text-primary-bg"
+            : "text-text-secondary hover:text-text-primary hover:bg-surface-light"
         }`}
         whileTap={{ scale: 0.95 }}
       >
