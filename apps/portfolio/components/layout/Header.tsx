@@ -2,14 +2,18 @@
 
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
-import { Moon, Sun, Menu, X } from "lucide-react";
+import { Moon, Sun, Menu, X, Search } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, useScroll, useTransform } from "framer-motion";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { useTranslation } from "@/hooks/useTranslation";
 
-export default function Header() {
+interface HeaderProps {
+  onSearchClick?: () => void;
+}
+
+export default function Header({ onSearchClick }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { theme, setTheme } = useTheme();
@@ -112,8 +116,19 @@ export default function Header() {
             ))}
           </div>
 
-          {/* Language, Theme Toggle & Mobile Menu Button */}
+          {/* Search, Language, Theme Toggle & Mobile Menu Button */}
           <div className="flex items-center space-x-4">
+            {/* Search Button - Desktop */}
+            <button
+              onClick={onSearchClick}
+              className="hidden md:flex items-center gap-2 px-4 py-2 rounded-lg bg-surface hover:bg-surface-light transition-all duration-200 border border-surface-light hover:border-accent-primary group"
+              aria-label="Search"
+            >
+              <Search className="w-5 h-5 text-text-muted group-hover:text-accent-primary transition-colors" />
+              <span className="text-sm text-text-muted group-hover:text-text-primary transition-colors">Search</span>
+              <kbd className="px-2 py-0.5 text-xs font-mono bg-secondary-bg border border-surface-light rounded text-text-muted">⌘K</kbd>
+            </button>
+
             {/* Language Switcher - Desktop */}
             <div className="hidden md:block">
               <LanguageSwitcher />
@@ -149,6 +164,18 @@ export default function Header() {
         {/* Mobile Navigation */}
         {isMobileMenuOpen && (
           <div className="md:hidden py-6 space-y-3 border-t-2 border-surface">
+            {/* Search Button - Mobile */}
+            <button
+              onClick={() => {
+                onSearchClick?.();
+                setIsMobileMenuOpen(false);
+              }}
+              className="flex items-center gap-3 w-full px-6 py-3 text-lg font-bold text-text-secondary hover:text-accent-primary hover:bg-surface rounded-lg transition-all duration-200"
+            >
+              <Search className="w-5 h-5" />
+              <span>Search</span>
+            </button>
+
             {navigation.map((item) => (
               <Link
                 key={item.name}

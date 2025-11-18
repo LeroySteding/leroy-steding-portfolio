@@ -3,6 +3,7 @@ import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import ClientLayout from "@/components/layout/ClientLayout";
 import HreflangTags from "@/components/seo/HreflangTags";
+import CookieConsent from "@/components/ui/CookieConsent";
 import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({
@@ -73,6 +74,7 @@ export default function RootLayout({
         <ClientLayout>
           {children}
           <Analytics />
+          <CookieConsent />
         </ClientLayout>
       </body>
     </html>

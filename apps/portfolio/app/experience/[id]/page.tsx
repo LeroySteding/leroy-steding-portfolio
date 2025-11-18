@@ -9,6 +9,7 @@ import { getExperienceById } from "@/utils/getLocalizedData";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useTranslation } from "@/hooks/useTranslation";
 import MetaTags from "@/components/seo/MetaTags";
+import CTA from "@/components/ui/CTA";
 
 export default function ExperienceDetailPage() {
   const params = useParams();
@@ -58,7 +59,7 @@ export default function ExperienceDetailPage() {
           <div className="absolute bottom-1/4 -right-48 w-96 h-96 bg-accent-secondary/30 rounded-full blur-3xl" />
         </div>
 
-        <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="container relative z-10 mx-auto px-8 lg:px-16">
           {/* Back button */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -139,7 +140,7 @@ export default function ExperienceDetailPage() {
 
       {/* Content Section */}
       <section className="py-24">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="container mx-auto px-8 lg:px-16">
           <div className="mx-auto">
             {/* Technologies */}
             <motion.div
@@ -291,20 +292,12 @@ export default function ExperienceDetailPage() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
-              className="card text-center p-12"
             >
-              <h3 className="text-3xl md:text-4xl font-display font-black mb-6">
-                {t.experience.detail.cta.title}
-              </h3>
-              <p className="text-text-secondary text-lg mb-8 max-w-2xl mx-auto">
-                {t.experience.detail.cta.subtitle}
-              </p>
-              <Link
-                href="/#contact"
-                className="btn-primary inline-flex items-center gap-3"
-              >
-                {t.experience.detail.cta.button}
-              </Link>
+              <CTA 
+                variant="contact"
+                title={t.experience.detail.cta.title}
+                description={t.experience.detail.cta.subtitle}
+              />
             </motion.div>
           </div>
         </div>
