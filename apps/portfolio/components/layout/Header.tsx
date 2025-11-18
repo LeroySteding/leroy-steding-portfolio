@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 import { Moon, Sun, Menu, X } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { motion, useScroll, useTransform } from "framer-motion";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { useTranslation } from "@/hooks/useTranslation";
 
@@ -12,12 +14,22 @@ export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { theme, setTheme } = useTheme();
   const t = useTranslation();
+  const pathname = usePathname();
+  const isHomePage = pathname === '/' || pathname === '/en' || pathname === '/nl';
+  
+  const { scrollY } = useScroll();
+  
+  // Transform values for the STEDING title animation (only on home page)translateX(-620px) translateY(-210px) scale(0.16)
+  const scale = useTransform(scrollY, [0, 500], [1, 0.16]);
+  const y = useTransform(scrollY, [0, 500], [0, -210]);
+  const x = useTransform(scrollY, [0, 500], [0, -610]);
   
   const navigation = [
     { name: t.nav.about, href: "/#about" },
     { name: t.nav.experience, href: "/#experience" },
     { name: t.nav.skills, href: "/#skills" },
     { name: t.nav.projects, href: "/#projects" },
+    { name: t.nav.blog, href: "/blog" },
     { name: t.nav.contact, href: "/#contact" },
   ];
   const [mounted, setMounted] = useState(false);
@@ -42,24 +54,49 @@ export default function Header() {
   }
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? "bg-primary-bg/95 backdrop-blur-md border-b-2 border-surface"
-          : "bg-transparent"
-      }`}
-    >
-      <nav className="container mx-auto px-8 lg:px-16">
-        <div className="flex items-center justify-between h-20 md:h-24">
-          {/* Logo */}
-          <Link
-            href="/"
-            className="flex items-center space-x-2 group"
-          >
-            <span className="text-3xl md:text-4xl font-display font-black text-gradient transition-all">
+    <>
+      {/* Animated STEDING logo - only on home page */}
+      {isHomePage && (
+        <motion.div
+          style={{ scale, y, x }}
+          className="fixed top-32 left-0 right-0 z-60 pointer-events-none"
+        >
+          <div className="container mx-auto px-80 lg:px-16">
+            <h1 
+              className="ml:20 font-display font-black text-gradient whitespace-nowrap leading-none text-[20vw] md:text-[15vw] lg:text-[13vw]"
+              style={{ 
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'space-between',
+                letterSpacing: '0.05em'
+              }}
+            >
               STEDING.
-            </span>
-          </Link>
+            </h1>
+          </div>
+        </motion.div>
+      )}
+
+      <header
+        className={`fixed top-0 left-0 right-0 z-55 transition-all duration-300 ${
+          isScrolled
+            ? "bg-primary-bg/95 backdrop-blur-md border-b-2 border-surface"
+            : "bg-transparent"
+        }`}
+      >
+        <nav className="container mx-auto px-8 lg:px-16">
+          <div className="flex items-center justify-between h-20 md:h-24">
+            {/* Logo */}
+            <Link
+              href="/"
+              className="flex items-center space-x-2 group"
+            >
+              {!isHomePage && (
+                <span className="text-3xl md:text-4xl font-display font-black text-gradient transition-all">
+                  STEDING.
+                </span>
+              )}
+            </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-10">
@@ -128,7 +165,8 @@ export default function Header() {
             </div>
           </div>
         )}
-      </nav>
-    </header>
+        </nav>
+      </header>
+    </>
   );
 }

@@ -1,20 +1,44 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import { Search, X } from "lucide-react";
 import { techStack } from "@/data/techStack";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useTranslation } from "@/hooks/useTranslation";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function TechStack() {
   const t = useTranslation();
   const { language } = useLanguage();
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
-  const displayTechnologies = selectedCategory
-    ? techStack.find(cat => cat.name === selectedCategory)?.technologies || []
-    : techStack.flatMap(cat => cat.technologies);
+  // Toggle category selection (multi-select)
+  const toggleCategory = (categoryName: string) => {
+    setSelectedCategories(prev => 
+      prev.includes(categoryName)
+        ? prev.filter(c => c !== categoryName)
+        : [...prev, categoryName]
+    );
+  };
+
+  // Filter technologies based on search and selected categories
+  const displayTechnologies = useMemo(() => {
+    let technologies = selectedCategories.length > 0
+      ? techStack
+          .filter(cat => selectedCategories.includes(cat.name))
+          .flatMap(cat => cat.technologies)
+      : techStack.flatMap(cat => cat.technologies);
+
+    if (searchQuery) {
+      technologies = technologies.filter(tech =>
+        tech.name.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+
+    return technologies;
+  }, [selectedCategories, searchQuery]);
 
   return (
     <section id="skills" className="section relative bg-tertiary-bg overflow-hidden">
@@ -45,102 +69,167 @@ export default function TechStack() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
-            className="text-xl text-text-secondary max-w-3xl"
+            className="text-xl text-text-secondary max-w-3xl mb-8"
           >
             {t.techStack.description}
           </motion.p>
+
+          {/* Search Bar */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            viewport={{ once: true }}
+            className="relative max-w-md"
+          >
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search technologies..."
+              className="w-full pl-12 pr-12 py-4 rounded-xl bg-surface border-2 border-surface focus:border-accent-secondary text-text-primary placeholder:text-text-muted transition-all duration-300 font-semibold"
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery("")}
+                className="absolute right-4 top-1/2 -translate-y-1/2 p-1 hover:bg-surface-light rounded-full transition-colors"
+              >
+                <X className="w-4 h-4 text-text-muted" />
+              </button>
+            )}
+          </motion.div>
         </div>
 
-        {/* Category filters */}
+        {/* Category filters - Multi-select */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="flex flex-wrap gap-4 mb-16"
+          className="mb-12"
         >
-          <button
-            onClick={() => setSelectedCategory(null)}
-            className={`px-8 py-4 rounded-lg font-bold text-lg transition-all duration-300 ${
-              selectedCategory === null
-                ? "btn-primary"
-                : "btn-secondary"
-            }`}
-          >
-            {t.techStack.all}
-          </button>
-          {techStack.map((category) => (
-            <button
-              key={category.name}
-              onClick={() => setSelectedCategory(category.name)}
-              className={`px-8 py-4 rounded-lg font-bold text-lg transition-all duration-300 flex items-center gap-3 ${
-                selectedCategory === category.name
-                  ? "btn-primary"
-                  : "btn-secondary"
-              }`}
-            >
-              <span className="text-2xl">{category.icon}</span>
-              <span>{language === 'nl' ? category.nameNL : category.name}</span>
-            </button>
-          ))}
+          <div className="flex items-center gap-4 mb-6">
+            <h3 className="text-lg font-bold text-text-primary">Filter by Category:</h3>
+            {selectedCategories.length > 0 && (
+              <button
+                onClick={() => setSelectedCategories([])}
+                className="text-sm font-semibold text-accent-primary hover:text-accent-secondary transition-colors flex items-center gap-2"
+              >
+                <X className="w-4 h-4" />
+                Clear All
+              </button>
+            )}
+          </div>
+          <div className="flex flex-wrap gap-3">
+            {techStack.map((category) => {
+              const isSelected = selectedCategories.includes(category.name);
+              return (
+                <button
+                  key={category.name}
+                  onClick={() => toggleCategory(category.name)}
+                  className={`px-6 py-3 rounded-xl font-bold text-base transition-all duration-300 flex items-center gap-3 ${
+                    isSelected
+                      ? "bg-accent-secondary text-primary-bg shadow-lg scale-105"
+                      : "bg-surface text-text-secondary hover:bg-surface-light hover:text-accent-secondary border-2 border-transparent hover:border-accent-secondary/30"
+                  }`}
+                >
+                  <span className="text-2xl">{category.icon}</span>
+                  <span>{language === 'nl' ? category.nameNL : category.name}</span>
+                  {isSelected && (
+                    <motion.span
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      className="w-2 h-2 rounded-full bg-primary-bg"
+                    />
+                  )}
+                </button>
+              );
+            })}
+          </div>
         </motion.div>
 
         {/* Technologies grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6 mb-16">
-          {(selectedCategory 
-            ? techStack.filter(cat => cat.name === selectedCategory)
-            : techStack
-          ).map((category) => (
-            category.technologies.map((tech, index) => (
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={`${selectedCategories.join('-')}-${searchQuery}`}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6 mb-16"
+          >
+            {displayTechnologies.map((tech, index) => (
               <motion.div
-                key={`${category.name}-${tech.name}`}
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.4, delay: index * 0.03 }}
-                viewport={{ once: true }}
-                className="card group p-6 flex flex-col items-center justify-center gap-4 cursor-pointer"
+                key={tech.name}
+                initial={{ opacity: 0, y: 20, scale: 0.9 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                whileHover={{ y: -5, scale: 1.05 }}
+                transition={{ 
+                  duration: 0.5, 
+                  delay: index * 0.03,
+                  type: "spring",
+                  stiffness: 300,
+                  damping: 20
+                }}
+                className="relative group"
               >
-                {/* Tech icon */}
-                <div className="relative w-16 h-16 flex items-center justify-center">
-                  {tech.icon.startsWith('http') ? (
-                    <Image
-                      src={tech.icon}
-                      alt={tech.name}
-                      width={64}
-                      height={64}
-                      className="object-contain group-hover:scale-110 transition-transform duration-300"
-                    />
-                  ) : (
-                    <span className="text-5xl">{tech.icon}</span>
-                  )}
-                </div>
+                {/* Glow effect */}
+                <div className="absolute -inset-1 bg-gradient-to-r from-accent-secondary/20 to-accent-primary/20 rounded-2xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                
+                {/* Card content */}
+                <div className="relative card p-6 flex flex-col items-center justify-center gap-3 cursor-pointer backdrop-blur-sm border-2 border-surface group-hover:border-accent-secondary/40 transition-all duration-300">
+                  {/* Tech icon */}
+                  <div className="relative w-16 h-16 flex items-center justify-center">
+                    {tech.icon.startsWith('http') ? (
+                      <Image
+                        src={tech.icon}
+                        alt={tech.name}
+                        width={64}
+                        height={64}
+                        className="object-contain group-hover:scale-110 transition-transform duration-300"
+                      />
+                    ) : (
+                      <span className="text-5xl group-hover:scale-110 transition-transform duration-300">{tech.icon}</span>
+                    )}
+                  </div>
 
-                {/* Tech name */}
-                <h3 className="text-base font-bold text-text-primary text-center group-hover:text-accent-primary transition-colors">
-                  {tech.name}
-                </h3>
+                  {/* Tech name */}
+                  <h3 className="text-base font-bold text-text-primary text-center group-hover:text-accent-secondary transition-colors min-h-[48px] flex items-center">
+                    {tech.name}
+                  </h3>
 
-                {/* Proficiency bar */}
-                <div className="w-full bg-surface rounded-full h-2 overflow-hidden">
+                  {/* Proficiency bar */}
+                  <div className="w-full bg-surface rounded-full h-2 overflow-hidden">
+                    <motion.div
+                      initial={{ width: 0 }}
+                      animate={{ width: `${tech.proficiency}%` }}
+                      transition={{ 
+                        duration: 1, 
+                        delay: index * 0.03,
+                        ease: [0.22, 1, 0.36, 1]
+                      }}
+                      className="h-full bg-gradient-to-r from-accent-secondary to-accent-primary rounded-full relative"
+                    >
+                      <div className="absolute inset-0 bg-white/20 animate-pulse" />
+                    </motion.div>
+                  </div>
+
+                  {/* Proficiency percentage - Always visible */}
                   <motion.div
-                    initial={{ width: 0 }}
-                    whileInView={{ width: `${tech.proficiency}%` }}
-                    transition={{ duration: 0.8, delay: index * 0.03 }}
-                    viewport={{ once: true }}
-                    className="h-full bg-gradient-to-r from-accent-primary to-accent-secondary rounded-full"
-                  />
-                </div>
-
-                {/* Proficiency percentage */}
-                <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <span className="px-3 py-1.5 text-sm font-bold rounded-full bg-accent-primary text-primary-bg">
-                    {tech.proficiency}%
-                  </span>
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: index * 0.03 + 0.3 }}
+                  >
+                    <span className="px-3 py-1.5 text-sm font-bold rounded-full bg-gradient-to-r from-accent-secondary/20 to-accent-primary/20 text-accent-secondary border border-accent-secondary/30">
+                      {tech.proficiency}%
+                    </span>
+                  </motion.div>
                 </div>
               </motion.div>
-            ))
-          ))}
-        </div>
+            ))}
+          </motion.div>
+        </AnimatePresence>
 
         {/* Stats */}
         <motion.div

@@ -6,6 +6,7 @@ export const nl: Translations = {
     experience: "Ervaring",
     skills: "Vaardigheden",
     projects: "Projecten",
+    blog: "Journaal",
     contact: "Contact",
     toggleTheme: "Thema wisselen",
     toggleMenu: "Menu openen",

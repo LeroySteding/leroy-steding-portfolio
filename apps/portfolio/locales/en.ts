@@ -4,6 +4,7 @@ export const en = {
     experience: "Experience",
     skills: "Skills",
     projects: "Projects",
+    blog: "Journal",
     contact: "Contact",
     toggleTheme: "Toggle theme",
     toggleMenu: "Toggle menu",
