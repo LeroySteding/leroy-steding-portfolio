@@ -109,10 +109,23 @@ export default function Projects() {
                 <div className="relative card overflow-hidden">
                   {/* Image */}
                   <div className="relative h-64 bg-secondary-bg overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-accent-primary/10 to-accent-secondary/10" />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-8xl opacity-40">🚀</span>
-                </div>
+                {project.image ? (
+                  <>
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-primary-bg/60 to-transparent" />
+                  </>
+                ) : (
+                  <>
+                    <div className="absolute inset-0 bg-gradient-to-br from-accent-primary/10 to-accent-secondary/10" />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <span className="text-8xl opacity-40">🚀</span>
+                    </div>
+                  </>
+                )}
                 
                 {/* Overlay on hover */}
                 <div className="absolute inset-0 bg-primary-bg/95 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">

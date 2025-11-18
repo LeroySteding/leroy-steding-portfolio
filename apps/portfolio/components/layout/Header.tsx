@@ -20,9 +20,9 @@ export default function Header() {
   const { scrollY } = useScroll();
   
   // Transform values for the STEDING title animation (only on home page)translateX(-620px) translateY(-210px) scale(0.16)
-  const scale = useTransform(scrollY, [0, 500], [1, 0.16]);
-  const y = useTransform(scrollY, [0, 500], [0, -210]);
-  const x = useTransform(scrollY, [0, 500], [0, -610]);
+  const scale = useTransform(scrollY, [0, 500], [1.15, 0.12]);
+  const y = useTransform(scrollY, [0, 500], [100, -210]);
+  const x = useTransform(scrollY, [0, 500], [100, -618]);
   
   const navigation = [
     { name: t.nav.about, href: "/#about" },

@@ -49,15 +49,31 @@ export default function ProjectDetailPage() {
         keywords={project?.technologies || []}
       />
       <div className="min-h-screen bg-primary-bg">
-      {/* Hero Section */}
-      <section className="relative py-32 bg-secondary-bg overflow-hidden">
-        {/* Background decoration */}
-        <div className="absolute top-0 left-0 w-full h-full opacity-20">
-          <div className="absolute top-1/4 -left-48 w-96 h-96 bg-accent-primary/30 rounded-full blur-3xl" />
-          <div className="absolute bottom-1/4 -right-48 w-96 h-96 bg-accent-secondary/30 rounded-full blur-3xl" />
-        </div>
+      {/* Hero Section with Featured Image */}
+      <section className="relative h-[60vh] min-h-[500px] overflow-hidden">
+        {/* Featured Image Background */}
+        {project.image ? (
+          <div className="absolute inset-0">
+            <img
+              src={project.image}
+              alt={project.title}
+              className="w-full h-full object-cover"
+            />
+            {/* Dark gradient overlay for readability */}
+            <div className="absolute inset-0 bg-gradient-to-b from-primary-bg/60 via-primary-bg/80 to-primary-bg" />
+          </div>
+        ) : (
+          <>
+            {/* Fallback background decoration */}
+            <div className="absolute inset-0 bg-secondary-bg" />
+            <div className="absolute top-0 left-0 w-full h-full opacity-20">
+              <div className="absolute top-1/4 -left-48 w-96 h-96 bg-accent-primary/30 rounded-full blur-3xl" />
+              <div className="absolute bottom-1/4 -right-48 w-96 h-96 bg-accent-secondary/30 rounded-full blur-3xl" />
+            </div>
+          </>
+        )}
 
-        <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="container relative z-10 mx-auto px-8 lg:px-16 h-full flex flex-col justify-end pb-16">
           {/* Back button */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -91,11 +107,11 @@ export default function ProjectDetailPage() {
                 </div>
               </div>
               
-              <h1 className="text-6xl sm:text-7xl lg:text-8xl font-display font-black mb-8 leading-none">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-black mb-6 leading-tight text-text-primary">
                 {project.title}
               </h1>
               
-              <p className="text-xl sm:text-2xl text-text-secondary leading-relaxed max-w-4xl">
+              <p className="text-lg sm:text-xl text-text-secondary leading-relaxed max-w-3xl">
                 {project.description}
               </p>
             </motion.div>
@@ -136,7 +152,7 @@ export default function ProjectDetailPage() {
 
       {/* Content Section */}
       <section className="py-24">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="container relative z-10 mx-auto px-8 lg:px-16">
           <div className="mx-auto">
             {/* Technologies */}
             <motion.div

@@ -8,7 +8,7 @@ export const projectsNL: Project[] = [
     longDescription: `AllyScan is een uitgebreid AI-aangedreven toegankelijkheidstestplatform dat organisaties helpt ervoor te zorgen dat hun digitale producten toegankelijk zijn voor iedereen. Met behulp van geavanceerde machine learning-algoritmen scant AllyScan automatisch websites en webapplicaties om WCAG 2.1-nalevingsproblemen te identificeren en biedt gedetailleerde, bruikbare aanbevelingen voor herstel.
 
 Het platform beschikt over realtime scannen, geautomatiseerde testworkflows en intelligente rapportage die problemen prioriteert op basis van ernst en impact. AllyScan integreert naadloos in CI/CD-pipelines, waardoor ontwikkelteams toegankelijkheidsproblemen vroeg in het ontwikkelingsproces kunnen opsporen.`,
-    image: "/projects/allyscan.jpg",
+    image: "https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?w=1200&h=600&fit=crop",
     technologies: ["Next.js", "Python", "AI/ML", "WCAG", "TypeScript", "FastAPI", "PostgreSQL"],
     liveUrl: "https://allyscan.com",
     githubUrl: "https://github.com/leroysteding/allyscan",
@@ -38,7 +38,7 @@ Het platform beschikt over realtime scannen, geautomatiseerde testworkflows en i
     longDescription: `Smart Shop Scraper is een intelligent webscrapingplatform ontworpen voor e-commercebedrijven om concurrenten te monitoren, prijzen te volgen en markttrends te analyseren. Gebouwd met Python en Playwright voor robuuste browserautomatisering, kan het platform productgegevens extraheren uit zelfs de meest complexe moderne webapplicaties.
 
 Het systeem beschikt over intelligente snelheidsbeperking, roterende proxies en geavanceerde anti-detectiemechanismen om betrouwbare gegevensverzameling te garanderen. Met FastAPI-backend en PostgreSQL-database biedt het realtime waarschuwingen, historische trendanalyse en aanpasbare dashboards voor business intelligence.`,
-    image: "/projects/shop-scraper.jpg",
+    image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=1200&h=600&fit=crop",
     technologies: ["Python", "Playwright", "FastAPI", "PostgreSQL", "Redis", "Docker"],
     liveUrl: "https://shopscraper.com",
     githubUrl: "https://github.com/leroysteding/shop-scraper",
@@ -68,7 +68,7 @@ Het systeem beschikt over intelligente snelheidsbeperking, roterende proxies en 
     longDescription: `IntelliWealth is een AI-aangedreven financieel planningsplatform dat de toegang tot geavanceerd beleggingsadvies democratiseert. Met behulp van geavanceerde machine learning-algoritmen analyseert het platform de financiële situatie, risicotolerantie en doelen van gebruikers om gepersonaliseerde beleggingsaanbevelingen en portefeuilleoptimalisatiestrategieën te bieden.
 
 Gebouwd met Next.js en Supabase, beschikt IntelliWealth over realtime marktdata-integratie, geautomatiseerde portefeuilleherschikking en AI-agents die voortdurend aanbevelingen monitoren en aanpassen op basis van marktomstandigheden en gebruikersvoorkeuren. Het platform integreert met Stripe voor naadloos abonnementsbeheer.`,
-    image: "/projects/intelliwealth.jpg",
+    image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=1200&h=600&fit=crop",
     technologies: ["Next.js", "Supabase", "AI Agents", "Stripe", "TypeScript", "Financial APIs"],
     liveUrl: "https://intelliwealth.com",
     githubUrl: "https://github.com/leroysteding/intelliwealth",
@@ -98,7 +98,7 @@ Gebouwd met Next.js en Supabase, beschikt IntelliWealth over realtime marktdata-
     longDescription: `Lotto Manager is een uitgebreid platform voor loterijsyndicaatbeheer dat groepsloterijspel vereenvoudigt. Het systeem automatiseert lotvolging, berekeningen voor prijzendistributie en ledenbeheer, waardoor het voor groepen gemakkelijk wordt om samen te spelen met eerlijke en transparante prijzendeling.
 
 Gebouwd met Next.js en TypeScript, beschikt het platform over Stripe-integratie voor het innen van ledenbijdragen, geautomatiseerde prijsberekeningsalgoritmen en gedetailleerde rapportage. Het systeem ondersteunt meerdere loterijtypen en valuta's, met realtime meldingen voor winsten en trekkingen.`,
-    image: "/projects/lotto-manager.jpg",
+    image: "https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?w=1200&h=600&fit=crop",
     technologies: ["Next.js", "TypeScript", "Supabase", "Stripe", "Automated Calculations"],
     liveUrl: "https://lottomanager.com",
     githubUrl: null,
@@ -128,7 +128,7 @@ Gebouwd met Next.js en TypeScript, beschikt het platform over Stripe-integratie 
     longDescription: `AI Stemming Dagboek is een privacy-first mentale wellness-applicatie die gebruikers helpt hun emotionele welzijn bij te houden via AI-aangedreven analyse. Gebouwd met React Native voor cross-platform mobiele ondersteuning, biedt de app gepersonaliseerde inzichten in stemmingspatronen, triggers en mentale gezondheidstrends.
 
 Het platform gebruikt on-device AI-verwerking om gebruikersprivacy te garanderen en tegelijkertijd geavanceerde analyse te bieden. Integratie met Supabase maakt veilige cloudback-up mogelijk terwijl end-to-end-encryptie wordt gehandhaafd. De app beschikt over dagelijkse prompts, stemmingsvisualisatie en evidence-based wellness-aanbevelingen.`,
-    image: "/projects/mood-journal.jpg",
+    image: "https://images.unsplash.com/photo-1544027993-37dbfe43562a?w=1200&h=600&fit=crop",
     technologies: ["React Native", "AI/ML", "Supabase", "TypeScript", "Privacy-First Architecture"],
     liveUrl: "https://moodjournal.app",
     githubUrl: "https://github.com/leroysteding/mood-journal",
@@ -160,7 +160,7 @@ Het platform gebruikt on-device AI-verwerking om gebruikersprivacy te garanderen
 De architectuur beschikt over een uitgebreid ontwerpsysteem gebouwd met Tailwind CSS en TypeScript, gedocumenteerd en getest in Storybook. Het platform implementeert herbruikbare API-clients, state management-oplossingen en een robuuste CI/CD-pijplijn in GitLab die betrouwbare implementaties garandeert in ontwikkel-, staging- en productieomgevingen.
 
 Belangrijkste functies zijn multi-brand theming, WCAG-toegankelijkheidsnaleving, prestatie-optimalisatie en schaalbare architectuur die duizenden gelijktijdige gebruikers ondersteunt.`,
-    image: "/projects/surf-platform.jpg",
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=600&fit=crop",
     technologies: ["Next.js", "Turborepo", "TypeScript", "Tailwind CSS", "Storybook", "GitLab CI/CD", "WCAG"],
     liveUrl: "https://edusources.nl",
     githubUrl: null,
@@ -190,7 +190,7 @@ Belangrijkste functies zijn multi-brand theming, WCAG-toegankelijkheidsnaleving,
     longDescription: `Een geavanceerd productieofferteringssysteem dat het offerteproces voor plaatbewerking revolutioneert. Het platform beschikt over geavanceerde 3D CAD-bestandsparsingmogelijkheden die automatisch afmetingen, materialen en complexiteitsmetrieken extraheren uit STEP, STL en andere 3D-formaten.
 
 Gebouwd met Next.js-frontend en Python-backend, gebruikt het systeem Three.js voor 3D-visualisatie en aangepaste algoritmen voor het berekenen van productiekosten, inclusief materiaal, arbeid, insteltijd en machinegebruik. Het platform integreert met bestaande ERP-systemen en biedt directe, nauwkeurige offertes die voorheen uren handmatige berekening kostten.`,
-    image: "/projects/quote-tool.jpg",
+    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1200&h=600&fit=crop",
     technologies: ["Next.js", "Three.js", "Python", "CAD Parser", "TypeScript", "FastAPI"],
     liveUrl: null,
     githubUrl: null,
@@ -220,7 +220,7 @@ Gebouwd met Next.js-frontend en Python-backend, gebruikt het systeem Three.js vo
     longDescription: `Een uitgebreid AI-transformatieproject voor De Vries Surface Technologies, met implementatie van intelligente procesautomatisering over meerdere bedrijfsworkflows. De oplossingsarchitectuur omvat geautomatiseerde documentverwerking, voorspellend onderhoudsplanning, kwaliteitscontroleautomatisering en business intelligence-dashboards.
 
 Gebouwd op Azure cloud-infrastructuur met Python-gebaseerde microservices en FastAPI-endpoints, integreert het systeem met bestaande productiesystemen terwijl het nieuwe AI-aangedreven mogelijkheden biedt. Het platform omvat aangepaste machine learning-modellen voor kwaliteitsvoorspelling, geautomatiseerde rapportage en realtime analyse.`,
-    image: "/projects/ai-solutions.jpg",
+    image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=1200&h=600&fit=crop",
     technologies: ["AI/ML", "Azure", "Python", "FastAPI", "Analytics", "Power BI"],
     liveUrl: null,
     githubUrl: null,
@@ -250,7 +250,7 @@ Gebouwd op Azure cloud-infrastructuur met Python-gebaseerde microservices en Fas
     longDescription: `Enterprise mobiele applicatie voor VodafoneZiggo die miljoenen klanten bedient. Gebouwd met React Native en Expo, biedt de app een naadloze cross-platform ervaring voor accountbeheer, servicemonitoring en klantenondersteuning.
 
 Het project beschikt over een uitgebreid ontwerpsysteem gebouwd in Storybook, dat consistentie garandeert op iOS- en Android-platforms. WCAG-toegankelijkheidsstandaarden geïmplementeerd, met uitgebreide testing met Jest en enterprise-grade code-kwaliteitsmonitoring via SonarQube. De app bevat realtime servicestatus, factuurbeheer en gepersonaliseerde aanbevelingen.`,
-    image: "/projects/vodafoneziggo.jpg",
+    image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=1200&h=600&fit=crop",
     technologies: ["React Native", "Expo", "TypeScript", "Storybook", "Jest", "WCAG", "SonarQube"],
     liveUrl: null,
     githubUrl: null,
@@ -280,7 +280,7 @@ Het project beschikt over een uitgebreid ontwerpsysteem gebouwd in Storybook, da
     longDescription: `Een geavanceerd platform voor socialezekerheidsgevallenbeheer, met integratie van meerdere datastromen voor WGA (re-integratie) en Ziektewet-begeleiding. Het platform bedient medewerkers en beheerders bij het beheren van complexe socialezekerheidsgevallen.
 
 Gebouwd met Next.js en TypeScript, beschikt het systeem over realtime gegevenssynchronisatie, geautomatiseerd workflowbeheer en uitgebreide rapportage. Jenkins CI/CD-pijplijn garandeert betrouwbare implementaties en snelle iteratie. Het platform verwerkt gevoelige persoonsgegevens met beveiliging op bankniveau en volledige AVG-naleving.`,
-    image: "/projects/robidus.jpg",
+    image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&h=600&fit=crop",
     technologies: ["Next.js", "TypeScript", "Jenkins", "CI/CD", "React", "Security"],
     liveUrl: null,
     githubUrl: null,
@@ -310,7 +310,7 @@ Gebouwd met Next.js en TypeScript, beschikt het systeem over realtime gegevenssy
     longDescription: `Enterprise e-commerceplatform voor Timber and Building Supplies Holland N.V., gebouwd op SAP Hybris Commerce. Het project omvatte full-stack ontwikkeling met diepe integratie tussen frontend-gebruikerservaring en backend SAP-systemen.
 
 Moderne webfrontend ontwikkeld met integratie met SAP ERP voor realtime voorraad, prijzen en orderbeheer. Het platform ondersteunt B2B- en B2C-verkoopkanalen met complexe prijsregels, aangepaste catalogi en multi-warehouse voorraadbeheer. Aangepaste extensies geïmplementeerd voor de bouwmaterialensector, inclusief bulkbestellingen, projectbeheer en leveringsplanning.`,
-    image: "/projects/timber-ecommerce.jpg",
+    image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1200&h=600&fit=crop",
     technologies: ["SAP Hybris", "Java", "JavaScript", "E-Commerce", "SAP Integration", "Spring"],
     liveUrl: null,
     githubUrl: null,

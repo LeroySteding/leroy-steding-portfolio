@@ -31,7 +31,7 @@ export const projects: Project[] = [
     longDescription: `AI ATS is an intelligent applicant tracking system that revolutionizes recruitment through AI-powered automation. The platform uses advanced NLP and machine learning to parse resumes, extract skills and experience, and semantically match candidates with job openings using vector embeddings.
 
 Built with Next.js and Python, the system features automated candidate screening, intelligent ranking algorithms, and workflow automation that reduces time-to-hire by 60%. Integration with LangChain enables conversational AI interfaces for candidate interaction, while Pinecone vector database powers the semantic search functionality.`,
-    image: "/projects/ai-ats.jpg",
+    image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&h=600&fit=crop",
     technologies: ["Next.js", "OpenAI GPT-4", "LangChain", "Pinecone", "PostgreSQL", "TypeScript", "Python"],
     liveUrl: null,
     githubUrl: null,
@@ -67,7 +67,7 @@ Built with Next.js and Python, the system features automated candidate screening
     longDescription: `An advanced manufacturing quotation system that revolutionizes the quoting process for sheet metal fabrication. The platform features sophisticated 3D CAD file parsing capabilities, automatically extracting dimensions, materials, and complexity metrics from STEP, STL, and other 3D formats.
 
 Built with Next.js frontend and Python backend, the system uses Three.js for 3D visualization and custom algorithms for calculating manufacturing costs including material, labor, setup time, and machine utilization. The platform integrates with existing ERP systems and provides instant, accurate quotes that previously took hours of manual calculation.`,
-    image: "/projects/quote-tool.jpg",
+    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1200&h=600&fit=crop",
     technologies: ["Next.js", "Three.js", "Python", "FastAPI", "PostgreSQL", "React Three Fiber", "TypeScript"],
     liveUrl: null,
     githubUrl: null,
@@ -103,7 +103,7 @@ Built with Next.js frontend and Python backend, the system uses Three.js for 3D 
     longDescription: `A comprehensive AI transformation project for De Vries Surface Technologies, implementing intelligent process automation across multiple business workflows. The solution architecture includes automated document processing, predictive maintenance scheduling, quality control automation, and business intelligence dashboards.
 
 Built on Azure cloud infrastructure with Python-based microservices and FastAPI endpoints, the system integrates with existing manufacturing systems while providing new AI-powered capabilities. The platform includes custom machine learning models for quality prediction, automated reporting, and real-time analytics.`,
-    image: "/projects/ai-solutions.jpg",
+    image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=1200&h=600&fit=crop",
     technologies: ["OpenAI GPT-4", "LangChain", "Python", "FastAPI", "n8n", "Power BI", "PostgreSQL"],
     liveUrl: null,
     githubUrl: null,
@@ -139,7 +139,7 @@ Built on Azure cloud infrastructure with Python-based microservices and FastAPI 
     longDescription: `AllyScan is a comprehensive AI-powered accessibility testing platform that helps organizations ensure their digital products are accessible to everyone. Using advanced machine learning algorithms, AllyScan automatically scans websites and web applications to identify WCAG 2.1 compliance issues and provides detailed, actionable recommendations for remediation.
 
 The platform features real-time scanning, automated testing workflows, and intelligent reporting that prioritizes issues by severity and impact. AllyScan integrates seamlessly into CI/CD pipelines, enabling development teams to catch accessibility issues early in the development process.`,
-    image: "/projects/allyscan.jpg",
+    image: "https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?w=1200&h=600&fit=crop",
     technologies: ["Next.js", "Playwright", "PostgreSQL", "TypeScript", "Prisma", "Docker"],
     liveUrl: "https://allyscan.com",
     githubUrl: "https://github.com/leroysteding/allyscan",
@@ -175,7 +175,7 @@ The platform features real-time scanning, automated testing workflows, and intel
     longDescription: `Smart Shop Scraper is an intelligent web scraping platform designed for e-commerce businesses to monitor competitors, track pricing, and analyze market trends. Built with Python and Playwright for robust browser automation, the platform can extract product data from even the most complex modern web applications.
 
 The system features intelligent rate limiting, rotating proxies, and advanced anti-detection mechanisms to ensure reliable data collection. With FastAPI backend and PostgreSQL database, it provides real-time alerts, historical trend analysis, and customizable dashboards for business intelligence.`,
-    image: "/projects/shop-scraper.jpg",
+    image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=1200&h=600&fit=crop",
     technologies: ["Python", "Playwright", "FastAPI", "PostgreSQL", "Redis", "Docker"],
     liveUrl: "https://shopscraper.com",
     githubUrl: "https://github.com/leroysteding/shop-scraper",
@@ -205,7 +205,7 @@ The system features intelligent rate limiting, rotating proxies, and advanced an
     longDescription: `IntelliWealth is an AI-powered financial planning platform that democratizes access to sophisticated investment advice. Using advanced machine learning algorithms, the platform analyzes user financial situations, risk tolerance, and goals to provide personalized investment recommendations and portfolio optimization strategies.
 
 Built with Next.js and Supabase, IntelliWealth features real-time market data integration, automated portfolio rebalancing, and AI agents that continuously monitor and adjust recommendations based on market conditions and user preferences. The platform integrates with Stripe for seamless subscription management.`,
-    image: "/projects/intelliwealth.jpg",
+    image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=1200&h=600&fit=crop",
     technologies: ["Next.js", "OpenAI GPT-4", "Python", "PostgreSQL", "Plaid API", "TypeScript", "Recharts"],
     liveUrl: "https://intelliwealth.com",
     githubUrl: "https://github.com/leroysteding/intelliwealth",
@@ -241,7 +241,7 @@ Built with Next.js and Supabase, IntelliWealth features real-time market data in
     longDescription: `Lotto Manager is a comprehensive lottery syndicate management platform that simplifies group lottery play. The system automates ticket tracking, prize distribution calculations, and member management, making it easy for groups to play together while ensuring fair and transparent prize sharing.
 
 Built with Next.js and TypeScript, the platform features Stripe integration for collecting member contributions, automated prize calculation algorithms, and detailed reporting. The system supports multiple lottery types and currencies, with real-time notifications for wins and draws.`,
-    image: "/projects/lotto-manager.jpg",
+    image: "https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?w=1200&h=600&fit=crop",
     technologies: ["Next.js", "TypeScript", "Supabase", "Stripe", "Automated Calculations"],
     liveUrl: "https://lottomanager.com",
     githubUrl: null,
@@ -271,7 +271,7 @@ Built with Next.js and TypeScript, the platform features Stripe integration for 
     longDescription: `AI Mood Journal is a privacy-first mental wellness application that helps users track their emotional well-being through AI-powered analysis. Built with React Native for cross-platform mobile support, the app provides personalized insights into mood patterns, triggers, and mental health trends.
 
 The platform uses on-device AI processing to ensure user privacy while still providing sophisticated analysis. Integration with Supabase enables secure cloud backup while maintaining end-to-end encryption. The app features daily prompts, mood visualization, and evidence-based wellness recommendations.`,
-    image: "/projects/mood-journal.jpg",
+    image: "https://images.unsplash.com/photo-1544027993-37dbfe43562a?w=1200&h=600&fit=crop",
     technologies: ["React Native", "AI/ML", "Supabase", "TypeScript", "Privacy-First Architecture"],
     liveUrl: "https://moodjournal.app",
     githubUrl: "https://github.com/leroysteding/mood-journal",
@@ -303,7 +303,7 @@ The platform uses on-device AI processing to ensure user privacy while still pro
 The architecture features a comprehensive design system built with Tailwind CSS and TypeScript, documented and tested in Storybook. The platform implements reusable API clients, state management solutions, and a robust CI/CD pipeline in GitLab ensuring reliable deployments across development, staging, and production environments.
 
 Key features include multi-brand theming, WCAG accessibility compliance, performance optimization, and scalable architecture supporting thousands of concurrent users.`,
-    image: "/projects/surf-platform.jpg",
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=600&fit=crop",
     technologies: ["Next.js", "Turborepo", "TypeScript", "Tailwind CSS", "Storybook", "GitLab CI/CD", "WCAG"],
     liveUrl: "https://edusources.nl",
     githubUrl: null,
@@ -333,7 +333,7 @@ Key features include multi-brand theming, WCAG accessibility compliance, perform
     longDescription: `A modern headless e-commerce platform built on MedusaJS, providing flexible and scalable commerce infrastructure. The architecture separates the backend commerce engine from the frontend storefront, enabling omnichannel experiences and rapid iteration on customer-facing applications.
 
 The platform features a Next.js storefront with server-side rendering for optimal SEO, integrated payment processing through Stripe, automated shipping calculations, and comprehensive order management. Built with TypeScript for type safety and Algolia for fast product search and filtering. The system supports multi-currency, inventory management, and customer account features.`,
-    image: "/projects/headless-ecommerce.jpg",
+    image: "https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=1200&h=600&fit=crop",
     technologies: ["MedusaJS", "Next.js", "TypeScript", "Stripe", "PostgreSQL", "Algolia", "Tailwind CSS"],
     liveUrl: null,
     githubUrl: null,
@@ -369,7 +369,7 @@ The platform features a Next.js storefront with server-side rendering for optima
     longDescription: `Enterprise mobile application for VodafoneZiggo serving millions of customers. Built with React Native and Expo, the app provides seamless cross-platform experience for account management, service monitoring, and customer support.
 
 The project features a comprehensive design system built in Storybook, ensuring consistency across iOS and Android platforms. Implemented WCAG accessibility standards throughout, with extensive testing using Jest and enterprise-grade code quality monitoring via SonarQube. The app includes real-time service status, billing management, and personalized recommendations.`,
-    image: "/projects/vodafoneziggo.jpg",
+    image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=1200&h=600&fit=crop",
     technologies: ["React Native", "Expo", "TypeScript", "Storybook", "Jest", "WCAG", "SonarQube"],
     liveUrl: null,
     githubUrl: null,
@@ -399,7 +399,7 @@ The project features a comprehensive design system built in Storybook, ensuring 
     longDescription: `A sophisticated platform for social security case management, integrating multiple data streams for WGA (Return to Work) and Ziektewet (Sickness Benefits) guidance. The platform serves case workers and administrators in managing complex social security cases.
 
 Built with Next.js and TypeScript, the system features real-time data synchronization, automated workflow management, and comprehensive reporting. Jenkins CI/CD pipeline ensures reliable deployments and quick iteration. The platform handles sensitive personal data with bank-grade security and full GDPR compliance.`,
-    image: "/projects/robidus.jpg",
+    image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&h=600&fit=crop",
     technologies: ["Next.js", "TypeScript", "Jenkins", "CI/CD", "React", "Security"],
     liveUrl: null,
     githubUrl: null,
@@ -429,7 +429,7 @@ Built with Next.js and TypeScript, the system features real-time data synchroniz
     longDescription: `Enterprise e-commerce platform for Timber and Building Supplies Holland N.V., built on SAP Hybris Commerce. The project involved full-stack development with deep integration between frontend user experience and backend SAP systems.
 
 Developed modern web frontend while integrating with SAP ERP for real-time inventory, pricing, and order management. The platform supports B2B and B2C sales channels with complex pricing rules, custom catalogs, and multi-warehouse inventory management. Implemented custom extensions for the building supplies industry including bulk ordering, project management, and delivery scheduling.`,
-    image: "/projects/timber-ecommerce.jpg",
+    image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1200&h=600&fit=crop",
     technologies: ["SAP Hybris", "Java", "JavaScript", "E-Commerce", "SAP Integration", "Spring"],
     liveUrl: null,
     githubUrl: null,
