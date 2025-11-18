@@ -30,7 +30,7 @@ export default function Header() {
     { name: t.nav.skills, href: "/#skills" },
     { name: t.nav.projects, href: "/#projects" },
     { name: t.nav.blog, href: "/blog" },
-    { name: t.nav.contact, href: "/#contact" },
+    { name: t.nav.contact, href: "/contact" },
   ];
   const [mounted, setMounted] = useState(false);
 

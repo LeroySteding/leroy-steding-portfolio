@@ -8,6 +8,7 @@ import { getProjectById } from "@/utils/getLocalizedData";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useTranslation } from "@/hooks/useTranslation";
 import MetaTags from "@/components/seo/MetaTags";
+import CTA from "@/components/ui/CTA";
 
 export default function ProjectDetailPage() {
   const params = useParams();
@@ -296,26 +297,7 @@ export default function ProjectDetailPage() {
             )}
 
             {/* CTA */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-              className="card text-center p-12"
-            >
-              <h3 className="text-3xl md:text-4xl font-display font-black mb-6">
-                {t.projects.detail.cta.title}
-              </h3>
-              <p className="text-text-secondary text-lg mb-8 max-w-2xl mx-auto">
-                {t.projects.detail.cta.subtitle}
-              </p>
-              <Link
-                href="/#contact"
-                className="btn-primary inline-flex items-center gap-3"
-              >
-                {t.projects.detail.cta.button}
-              </Link>
-            </motion.div>
+            <CTA variant="project" />
           </div>
         </div>
       </section>

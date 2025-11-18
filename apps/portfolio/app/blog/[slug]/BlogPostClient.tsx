@@ -9,6 +9,8 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { useEffect, useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import NewsletterSubscribe from "@/components/ui/NewsletterSubscribe";
+import CTA from "@/components/ui/CTA";
 
 interface BlogPostClientProps {
   slug: string;
@@ -243,30 +245,12 @@ export default function BlogPostClient({ slug }: BlogPostClientProps) {
             </div>
 
             {/* Newsletter CTA */}
-            <div className="card p-8 mb-16 bg-gradient-to-br from-accent-primary/10 to-accent-secondary/10 border-2 border-accent-primary/30">
-              <div className="flex items-start gap-6">
-                <div className="flex-shrink-0 w-16 h-16 rounded-xl bg-gradient-to-br from-accent-primary to-accent-secondary flex items-center justify-center">
-                  <Mail className="w-8 h-8 text-white" />
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-2xl font-display font-bold mb-3 text-text-primary">
-                    Want more insights like this?
-                  </h3>
-                  <p className="text-text-secondary mb-6 leading-relaxed">
-                    Subscribe to get notified about new articles, tutorials, and research on web development and AI automation.
-                  </p>
-                  <div className="flex gap-3">
-                    <input
-                      type="email"
-                      placeholder="Enter your email"
-                      className="flex-1 px-4 py-3 rounded-xl bg-surface border-2 border-surface focus:border-accent-primary outline-none text-text-primary placeholder:text-text-secondary transition-all"
-                    />
-                    <button className="px-6 py-3 bg-accent-primary text-primary-bg rounded-xl font-bold hover:scale-105 transition-transform whitespace-nowrap">
-                      Subscribe
-                    </button>
-                  </div>
-                </div>
-              </div>
+            <div className="mb-16">
+              <NewsletterSubscribe 
+                variant="compact"
+                title="Want more insights like this?"
+                description="Subscribe to get notified about new articles, tutorials, and research on web development and AI automation."
+              />
             </div>
 
             {/* Tags */}
@@ -286,6 +270,15 @@ export default function BlogPostClient({ slug }: BlogPostClientProps) {
                   </Link>
                 ))}
               </div>
+            </div>
+
+            {/* CTA Section */}
+            <div className="mb-16">
+              <CTA 
+                variant="contact"
+                title="Have Questions or Ideas?"
+                description="If this article sparked any thoughts or if you'd like to discuss these concepts further, I'd love to hear from you."
+              />
             </div>
 
             {/* Related Posts */}

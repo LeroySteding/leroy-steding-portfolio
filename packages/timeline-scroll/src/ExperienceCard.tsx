@@ -100,18 +100,17 @@ export const ExperienceCard: React.FC<ExperienceCardProps> = ({
 
   const cardContent = (
     <div
-      className={`relative p-8 rounded-2xl bg-linear-to-br from-cyber-darker to-cyber-black border-2 border-${colorClass}/30 hover:border-${colorClass}/70 transition-all duration-500 group hover:shadow-2xl hover:shadow-${colorClass}/20 ${href ? "cursor-pointer" : ""} ${className} flex flex-col justify-between`}
+      className={`relative p-8 rounded-2xl bg-secondary-bg border border-surface hover:border-accent-primary transition-all duration-300 group hover:shadow-2xl hover:-translate-y-2 ${href ? "cursor-pointer" : ""} ${className} flex flex-col justify-between`}
       style={{
         width: `${width}px`,
         height: "600px",
         minHeight: "600px",
         maxHeight: "600px",
-        backgroundColor: "rgb(10, 10, 15)",
       }}
     >
       {/* Company Logo - Top Right */}
       {companyLogo && (
-        <div className="absolute top-4 right-4 w-16 h-16 rounded-lg bg-white/95 backdrop-blur-sm border border-cyber-gray-light shadow-lg p-2 group-hover:scale-110 transition-transform duration-300 z-20 flex items-center justify-center">
+        <div className="absolute top-6 right-6 w-16 h-16 rounded-xl bg-surface border-2 border-surface-light shadow-lg p-2 group-hover:scale-110 transition-transform duration-300 z-20 flex items-center justify-center">
           {companyLogo.startsWith("/") ? (
             <img
               src={companyLogo}
@@ -133,7 +132,7 @@ export const ExperienceCard: React.FC<ExperienceCardProps> = ({
           <div className="pr-20 flex-shrink-0" style={{ height: '140px' }}>
             <div className="flex items-center gap-3 mb-3">
               <svg
-                className={`w-5 h-5 text-${colorClass} flex-shrink-0`}
+                className="w-5 h-5 text-accent-primary flex-shrink-0"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -145,20 +144,16 @@ export const ExperienceCard: React.FC<ExperienceCardProps> = ({
                   d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
                 />
               </svg>
-              <span
-                className={`text-sm font-bold text-${colorClass} uppercase tracking-wide`}
-              >
+              <span className="text-sm font-bold text-accent-primary uppercase tracking-wide">
                 {period}
               </span>
             </div>
 
-            <h3 className="text-2xl font-display font-bold mb-2 text-text-primary group-hover:text-neon-cyan transition-colors leading-tight line-clamp-2">
+            <h3 className="text-2xl font-display font-bold mb-2 text-text-primary group-hover:text-accent-primary transition-colors leading-tight line-clamp-2">
               {title}
             </h3>
 
-            <h4
-              className={`text-lg font-semibold text-${colorClass} mb-1 flex items-center gap-2`}
-            >
+            <h4 className="text-lg font-semibold text-text-secondary mb-1 flex items-center gap-2">
               <svg
                 className="w-5 h-5"
                 fill="none"
@@ -176,7 +171,7 @@ export const ExperienceCard: React.FC<ExperienceCardProps> = ({
             </h4>
 
             {location && (
-              <p className="flex items-center gap-2 text-text-secondary text-sm line-clamp-1">
+              <p className="flex items-center gap-2 text-text-muted text-sm line-clamp-1">
                 <svg
                   className="w-4 h-4"
                   fill="none"
@@ -220,7 +215,7 @@ export const ExperienceCard: React.FC<ExperienceCardProps> = ({
                     key={i}
                     className="flex items-start gap-2 text-xs text-text-secondary line-clamp-1"
                   >
-                    <span className={`text-${colorClass} mt-0.5 flex-shrink-0`}>
+                    <span className="text-accent-primary mt-0.5 flex-shrink-0">
                       ▸
                     </span>
                     <span className="line-clamp-1">{achievement}</span>
@@ -228,7 +223,7 @@ export const ExperienceCard: React.FC<ExperienceCardProps> = ({
                 ))}
               </ul>
             ) : (
-              <p className="text-xs text-text-secondary/50">No achievements listed</p>
+              <p className="text-xs text-text-muted">No achievements listed</p>
             )}
           </div>
 
@@ -241,15 +236,13 @@ export const ExperienceCard: React.FC<ExperienceCardProps> = ({
               {technologies.slice(0, 6).map((tech) => (
                 <span
                   key={tech}
-                  className={`px-3 py-1 text-xs font-semibold rounded-lg bg-${colorClass}/10 text-${colorClass} border border-${colorClass}/30 hover:bg-${colorClass}/20 transition-colors`}
+                  className="px-3 py-1 text-xs font-semibold rounded-lg bg-surface text-text-secondary border-2 border-surface-light hover:border-accent-primary hover:text-accent-primary transition-all duration-300"
                 >
                   {tech}
                 </span>
               ))}
               {technologies.length > 6 && (
-                <span
-                  className={`px-3 py-1 text-xs font-semibold rounded-lg bg-${colorClass}/10 text-${colorClass} border border-${colorClass}/30`}
-                >
+                <span className="px-3 py-1 text-xs font-semibold rounded-lg bg-surface text-text-secondary border-2 border-surface-light">
                   +{technologies.length - 6} more
                 </span>
               )}
@@ -261,9 +254,7 @@ export const ExperienceCard: React.FC<ExperienceCardProps> = ({
 
           {/* View Details Link - Fixed at bottom */}
           {showViewDetails && (
-            <div
-              className={`flex items-center gap-2 text-${colorClass} text-sm font-bold group-hover:gap-4 transition-all duration-300 pt-3 border-t border-cyber-gray-light flex-shrink-0 mt-auto`}
-            >
+            <div className="flex items-center gap-2 text-accent-primary text-sm font-bold group-hover:gap-4 transition-all duration-300 pt-3 border-t border-surface-light flex-shrink-0 mt-auto">
               <span>{viewDetailsText}</span>
               <svg
                 className="w-5 h-5 group-hover:translate-x-2 transition-transform duration-300"

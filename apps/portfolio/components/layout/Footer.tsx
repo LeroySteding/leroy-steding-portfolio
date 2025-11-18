@@ -1,8 +1,9 @@
 "use client";
 
-import { Github, Linkedin, Twitter, Mail } from "lucide-react";
+import { Github, Linkedin, Twitter, Mail, MapPin, Phone } from "lucide-react";
 import Link from "next/link";
 import { useTranslation } from "@/hooks/useTranslation";
+import NewsletterSubscribe from "@/components/ui/NewsletterSubscribe";
 
 export default function Footer() {
   const t = useTranslation();
@@ -24,36 +25,97 @@ export default function Footer() {
       href: "https://twitter.com/leroysteding",
       icon: Twitter,
     },
+  ];
+
+  const contactInfo = [
     {
-      name: t.footer.links.email,
-      href: "mailto:leroy@steding.digital",
       icon: Mail,
+      label: "Email",
+      value: "leroy@steding.digital",
+      href: "mailto:leroy@steding.digital",
+    },
+    {
+      icon: Phone,
+      label: "Phone",
+      value: "+31 6 12345678",
+      href: "tel:+31612345678",
+    },
+    {
+      icon: MapPin,
+      label: "Location",
+      value: "Netherlands",
     },
   ];
 
   const footerLinks = [
+    { name: t.nav.about, href: "/#about" },
+    { name: t.nav.experience, href: "/#experience" },
+    { name: t.nav.projects, href: "/#projects" },
+    { name: t.nav.blog, href: "/blog" },
+    { name: t.nav.contact, href: "/contact" },
+  ];
+
+  const legalLinks = [
     { name: t.footer.links.privacy, href: "/privacy" },
     { name: t.footer.links.terms, href: "/terms" },
   ];
 
   return (
     <footer className="bg-tertiary-bg border-t-2 border-surface">
+      {/* Newsletter Section */}
+      <div className="border-b-2 border-surface">
+        <div className="container mx-auto px-8 lg:px-16 py-16">
+          <NewsletterSubscribe variant="inline" className="max-w-2xl mx-auto text-center" />
+        </div>
+      </div>
+
+      {/* Main Footer Content */}
       <div className="container mx-auto px-8 lg:px-16 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           {/* Branding */}
           <div className="space-y-6">
             <h3 className="text-3xl font-display font-black text-gradient">
               STEDING.
             </h3>
-            <p className="text-text-secondary text-lg leading-relaxed font-medium">
+            <p className="text-text-secondary text-base leading-relaxed font-medium">
               Full-Stack Developer & AI Automation Architect building scalable
               AI-driven web platforms and digital automation solutions.
             </p>
           </div>
 
-          {/* Quick Links */}
+          {/* Contact Info */}
           <div className="space-y-6">
             <h4 className="text-2xl font-display font-bold text-accent-primary">
+              {t.nav.about === "Over Mij" ? "Contact" : "Contact"}
+            </h4>
+            <ul className="space-y-3">
+              {contactInfo.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <li key={item.label}>
+                    {item.href ? (
+                      <a
+                        href={item.href}
+                        className="flex items-center gap-3 text-text-secondary hover:text-accent-primary transition-colors duration-200 group"
+                      >
+                        <Icon className="w-4 h-4 flex-shrink-0" />
+                        <span className="text-sm font-semibold">{item.value}</span>
+                      </a>
+                    ) : (
+                      <div className="flex items-center gap-3 text-text-secondary">
+                        <Icon className="w-4 h-4 flex-shrink-0" />
+                        <span className="text-sm font-semibold">{item.value}</span>
+                      </div>
+                    )}
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+
+          {/* Quick Links */}
+          <div className="space-y-6">
+            <h4 className="text-2xl font-display font-bold text-accent-secondary">
               {t.nav.about === "Over Mij" ? "Snelle Links" : "Quick Links"}
             </h4>
             <ul className="space-y-3">
@@ -61,7 +123,7 @@ export default function Footer() {
                 <li key={link.name}>
                   <Link
                     href={link.href}
-                    className="text-text-secondary hover:text-accent-primary transition-colors duration-200 text-base font-semibold"
+                    className="text-text-secondary hover:text-accent-secondary transition-colors duration-200 text-sm font-semibold"
                   >
                     {link.name}
                   </Link>
@@ -72,10 +134,10 @@ export default function Footer() {
 
           {/* Social Links */}
           <div className="space-y-6">
-            <h4 className="text-2xl font-display font-bold text-accent-secondary">
-              {t.nav.about === "Over Mij" ? "Verbinden" : "Connect"}
+            <h4 className="text-2xl font-display font-bold text-accent-primary">
+              {t.nav.about === "Over Mij" ? "Social" : "Social"}
             </h4>
-            <div className="flex space-x-4">
+            <div className="flex space-x-3">
               {socialLinks.map((social) => {
                 const Icon = social.icon;
                 return (
@@ -87,7 +149,7 @@ export default function Footer() {
                     className="card p-4 hover:scale-110 transition-all duration-200 group"
                     aria-label={social.name}
                   >
-                    <Icon className="w-7 h-7 text-text-secondary group-hover:text-accent-primary transition-colors duration-200" />
+                    <Icon className="w-6 h-6 text-text-secondary group-hover:text-accent-primary transition-colors duration-200" />
                   </a>
                 );
               })}
@@ -95,11 +157,29 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Copyright */}
+        {/* Copyright & Legal */}
         <div className="pt-8 border-t-2 border-surface">
-          <p className="text-center text-text-muted text-base font-semibold">
-            © {currentYear} Leroy Steding — {t.nav.about === "Over Mij" ? "Alle rechten voorbehouden" : "All rights reserved"}
-          </p>
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            <p className="text-text-muted text-sm font-semibold">
+              © {currentYear} Leroy Steding — {t.nav.about === "Over Mij" ? "Alle rechten voorbehouden" : "All rights reserved"}
+            </p>
+            
+            <div className="flex items-center gap-6">
+              {legalLinks.map((link, index) => (
+                <span key={link.name} className="flex items-center gap-6">
+                  <Link
+                    href={link.href}
+                    className="text-text-muted hover:text-accent-primary transition-colors duration-200 text-sm font-semibold"
+                  >
+                    {link.name}
+                  </Link>
+                  {index < legalLinks.length - 1 && (
+                    <span className="text-text-muted">•</span>
+                  )}
+                </span>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </footer>

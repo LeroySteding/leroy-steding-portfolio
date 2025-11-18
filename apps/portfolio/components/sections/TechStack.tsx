@@ -8,6 +8,15 @@ import { useState, useMemo } from "react";
 import { useTranslation } from "@/hooks/useTranslation";
 import { useLanguage } from "@/contexts/LanguageContext";
 
+// Helper function to get proficiency level
+const getProficiencyLevel = (proficiency: number): { label: string; color: string } => {
+  if (proficiency >= 90) return { label: "Master", color: "text-green-400" };
+  if (proficiency >= 75) return { label: "Expert", color: "text-accent-primary" };
+  if (proficiency >= 60) return { label: "Advanced", color: "text-blue-400" };
+  if (proficiency >= 40) return { label: "Intermediate", color: "text-accent-secondary" };
+  return { label: "Beginner", color: "text-text-muted" };
+};
+
 export default function TechStack() {
   const t = useTranslation();
   const { language } = useLanguage();
@@ -149,24 +158,56 @@ export default function TechStack() {
           </div>
         </motion.div>
 
+        {/* Results count */}
+        {(selectedCategories.length > 0 || searchQuery) && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-6 text-text-secondary font-semibold"
+          >
+            Found {displayTechnologies.length} {displayTechnologies.length === 1 ? 'technology' : 'technologies'}
+          </motion.div>
+        )}
+
         {/* Technologies grid */}
         <AnimatePresence mode="wait">
-          <motion.div
-            key={`${selectedCategories.join('-')}-${searchQuery}`}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6 mb-16"
-          >
+          {displayTechnologies.length === 0 ? (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              className="card p-16 text-center mb-16"
+            >
+              <div className="text-6xl mb-4">🔍</div>
+              <h3 className="text-2xl font-bold text-text-primary mb-2">No technologies found</h3>
+              <p className="text-text-secondary mb-6">Try adjusting your search or filters</p>
+              <button
+                onClick={() => {
+                  setSearchQuery("");
+                  setSelectedCategories([]);
+                }}
+                className="btn-secondary"
+              >
+                Clear Filters
+              </button>
+            </motion.div>
+          ) : (
+            <motion.div
+              key={`${selectedCategories.join('-')}-${searchQuery}`}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6 mb-16"
+            >
             {displayTechnologies.map((tech, index) => (
               <motion.div
                 key={tech.name}
                 initial={{ opacity: 0, y: 20, scale: 0.9 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
-                whileHover={{ y: -5, scale: 1.05 }}
+                whileHover={{ y: -8, scale: 1.02 }}
                 transition={{ 
-                  duration: 0.5, 
+                  duration: 0.6, 
                   delay: index * 0.03,
                   type: "spring",
                   stiffness: 300,
@@ -175,10 +216,10 @@ export default function TechStack() {
                 className="relative group"
               >
                 {/* Glow effect */}
-                <div className="absolute -inset-1 bg-gradient-to-r from-accent-secondary/20 to-accent-primary/20 rounded-2xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute -inset-1 bg-gradient-to-r from-accent-secondary/20 to-accent-primary/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 
                 {/* Card content */}
-                <div className="relative card p-6 flex flex-col items-center justify-center gap-3 cursor-pointer backdrop-blur-sm border-2 border-surface group-hover:border-accent-secondary/40 transition-all duration-300">
+                <div className="relative card p-6 flex flex-col items-center justify-center gap-3 cursor-pointer h-full min-h-[200px]">
                   {/* Tech icon */}
                   <div className="relative w-16 h-16 flex items-center justify-center">
                     {tech.icon.startsWith('http') ? (
@@ -200,35 +241,35 @@ export default function TechStack() {
                   </h3>
 
                   {/* Proficiency bar */}
-                  <div className="w-full bg-surface rounded-full h-2 overflow-hidden">
-                    <motion.div
-                      initial={{ width: 0 }}
-                      animate={{ width: `${tech.proficiency}%` }}
-                      transition={{ 
-                        duration: 1, 
-                        delay: index * 0.03,
-                        ease: [0.22, 1, 0.36, 1]
-                      }}
-                      className="h-full bg-gradient-to-r from-accent-secondary to-accent-primary rounded-full relative"
-                    >
-                      <div className="absolute inset-0 bg-white/20 animate-pulse" />
-                    </motion.div>
+                  <div className="w-full">
+                    <div className="flex items-center justify-between mb-1.5">
+                      <span className={`text-xs font-bold ${getProficiencyLevel(tech.proficiency).color}`}>
+                        {getProficiencyLevel(tech.proficiency).label}
+                      </span>
+                      <span className="text-xs font-bold text-accent-secondary">
+                        {tech.proficiency}%
+                      </span>
+                    </div>
+                    <div className="w-full bg-surface rounded-full h-2 overflow-hidden">
+                      <motion.div
+                        initial={{ width: 0 }}
+                        animate={{ width: `${tech.proficiency}%` }}
+                        transition={{ 
+                          duration: 1, 
+                          delay: index * 0.03,
+                          ease: [0.22, 1, 0.36, 1]
+                        }}
+                        className="h-full bg-gradient-to-r from-accent-secondary to-accent-primary rounded-full relative"
+                      >
+                        <div className="absolute inset-0 bg-white/20 animate-pulse" />
+                      </motion.div>
+                    </div>
                   </div>
-
-                  {/* Proficiency percentage - Always visible */}
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: index * 0.03 + 0.3 }}
-                  >
-                    <span className="px-3 py-1.5 text-sm font-bold rounded-full bg-gradient-to-r from-accent-secondary/20 to-accent-primary/20 text-accent-secondary border border-accent-secondary/30">
-                      {tech.proficiency}%
-                    </span>
-                  </motion.div>
                 </div>
               </motion.div>
             ))}
-          </motion.div>
+            </motion.div>
+          )}
         </AnimatePresence>
 
         {/* Stats */}
