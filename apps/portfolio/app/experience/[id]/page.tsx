@@ -17,7 +17,7 @@ export default function ExperienceDetailPage() {
   const experience = getExperienceById(params.id as string, language);
 
   const pageTitle = experience
-    ? `${experience.title} at ${experience.company} | Leroy Steding`
+    ? `${experience.title} at ${experience.company} | STEDING.`
     : t.experience.detail.notFound;
   const pageDescription = experience?.description || "";
   const pageUrl = `https://leroysteding.nl/experience/${params.id}`;

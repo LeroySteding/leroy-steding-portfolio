@@ -1,7 +1,6 @@
 "use client";
 
 import { ArrowRight, Download } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useTranslation } from "@/hooks/useTranslation";
@@ -11,10 +10,10 @@ export default function Hero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-primary-bg">
       {/* Subtle gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-primary-bg via-secondary-bg to-primary-bg opacity-60" />
+      <div className="absolute inset-0 bg-linear-to-b from-primary-bg via-secondary-bg to-primary-bg opacity-60" />
 
-      <div className="container relative z-10 mx-auto px-8 lg:px-16 pt-32 pb-20">
-        <div className="grid lg:grid-cols-2 gap-20 items-center">
+      <div className="container  z-10 mx-auto px-8 lg:px-16 pt-32 pb-20">
+        <div className="flex gap-20 items-center">
           {/* Content */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -95,36 +94,6 @@ export default function Hero() {
                 <div className="text-base text-text-muted mt-2 font-semibold uppercase tracking-wide">{t.hero.stats.clients}</div>
               </div>
             </motion.div>
-          </motion.div>
-
-          {/* Portrait Image */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="relative"
-          >
-            <div className="relative w-full aspect-square max-w-lg mx-auto">
-              {/* Simple accent border */}
-              <div className="absolute -inset-4 border-4 border-accent-primary rounded-2xl" />
-              
-              {/* Image container */}
-              <div className="relative w-full h-full rounded-2xl overflow-hidden bg-secondary-bg">
-                <Image
-                  src="/leroy-profile-pic.jpeg"
-                  alt="Leroy Steding Portrait"
-                  fill
-                  className="object-cover"
-                  priority
-                  placeholder="blur"
-                  blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAn/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCwAB//2Q=="
-                />
-              </div>
-              
-              {/* Decorative corner elements */}
-              <div className="absolute -top-6 -left-6 w-32 h-32 border-l-4 border-t-4 border-accent-secondary rounded-tl-2xl" />
-              <div className="absolute -bottom-6 -right-6 w-32 h-32 border-r-4 border-b-4 border-accent-primary rounded-br-2xl" />
-            </div>
           </motion.div>
         </div>
       </div>

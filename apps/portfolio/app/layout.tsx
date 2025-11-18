@@ -20,7 +20,7 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "Leroy Steding | Full-Stack Developer & AI Automation Architect",
+  title: "STEDING. | Full-Stack Developer & AI Automation Architect",
   description: "Building scalable AI-driven web platforms & digital automation solutions. Full-stack developer specializing in Next.js, TypeScript, React, and AI automation.",
   keywords: ["Leroy Steding", "Full-Stack Developer", "AI Automation", "Next.js", "TypeScript", "React", "Hifive", "Web Development", "Netherlands"],
   authors: [{ name: "Leroy Steding" }],
@@ -30,8 +30,8 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "https://leroysteding.nl",
-    siteName: "Leroy Steding Portfolio",
-    title: "Leroy Steding | Full-Stack Developer & AI Automation Architect",
+    siteName: "STEDING. Portfolio",
+    title: "Steding | Full-Stack Developer & AI Automation Architect",
     description: "Building scalable AI-driven web platforms & digital automation solutions.",
     images: [
       {
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Leroy Steding | Full-Stack Developer & AI Automation Architect",
+    title: "Full-Stack Developer & AI Automation Architect",
     description: "Building scalable AI-driven web platforms & digital automation solutions.",
     images: ["/og-image.png"],
   },

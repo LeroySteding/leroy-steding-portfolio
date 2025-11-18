@@ -43,7 +43,7 @@ export default function Footer() {
           {/* Branding */}
           <div className="space-y-6">
             <h3 className="text-3xl font-display font-black text-gradient">
-              Leroy Steding
+              STEDING.
             </h3>
             <p className="text-text-secondary text-lg leading-relaxed font-medium">
               Full-Stack Developer & AI Automation Architect building scalable

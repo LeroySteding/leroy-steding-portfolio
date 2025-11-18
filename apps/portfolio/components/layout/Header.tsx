@@ -57,7 +57,7 @@ export default function Header() {
             className="flex items-center space-x-2 group"
           >
             <span className="text-3xl md:text-4xl font-display font-black text-gradient transition-all">
-              LS
+              STEDING.
             </span>
           </Link>
 
