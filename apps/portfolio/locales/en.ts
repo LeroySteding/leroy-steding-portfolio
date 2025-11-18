@@ -155,6 +155,28 @@ export const en = {
       success: "✓ Message sent successfully! I'll get back to you soon.",
       error: "✗ Failed to send message. Please try again or email me directly.",
     },
+    chat: {
+      title: "Leroy's AI Assistant",
+      subtitle: "Ask me anything about Leroy's experience, projects, skills, or how to work together",
+      placeholder: "Ask me anything...",
+      emptyStateTitle: "Hi! I'm Leroy's AI Assistant",
+      emptyStateSubtitle: "I can help you learn about Leroy's experience, projects, and services. Try asking:",
+      suggestionsLabel: "You might also ask:",
+      starterPrompts: [
+        "What are Leroy's main skills?",
+        "Tell me about his AI projects",
+        "What services does he offer?",
+        "How can I work with Leroy?",
+      ],
+      followUpPrompts: [
+        "What's his experience with Next.js?",
+        "Tell me about his e-commerce projects",
+        "Does he do mobile development?",
+        "What's his approach to accessibility?",
+        "Can he help with AI integration?",
+        "What industries has he worked in?",
+      ],
+    },
   },
   footer: {
     copyright: "© 2025 Leroy Steding. All rights reserved.",

@@ -157,6 +157,28 @@ export const nl: Translations = {
       success: "✓ Bericht succesvol verzonden! Ik neem binnenkort contact met u op.",
       error: "✗ Bericht verzenden mislukt. Probeer het opnieuw of stuur mij direct een e-mail.",
     },
+    chat: {
+      title: "Leroy's AI Assistent",
+      subtitle: "Vraag me alles over Leroy's ervaring, projecten, vaardigheden of hoe samen te werken",
+      placeholder: "Vraag me alles...",
+      emptyStateTitle: "Hoi! Ik ben Leroy's AI Assistent",
+      emptyStateSubtitle: "Ik kan u helpen meer te leren over Leroy's ervaring, projecten en diensten. Probeer te vragen:",
+      suggestionsLabel: "U zou ook kunnen vragen:",
+      starterPrompts: [
+        "Wat zijn Leroy's belangrijkste vaardigheden?",
+        "Vertel me over zijn AI-projecten",
+        "Welke diensten biedt hij aan?",
+        "Hoe kan ik met Leroy samenwerken?",
+      ],
+      followUpPrompts: [
+        "Wat is zijn ervaring met Next.js?",
+        "Vertel me over zijn e-commerce projecten",
+        "Doet hij mobiele ontwikkeling?",
+        "Wat is zijn benadering van toegankelijkheid?",
+        "Kan hij helpen met AI-integratie?",
+        "In welke sectoren heeft hij gewerkt?",
+      ],
+    },
   },
   footer: {
     copyright: "© 2025 Leroy Steding. Alle rechten voorbehouden.",

@@ -5,8 +5,14 @@ import { Mail, MapPin, Phone, Linkedin, Github, Twitter, Send, Calendar, Downloa
 import Link from "next/link";
 import { useState } from "react";
 import NewsletterSubscribe from "@/components/ui/NewsletterSubscribe";
+import ChatPage from "@/components/ui/ChatPage";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { useTranslation } from "@/hooks/useTranslation";
 
 export default function ContactPage() {
+  const { language } = useLanguage();
+  const t = useTranslation(language);
+  
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -350,6 +356,20 @@ export default function ContactPage() {
               </div>
             </motion.div>
           </div>
+
+          {/* AI Chat Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="mb-24"
+          >
+            <ChatPage 
+              translations={t.contact.chat}
+              locale={language}
+            />
+          </motion.div>
 
           {/* Newsletter Section */}
           <motion.div
