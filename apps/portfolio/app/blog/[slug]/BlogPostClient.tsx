@@ -3,7 +3,7 @@
 import { notFound } from "next/navigation";
 import { Calendar, Clock, Tag, ArrowLeft, Share2, Twitter, Linkedin, Facebook, Link as LinkIcon, Mail, ChevronRight } from "lucide-react";
 import Link from "next/link";
-import { getPostBySlug, getAllPosts } from "@/data/blog";
+import { getBlogPosts } from "@/utils/getLocalizedData";
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
@@ -13,11 +13,11 @@ import NewsletterSubscribe from "@/components/ui/NewsletterSubscribe";
 import CTA from "@/components/ui/CTA";
 
 interface BlogPostClientProps {
-  slug: string;
+  post: any;
+  language?: 'en' | 'nl';
 }
 
-export default function BlogPostClient({ slug }: BlogPostClientProps) {
-  const post = getPostBySlug(slug);
+export default function BlogPostClient({ post, language = 'en' }: BlogPostClientProps) {
   const [readingProgress, setReadingProgress] = useState(0);
   const [showShareMenu, setShowShareMenu] = useState(false);
   const [activeHeading, setActiveHeading] = useState<string>("");
@@ -29,7 +29,7 @@ export default function BlogPostClient({ slug }: BlogPostClientProps) {
 
   // Get related posts (same category or shared tags)
   const relatedPosts = useMemo(() => {
-    const allPosts = getAllPosts().filter(p => p.id !== post.id);
+    const allPosts = getBlogPosts(language).filter(p => p.id !== post.id);
     
     return allPosts
       .map(p => ({
@@ -41,7 +41,7 @@ export default function BlogPostClient({ slug }: BlogPostClientProps) {
       .sort((a, b) => b.score - a.score)
       .slice(0, 3)
       .map(item => item.post);
-  }, [post]);
+  }, [post, language]);
 
   // Extract headings for table of contents
   const headings = useMemo(() => {
@@ -142,11 +142,11 @@ export default function BlogPostClient({ slug }: BlogPostClientProps) {
 
         <div className="container relative z-10 mx-auto px-8 lg:px-16 pb-16 pt-32">
           <Link
-            href="/blog"
+            href={language === 'nl' ? '/nl/blog' : '/blog'}
             className="inline-flex items-center gap-2 text-text-secondary hover:text-accent-primary transition-colors mb-8 group font-bold backdrop-blur-sm bg-primary-bg/50 px-4 py-2 rounded-xl"
           >
             <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-            <span>Back to Journal</span>
+            <span>{language === 'nl' ? 'Terug naar Blog' : 'Back to Journal'}</span>
           </Link>
 
           <div className="flex items-center gap-3 mb-6">
@@ -180,7 +180,7 @@ export default function BlogPostClient({ slug }: BlogPostClientProps) {
             </div>
             <div className="flex items-center gap-2 backdrop-blur-sm bg-primary-bg/50 px-4 py-3 rounded-xl">
               <Calendar className="w-4 h-4 text-accent-primary" />
-              <span className="font-bold text-text-primary">{new Date(post.publishedAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
+              <span className="font-bold text-text-primary">{new Date(post.publishedAt).toLocaleDateString(language === 'nl' ? 'nl-NL' : 'en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
             </div>
             <div className="flex items-center gap-2 backdrop-blur-sm bg-primary-bg/50 px-4 py-3 rounded-xl">
               <Clock className="w-4 h-4 text-accent-primary" />
@@ -291,7 +291,7 @@ export default function BlogPostClient({ slug }: BlogPostClientProps) {
                   {relatedPosts.map((relatedPost) => (
                     <Link
                       key={relatedPost.id}
-                      href={`/blog/${relatedPost.slug}`}
+                      href={language === 'nl' ? `/nl/blog/${relatedPost.slug}` : `/blog/${relatedPost.slug}`}
                       className="card p-6 hover:scale-105 transition-transform group"
                     >
                       <span className="px-3 py-1 text-xs font-bold rounded-full capitalize bg-accent-primary/20 text-accent-primary mb-3 inline-block">
@@ -312,11 +312,11 @@ export default function BlogPostClient({ slug }: BlogPostClientProps) {
             {/* Navigation */}
             <div className="flex flex-col sm:flex-row justify-between items-center gap-6 pt-12 border-t-2 border-surface">
               <Link
-                href="/blog"
+                href={language === 'nl' ? '/nl/blog' : '/blog'}
                 className="flex items-center gap-3 text-accent-primary hover:text-accent-secondary transition-colors group font-bold text-lg"
               >
                 <ArrowLeft className="w-6 h-6 group-hover:-translate-x-1 transition-transform" />
-                <span>Back to all posts</span>
+                <span>{language === 'nl' ? 'Terug naar alle artikelen' : 'Back to all posts'}</span>
               </Link>
               <Link
                 href="/#contact"

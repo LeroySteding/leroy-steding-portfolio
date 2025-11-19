@@ -4,7 +4,10 @@ import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Calendar, Clock, ArrowRight, BookOpen, Code, FlaskConical } from "lucide-react";
 import Link from "next/link";
-import { getAllPosts, type BlogPost } from "@/data/blog";
+import { getBlogPosts } from "@/utils/getLocalizedData";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { useTranslation } from "@/hooks/useTranslation";
+import type { BlogPost } from "@/data/blog";
 
 type CategoryFilter = 'all' | 'article' | 'tutorial' | 'research';
 
@@ -15,16 +18,18 @@ const categoryIcons = {
 };
 
 export default function Blog() {
+  const { language } = useLanguage();
+  const t = useTranslation();
   const [selectedCategory, setSelectedCategory] = useState<CategoryFilter>('all');
   
-  const allPosts = getAllPosts();
+  const allPosts = getBlogPosts(language);
   const featuredPosts = allPosts.filter(p => p.featured).slice(0, 6);
 
   const filteredPosts = useMemo(() => {
     const posts = featuredPosts;
     if (selectedCategory === 'all') return posts;
     return posts.filter(post => post.category === selectedCategory);
-  }, [featuredPosts, selectedCategory]);
+  }, [featuredPosts, selectedCategory, language]);
 
   return (
     <section id="blog" className="section relative bg-primary-bg overflow-hidden">
@@ -41,7 +46,7 @@ export default function Blog() {
             viewport={{ once: true }}
             className="font-display font-black mb-6"
           >
-            Latest from the <span className="text-gradient">Journal</span>
+            {t.blog.section.title} <span className="text-gradient">{t.blog.section.titleHighlight}</span>
           </motion.h2>
           <motion.div
             initial={{ opacity: 0, scaleX: 0 }}
@@ -69,10 +74,7 @@ export default function Blog() {
                     : 'bg-surface text-text-secondary hover:bg-surface-light hover:text-accent-primary border-2 border-transparent hover:border-accent-primary/30'
                 }`}
               >
-                {category === 'all' ? 'All Posts' : 
-                 category === 'article' ? 'Articles' :
-                 category === 'tutorial' ? 'Tutorials' :
-                 'Research'}
+                {t.blog.page.categories[category]}
               </button>
             ))}
           </motion.div>
@@ -133,7 +135,7 @@ export default function Blog() {
                     </div>
 
                     {/* Content */}
-                    <Link href={`/blog/${post.slug}`}>
+                    <Link href={language === 'nl' ? `/nl/blog/${post.slug}` : `/blog/${post.slug}`}>
                       <div className="p-8">
                         {/* Meta Information */}
                         <div className="flex items-center gap-4 mb-4 text-sm text-text-muted">
@@ -206,14 +208,14 @@ export default function Blog() {
           className="text-center"
         >
           <p className="text-xl text-text-secondary mb-8 font-medium">
-            Want to read more articles, tutorials, and research?
+            {t.blog.section.description}
           </p>
           <Link
-            href="/blog"
+            href={language === 'nl' ? '/nl/blog' : '/blog'}
             className="btn-secondary inline-flex items-center gap-3"
           >
             <BookOpen className="w-6 h-6" />
-            View All Posts
+            {t.blog.section.viewAll}
             <ArrowRight className="w-5 h-5" />
           </Link>
         </motion.div>

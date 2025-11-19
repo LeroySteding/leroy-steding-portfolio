@@ -241,6 +241,12 @@ export const en = {
     },
   },
   blog: {
+    section: {
+      title: "Latest from the",
+      titleHighlight: "Journal",
+      description: "Want to read more articles, tutorials, and research?",
+      viewAll: "View All Posts",
+    },
     page: {
       title: "The",
       titleHighlight: "Journal",

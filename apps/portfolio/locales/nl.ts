@@ -243,6 +243,12 @@ export const nl: Translations = {
     },
   },
   blog: {
+    section: {
+      title: "Laatste uit het",
+      titleHighlight: "Journaal",
+      description: "Wilt u meer artikelen, tutorials en onderzoek lezen?",
+      viewAll: "Bekijk Alle Berichten",
+    },
     page: {
       title: "Het",
       titleHighlight: "Journaal",

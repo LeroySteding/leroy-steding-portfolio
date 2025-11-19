@@ -33,5 +33,5 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     notFound();
   }
 
-  return <BlogPostClient slug={slug} />;
+  return <BlogPostClient post={post} language="en" />;
 }
