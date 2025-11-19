@@ -8,7 +8,7 @@ import Image from "next/image";
 
 export default function About() {
   const t = useTranslation();
-  
+
   const highlights = [
     {
       icon: Code2,
@@ -27,10 +27,13 @@ export default function About() {
     },
   ];
   return (
-    <section id="about" className="section relative bg-secondary-bg overflow-hidden">
+    <section
+      id="about"
+      className="section relative bg-secondary-bg overflow-hidden"
+    >
       {/* Subtle accent line */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-linear-to-r from-transparent via-accent-primary to-transparent" />
-      
+
       <div className="container relative z-10 mx-auto px-8 lg:px-16">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -47,7 +50,8 @@ export default function About() {
               viewport={{ once: true }}
               className="font-display font-black mb-6"
             >
-              {t.about.title} <span className="text-gradient">{t.about.titleHighlight}</span>
+              {t.about.title}{" "}
+              <span className="text-gradient">{t.about.titleHighlight}</span>
             </motion.h2>
             <motion.div
               initial={{ opacity: 0, scaleX: 0 }}
@@ -67,11 +71,13 @@ export default function About() {
               viewport={{ once: true }}
               className="space-y-8 text-xl text-text-secondary leading-relaxed"
             >
-              <p className="text-2xl font-semibold">{parseTranslation(t.about.intro)}</p>
+              <p className="text-2xl font-semibold">
+                {parseTranslation(t.about.intro)}
+              </p>
               <p>{parseTranslation(t.about.expertise)}</p>
               <p>{parseTranslation(t.about.experience)}</p>
             </motion.div>
-         
+
             {/* Portrait Image */}
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
@@ -83,7 +89,7 @@ export default function About() {
               <div className="relative w-full aspect-square max-w-lg lg:ml-auto">
                 {/* Simple accent border */}
                 <div className="absolute -inset-4 border-4 border-accent-primary rounded-2xl" />
-                
+
                 {/* Image container */}
                 <div className="relative w-full h-full rounded-2xl overflow-hidden bg-secondary-bg">
                   <Image
@@ -96,16 +102,14 @@ export default function About() {
                     blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAn/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCwAB//2Q=="
                   />
                 </div>
-                
+
                 {/* Decorative corner elements */}
                 <div className="absolute -top-6 -left-6 w-32 h-32 border-l-4 border-t-4 border-accent-secondary rounded-tl-2xl" />
                 <div className="absolute -bottom-6 -right-6 w-32 h-32 border-r-4 border-b-4 border-accent-primary rounded-br-2xl" />
               </div>
             </motion.div>
           </div>
-         
-         
-         
+
           {/* Highlights grid */}
           <div className="grid md:grid-cols-3 gap-8">
             {highlights.map((item, index) => {

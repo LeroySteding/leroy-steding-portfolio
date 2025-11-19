@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Mail, Send, Check, AlertCircle } from "lucide-react";
+import { useTranslation } from "@/hooks/useTranslation";
 
 interface NewsletterSubscribeProps {
   variant?: "default" | "compact" | "inline";
@@ -19,6 +20,7 @@ export default function NewsletterSubscribe({
   description,
   className = "",
 }: NewsletterSubscribeProps) {
+  const t = useTranslation();
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [message, setMessage] = useState("");
@@ -28,7 +30,7 @@ export default function NewsletterSubscribe({
     
     if (!email || !email.includes("@")) {
       setStatus("error");
-      setMessage("Please enter a valid email address");
+      setMessage(t.newsletter.errors.invalidEmail);
       setTimeout(() => setStatus("idle"), 3000);
       return;
     }
@@ -40,20 +42,20 @@ export default function NewsletterSubscribe({
       await new Promise((resolve) => setTimeout(resolve, 1500));
       
       setStatus("success");
-      setMessage("Thanks for subscribing! Check your inbox for confirmation.");
+      setMessage(t.newsletter.messages.success);
       setEmail("");
       
       setTimeout(() => setStatus("idle"), 5000);
     } catch (error) {
       setStatus("error");
-      setMessage("Something went wrong. Please try again.");
+      setMessage(t.newsletter.errors.generic);
       setTimeout(() => setStatus("idle"), 3000);
     }
   };
 
   // Default content
-  const defaultTitle = title || "Stay in the loop";
-  const defaultDescription = description || "Get notified about new articles, projects, and insights delivered straight to your inbox.";
+  const defaultTitle = title || t.newsletter.title;
+  const defaultDescription = description || t.newsletter.description;
 
   // Variant-specific layouts
   if (variant === "compact") {
@@ -81,7 +83,7 @@ export default function NewsletterSubscribe({
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="your@email.com"
+              placeholder={t.newsletter.placeholder}
               disabled={status === "loading" || status === "success"}
               className="w-full px-4 py-3 rounded-lg bg-surface border-2 border-surface-light text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent-primary transition-colors duration-300 disabled:opacity-50"
             />
@@ -95,16 +97,16 @@ export default function NewsletterSubscribe({
             {status === "loading" ? (
               <>
                 <div className="w-5 h-5 border-2 border-primary-bg border-t-transparent rounded-full animate-spin" />
-                Subscribing...
+                {t.newsletter.buttons.subscribing}
               </>
             ) : status === "success" ? (
               <>
                 <Check className="w-5 h-5" />
-                Subscribed!
+                {t.newsletter.buttons.subscribed}
               </>
             ) : (
               <>
-                Subscribe
+                {t.newsletter.subscribe}
                 <Send className="w-5 h-5" />
               </>
             )}
@@ -134,9 +136,9 @@ export default function NewsletterSubscribe({
         </form>
 
         <p className="text-xs text-text-muted mt-4">
-          No spam, unsubscribe anytime. Read our{" "}
+          {t.newsletter.privacy.text}{" "}
           <a href="/privacy" className="text-accent-primary hover:underline">
-            privacy policy
+            {t.newsletter.privacy.link}
           </a>
           .
         </p>
@@ -210,7 +212,7 @@ export default function NewsletterSubscribe({
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="your@email.com"
+              placeholder={t.newsletter.placeholder}
               disabled={status === "loading" || status === "success"}
               className="flex-1 px-6 py-4 text-lg rounded-xl bg-surface border-2 border-surface-light text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent-primary transition-colors duration-300 disabled:opacity-50 font-semibold"
             />
@@ -222,16 +224,16 @@ export default function NewsletterSubscribe({
               {status === "loading" ? (
                 <>
                   <div className="w-5 h-5 border-2 border-primary-bg border-t-transparent rounded-full animate-spin" />
-                  Subscribing...
+                  {t.newsletter.buttons.subscribing}
                 </>
               ) : status === "success" ? (
                 <>
                   <Check className="w-5 h-5" />
-                  Subscribed!
+                  {t.newsletter.buttons.subscribed}
                 </>
               ) : (
                 <>
-                  Subscribe Now
+                  {t.newsletter.buttons.subscribeNow}
                   <Send className="w-5 h-5" />
                 </>
               )}
@@ -262,9 +264,9 @@ export default function NewsletterSubscribe({
         </form>
 
         <p className="text-sm text-text-muted mt-6">
-          Join 500+ developers and designers. No spam, unsubscribe anytime.{" "}
+          {t.newsletter.footer.text}{" "}
           <a href="/privacy" className="text-accent-primary hover:underline font-semibold">
-            Privacy policy
+            {t.newsletter.footer.link}
           </a>
         </p>
       </div>

@@ -2,6 +2,150 @@ import { Project } from "./projects";
 
 export const projectsNL: Project[] = [
   {
+    id: 'ai-ats',
+    title: "AI ATS Recruitment Platform",
+    description: "Intelligent sollicitantenvolgsysteem voor geautomatiseerde vacature-kandidaat matching. AI-aangedreven CV-parsing en semantische functie-matching gebouwd met behulp van vector embeddings. Geautomatiseerde screeningworkflows en kandidaatrangschikking geïmplementeerd op basis van functievereisten en ervaring.",
+    longDescription: `AI ATS is een intelligent sollicitantenvolgsysteem dat recruitment revolutioneert door middel van AI-aangedreven automatisering. Het platform gebruikt geavanceerde NLP en machine learning om cv's te parseren, vaardigheden en ervaring te extraheren, en kandidaten semantisch te matchen met vacatures met behulp van vector embeddings.
+
+Gebouwd met Next.js en Python, beschikt het systeem over geautomatiseerde kandidaatscreening, intelligente rankingalgoritmen en workflowautomatisering die de time-to-hire met 60% vermindert. Integratie met LangChain maakt conversationele AI-interfaces mogelijk voor kandidaatinteractie, terwijl Pinecone vector database de semantische zoekfunctionaliteit aandrijft.`,
+    image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&h=600&fit=crop",
+    technologies: ["Next.js", "OpenAI GPT-4", "LangChain", "Pinecone", "PostgreSQL", "TypeScript", "Python"],
+    liveUrl: null,
+    githubUrl: null,
+    featured: true,
+    category: 'product',
+    year: '2024',
+    showOnCV: true,
+    achievements: [
+      "Geautomatiseerde CV-parsing en vaardighedenextractie",
+      "Semantische matching-engine gebouwd voor vacature-kandidaat fit",
+      "AI-aangedreven kandidaatscreeningworkflows geïmplementeerd"
+    ],
+    challenges: [
+      "Diverse CV-formaten en structuren parseren",
+      "Nauwkeurige semantische matching-algoritmen bouwen",
+      "Onbevooroordeelde AI-screening garanderen"
+    ],
+    solutions: [
+      "Multi-format CV-parser ontwikkeld met OCR-ondersteuning",
+      "Vector embeddings geïmplementeerd voor semantische vacature-matching",
+      "Transparante AI-beslissingsuitleg gecreëerd"
+    ],
+    impact: [
+      "Time-to-hire met 60% verminderd",
+      "Wekelijks 1000+ sollicitaties verwerken",
+      "Kwaliteit van kandidaat-match met 45% verbeterd"
+    ]
+  },
+  {
+    id: '3d-cad-quote-tool',
+    title: "3D CAD Offertetool",
+    description: "Productieofferteringssysteem met realtime 3D CAD-bestandsvisualisatie en geautomatiseerde kostencalculatie. Three.js geïntegreerd voor interactieve 3D-rendering en Python-gebaseerde parser voor het extraheren van specificaties uit STEP-, STL- en DXF-bestanden.",
+    longDescription: `Een geavanceerd productieofferteringssysteem dat het offerteproces voor plaatbewerking revolutioneert. Het platform beschikt over geavanceerde 3D CAD-bestandsparsingmogelijkheden die automatisch afmetingen, materialen en complexiteitsmetrieken extraheren uit STEP, STL en andere 3D-formaten.
+
+Gebouwd met Next.js-frontend en Python-backend, gebruikt het systeem Three.js voor 3D-visualisatie en aangepaste algoritmen voor het berekenen van productiekosten inclusief materiaal, arbeid, insteltijd en machinegebruik. Het platform integreert met bestaande ERP-systemen en biedt directe, nauwkeurige offertes die voorheen uren handmatige berekening kostten.`,
+    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1200&h=600&fit=crop",
+    technologies: ["Next.js", "Three.js", "Python", "FastAPI", "PostgreSQL", "React Three Fiber", "TypeScript"],
+    liveUrl: null,
+    githubUrl: null,
+    featured: true,
+    category: 'client',
+    year: '2024',
+    showOnCV: true,
+    achievements: [
+      "Offertegenereringsproces geautomatiseerd met 3D-visualisatie",
+      "CAD-bestandsparser gebouwd die meerdere formaten ondersteunt",
+      "Geautomatiseerde PDF-rapportgeneratie geïntegreerd"
+    ],
+    challenges: [
+      "Complexe 3D CAD-bestandsformaten parseren en interpreteren",
+      "Nauwkeurige productiekosten berekenen uit 3D-modellen",
+      "Realtime visualisatie bieden van geparseerde onderdelen"
+    ],
+    solutions: [
+      "Aangepaste CAD-parsing-engine ontwikkeld die meerdere formaten ondersteunt",
+      "Berekeningsalgoritmen gebouwd op basis van best practices in productie",
+      "Three.js geïntegreerd voor interactieve 3D-visualisatie"
+    ],
+    impact: [
+      "Offertegenereringstijd verminderd van 2 uur naar 2 minuten",
+      "Offertenauwkeurigheid verbeterd met 95%",
+      "Maandelijks 500+ offertes verwerken"
+    ]
+  },
+  {
+    id: 'ai-manufacturing-solutions',
+    title: "AI-Aangedreven Productieoplossingen",
+    description: "Digitale transformatie-initiatief met implementatie van AI-automatisering voor productieoperaties. Intelligente documentverwerking gebouwd met OpenAI GPT-4 en geautomatiseerde workfloworkestratie met n8n die ERP- en CRM-systemen verbindt.",
+    longDescription: `Een uitgebreid AI-transformatieproject voor De Vries Surface Technologies, met implementatie van intelligente procesautomatisering over meerdere bedrijfsworkflows. De oplossingsarchitectuur omvat geautomatiseerde documentverwerking, voorspellende onderhoudsplanning, kwaliteitscontroleautomatisering en business intelligence-dashboards.
+
+Gebouwd op Azure cloud-infrastructuur met Python-gebaseerde microservices en FastAPI-endpoints, integreert het systeem met bestaande productiesystemen terwijl het nieuwe AI-aangedreven mogelijkheden biedt. Het platform omvat aangepaste machine learning-modellen voor kwaliteitsvoorspelling, geautomatiseerde rapportage en realtime analyse.`,
+    image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=1200&h=600&fit=crop",
+    technologies: ["OpenAI GPT-4", "LangChain", "Python", "FastAPI", "n8n", "Power BI", "PostgreSQL"],
+    liveUrl: null,
+    githubUrl: null,
+    featured: true,
+    category: 'client',
+    year: '2024',
+    showOnCV: true,
+    achievements: [
+      "Documentverwerkingsworkflows geautomatiseerd",
+      "AI-aangedreven kwaliteitsvoorspelling geïntegreerd",
+      "Realtime productiemonitoringdashboards gebouwd"
+    ],
+    challenges: [
+      "AI integreren in bestaande productieprocessen",
+      "Modellen trainen met beperkte historische gegevens",
+      "Systeembetrouwbaarheid garanderen in productieomgeving"
+    ],
+    solutions: [
+      "Geleidelijke AI-adoptie geïmplementeerd met menselijk toezicht",
+      "Transfer learning en synthetische datageneratie gebruikt",
+      "Robuuste monitoring en fallback-systemen gebouwd"
+    ],
+    impact: [
+      "Handmatige verwerkingstijd met 70% verminderd",
+      "Kwaliteitsvoorspellingsnauwkeurigheid verbeterd naar 92%",
+      "$200K+ jaarlijkse kostenbesparingen gegenereerd"
+    ]
+  },
+  {
+    id: 'headless-ecommerce',
+    title: "Headless E-Commerce Platform",
+    description: "Modern commerceplatform gebouwd op MedusaJS met Next.js-storefront. Headless architectuur geïmplementeerd voor flexibel contentbeheer, Stripe-betalingen en verzendworkflows geïntegreerd, en abonnementbeheersysteem gebouwd.",
+    longDescription: `Een modern headless e-commerceplatform gebouwd op MedusaJS, dat flexibele en schaalbare commerce-infrastructuur biedt. De architectuur scheidt de backend commerce-engine van de frontend-storefront, wat omnichannel-ervaringen en snelle iteratie op klantgerichte applicaties mogelijk maakt.
+
+Het platform beschikt over een Next.js-storefront met server-side rendering voor optimale SEO, geïntegreerde betalingsverwerking via Stripe, geautomatiseerde verzendberekeningen en uitgebreid orderbeheer. Gebouwd met TypeScript voor type-veiligheid en Algolia voor snelle productzoekopdrachten en filtering. Het systeem ondersteunt multi-valuta, voorraadbeheer en klantaccountfuncties.`,
+    image: "https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=1200&h=600&fit=crop",
+    technologies: ["MedusaJS", "Next.js", "TypeScript", "Stripe", "PostgreSQL", "Algolia", "Tailwind CSS"],
+    liveUrl: null,
+    githubUrl: null,
+    featured: true,
+    category: 'product',
+    year: '2024',
+    showOnCV: true,
+    achievements: [
+      "Headless commerce-architectuur gebouwd",
+      "Betalingsverwerking en verzending geïntegreerd",
+      "Abonnementbeheersysteem geïmplementeerd"
+    ],
+    challenges: [
+      "Flexibel headless commerce-systeem architecteren",
+      "Complexe productvarianten en voorraad beheren",
+      "Betalingsveiligheid en PCI-compliance garanderen"
+    ],
+    solutions: [
+      "Modulaire architectuur van MedusaJS gebruikt voor uitbreidbaarheid",
+      "Aangepast voorraadbeheer gebouwd met realtime synchronisatie",
+      "Stripe geïmplementeerd voor veilige betalingsverwerking"
+    ],
+    impact: [
+      "Maandelijks 1.000+ bestellingen verwerken",
+      "Meerdere verkoopkanalen ondersteunen",
+      "99,9% uptime voor betalingsverwerking"
+    ]
+  },
+  {
     id: 'allyscan',
     title: "AllyScan",
     description: "AI-aangedreven toegankelijkheidsscanner die websites analyseert op WCAG-naleving en bruikbare aanbevelingen geeft voor verbetering.",

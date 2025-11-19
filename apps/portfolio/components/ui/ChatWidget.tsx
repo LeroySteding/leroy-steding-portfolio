@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MessageCircle, X, Send, Loader2, Sparkles } from "lucide-react";
 import ReactMarkdown from "react-markdown";
+import { useTranslation } from "@/hooks/useTranslation";
 
 interface Message {
   role: "user" | "assistant";
@@ -11,23 +12,8 @@ interface Message {
   timestamp: Date;
 }
 
-const STARTER_PROMPTS = [
-  "What are Leroy's main skills?",
-  "Tell me about his AI projects",
-  "What services does he offer?",
-  "How can I work with Leroy?",
-];
-
-const FOLLOW_UP_PROMPTS = [
-  "What's his experience with Next.js?",
-  "Tell me about his e-commerce projects",
-  "Does he do mobile development?",
-  "What's his approach to accessibility?",
-  "Can he help with AI integration?",
-  "What industries has he worked in?",
-];
-
 export default function ChatWidget() {
+  const t = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
@@ -93,7 +79,7 @@ export default function ChatWidget() {
       console.error("Chat error:", error);
       const errorMessage: Message = {
         role: "assistant",
-        content: "Sorry, I encountered an error. Please try again or contact Leroy directly at leroysteding@gmail.com.",
+        content: t.chat.error.message,
         timestamp: new Date(),
       };
       setMessages((prev) => [...prev, errorMessage]);
@@ -121,7 +107,7 @@ export default function ChatWidget() {
 
   // Get available prompts (not yet used)
   const getAvailablePrompts = () => {
-    const allPrompts = messages.length === 0 ? STARTER_PROMPTS : FOLLOW_UP_PROMPTS;
+    const allPrompts = messages.length === 0 ? t.chat.starterPrompts : t.chat.followUpPrompts;
     return allPrompts.filter(prompt => !usedPrompts.has(prompt)).slice(0, 3);
   };
 
@@ -189,8 +175,8 @@ export default function ChatWidget() {
                     <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-bg-primary" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-text-primary">AI Assistant</h3>
-                    <p className="text-xs text-text-secondary">Ask me about Leroy</p>
+                    <h4 className="font-semibold text-text-primary">{t.chat.header.title}</h4>
+                    <p className="text-xs text-text-secondary">{t.chat.header.subtitle}</p>
                   </div>
                 </div>
               </div>
@@ -204,15 +190,15 @@ export default function ChatWidget() {
                         <Sparkles className="w-8 h-8 text-accent-primary" />
                       </div>
                       <h4 className="text-lg font-semibold text-text-primary mb-2">
-                        Hi! I'm Leroy's AI Assistant
+                        {t.chat.welcome.title}
                       </h4>
                       <p className="text-sm text-text-secondary mb-4">
-                        I can help you learn about Leroy's experience, projects, and services. Try asking:
+                        {t.chat.welcome.description}
                       </p>
                     </div>
                     
                     <div className="grid grid-cols-1 gap-2">
-                      {STARTER_PROMPTS.map((prompt, index) => (
+                      {t.chat.starterPrompts.map((prompt, index) => (
                         <button
                           key={index}
                           onClick={() => handleStarterPrompt(prompt)}
@@ -284,7 +270,7 @@ export default function ChatWidget() {
                     {/* Show suggestion prompts after messages */}
                     {messages.length > 0 && !isLoading && availablePrompts.length > 0 && (
                       <div className="space-y-2 mt-4">
-                        <p className="text-xs text-text-tertiary">You might also ask:</p>
+                        <p className="text-xs text-text-tertiary">{t.chat.suggestions.title}</p>
                         {availablePrompts.map((prompt, index) => (
                           <button
                             key={index}
@@ -309,7 +295,7 @@ export default function ChatWidget() {
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     onKeyDown={handleKeyDown}
-                    placeholder="Ask me anything..."
+                    placeholder={t.chat.input.placeholder}
                     rows={1}
                     className="flex-1 px-4 py-2 bg-bg-secondary border border-border rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-accent-primary/50 text-text-primary placeholder-text-tertiary"
                     disabled={isLoading}
@@ -327,7 +313,7 @@ export default function ChatWidget() {
                   </button>
                 </form>
                 <p className="text-xs text-text-tertiary mt-2 text-center">
-                  AI can make mistakes. Verify important info.
+                  {t.chat.disclaimer}
                 </p>
               </div>
             </div>

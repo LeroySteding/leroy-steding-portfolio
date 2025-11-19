@@ -28,6 +28,13 @@ export const metadata: Metadata = {
   authors: [{ name: "Leroy Steding" }],
   creator: "Leroy Steding",
   metadataBase: new URL("https://leroysteding.nl"),
+  alternates: {
+    canonical: "https://leroysteding.nl",
+    languages: {
+      'en': 'https://leroysteding.nl',
+      'nl': 'https://leroysteding.nl/nl',
+    },
+  },
   openGraph: {
     type: "website",
     locale: "en_US",

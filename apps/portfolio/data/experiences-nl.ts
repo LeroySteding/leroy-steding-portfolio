@@ -234,6 +234,205 @@ Door mijn expertise in Next.js en React, gecombineerd met een gedetailleerde bac
     ]
   },
   {
+    id: 'software-bastards',
+    title: "Front-End Developer",
+    company: "Software Bastards",
+    companyLogo: "/logos/software-bastards-logo.svg",
+    companyUrl: "https://softwarebastards.nl",
+    period: "Juli 2022 – September 2023",
+    location: "Amsterdam, Nederland",
+    description: "Frontend-ontwikkeling met focus op innovatieve webapplicaties met React 18, TypeScript en modern JavaScript-ecosysteem. Herbruikbare componentenbibliotheken gebouwd, complexe state management geïmplementeerd met Redux Toolkit en 90%+ testdekking gehandhaafd. Tibbaa gecontracteerd voor React Native mobiele ontwikkeling tijdens deze periode.",
+    longDescription: `Bij Software Bastards werkte ik als Front-End Developer in een dynamische agency-omgeving, waarbij ik moderne webapplicaties bouwde voor diverse klanten, waaronder startups en gevestigde ondernemingen. De rol benadrukte technische excellentie, clean code-principes en innovatieve oplossingen met behulp van geavanceerde frontend-technologieën.
+
+Mijn primaire focus lag op het ontwikkelen van geavanceerde React-applicaties met TypeScript, het creëren van responsive, performante gebruikersinterfaces die uitzonderlijke gebruikerservaringen leverden. Ik architecteerde en bouwde herbruikbare componentenbibliotheken die fundamentele assets werden gedeeld over meerdere klantprojecten, wat de ontwikkeltijd met 40% verminderde en consistente ontwerppatronen garandeerde. Deze bibliotheken omvatten complexe formuliercomponenten met validatie, datavisualisatiewidgets en interactieve UI-elementen.
+
+State management werd geïmplementeerd met Redux Toolkit voor voorspelbare state containers, gecombineerd met Redux Saga voor het afhandelen van complexe asynchrone workflows. Ik integreerde RESTful API's en GraphQL-endpoints met Apollo Client, waarbij ik optimistische updates en intelligente cachingstrategieën implementeerde om waargenomen prestaties te verbeteren. Authenticatie en autorisatie werden afgehandeld via JWT-tokens met refresh-mechanismen en op rollen gebaseerde toegangscontrole.
+
+Codekwaliteit was van het grootste belang - ik handhaafde 90%+ testdekking met Jest en React Testing Library, waarbij ik uitgebreide unit tests schreef voor componenten en integratietests voor gebruikersworkflows. ESLint met Airbnb's style guide zorgde voor consistente codestandaarden, terwijl Prettier automatische opmaak verzorgde. Ik stelde webpack-configuraties op geoptimaliseerd voor productie met code splitting, tree shaking en lazy loading om bundlegroottes te minimaliseren.
+
+Samenwerking was integraal voor succes - ik werkte nauw samen met UX-ontwerpers om Figma-ontwerpen te vertalen naar pixel-perfecte implementaties, werkte samen met backend-ontwikkelaars aan API contract design en integratie, nam deel aan code reviews met constructieve feedback aan collega's, en droeg bij aan technische besluitvorming en architectuurdiscussies. De agile omgeving met twee-weekse sprints hield oplevering gefocust en iteratief.
+
+Tijdens deze periode contracteerde ik ook voor Tibbaa voor het ontwikkelen van React Native mobiele applicaties, wat veelzijdigheid over web- en mobiele platforms toonde. De rol versterkte mijn frontend engineering-capaciteiten aanzienlijk, verdiepte mijn begrip van het moderne JavaScript-ecosysteem en versterkte best practices in componentarchitectuur en state management.`,
+    technologies: ["React 18", "TypeScript 4.x", "JavaScript ES2022", "Redux Toolkit", "Redux Saga", "Webpack 5", "Babel", "CSS3", "SASS", "CSS Modules", "Styled Components", "Jest", "React Testing Library", "ESLint", "Prettier", "GraphQL", "Apollo Client", "REST APIs", "JWT", "Git", "GitHub", "Figma", "Responsive Design", "Cross-browser Compatibility", "Performance Optimization", "Code Splitting", "Lazy Loading", "Agile/Scrum"],
+    color: "violet",
+    highlights: [
+      "Moderne React applicatie-ontwikkeling",
+      "Clean code en best practices focus",
+      "Collaboratieve teamomgeving"
+    ],
+    achievements: [
+      "Meerdere klantprojecten succesvol opgeleverd",
+      "Herbruikbare componentenbibliotheken geïmplementeerd",
+      "Hoge codekwaliteitsnormen gehandhaafd"
+    ],
+    responsibilities: [
+      "Frontend-functies ontwikkelen met React en TypeScript",
+      "Responsive designs implementeren",
+      "Samenwerken met cross-functionele teams",
+      "Codekwaliteit en prestaties handhaven"
+    ]
+  },
+  {
+    id: 'tibbaa',
+    title: "React Native Developer",
+    company: "Tibbaa (via Software Bastards)",
+    companyLogo: "/logos/tibbaa-logo.png",
+    companyUrl: "https://tibbaa.com",
+    period: "September 2022 – Mei 2023",
+    location: "Amsterdam, Nederland",
+    description: "Mobiele applicatie-ontwikkeling met focus op cross-platform iOS en Android applicaties met React Native en Expo. Opdracht via Software Bastards. Complexe navigatieflows geïmplementeerd, native modules geïntegreerd en 4,5+ ster app store-beoordelingen bereikt met focus op prestatie-optimalisatie en gebruikerservaring.",
+    longDescription: `Bij Tibbaa werkte ik als React Native Developer via een opdracht door Software Bastards, waarbij ik cross-platform mobiele applicaties bouwde voor iOS en Android die native-kwaliteit gebruikerservaringen leverden. De rol richtte zich op het creëren van performante, gebruiksvriendelijke mobiele oplossingen die voldeden aan hoge normen voor kwaliteit en gebruikerstevredenheid.
+
+Mijn verantwoordelijkheden richtten zich op het ontwikkelen van nieuwe functies en het verbeteren van bestaande functionaliteit met React Native met TypeScript, waarbij ik type safety en code onderhoudbaarheid over de hele mobiele codebase garandeerde. Ik implementeerde complexe navigatieflows met React Navigation, waarbij ik intuïtieve gebruikersreizen creëerde met stack, tab en drawer navigators. Deep linking werd geïntegreerd om naadloze navigatie mogelijk te maken vanuit push notifications en externe bronnen.
+
+State management werd afgehandeld via Redux met Redux Toolkit, waarbij applicatiestatus efficiënt werd beheerd en persistente opslag werd geïmplementeerd met AsyncStorage voor offline-mogelijkheden. Ik integreerde RESTful API's voor data-ophaling en real-time updates, waarbij ik optimistische UI-updates implementeerde om waargenomen prestaties te verbeteren. Push notifications werden geconfigureerd via Firebase Cloud Messaging, wat tijdige gebruikersbetrokkenheid mogelijk maakte.
+
+Native module-integratie was een belangrijk aspect - ik verbond JavaScript en native code voor platformspecifieke functies, waaronder cameratoegang, biometrische authenticatie (Face ID, Touch ID, vingerafdruk), geolocatiediensten en lokale bestandssysteembewerkingen. Platformspecifieke code werd zorgvuldig beheerd om consistent gedrag te garanderen terwijl native mogelijkheden werden benut waar nuttig.
+
+Prestatie-optimalisatie was kritiek voor het leveren van soepele 60fps-ervaringen. Ik implementeerde FlatList-virtualisatie voor efficiënte rendering van grote lijsten, gebruikte React.memo en useMemo om onnodige re-renders te voorkomen, optimaliseerde afbeeldingslading met react-native-fast-image, en monitorde prestaties met Flipper debugging tools. Bundelgrootte werd geminimaliseerd door code splitting en het verwijderen van ongebruikte afhankelijkheden.
+
+Testen was uitgebreid met Jest en React Native Testing Library die bedrijfslogica en componentrendering dekten. Ik voerde handmatige tests uit op zowel iOS-simulators en Android-emulators, plus echte apparaten om platformspecifieke problemen op te vangen. App store deployment-processen werden vastgesteld voor TestFlight (iOS) en Google Play Console (Android), waarbij versiebeheer, release notes en gefaseerde rollouts werden beheerd.
+
+Samenwerking met productmanagers, UX-ontwerpers, backend-engineers en QA-testers zorgde voor afstemming en kwaliteit. De applicaties die ik ontwikkelde, behaalden uitstekende 4,5+ ster beoordelingen en positieve gebruikersrecensies, wat de focus op prestaties en gebruikerservaring valideerde. Deze rol versterkte mijn mobiele ontwikkelingsexpertise en cross-platform architectuurvaardigheden.`,
+    technologies: ["React Native 0.70+", "Expo SDK", "TypeScript 4.x", "Redux Toolkit", "React Navigation", "AsyncStorage", "Firebase Cloud Messaging", "Push Notifications", "Deep Linking", "Native Modules", "iOS", "Android", "Biometric Authentication", "Geolocation", "Camera", "Jest", "React Native Testing Library", "Flipper", "TestFlight", "Google Play Console", "REST APIs", "Performance Optimization", "FlatList", "Image Optimization", "Code Splitting", "Git", "Agile/Scrum"],
+    color: "cyan",
+    highlights: [
+      "Cross-platform mobiele ontwikkeling",
+      "Native iOS en Android functies",
+      "Hoogpresterende mobiele applicaties"
+    ],
+    achievements: [
+      "Succesvolle mobiele applicaties gelanceerd",
+      "Uitstekende app store-beoordelingen bereikt",
+      "Functies opgeleverd binnen strakke deadlines"
+    ],
+    responsibilities: [
+      "React Native mobiele applicaties ontwikkelen",
+      "Native iOS en Android functies implementeren",
+      "App-prestaties optimaliseren",
+      "Samenwerken met product- en ontwerpteams"
+    ]
+  },
+  {
+    id: 'rampage',
+    title: "Frontend Developer",
+    company: "Rampage (via Rebels)",
+    companyLogo: "/logos/rebels-rampage-logo.png",
+    companyUrl: "#",
+    period: "Januari 2021 – Juli 2022",
+    location: "Amsterdam, Nederland",
+    description: "Frontend-ontwikkelingsopdracht via Rebels, waarbij moderne webapplicaties werden gebouwd met React en TypeScript.",
+    longDescription: `Bij Rampage werkte ik als Frontend Developer via een opdracht door Rebels. Mijn rol omvatte het bouwen en onderhouden van moderne webapplicaties met React, TypeScript en hedendaagse frontend-technologieën.
+
+Ik droeg bij aan het ontwikkelen van gebruikersinterfaces die zowel visueel aantrekkelijk als zeer functioneel waren, waarbij uitstekende gebruikerservaring over alle platforms werd gegarandeerd. Werkend in een agile omgeving, werkte ik samen met ontwerpers en backend-ontwikkelaars om hoogwaardige oplossingen op te leveren.`,
+    technologies: ["React", "TypeScript", "JavaScript", "CSS3", "HTML5", "Agile"],
+    color: "violet",
+    highlights: [
+      "Moderne React applicatie-ontwikkeling",
+      "Agile teamsamenwerking",
+      "Hoogwaardige gebruikersinterface-implementatie"
+    ],
+    achievements: [
+      "Meerdere feature releases opgeleverd",
+      "Applicatieprestaties verbeterd",
+      "Uitstekende codekwaliteit gehandhaafd"
+    ],
+    responsibilities: [
+      "Frontend-functies ontwikkelen met React en TypeScript",
+      "Samenwerken met cross-functionele teams",
+      "Responsive designs implementeren",
+      "Codekwaliteit en best practices garanderen"
+    ]
+  },
+  {
+    id: 'rebels',
+    title: "Full-Stack Developer",
+    company: "Rebels",
+    companyLogo: "/logos/rebels-logo.jpeg",
+    companyUrl: "https://rebels.nl",
+    period: "Februari 2020 – Juli 2022",
+    location: "Amsterdam, Nederland",
+    description: "Full-stack ontwikkeling bij toonaangevende Amsterdamse tech consultancy, waarbij hoogwaardige softwareoplossingen werden opgeleverd over diverse klant opdrachten. Succesvol 5+ grote projecten voltooid voor enterprise klanten waaronder VodafoneZiggo, SURF, Rampage, Robidus en Lost Lemon, waarbij expertise werd opgebouwd over React, Next.js, TypeScript, Node.js en Java-ecosystemen.",
+    longDescription: `Bij Rebels werkte ik als Full-Stack Developer bij een van de premier tech consultancies van Amsterdam, bekend om het plaatsen van topengineering-talent bij toonaangevende bedrijven in Nederland. Over 2,5 jaar voltooide ik succesvol 5+ klantopdrachten die onderwijstechnologie, sociale zekerheid, telecommunicatie en webontwikkelingssectoren omvatten, waarbij ik consistent positieve feedback ontving voor technische excellentie en professionaliteit.
+
+Het consultancy-model vereiste uitzonderlijk aanpassingsvermogen - elke opdracht bracht nieuwe technische stacks, teamdynamiek, bedrijfsdomeinen en projectmethodologieën met zich mee. Deze omgeving versnelde mijn professionele groei toen ik snel onboarde naar nieuwe codebases, onbekende technologieën onder de knie kreeg en waarde leverde binnen strakke tijdslijnen. Snel leren en effectieve communicatie werden essentiële vaardigheden voor het navigeren door diverse klantcontexten.
+
+Mijn technische focus omspande de volledige stack met bijzondere kracht in moderne JavaScript/TypeScript-ecosystemen. Frontend-ontwikkeling richtte zich op React en Next.js, waarbij responsive, toegankelijke gebruikersinterfaces werden gebouwd met sterke nadruk op componentarchitectuur en state management. Ik implementeerde complexe formulieren met validatie, datatables met sorteren/filteren, dashboards met real-time updates en multi-step workflows. Backend-werk omvatte Node.js API's met Express/Fastify en Java services met Spring Boot, het ontwerpen van RESTful endpoints, het implementeren van bedrijfslogica en integratie met databases (PostgreSQL, MongoDB) en externe services.
+
+Belangrijke klantopdrachten omvatten:
+
+**SURF (2025)** - Enterprise whitelabel platform voor educatieve bronnen die 50.000+ gebruikers bedienen, gedeelde componentenbibliotheken bouwen en CI/CD-pijplijnen implementeren
+
+**VodafoneZiggo (2024-2025)** - React Native mobiele applicatie voor 3M+ klanten, ontwerpsystemen ontwikkelen en WCAG-toegankelijkheid garanderen
+
+**Rampage (2021-2022)** - Frontend-ontwikkeling waarbij moderne webapplicaties werden gebouwd met React en TypeScript
+
+**Robidus (2021)** - Sociale zekerheidsplatform dat diverse datastromen integreert, CI/CD implementeren met Jenkins
+
+**Lost Lemon (2020)** - Frontend-ontwikkeling voor MensCentraal-applicatie met SASS en Java JSF/Primefaces
+
+Elke opdracht versterkte best practices in softwareontwikkeling - clean code-principes, uitgebreid testen, code review, agile methodologieën en effectieve klantcommunicatie. Ik werkte samen met cross-functionele teams waaronder ontwerpers, productmanagers, QA-engineers en mede-ontwikkelaars, waarbij ik vaak diende als een brug tussen technische en niet-technische stakeholders.
+
+De Rebels-ervaring was transformerend voor mijn carrière, waarbij ik werd blootgesteld aan enterprise-schaal systemen, diverse technische architecturen en high-performance teamomgevingen. Het bouwde vertrouwen in mijn vermogen om complexe technische uitdagingen aan te pakken, snel aan te passen aan nieuwe domeinen en consistent professionele resultaten te leveren. De nadruk van de consultancy op continu leren en technische excellentie sloot perfect aan bij mijn groeimindset, wat een sterke basis vestigde voor senior-level rollen.`,
+    technologies: ["React 17-18", "Next.js 11-13", "TypeScript 4.x", "JavaScript ES2020+", "Node.js 14-16", "Express", "Fastify", "Java 11-17", "Spring Boot 2.x", "PostgreSQL", "MongoDB", "REST APIs", "GraphQL", "Git", "Docker", "Jenkins", "CI/CD", "Jest", "React Testing Library", "JUnit", "Agile/Scrum", "SASS", "Tailwind CSS", "Redux", "Context API", "Microservices", "OAuth", "JWT", "WCAG", "Responsive Design", "Full-Stack Development", "Client Consulting"],
+    color: "cyan",
+    highlights: [
+      "Diverse klantopdrachten en projecten",
+      "Full-stack ontwikkeling over meerdere domeinen",
+      "Grote enterprise klanten",
+      "Aanpasbare consultancy-omgeving"
+    ],
+    achievements: [
+      "Succesvol 5+ klantopdrachten voltooid",
+      "Langetermijnrelaties opgebouwd met grote klanten",
+      "Oplossingen opgeleverd over diverse technische stacks",
+      "Consistent positieve klantfeedback ontvangen"
+    ],
+    responsibilities: [
+      "Full-stack oplossingen opleveren voor klantopdrachten",
+      "Aanpassen aan verschillende technische stacks en methodologieën",
+      "Samenwerken met diverse teams en stakeholders",
+      "Hoge kwaliteitsnormen handhaven over projecten"
+    ],
+    impact: [
+      "Bijgedragen aan grote enterprise projecten",
+      "Succesvolle klantbetrekkingen mogelijk gemaakt",
+      "Reputatie opgebouwd voor technische excellentie"
+    ]
+  },
+  {
+    id: 'lost-lemon',
+    title: "Frontend Developer",
+    company: "Lost Lemon (via Rebels)",
+    companyLogo: "/logos/lost-lemon-logo.png",
+    companyUrl: "#",
+    period: "Oktober 2020 – December 2020",
+    location: "Amsterdam, Nederland",
+    description: "Frontend-ontwikkeling voor MensCentraal-applicatie met SASS en Java JSF/Primefaces-componenten.",
+    longDescription: `Bij Lost Lemon droeg ik bij aan het verbeteren van de MensCentraal-applicatie via een opdracht door Rebels. Het project richtte zich op het herontwerpen van het dashboard en andere functionaliteiten met een nieuw design, waarbij gebruiksvriendelijkheid werd verbeterd op basis van gebruikersonderzoek.
+
+Ik werkte met SASS om componenten te stylen, vaak gebouwd met Primefaces-componenten. De applicatie was een webgebaseerde Java (JSF/Primefaces)-applicatie, wat nauwe samenwerking met backend-ontwikkelaars vereiste om naadloze integratie te garanderen.`,
+    technologies: ["SASS", "Java JSF", "Primefaces", "JavaScript", "CSS3", "Gebruikersonderzoek"],
+    color: "violet",
+    highlights: [
+      "MensCentraal applicatie herontwerp",
+      "Gebruikersonderzoek-gedreven verbeteringen",
+      "Primefaces componenten styling",
+      "Java JSF webapplicatie"
+    ],
+    achievements: [
+      "Gebruiksvriendelijkheid verbeterd op basis van onderzoek",
+      "Dashboard succesvol herontworpen",
+      "Visuele consistentie over applicatie verbeterd"
+    ],
+    responsibilities: [
+      "Primefaces-componenten stylen met SASS",
+      "Nieuwe ontwerpen implementeren voor dashboard",
+      "Gebruikerservaring verbeteren op basis van onderzoek",
+      "Samenwerken met backend Java-ontwikkelaars"
+    ]
+  },
+  {
     id: 'timber',
     title: "Hybris E-Commerce Developer",
     company: "Timber and Building Supplies Holland N.V",
@@ -269,6 +468,161 @@ Ik droeg actief bij aan verschillende projectfasen, van concept en ontwerp tot o
       "Digitale transformatie mogelijk gemaakt voor bouwmaterialenbedrijf",
       "B2B-bestelprocessen gestroomlijnd",
       "Online omzet significant verhoogd"
+    ]
+  },
+  {
+    id: 'improvers',
+    title: "Front-End Developer",
+    company: "Improvers",
+    companyLogo: "/logos/improvers-logo.png",
+    companyUrl: "#",
+    period: "Oktober 2017 – Augustus 2018",
+    location: "Nederland",
+    description: "Frontend-ontwikkeling met moderne JavaScript frameworks en responsive design technieken.",
+    longDescription: `Bij Improvers werkte ik als Front-End Developer, waarbij ik me richtte op het bouwen van responsive webapplicaties met moderne JavaScript frameworks. Mijn rol omvatte het creëren van gebruikersinterfaces die zowel visueel aantrekkelijk als zeer functioneel waren.
+
+Ik werkte samen met ontwerpers en backend-ontwikkelaars om hoogwaardige weboplossingen op te leveren, waarbij cross-browser compatibiliteit en optimale prestaties werden gegarandeerd.`,
+    technologies: ["JavaScript", "HTML5", "CSS3", "jQuery", "Responsive Design", "Bootstrap"],
+    color: "violet",
+    highlights: [
+      "Responsive webapplicatie-ontwikkeling",
+      "Cross-browser compatibiliteit",
+      "Moderne JavaScript-implementatie"
+    ],
+    achievements: [
+      "Meerdere klantprojecten opgeleverd",
+      "Websiteprestaties verbeterd",
+      "Responsive designs geïmplementeerd"
+    ],
+    responsibilities: [
+      "Frontend-functies ontwikkelen met JavaScript",
+      "Responsive designs implementeren",
+      "Cross-browser compatibiliteit garanderen",
+      "Samenwerken met ontwerp- en backend-teams"
+    ]
+  },
+  {
+    id: 'woodwing',
+    title: "Junior Software Engineer",
+    company: "WoodWing",
+    companyLogo: "/logos/woodwing-logo.png",
+    companyUrl: "https://www.woodwing.com",
+    period: "Februari 2016 – September 2016",
+    location: "Zaandam, Nederland",
+    description: "Softwareontwikkelingsstage en junior rol bij toonaangevende content management solutions provider.",
+    longDescription: `Bij WoodWing begon ik als stagiair en maakte ik de overstap naar een Junior Software Engineer-rol, waarbij ik werkte aan content management-oplossingen. Deze 8 maanden durende positie bood waardevolle ervaring in professionele softwareontwikkeling, werken met enterprise klanten en het leren van best practices in de industrie.
+
+Ik droeg bij aan het ontwikkelen van functies voor WoodWing's content management platform, werkte samen met senior engineers en kreeg kennis van complexe softwaresystemen.`,
+    technologies: ["JavaScript", "PHP", "HTML5", "CSS3", "Content Management", "Agile"],
+    color: "cyan",
+    highlights: [
+      "Stagiair naar Junior Engineer transitie",
+      "Enterprise content management systemen",
+      "Professionele ontwikkelingservaring"
+    ],
+    achievements: [
+      "Succesvol overgegaan van stagiair naar junior engineer",
+      "Bijgedragen aan enterprise platform functies",
+      "Professionele softwareontwikkelingspraktijken geleerd"
+    ],
+    responsibilities: [
+      "Functies ontwikkelen voor content management platform",
+      "Samenwerken met senior engineers",
+      "Deelnemen aan code reviews",
+      "Enterprise softwareontwikkeling leren"
+    ]
+  },
+  {
+    id: 'objeqts',
+    title: "Junior Software Engineer",
+    company: "Objeqts BV",
+    companyLogo: "/logos/objeqts-logo.png",
+    companyUrl: "#",
+    period: "Mei 2015 – September 2015",
+    location: "Nederland",
+    description: "Junior softwareontwikkelingsrol gericht op webapplicaties en softwareoplossingen.",
+    longDescription: `Bij Objeqts BV werkte ik als Junior Software Engineer, waarbij ik bijdroeg aan webapplicatie-ontwikkeling en softwareoplossingen. Deze rol bood early career ervaring in professionele softwareontwikkelingsomgevingen.
+
+Ik werkte aan verschillende projecten, leerde best practices voor softwareontwikkeling en kreeg hands-on ervaring met webtechnologieën.`,
+    technologies: ["JavaScript", "PHP", "HTML5", "CSS3", "MySQL", "Web Development"],
+    color: "violet",
+    highlights: [
+      "Early career softwareontwikkeling",
+      "Webapplicatie-ontwikkeling",
+      "Professionele ontwikkelingspraktijken"
+    ],
+    achievements: [
+      "Bijgedragen aan meerdere projecten",
+      "Webapplicaties ontwikkeld",
+      "Professionele workflows geleerd"
+    ],
+    responsibilities: [
+      "Webapplicatie-functies ontwikkelen",
+      "Samenwerken met ontwikkelteam",
+      "Schone, onderhoudbare code schrijven",
+      "Best practices voor softwareontwikkeling leren"
+    ]
+  },
+  {
+    id: 'jaspers-media',
+    title: "Web Developer Stagiair",
+    company: "Jaspers Media",
+    companyLogo: "/logos/jaspers-media-logo.png",
+    companyUrl: "#",
+    period: "Januari 2014 – Mei 2014",
+    location: "Nederland",
+    description: "Webontwikkelingsstage gericht op PHP, MySQL en JavaScript. Google Maps-applicatie gebouwd voor Biernet.nl.",
+    longDescription: `Bij Jaspers Media voltooide ik een webontwikkelingsstage waarbij ik hands-on ervaring opdeed met PHP, MySQL en JavaScript. Een belangrijk project was het ontwikkelen van een Google Maps-applicatie voor Biernet.nl, die lokale gebruikers hielp om nabijgelegen biergerelateerde etablissementen te vinden.
+
+Deze stage bood fundamentele ervaring in webontwikkeling, databasebeheer en werken met API's.`,
+    technologies: ["PHP", "MySQL", "JavaScript", "Google Maps API", "HTML5", "CSS3"],
+    color: "cyan",
+    highlights: [
+      "Google Maps API-integratie",
+      "PHP en MySQL-ontwikkeling",
+      "Real-world webapplicatieproject"
+    ],
+    achievements: [
+      "Functionele Google Maps-applicatie gebouwd",
+      "Google Maps API succesvol geïntegreerd",
+      "Fundamentele webontwikkelingsvaardigheden opgedaan"
+    ],
+    responsibilities: [
+      "Webapplicaties ontwikkelen met PHP en MySQL",
+      "Google Maps API integreren",
+      "Interactieve kaartfuncties creëren",
+      "Webontwikkelingsfundamenten leren"
+    ]
+  },
+  {
+    id: 'djw-media',
+    title: "Application Developer Stagiair",
+    company: "DJW Media",
+    companyLogo: "/logos/djw-media-logo.svg",
+    companyUrl: "#",
+    period: "Januari 2013 – Juni 2013",
+    location: "Nederland",
+    description: "Applicatieontwikkelingsstage waarbij werd gewerkt aan CMS-systemen en de Feest Familie-website.",
+    longDescription: `Bij DJW Media voltooide ik mijn eerste stage als Application Developer, waarbij ik werkte aan content management systemen en webapplicaties. Een opmerkelijk project was het bijdragen aan de Feest Familie-website, wat waardevolle ervaring opleverde in CMS-ontwikkeling en webprogrammering.
+
+Deze stage markeerde het begin van mijn professionele softwareontwikkelingsreis en bood essentiële fundamentele vaardigheden.`,
+    technologies: ["PHP", "MySQL", "CMS", "HTML", "CSS", "JavaScript"],
+    color: "violet",
+    highlights: [
+      "Eerste professionele ontwikkelingsstage",
+      "CMS-systeemontwikkeling",
+      "Fundament voor softwarecarrière"
+    ],
+    achievements: [
+      "Bijgedragen aan Feest Familie-website",
+      "CMS-ontwikkeling geleerd",
+      "Fundamentele programmeervaardigheden opgebouwd"
+    ],
+    responsibilities: [
+      "Werken aan CMS-systemen",
+      "Webapplicatie-functies ontwikkelen",
+      "Applicatieontwikkeling leren",
+      "Samenwerken met ontwikkelteam"
     ]
   }
 ];

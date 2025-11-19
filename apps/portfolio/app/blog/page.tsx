@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Calendar, Clock, ArrowRight, Search, X, BookOpen, Code, FlaskConical, Tag } from "lucide-react";
 import Link from "next/link";
 import { getAllPosts } from "@/data/blog";
+import { useTranslation } from "@/hooks/useTranslation";
 
 type CategoryFilter = 'all' | 'article' | 'tutorial' | 'research';
 
@@ -15,6 +16,7 @@ const categoryIcons = {
 };
 
 export default function BlogPage() {
+  const t = useTranslation();
   const [selectedCategory, setSelectedCategory] = useState<CategoryFilter>('all');
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
@@ -76,7 +78,7 @@ export default function BlogPage() {
           className="mb-16"
         >
           <h1 className="font-display font-black mb-6 text-6xl md:text-7xl">
-            The <span className="text-gradient">Journal</span>
+            {t.blog.page.title} <span className="text-gradient">{t.blog.page.titleHighlight}</span>
           </h1>
           <motion.div
             initial={{ opacity: 0, scaleX: 0 }}
@@ -85,7 +87,7 @@ export default function BlogPage() {
             className="w-32 h-2 bg-accent-primary rounded-full mb-8"
           />
           <p className="text-xl text-text-secondary max-w-3xl leading-relaxed">
-            Thoughts, tutorials, and research on modern web development, AI automation, and building scalable products.
+            {t.blog.page.description}
           </p>
         </motion.div>
 
@@ -103,7 +105,7 @@ export default function BlogPage() {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search articles, tutorials, and research..."
+              placeholder={t.blog.page.search.placeholder}
               className="w-full pl-12 pr-12 py-4 rounded-xl bg-surface border-2 border-surface focus:border-accent-primary outline-none text-text-primary placeholder:text-text-secondary transition-all font-medium"
             />
             {searchQuery && (
@@ -128,10 +130,7 @@ export default function BlogPage() {
                     : 'bg-surface text-text-secondary hover:bg-surface-light hover:text-accent-primary border-2 border-transparent hover:border-accent-primary/30'
                 }`}
               >
-                {category === 'all' ? 'All Posts' : 
-                 category === 'article' ? 'Articles' :
-                 category === 'tutorial' ? 'Tutorials' :
-                 'Research'}
+                {t.blog.page.categories[category]}
               </button>
             ))}
           </div>
@@ -141,7 +140,7 @@ export default function BlogPage() {
             <div>
               <div className="flex items-center gap-2 mb-3">
                 <Tag className="w-4 h-4 text-text-secondary" />
-                <span className="text-sm font-bold text-text-secondary">Filter by tags:</span>
+                <span className="text-sm font-bold text-text-secondary">{t.blog.page.tags.title}</span>
               </div>
               <div className="flex flex-wrap gap-2">
                 {allTags.map((tag) => (
@@ -169,7 +168,7 @@ export default function BlogPage() {
                 className="text-accent-secondary hover:text-accent-primary transition-colors font-bold flex items-center gap-2"
               >
                 <X className="w-4 h-4" />
-                Clear all filters
+                {t.blog.page.actions.clearFilters}
               </button>
             </div>
           )}
@@ -181,7 +180,7 @@ export default function BlogPage() {
           animate={{ opacity: 1 }}
           className="mb-8 text-text-secondary font-medium"
         >
-          Showing <span className="text-accent-primary font-bold">{filteredPosts.length}</span> {filteredPosts.length === 1 ? 'post' : 'posts'}
+          {t.blog.page.results.showing} <span className="text-accent-primary font-bold">{filteredPosts.length}</span> {filteredPosts.length === 1 ? t.blog.page.results.post : t.blog.page.results.posts}
         </motion.div>
 
         {/* Blog Posts Grid */}
@@ -277,7 +276,7 @@ export default function BlogPage() {
 
                           {/* Read More Link */}
                           <div className="flex items-center gap-2 text-accent-primary text-base font-bold">
-                            Read Article
+                            {t.blog.page.actions.readArticle}
                             <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform duration-300" />
                           </div>
                         </div>
@@ -291,7 +290,7 @@ export default function BlogPage() {
                       {/* Featured badge */}
                       {post.featured && (
                         <div className="absolute top-6 left-6 px-4 py-2 rounded-lg bg-gradient-to-r from-yellow-500 to-orange-500 text-primary-bg text-sm font-bold shadow-lg">
-                          Featured
+                          {t.blog.page.badges.featured}
                         </div>
                       )}
                     </div>
@@ -311,16 +310,16 @@ export default function BlogPage() {
                 <Search className="w-10 h-10 text-text-secondary" />
               </div>
               <h3 className="text-2xl font-bold text-text-primary mb-2">
-                No posts found
+                {t.blog.page.empty.title}
               </h3>
               <p className="text-text-secondary mb-6">
-                Try adjusting your filters or search query
+                {t.blog.page.empty.subtitle}
               </p>
               <button
                 onClick={clearFilters}
                 className="px-6 py-3 bg-accent-primary text-primary-bg rounded-xl font-bold hover:scale-105 transition-transform"
               >
-                Clear Filters
+                {t.blog.page.actions.clearFiltersButton}
               </button>
             </motion.div>
           )}

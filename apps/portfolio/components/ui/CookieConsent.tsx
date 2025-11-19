@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { Cookie, X, Settings, Check } from "lucide-react";
+import { useTranslation } from "@/hooks/useTranslation";
 
 interface CookieConsentProps {
   className?: string;
@@ -16,6 +17,7 @@ type ConsentState = {
 };
 
 export default function CookieConsent({ className = "" }: CookieConsentProps) {
+  const t = useTranslation();
   const [isVisible, setIsVisible] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [consent, setConsent] = useState<ConsentState>({
@@ -99,12 +101,12 @@ export default function CookieConsent({ className = "" }: CookieConsentProps) {
                   </div>
                   <div className="flex-1">
                     <h3 className="text-xl font-bold text-text-primary mb-2">
-                      🍪 Cookie Settings
+                      {t.cookies.title}
                     </h3>
                     <p className="text-text-secondary text-sm leading-relaxed">
-                      This website uses cookies to ensure you get the best experience. We use necessary cookies for site functionality, and optional cookies for analytics and improvements.{" "}
+                      {t.cookies.description}{" "}
                       <Link href="/privacy" className="text-accent-primary hover:text-accent-secondary underline transition-colors">
-                        Learn more in our Privacy Policy
+                        {t.cookies.learnMore}
                       </Link>
                     </p>
                   </div>
@@ -138,14 +140,14 @@ export default function CookieConsent({ className = "" }: CookieConsentProps) {
                           <div className="flex-1">
                             <div className="flex items-center gap-2 mb-1">
                               <h4 className="font-semibold text-text-primary text-sm">
-                                Necessary Cookies
+                                {t.cookies.types.necessary.title}
                               </h4>
                               <span className="px-2 py-0.5 text-xs font-bold bg-accent-primary/20 text-accent-primary rounded">
-                                Required
+                                {t.cookies.types.necessary.required}
                               </span>
                             </div>
                             <p className="text-xs text-text-muted leading-relaxed">
-                              Essential for the website to function properly. These cookies enable core functionality such as security and accessibility.
+                              {t.cookies.types.necessary.description}
                             </p>
                           </div>
                         </div>
@@ -164,10 +166,10 @@ export default function CookieConsent({ className = "" }: CookieConsentProps) {
                           </div>
                           <div className="flex-1">
                             <h4 className="font-semibold text-text-primary text-sm mb-1">
-                              Analytics Cookies
+                              {t.cookies.types.analytics.title}
                             </h4>
                             <p className="text-xs text-text-muted leading-relaxed">
-                              Help us understand how visitors interact with the website by collecting and reporting information anonymously.
+                              {t.cookies.types.analytics.description}
                             </p>
                           </div>
                         </div>
@@ -186,10 +188,10 @@ export default function CookieConsent({ className = "" }: CookieConsentProps) {
                           </div>
                           <div className="flex-1">
                             <h4 className="font-semibold text-text-primary text-sm mb-1">
-                              Marketing Cookies
+                              {t.cookies.types.marketing.title}
                             </h4>
                             <p className="text-xs text-text-muted leading-relaxed">
-                              Used to track visitors across websites to display relevant and personalized content.
+                              {t.cookies.types.marketing.description}
                             </p>
                           </div>
                         </div>
@@ -205,7 +207,7 @@ export default function CookieConsent({ className = "" }: CookieConsentProps) {
                     className="flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-surface hover:bg-surface-light text-text-primary font-semibold border border-surface-light hover:border-accent-primary transition-all duration-300"
                   >
                     <Settings className="w-4 h-4" />
-                    {showSettings ? "Hide Settings" : "Customize"}
+                    {showSettings ? t.cookies.buttons.hideSettings : t.cookies.buttons.customize}
                   </button>
 
                   {showSettings ? (
@@ -214,7 +216,7 @@ export default function CookieConsent({ className = "" }: CookieConsentProps) {
                       className="flex-1 flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-accent-primary hover:bg-accent-primary/90 text-white font-bold transition-all duration-300 shadow-lg shadow-accent-primary/20"
                     >
                       <Check className="w-4 h-4" />
-                      Save Preferences
+                      {t.cookies.buttons.savePreferences}
                     </button>
                   ) : (
                     <>
@@ -222,13 +224,13 @@ export default function CookieConsent({ className = "" }: CookieConsentProps) {
                         onClick={handleAcceptNecessary}
                         className="flex-1 px-6 py-3 rounded-xl bg-surface hover:bg-surface-light text-text-primary font-semibold border border-surface-light hover:border-text-muted transition-all duration-300"
                       >
-                        Necessary Only
+                        {t.cookies.buttons.necessaryOnly}
                       </button>
                       <button
                         onClick={handleAcceptAll}
                         className="flex-1 px-6 py-3 rounded-xl bg-accent-primary hover:bg-accent-primary/90 text-white font-bold transition-all duration-300 shadow-lg shadow-accent-primary/20"
                       >
-                        Accept All
+                        {t.cookies.buttons.acceptAll}
                       </button>
                     </>
                   )}

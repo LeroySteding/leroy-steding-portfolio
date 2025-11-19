@@ -198,12 +198,12 @@ export default function BlogPostClient({ slug }: BlogPostClientProps) {
             <div className="prose prose-invert prose-xl max-w-none mb-16">
               <ReactMarkdown
                 components={{
-                  code({ node, inline, className, children, ...props }) {
+                  code({ node, className, children }) {
                     const match = /language-(\w+)/.exec(className || '');
-                    return !inline && match ? (
+                    return match ? (
                       <div className="my-8 rounded-xl overflow-hidden">
                         <SyntaxHighlighter
-                          style={vscDarkPlus}
+                          style={vscDarkPlus as any}
                           language={match[1]}
                           PreTag="div"
                           customStyle={{
@@ -212,13 +212,12 @@ export default function BlogPostClient({ slug }: BlogPostClientProps) {
                             fontSize: '0.95rem',
                             lineHeight: '1.7',
                           }}
-                          {...props}
                         >
                           {String(children).replace(/\n$/, '')}
                         </SyntaxHighlighter>
                       </div>
                     ) : (
-                      <code className="px-2 py-1 rounded-lg bg-surface text-accent-primary font-mono text-base" {...props}>
+                      <code className="px-2 py-1 rounded-lg bg-surface text-accent-primary font-mono text-base">
                         {children}
                       </code>
                     );

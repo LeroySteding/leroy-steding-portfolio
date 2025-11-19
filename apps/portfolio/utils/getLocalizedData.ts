@@ -3,6 +3,7 @@ import { experiences as experiencesEN } from "@/data/experiences";
 import { projectsNL } from "@/data/projects-nl";
 import { experiencesNL } from "@/data/experiences-nl";
 import { blogPosts } from "@/data/blog";
+import { blogPostsNL } from "@/data/blog-nl";
 
 type Language = "en" | "nl";
 
@@ -25,9 +26,7 @@ export function getExperienceById(id: string, language: Language) {
 }
 
 export function getBlogPosts(language: Language) {
-  // Blog posts are currently only in English
-  // TODO: Add Dutch translations when available
-  return blogPosts;
+  return language === 'nl' ? blogPostsNL : blogPosts;
 }
 
 export function getBlogPostBySlug(slug: string, language: Language) {

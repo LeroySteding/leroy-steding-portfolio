@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { getProjects, getBlogPosts } from "@/utils/getLocalizedData";
+import { useTranslation } from "@/hooks/useTranslation";
 
 interface SearchResult {
   type: "blog" | "project";
@@ -24,6 +25,7 @@ interface GlobalSearchProps {
 }
 
 export default function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
+  const t = useTranslation();
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<SearchResult[]>([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -145,7 +147,7 @@ export default function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                     onKeyDown={handleKeyDown}
-                    placeholder="Search projects and blog posts..."
+                    placeholder={t.search.placeholder}
                     className="flex-1 bg-transparent text-text-primary text-lg placeholder:text-text-muted focus:outline-none"
                   />
                   <button
@@ -165,24 +167,18 @@ export default function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
                         <Search className="w-8 h-8 text-accent-primary" />
                       </div>
                       <p className="text-text-secondary text-base mb-3">
-                        Start typing to search projects and blog posts
+                        {t.search.emptyTitle}
                       </p>
                       <div className="flex items-center justify-center gap-2 text-sm text-text-muted">
-                        <kbd className="px-2 py-1 bg-surface rounded text-xs font-mono">↑</kbd>
-                        <kbd className="px-2 py-1 bg-surface rounded text-xs font-mono">↓</kbd>
-                        <span>to navigate</span>
-                        <kbd className="px-2 py-1 bg-surface rounded text-xs font-mono">↵</kbd>
-                        <span>to select</span>
-                        <kbd className="px-2 py-1 bg-surface rounded text-xs font-mono">esc</kbd>
-                        <span>to close</span>
+                        {t.search.emptyHelp}
                       </div>
                     </div>
                   ) : results.length === 0 ? (
                     <div className="p-12 text-center">
                       <div className="text-6xl mb-4">🔍</div>
-                      <h3 className="text-xl font-bold text-text-primary mb-2">No results found</h3>
+                      <h3 className="text-xl font-bold text-text-primary mb-2">{t.search.noResultsTitle}</h3>
                       <p className="text-text-secondary">
-                        Try searching with different keywords
+                        {t.search.noResultsDescription}
                       </p>
                     </div>
                   ) : (
@@ -269,14 +265,14 @@ export default function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
                 {/* Footer */}
                 <div className="flex items-center justify-between px-6 py-4 bg-surface/50 border-t-2 border-surface">
                   <div className="flex items-center gap-2 text-sm text-text-muted">
-                    <span>Search by</span>
+                    <span>{t.search.footer.searchBy}</span>
                     <span className="font-semibold text-accent-primary">STEDING.</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <kbd className="px-2 py-1 bg-secondary-bg border border-surface-light rounded text-xs font-mono text-text-secondary flex items-center gap-1">
                       <Command className="w-3 h-3" />K
                     </kbd>
-                    <span className="text-xs text-text-muted">to open</span>
+                    <span className="text-xs text-text-muted">{t.search.footer.toOpen}</span>
                   </div>
                 </div>
               </div>

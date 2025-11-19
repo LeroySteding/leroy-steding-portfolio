@@ -70,15 +70,19 @@ export default function CTA({
     },
   };
 
+  const preset = presets[variant];
+  
   const config = {
-    title: title || presets[variant].title,
-    description: description || presets[variant].description,
-    primaryButton: primaryButton || presets[variant].primaryButton,
-    secondaryButton: secondaryButton || presets[variant].secondaryButton,
+    title: title || preset.title,
+    description: description || preset.description,
+    primaryButton: primaryButton || preset.primaryButton,
+    secondaryButton: secondaryButton || (preset as any).secondaryButton,
   };
 
   const PrimaryIcon = config.primaryButton?.icon ? iconMap[config.primaryButton.icon] : ArrowRight;
-  const SecondaryIcon = config.secondaryButton?.icon ? iconMap[config.secondaryButton.icon] : ArrowRight;
+  const SecondaryIcon = config.secondaryButton?.icon && config.secondaryButton.icon in iconMap 
+    ? iconMap[config.secondaryButton.icon as keyof typeof iconMap] 
+    : ArrowRight;
 
   return (
     <motion.div

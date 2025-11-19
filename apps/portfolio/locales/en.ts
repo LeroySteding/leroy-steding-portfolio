@@ -29,13 +29,13 @@ export const en = {
   about: {
     title: "About",
     titleHighlight: "Me",
-    intro: "I'm a <highlight>Dutch full-stack developer</highlight> and entrepreneur with a passion for building cutting-edge web platforms that leverage the power of <highlight>AI automation</highlight>. As the founder of <strong>Hifive</strong>, I specialize in creating scalable, intelligent solutions that transform how businesses operate.",
-    expertise: "My expertise spans the modern web development stack, including <highlight>Next.js 17</highlight>, <highlight>React 19</highlight>, <highlight>TypeScript</highlight>, and <highlight>Supabase</highlight> on the frontend, paired with <highlight>Python</highlight>, <highlight>FastAPI</highlight>, and <highlight>PostgreSQL</highlight> on the backend. I'm particularly focused on AI automation, building intelligent agents, and creating seamless workflows with tools like <strong>n8n</strong>.",
-    experience: "From architecting <highlight>monorepo SaaS platforms</highlight> like the SURF Whitelabel Platform (Edusources & MBOdata) to building <highlight>AI-powered quotation pipelines</highlight> for industrial clients, I thrive on solving complex technical challenges and delivering production-ready solutions that scale.",
+    intro: "I'm a Dutch<strong> full-stack developer</strong> and <strong>entrepreneur</strong> with a passion for building cutting-edge web platforms that leverage the power of <strong>AI automation</strong>. As the founder of <strong>Hifive</strong>, I specialize in creating scalable, intelligent solutions that transform how businesses operate.",
+    expertise: "My expertise spans the modern web development stack, including <strong>Next.js</strong>, <strong>React</strong>, <strong>TypeScript</strong>, and <strong>Supabase</strong> on the frontend, paired with <strong>Python</strong>, <strong>FastAPI</strong>, and <strong>PostgreSQL</strong> on the backend. I'm particularly focused on <strong>AI automation</strong>, building intelligent agents, and creating seamless workflows with tools like <strong>n8n</strong>.",
+    experience: "From architecting <strong>monorepo SaaS platforms</strong> like a Whitelabel Platform to building <strong>AI-powered quotation pipelines</strong> for industrial clients, I thrive on solving complex technical challenges and delivering production-ready solutions that scale.",
     highlights: {
       fullstack: {
         title: "Full-Stack Expertise",
-        description: "Next.js 17, React 19, TypeScript, Supabase, Python, FastAPI",
+        description: "Next.js, React, TypeScript, Supabase, Python, FastAPI",
       },
       ai: {
         title: "AI Automation",
@@ -129,9 +129,15 @@ export const en = {
     title: "Get In",
     titleHighlight: "Touch",
     subtitle: "Have a project in mind or want to collaborate? Feel free to reach out!",
+    hero: {
+      title: "Let's",
+      titleHighlight: "Connect",
+      subtitle: "Have a project in mind or just want to chat? I'm always open to discussing new opportunities, creative ideas, or ways to be part of your vision.",
+    },
     info: {
       title: "Contact Information",
       email: "Email",
+      phone: "Phone",
       location: "Location",
       locationValue: "Netherlands",
     },
@@ -146,14 +152,58 @@ export const en = {
       namePlaceholder: "John Doe",
       email: "Your Email",
       emailPlaceholder: "john@example.com",
+      emailLabel: "Your email",
+      emailHelper: "I'll respond within 24 hours",
       subject: "Subject",
       subjectPlaceholder: "Project inquiry",
       message: "Message",
       messagePlaceholder: "Tell me about your project...",
+      required: "required",
       submit: "Send Message",
       sending: "Sending...",
       success: "✓ Message sent successfully! I'll get back to you soon.",
       error: "✗ Failed to send message. Please try again or email me directly.",
+      trustIndicators: {
+        responseTime: "Response Time",
+        availableNow: "Available Now",
+        securePrivate: "Secure & Private",
+      },
+      heading: "Send a Message",
+      subheading: "I typically respond within 24 hours. Let me know how I can help!",
+      successMessage: {
+        title: "Message sent successfully!",
+        body: "Thanks for reaching out! I'll respond to",
+        bodyEnd: "within 24 hours.",
+        spam: "Check your spam folder if you don't see my reply in your inbox.",
+      },
+      actions: {
+        sendAnother: "Send Another Message",
+        browseWork: "Browse My Work",
+        hideOptional: "Hide",
+        showOptional: "Add",
+        optionalLabel: "name or subject (optional)",
+      },
+      validation: {
+        tooShort: "Add a few more details for a better response",
+        perfect: "Perfect! That's enough detail",
+      },
+    },
+    alternativeActions: {
+      scheduleMeeting: {
+        title: "Schedule a Meeting",
+        description: "Book a 30-minute call",
+        buttonText: "View Calendar",
+      },
+      downloadResume: {
+        title: "Download Resume",
+        description: "View my experience",
+        buttonText: "Download CV",
+      },
+      linkedin: {
+        title: "Connect on LinkedIn",
+        description: "Let's connect",
+        buttonText: "View Profile",
+      },
     },
     chat: {
       title: "Leroy's AI Assistant",
@@ -189,6 +239,194 @@ export const en = {
       twitter: "Twitter",
       email: "Email",
     },
+  },
+  blog: {
+    page: {
+      title: "The",
+      titleHighlight: "Journal",
+      description: "Thoughts, tutorials, and research on modern web development, AI automation, and building scalable products.",
+      search: {
+        placeholder: "Search articles, tutorials, and research...",
+      },
+      categories: {
+        all: "All Posts",
+        article: "Articles",
+        tutorial: "Tutorials",
+        research: "Research",
+      },
+      tags: {
+        title: "Filter by tags:",
+      },
+      actions: {
+        clearFilters: "Clear all filters",
+        readArticle: "Read Article",
+        clearFiltersButton: "Clear Filters",
+      },
+      results: {
+        showing: "Showing",
+        post: "post",
+        posts: "posts",
+      },
+      badges: {
+        featured: "Featured",
+      },
+      empty: {
+        title: "No posts found",
+        subtitle: "Try adjusting your filters or search query",
+      },
+    },
+  },
+  common: {
+    search: "Search",
+    searchPlaceholder: "Search...",
+    loading: "Loading...",
+    error: "Error",
+    success: "Success",
+    submit: "Submit",
+    cancel: "Cancel",
+    close: "Close",
+    save: "Save",
+    delete: "Delete",
+    edit: "Edit",
+    view: "View",
+    download: "Download",
+    back: "Back",
+    next: "Next",
+    previous: "Previous",
+    all: "All",
+  },
+  newsletter: {
+    title: "Stay in the loop",
+    description: "Get notified about new articles, projects, and insights delivered straight to your inbox.",
+    placeholder: "your@email.com",
+    subscribe: "Subscribe",
+    buttons: {
+      subscribeNow: "Subscribe Now",
+      subscribing: "Subscribing...",
+      subscribed: "Subscribed!",
+    },
+    messages: {
+      success: "Thanks for subscribing! Check your inbox for confirmation.",
+    },
+    errors: {
+      generic: "Something went wrong. Please try again.",
+      invalidEmail: "Please enter a valid email address",
+    },
+    privacy: {
+      text: "No spam, unsubscribe anytime. Read our",
+      link: "privacy policy",
+    },
+    footer: {
+      text: "Join 500+ developers and designers. No spam, unsubscribe anytime.",
+      link: "Privacy policy",
+    },
+  },
+  cta: {
+    primary: {
+      title: "Let's Build Something Amazing Together",
+      description: "Have a project in mind? Let's discuss how we can bring your ideas to life with cutting-edge technology and innovative solutions.",
+      primaryButton: "Start a Conversation",
+      secondaryButton: "View My Work",
+    },
+    secondary: {
+      title: "Ready to Collaborate?",
+      description: "I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.",
+      primaryButton: "Get in Touch",
+    },
+    contact: {
+      title: "Let's Talk",
+      description: "Whether you have a question, want to discuss a project, or just want to connect, I'd love to hear from you.",
+      primaryButton: "Send a Message",
+      secondaryButton: "Schedule a Call",
+    },
+    project: {
+      title: "Interested in Similar Work?",
+      description: "I'd love to help you build something great. Let's discuss your project requirements and how I can contribute to your success.",
+      primaryButton: "Discuss Your Project",
+      secondaryButton: "View More Projects",
+    },
+    collaboration: {
+      title: "Want to Work Together?",
+      description: "I'm always looking for exciting opportunities to collaborate on innovative projects and create impactful solutions.",
+      primaryButton: "Let's Connect",
+      secondaryButton: "Download Resume",
+    },
+  },
+  search: {
+    placeholder: "Search projects and blog posts...",
+    emptyTitle: "Start typing to search projects and blog posts",
+    emptyHelp: "↑ ↓ to navigate, ↵ to select, esc to close",
+    noResultsTitle: "No results found",
+    noResultsDescription: "Try searching with different keywords",
+    footer: {
+      searchBy: "Search by",
+      toOpen: "to open",
+    },
+  },
+  cookies: {
+    title: "🍪 Cookie Settings",
+    description: "This website uses cookies to ensure you get the best experience. We use necessary cookies for site functionality, and optional cookies for analytics and improvements.",
+    learnMore: "Learn more in our Privacy Policy",
+    types: {
+      necessary: {
+        title: "Necessary Cookies",
+        required: "Required",
+        description: "Essential for the website to function properly. These cookies enable core functionality such as security and accessibility.",
+      },
+      analytics: {
+        title: "Analytics Cookies",
+        description: "Help us understand how visitors interact with the website by collecting and reporting information anonymously.",
+      },
+      marketing: {
+        title: "Marketing Cookies",
+        description: "Used to track visitors across websites to display relevant and personalized content.",
+      },
+    },
+    buttons: {
+      hideSettings: "Hide Settings",
+      customize: "Customize",
+      savePreferences: "Save Preferences",
+      necessaryOnly: "Necessary Only",
+      acceptAll: "Accept All",
+    },
+  },
+  chat: {
+    header: {
+      title: "Leroy's assistant",
+      subtitle: "Ask me about Leroy",
+      online: "Online",
+    },
+    welcome: {
+      title: "Hi! I'm Leroy's personal Assistant",
+      description: "I can help you learn about Leroy's experience, projects, and services. Try asking:",
+    },
+    starterPrompts: [
+      "What are Leroy's main skills?",
+      "Tell me about his AI projects",
+      "What services does he offer?",
+      "How can I work with Leroy?",
+    ],
+    followUpPrompts: [
+      "What's his experience with Next.js?",
+      "Tell me about his e-commerce projects",
+      "Does he do mobile development?",
+      "What's his approach to accessibility?",
+      "Can he help with AI integration?",
+      "What industries has he worked in?",
+    ],
+    input: {
+      placeholder: "Ask me anything...",
+      send: "Send",
+      sending: "Sending...",
+    },
+    suggestions: {
+      title: "You might also ask:",
+    },
+    error: {
+      title: "Error",
+      message: "Sorry, I encountered an error. Please try again or contact Leroy directly at leroysteding@gmail.com.",
+    },
+    disclaimer: "AI can make mistakes. Verify important info.",
   },
 };
 
