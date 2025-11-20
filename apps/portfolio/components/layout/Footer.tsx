@@ -1,6 +1,6 @@
 "use client";
 
-import { Github, Linkedin, Twitter, Mail, MapPin, Phone } from "lucide-react";
+import { Github, Linkedin, Twitter, Mail, MapPin, Phone, Calendar } from "lucide-react";
 import Link from "next/link";
 import { useTranslation } from "@/hooks/useTranslation";
 import NewsletterSubscribe from "@/components/ui/NewsletterSubscribe";
@@ -66,6 +66,54 @@ export default function Footer() {
       <div className="border-b-2 border-surface">
         <div className="container mx-auto px-8 lg:px-16 py-16">
           <NewsletterSubscribe variant="inline" className="max-w-2xl mx-auto text-center" />
+        </div>
+      </div>
+
+      {/* Booking CTA Section */}
+      <div className="border-b-2 border-surface bg-gradient-to-r from-accent-primary/5 via-accent-secondary/5 to-accent-primary/5">
+        <div className="container mx-auto px-8 lg:px-16 py-16">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="inline-flex p-3 rounded-xl bg-accent-primary/10 mb-6">
+              <Calendar className="w-8 h-8 text-accent-primary" />
+            </div>
+            
+            <h3 className="text-3xl md:text-4xl font-display font-black mb-4">
+              {t.nav.about === "Over Mij" ? "Klaar om te Starten?" : "Ready to Get Started?"}
+            </h3>
+            
+            <p className="text-lg text-text-secondary mb-8 max-w-2xl mx-auto leading-relaxed">
+              {t.nav.about === "Over Mij" 
+                ? "Plan een gratis 30-minuten gesprek om uw project te bespreken en ontdek hoe we samen uw ideeën tot leven kunnen brengen."
+                : "Schedule a free 30-minute consultation to discuss your project and discover how we can bring your ideas to life together."}
+            </p>
+            
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Link 
+                href="/book"
+                className="btn-primary group"
+              >
+                <Calendar className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                <span>{t.nav.about === "Over Mij" ? "Plan een Gesprek" : "Schedule a Call"}</span>
+              </Link>
+              
+              <Link 
+                href="/contact"
+                className="btn-secondary group"
+              >
+                <Mail className="w-5 h-5" />
+                <span>{t.nav.about === "Over Mij" ? "Stuur een Bericht" : "Send a Message"}</span>
+              </Link>
+            </div>
+            
+            <div className="flex items-center justify-center gap-8 mt-8 text-sm text-text-muted">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                <span>{t.nav.about === "Over Mij" ? "Beschikbaar voor Nieuwe Projecten" : "Available for New Projects"}</span>
+              </div>
+              <span>•</span>
+              <div>{t.nav.about === "Over Mij" ? "Meestal binnen 24u reactie" : "Usually responds within 24h"}</div>
+            </div>
+          </div>
         </div>
       </div>
 

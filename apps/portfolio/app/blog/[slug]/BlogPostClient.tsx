@@ -1,7 +1,7 @@
 "use client";
 
 import { notFound } from "next/navigation";
-import { Calendar, Clock, Tag, ArrowLeft, Share2, Twitter, Linkedin, Facebook, Link as LinkIcon, Mail, ChevronRight } from "lucide-react";
+import { Calendar, Clock, Tag, ArrowLeft, Share2, Twitter, Linkedin, Facebook, Link as LinkIcon, Mail, ChevronRight, Phone } from "lucide-react";
 import Link from "next/link";
 import { getBlogPosts } from "@/utils/getLocalizedData";
 import ReactMarkdown from 'react-markdown';
@@ -395,6 +395,47 @@ export default function BlogPostClient({ post, language = 'en' }: BlogPostClient
                   </nav>
                 </div>
               )}
+
+              {/* Book a Call CTA */}
+              <div className="card p-6 bg-gradient-to-br from-accent-primary/10 to-accent-secondary/10 border-2 border-accent-primary/20">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="p-2 rounded-lg bg-accent-primary/20">
+                    <Calendar className="w-5 h-5 text-accent-primary" />
+                  </div>
+                  <h4 className="font-bold text-text-primary">
+                    {language === 'nl' ? 'Laten we Praten' : "Let's Talk"}
+                  </h4>
+                </div>
+                
+                <p className="text-sm text-text-secondary mb-6 leading-relaxed">
+                  {language === 'nl' 
+                    ? 'Vragen over dit artikel? Of wilt u bespreken hoe deze concepten kunnen helpen bij uw project?'
+                    : 'Questions about this article? Or want to discuss how these concepts can help your project?'}
+                </p>
+
+                <div className="space-y-3">
+                  <Link
+                    href={language === 'nl' ? '/nl/book' : '/book'}
+                    className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-accent-primary hover:bg-accent-primary/90 text-primary-bg font-bold transition-all shadow-lg hover:shadow-xl hover:scale-105"
+                  >
+                    <Phone className="w-4 h-4" />
+                    <span>{language === 'nl' ? 'Plan een Gesprek' : 'Schedule a Call'}</span>
+                  </Link>
+
+                  <Link
+                    href={language === 'nl' ? '/nl/contact' : '/contact'}
+                    className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-surface hover:bg-surface-light text-text-primary font-bold transition-all"
+                  >
+                    <Mail className="w-4 h-4" />
+                    <span>{language === 'nl' ? 'Stuur een Bericht' : 'Send a Message'}</span>
+                  </Link>
+                </div>
+
+                <div className="mt-4 pt-4 border-t border-accent-primary/20 flex items-center justify-center gap-2 text-xs text-text-muted">
+                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                  <span>{language === 'nl' ? 'Beschikbaar voor nieuwe projecten' : 'Available for new projects'}</span>
+                </div>
+              </div>
             </div>
           </aside>
         </div>

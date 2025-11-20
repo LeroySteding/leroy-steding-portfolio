@@ -13,6 +13,7 @@
     "create:sections": "tsx scripts/create-default-sections.ts"
   },
   "dependencies": {
+    "@calcom/embed-react": "^1.5.3",
     "@clerk/nextjs": "^6.34.0",
     "@openai/chatkit-react": "^1.1.1",
     "@portabletext/react": "^4.0.3",

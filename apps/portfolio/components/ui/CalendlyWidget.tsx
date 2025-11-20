@@ -115,13 +115,25 @@ export default function CalendlyWidget({
   }
 
   return (
-    <div className="calendly-widget-container w-full">
+    <div 
+      className="calendly-widget-container w-full h-full overflow-hidden" 
+      style={{
+        position: 'relative',
+        width: '100%',
+        height: '100%',
+        minHeight: styles.height || '800px',
+      }}
+    >
       <InlineWidget
         url={calendlyUrl}
         prefill={prefill}
         pageSettings={pageSettings}
         utm={utm}
-        styles={styles}
+        styles={{
+          width: '100%',
+          height: '100%',
+          minHeight: 'inherit',
+        }}
       />
     </div>
   );
