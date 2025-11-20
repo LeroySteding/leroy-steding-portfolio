@@ -106,13 +106,13 @@ export default function Blog() {
                     damping: 20
                   }}
                   viewport={{ once: true, margin: "0px 0px -100px 0px" }}
-                  className="relative group"
+                  className="relative group h-full"
                 >
                   {/* Glow effect */}
                   <div className="absolute -inset-1 bg-gradient-to-r from-accent-primary/20 to-accent-secondary/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   
                   {/* Card content */}
-                  <div className="relative card overflow-hidden">
+                  <div className="relative card overflow-hidden h-full flex flex-col">
                     {/* Header with image or icon */}
                     <div className="relative h-48 bg-secondary-bg overflow-hidden">
                       {post.coverImage ? (
@@ -135,8 +135,8 @@ export default function Blog() {
                     </div>
 
                     {/* Content */}
-                    <Link href={language === 'nl' ? `/nl/blog/${post.slug}` : `/blog/${post.slug}`}>
-                      <div className="p-8">
+                    <Link href={language === 'nl' ? `/nl/blog/${post.slug}` : `/blog/${post.slug}`} className="flex-1 flex flex-col">
+                      <div className="p-8 flex-1 flex flex-col">
                         {/* Meta Information */}
                         <div className="flex items-center gap-4 mb-4 text-sm text-text-muted">
                           <div className="flex items-center gap-2">
@@ -153,12 +153,12 @@ export default function Blog() {
                           {post.title}
                         </h3>
                         
-                        <p className="text-text-secondary text-base leading-relaxed mb-6 line-clamp-3">
+                        <p className="text-text-secondary text-base leading-relaxed mb-6 line-clamp-3 flex-1">
                           {post.excerpt}
                         </p>
                         
                         {/* Tags - Scrollable */}
-                        <div className="flex gap-2 overflow-x-auto scrollbar-hide mb-6 pb-2">
+                        <div className="flex gap-2 overflow-x-auto scrollbar-hide mb-6 pb-2 mt-auto">
                           {post.tags.slice(0, 3).map((tag, i) => (
                             <motion.span
                               key={tag}

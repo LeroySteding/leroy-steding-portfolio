@@ -24,9 +24,9 @@ export default function Header({ onSearchClick }: HeaderProps) {
   const { scrollY } = useScroll();
   
   // Transform values for the STEDING title animation (only on home page)translateX(-620px) translateY(-210px) scale(0.16)
-  const scale = useTransform(scrollY, [0, 500], [1.15, 0.12]);
-  const y = useTransform(scrollY, [0, 500], [100, -210]);
-  const x = useTransform(scrollY, [0, 500], [100, -618]);
+  const scale = useTransform(scrollY, [0, 500], [1.15, 0.14]);
+  const y = useTransform(scrollY, [0, 500], [100, -213.5]);
+  const x = useTransform(scrollY, [0, 500], [100, -605.5]);
   
   const navigation = [
     { name: t.nav.about, href: "/#about" },
@@ -36,6 +36,7 @@ export default function Header({ onSearchClick }: HeaderProps) {
     { name: t.nav.blog, href: "/blog" },
     { name: t.nav.contact, href: "/contact" },
   ];
+
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -72,7 +73,6 @@ export default function Header({ onSearchClick }: HeaderProps) {
                 width: '100%',
                 display: 'flex',
                 justifyContent: 'space-between',
-                letterSpacing: '0.05em'
               }}
             >
               STEDING.
@@ -95,8 +95,12 @@ export default function Header({ onSearchClick }: HeaderProps) {
               href="/"
               className="flex items-center space-x-2 group"
             >
-              {!isHomePage && (
+              {!isHomePage ? (
                 <span className="text-3xl md:text-4xl font-display font-black text-gradient transition-all">
+                  STEDING.
+                </span>
+              ) : (
+                <span className="text-3xl md:text-4xl font-display font-black text-outline">
                   STEDING.
                 </span>
               )}

@@ -100,13 +100,13 @@ export default function Projects() {
                   damping: 20
                 }}
                 viewport={{ once: true, margin: "0px 0px -100px 0px" }}
-                className="relative group"
+                className="relative group h-full"
               >
                 {/* Glow effect */}
                 <div className="absolute -inset-1 bg-gradient-to-r from-accent-primary/20 to-accent-secondary/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 
                 {/* Card content */}
-                <div className="relative card overflow-hidden">
+                <div className="relative card overflow-hidden h-full flex flex-col">
                   {/* Image */}
                   <div className="relative h-64 bg-secondary-bg overflow-hidden">
                 {project.image ? (
@@ -162,8 +162,8 @@ export default function Projects() {
               </div>
 
               {/* Content */}
-              <Link href={`/projects/${project.id}`}>
-                <div className="p-8">
+              <Link href={`/projects/${project.id}`} className="flex-1 flex flex-col">
+                <div className="p-8 flex-1 flex flex-col">
                   {/* Project Metrics */}
                   <div className="flex items-center gap-4 mb-4 text-sm text-text-muted">
                     <div className="flex items-center gap-2">
@@ -188,12 +188,12 @@ export default function Projects() {
                     {project.title}
                   </h3>
                   
-                  <p className="text-text-secondary text-base leading-relaxed mb-6">
+                  <p className="text-text-secondary text-base leading-relaxed mb-6 flex-1">
                     {project.description}
                   </p>
                   
                   {/* Technologies - Scrollable */}
-                  <div className="flex gap-2 overflow-x-auto scrollbar-hide mb-6 pb-2">
+                  <div className="flex gap-2 overflow-x-auto scrollbar-hide mb-6 pb-2 mt-auto">
                     {project.technologies.map((tech, i) => (
                       <motion.span
                         key={tech}

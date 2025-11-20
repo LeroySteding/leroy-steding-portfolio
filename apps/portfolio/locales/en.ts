@@ -29,7 +29,10 @@ export const en = {
   about: {
     title: "About",
     titleHighlight: "Me",
-    intro: "I'm a Dutch<strong> full-stack developer</strong> and <strong>entrepreneur</strong> with a passion for building cutting-edge web platforms that leverage the power of <strong>AI automation</strong>. As the founder of <strong>Hifive</strong>, I specialize in creating scalable, intelligent solutions that transform how businesses operate.",
+    intro: {
+      title: "Full-Stack Developer & AI Automation Architect",
+      description: "I'm a Dutch full-stack developer and entrepreneur with a passion for building cutting-edge web platforms that leverage the power of AI automation. As the founder of Hifive, I specialize in creating scalable, intelligent solutions that transform how businesses operate.",
+    },
     expertise: "My expertise spans the modern web development stack, including <strong>Next.js</strong>, <strong>React</strong>, <strong>TypeScript</strong>, and <strong>Supabase</strong> on the frontend, paired with <strong>Python</strong>, <strong>FastAPI</strong>, and <strong>PostgreSQL</strong> on the backend. I'm particularly focused on <strong>AI automation</strong>, building intelligent agents, and creating seamless workflows with tools like <strong>n8n</strong>.",
     experience: "From architecting <strong>monorepo SaaS platforms</strong> like a Whitelabel Platform to building <strong>AI-powered quotation pipelines</strong> for industrial clients, I thrive on solving complex technical challenges and delivering production-ready solutions that scale.",
     highlights: {
@@ -46,6 +49,46 @@ export const en = {
         description: "Scalable platforms, monorepo structures, and modern deployment pipelines",
       },
     },
+  },
+  services: {
+    webDevelopment: {
+      title: "Web Development",
+      description: "Modern, responsive web applications built with Next.js, React, and TypeScript for optimal performance and user experience.",
+    },
+    aiAutomation: {
+      title: "AI Automation",
+      description: "Intelligent automation solutions that streamline workflows, reduce manual tasks, and leverage AI to transform business operations.",
+    },
+    apiIntegration: {
+      title: "API Integration",
+      description: "Seamless integration of third-party services and APIs to create connected, powerful applications that work together.",
+    },
+    consulting: {
+      title: "Technical Consulting",
+      description: "Expert guidance on architecture, technology stack selection, and best practices to help your project succeed.",
+    },
+    fullStack: {
+      title: "Full-Stack Solutions",
+      description: "End-to-end development from database design to frontend implementation, delivering complete, production-ready applications.",
+    },
+    cloudInfra: {
+      title: "Cloud Infrastructure",
+      description: "Scalable cloud solutions with modern DevOps practices, CI/CD pipelines, and infrastructure as code.",
+    },
+  },
+  testimonials: {
+    client1Name: "John Smith",
+    client1Role: "CEO",
+    client1Company: "TechCorp",
+    client1Quote: "Leroy delivered an exceptional AI-powered platform that transformed our business operations. His expertise in full-stack development and automation is unmatched.",
+    client2Name: "Sarah Johnson",
+    client2Role: "CTO",
+    client2Company: "InnovateLab",
+    client2Quote: "Working with Leroy was a game-changer. He not only delivered a robust SaaS platform but also provided invaluable technical guidance throughout the project.",
+    client3Name: "Michael Chen",
+    client3Role: "Founder",
+    client3Company: "StartupX",
+    client3Quote: "Leroy's ability to understand complex requirements and translate them into elegant, scalable solutions is remarkable. Highly recommended!",
   },
   experience: {
     title: "Professional",

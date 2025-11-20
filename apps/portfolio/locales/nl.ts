@@ -31,7 +31,10 @@ export const nl: Translations = {
   about: {
     title: "Over",
     titleHighlight: "Mij",
-    intro: "Ik ben een <highlight>Nederlandse full-stack developer</highlight> en ondernemer met een passie voor het bouwen van geavanceerde webplatforms die de kracht van <highlight>AI-automatisering</highlight> benutten. Als oprichter van <strong>Hifive</strong>, specialiseer ik me in het creëren van schaalbare, intelligente oplossingen die transformeren hoe bedrijven opereren.",
+    intro: {
+      title: "Full-Stack Developer & AI Automatisering Architect",
+      description: "Ik ben een Nederlandse full-stack developer en ondernemer met een passie voor het bouwen van geavanceerde webplatforms die de kracht van AI-automatisering benutten. Als oprichter van Hifive, specialiseer ik me in het creëren van schaalbare, intelligente oplossingen die transformeren hoe bedrijven opereren.",
+    },
     expertise: "Mijn expertise omvat de moderne web development stack, inclusief <highlight>Next.js 17</highlight>, <highlight>React 19</highlight>, <highlight>TypeScript</highlight>, en <highlight>Supabase</highlight> op de frontend, gecombineerd met <highlight>Python</highlight>, <highlight>FastAPI</highlight>, en <highlight>PostgreSQL</highlight> op de backend. Ik ben vooral gefocust op AI-automatisering, het bouwen van intelligente agents, en het creëren van naadloze workflows met tools zoals <strong>n8n</strong>.",
     experience: "Van het architecteren van <highlight>monorepo SaaS-platforms</highlight> zoals het SURF Whitelabel Platform (Edusources & MBOdata) tot het bouwen van <highlight>AI-aangedreven offertes pipelines</highlight> voor industriële klanten, ik floreer bij het oplossen van complexe technische uitdagingen en het leveren van productie-klare oplossingen die schalen.",
     highlights: {
@@ -48,6 +51,46 @@ export const nl: Translations = {
         description: "Schaalbare platforms, monorepo structuren en moderne deployment pipelines",
       },
     },
+  },
+  services: {
+    webDevelopment: {
+      title: "Webontwikkeling",
+      description: "Moderne, responsieve webapplicaties gebouwd met Next.js, React en TypeScript voor optimale prestaties en gebruikerservaring.",
+    },
+    aiAutomation: {
+      title: "AI Automatisering",
+      description: "Intelligente automatiseringsoplossingen die workflows stroomlijnen, handmatige taken verminderen en AI benutten om bedrijfsprocessen te transformeren.",
+    },
+    apiIntegration: {
+      title: "API Integratie",
+      description: "Naadloze integratie van externe services en API's om verbonden, krachtige applicaties te creëren die samenwerken.",
+    },
+    consulting: {
+      title: "Technisch Advies",
+      description: "Deskundige begeleiding op het gebied van architectuur, technologie stack selectie en best practices om uw project te laten slagen.",
+    },
+    fullStack: {
+      title: "Full-Stack Oplossingen",
+      description: "End-to-end ontwikkeling van database ontwerp tot frontend implementatie, met levering van complete, productie-klare applicaties.",
+    },
+    cloudInfra: {
+      title: "Cloud Infrastructuur",
+      description: "Schaalbare cloud oplossingen met moderne DevOps praktijken, CI/CD pipelines en infrastructuur als code.",
+    },
+  },
+  testimonials: {
+    client1Name: "Jan Bakker",
+    client1Role: "CEO",
+    client1Company: "TechCorp",
+    client1Quote: "Leroy leverde een uitzonderlijk AI-aangedreven platform dat onze bedrijfsvoering transformeerde. Zijn expertise in full-stack ontwikkeling en automatisering is ongeëvenaard.",
+    client2Name: "Sophie de Vries",
+    client2Role: "CTO",
+    client2Company: "InnovateLab",
+    client2Quote: "Samenwerken met Leroy was een game-changer. Hij leverde niet alleen een robuust SaaS-platform, maar bood ook waardevolle technische begeleiding gedurende het hele project.",
+    client3Name: "Michael Chen",
+    client3Role: "Oprichter",
+    client3Company: "StartupX",
+    client3Quote: "Leroy's vermogen om complexe vereisten te begrijpen en deze te vertalen naar elegante, schaalbare oplossingen is opmerkelijk. Zeer aanbevolen!",
   },
   experience: {
     title: "Professionele",
