@@ -54,7 +54,7 @@ export default function CTA({
       title: "Let's Talk",
       description: "Whether you have a question, want to discuss a project, or just want to connect, I'd love to hear from you.",
       primaryButton: { text: "Send a Message", href: "/contact", icon: "mail" as const },
-      secondaryButton: { text: "Schedule a Call", href: "https://calendly.com/leroysteding", icon: "calendar" as const },
+      secondaryButton: { text: "Schedule a Call", href: "/book", icon: "calendar" as const },
     },
     project: {
       title: "Interested in Similar Work?",

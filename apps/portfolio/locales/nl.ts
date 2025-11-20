@@ -230,6 +230,62 @@ export const nl: Translations = {
       ],
     },
   },
+  booking: {
+    title: "Plan een",
+    titleHighlight: "Gesprek",
+    hero: {
+      title: "Laten we praten over",
+      titleHighlight: "Jouw Project",
+      subtitle: "Boek een gratis 30 minuten durend consult om jouw project te bespreken, technisch advies te krijgen, of samenwerkingsmogelijkheden te verkennen.",
+    },
+    description: "Kies een tijd die het beste bij je past. Ik stuur je een agenda-uitnodiging en meeting link.",
+    trustIndicators: {
+      response: "24u Reactie",
+      availability: "Nu Beschikbaar",
+      secure: "Veilige Boeking",
+    },
+    meetingTypes: {
+      title: "Kies Je Meeting Type",
+      quickChat: {
+        title: "Korte Chat",
+        duration: "15 minuten",
+        description: "Korte kennismaking of snelle vraag",
+      },
+      consultation: {
+        title: "Project Consult",
+        duration: "30 minuten",
+        description: "Bespreek jouw projectvereisten in detail",
+      },
+      deepDive: {
+        title: "Technische Deep Dive",
+        duration: "60 minuten",
+        description: "Diepgaande technische planning en architectuur review",
+      },
+    },
+    benefits: {
+      title: "Wat Te Verwachten",
+      items: [
+        {
+          title: "Gratis Consultatie",
+          description: "Geen verplichting, alleen waardevolle inzichten voor jouw project",
+        },
+        {
+          title: "Technische Expertise",
+          description: "Krijg deskundig advies over architectuur, tech stack en implementatie",
+        },
+        {
+          title: "Duidelijke Vervolgstappen",
+          description: "Ga weg met bruikbare aanbevelingen en tijdlijnschattingen",
+        },
+      ],
+    },
+    cta: {
+      title: "Liever Op Een Andere Manier Contact?",
+      email: "Stuur Een E-mail",
+      linkedin: "Verbind Op LinkedIn",
+      projects: "Bekijk Mijn Werk",
+    },
+  },
   footer: {
     copyright: "© 2025 Leroy Steding. Alle rechten voorbehouden.",
     builtWith: "Gebouwd met Next.js, TypeScript, Tailwind CSS en Framer Motion",

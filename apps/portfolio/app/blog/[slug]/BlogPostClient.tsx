@@ -45,14 +45,15 @@ export default function BlogPostClient({ post, language = 'en' }: BlogPostClient
 
   // Extract headings for table of contents
   const headings = useMemo(() => {
+    if (!post?.content) return [];
     const matches = post.content.match(/^##\s+(.+)$/gm);
     if (!matches) return [];
-    return matches.map(match => {
+    return matches.map((match: string) => {
       const text = match.replace(/^##\s+/, '');
       const id = text.toLowerCase().replace(/[^a-z0-9]+/g, '-');
       return { text, id };
     });
-  }, [post.content]);
+  }, [post]);
 
   // Reading progress
   useEffect(() => {
@@ -65,7 +66,7 @@ export default function BlogPostClient({ post, language = 'en' }: BlogPostClient
       setReadingProgress(Math.min(100, Math.max(0, progress)));
 
       // Update active heading
-      const headingElements = headings.map(h => document.getElementById(h.id)).filter(Boolean);
+      const headingElements = headings.map((h: { text: string; id: string }) => document.getElementById(h.id)).filter(Boolean);
       for (let i = headingElements.length - 1; i >= 0; i--) {
         const element = headingElements[i];
         if (element && element.getBoundingClientRect().top <= 150) {
@@ -259,7 +260,7 @@ export default function BlogPostClient({ post, language = 'en' }: BlogPostClient
                 <span className="text-text-primary font-bold text-xl">Tags</span>
               </div>
               <div className="flex flex-wrap gap-3">
-                {post.tags.map((tag) => (
+                {post.tags.map((tag: string) => (
                   <Link
                     key={tag}
                     href="/blog"
@@ -374,7 +375,7 @@ export default function BlogPostClient({ post, language = 'en' }: BlogPostClient
                 <div className="card p-6">
                   <h4 className="font-bold text-text-primary mb-4">Table of Contents</h4>
                   <nav className="space-y-2">
-                    {headings.map((heading) => (
+                    {headings.map((heading: { text: string; id: string }) => (
                       <a
                         key={heading.id}
                         href={`#${heading.id}`}

@@ -70,7 +70,7 @@ export default function ContactPage() {
       icon: Calendar,
       title: t.contact.alternativeActions.scheduleMeeting.title,
       description: t.contact.alternativeActions.scheduleMeeting.description,
-      href: "https://calendly.com/leroysteding",
+      href: "/book",
       buttonText: t.contact.alternativeActions.scheduleMeeting.buttonText,
     },
     {

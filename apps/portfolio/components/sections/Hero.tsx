@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, Download } from "lucide-react";
+import { ArrowRight, Download, Calendar } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useTranslation } from "@/hooks/useTranslation";
@@ -121,11 +121,11 @@ export default function Hero() {
             </Link>
             
             <Link
-              href="#contact"
+              href="/book"
               className="group relative overflow-hidden bg-surface hover:bg-surface-light border-2 border-accent-secondary/30 hover:border-accent-secondary text-text-primary font-bold text-base md:text-lg px-10 py-5 rounded-xl transition-all duration-300 inline-flex items-center gap-3 shadow-xl hover:scale-105"
             >
-              <span className="relative z-10">{t.hero.cta.contact}</span>
-              <ArrowRight className="relative z-10 w-5 h-5 group-hover:translate-x-2 transition-transform duration-300" />
+              <Calendar className="relative z-10 w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
+              <span className="relative z-10">Schedule a Call</span>
             </Link>
           </motion.div>
         </motion.div>

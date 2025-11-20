@@ -228,6 +228,62 @@ export const en = {
       ],
     },
   },
+  booking: {
+    title: "Schedule a",
+    titleHighlight: "Call",
+    hero: {
+      title: "Let's Talk About",
+      titleHighlight: "Your Project",
+      subtitle: "Book a free 30-minute consultation to discuss your project, get technical advice, or explore collaboration opportunities.",
+    },
+    description: "Choose a time that works best for you. I'll send you a calendar invite and meeting link.",
+    trustIndicators: {
+      response: "24h Response",
+      availability: "Available Now",
+      secure: "Secure Booking",
+    },
+    meetingTypes: {
+      title: "Choose Your Meeting Type",
+      quickChat: {
+        title: "Quick Chat",
+        duration: "15 minutes",
+        description: "Brief introduction or quick question",
+      },
+      consultation: {
+        title: "Project Consultation",
+        duration: "30 minutes",
+        description: "Discuss your project requirements in detail",
+      },
+      deepDive: {
+        title: "Technical Deep Dive",
+        duration: "60 minutes",
+        description: "In-depth technical planning and architecture review",
+      },
+    },
+    benefits: {
+      title: "What to Expect",
+      items: [
+        {
+          title: "Free Consultation",
+          description: "No obligation, just valuable insights for your project",
+        },
+        {
+          title: "Technical Expertise",
+          description: "Get expert advice on architecture, tech stack, and implementation",
+        },
+        {
+          title: "Clear Next Steps",
+          description: "Walk away with actionable recommendations and timeline estimates",
+        },
+      ],
+    },
+    cta: {
+      title: "Prefer Another Way to Connect?",
+      email: "Send an Email",
+      linkedin: "Connect on LinkedIn",
+      projects: "View My Work",
+    },
+  },
   footer: {
     copyright: "© 2025 Leroy Steding. All rights reserved.",
     builtWith: "Built with Next.js, TypeScript, Tailwind CSS, and Framer Motion",

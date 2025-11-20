@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
-import { Moon, Sun, Menu, X, Search } from "lucide-react";
+import { Moon, Sun, Menu, X, Search, Calendar } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, useScroll, useTransform } from "framer-motion";
@@ -114,6 +114,15 @@ export default function Header({ onSearchClick }: HeaderProps) {
                 <span className="absolute -bottom-1 left-0 w-0 h-1 bg-accent-primary transition-all duration-300 group-hover:w-full rounded-full" />
               </Link>
             ))}
+            
+            {/* Book a Call CTA Button */}
+            <Link
+              href="/book"
+              className="px-5 py-2.5 bg-accent-primary hover:bg-accent-primary/90 text-primary-bg font-bold text-base rounded-lg transition-all duration-200 flex items-center gap-2 shadow-lg hover:shadow-accent-primary/50 hover:scale-105"
+            >
+              <Calendar className="w-4 h-4" />
+              Book a Call
+            </Link>
           </div>
 
           {/* Search, Language, Theme Toggle & Mobile Menu Button */}
@@ -164,6 +173,16 @@ export default function Header({ onSearchClick }: HeaderProps) {
         {/* Mobile Navigation */}
         {isMobileMenuOpen && (
           <div className="md:hidden py-6 space-y-3 border-t-2 border-surface">
+            {/* Book a Call CTA - Mobile (Featured at top) */}
+            <Link
+              href="/book"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="flex items-center justify-center gap-3 mx-6 px-6 py-4 bg-accent-primary hover:bg-accent-primary/90 text-primary-bg font-bold text-lg rounded-lg transition-all duration-200 shadow-lg"
+            >
+              <Calendar className="w-5 h-5" />
+              <span>Book a Call</span>
+            </Link>
+            
             {/* Search Button - Mobile */}
             <button
               onClick={() => {
