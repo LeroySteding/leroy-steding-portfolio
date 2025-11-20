@@ -34,7 +34,7 @@ export default function About() {
       {/* Subtle accent line */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-linear-to-r from-transparent via-accent-primary to-transparent" />
 
-      <div className="container relative z-10 mx-auto px-8 lg:px-16">
+      <div className="container relative z-10 mx-auto px-4 sm:px-6 md:px-8 lg:px-16">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -42,7 +42,7 @@ export default function About() {
           viewport={{ once: true }}
         >
           {/* Section header */}
-          <div className="mb-20">
+          <div className="mb-12 sm:mb-16 md:mb-20">
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -62,16 +62,16 @@ export default function About() {
             />
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-16 items-center mb-20">
+          <div className="grid lg:grid-cols-2 gap-10 sm:gap-12 md:gap-16 items-center mb-12 sm:mb-16 md:mb-20">
             {/* Content */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
               viewport={{ once: true }}
-              className="space-y-8 text-xl text-text-secondary leading-relaxed"
+              className="space-y-6 sm:space-y-7 md:space-y-8 text-base sm:text-lg md:text-xl text-text-secondary leading-relaxed"
             >
-              <p className="text-2xl font-semibold">
+              <p className="text-lg sm:text-xl md:text-2xl font-semibold">
                 {parseTranslation((typeof t.about.intro === 'object' && t.about.intro?.description) ? t.about.intro.description : String(t.about.intro))}
               </p>
               <p>{parseTranslation(t.about.expertise)}</p>
@@ -111,7 +111,7 @@ export default function About() {
           </div>
 
           {/* Highlights grid */}
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid sm:grid-cols-1 md:grid-cols-3 gap-6 sm:gap-7 md:gap-8">
             {highlights.map((item, index) => {
               const Icon = item.icon;
               return (
@@ -121,15 +121,15 @@ export default function About() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
                   viewport={{ once: true }}
-                  className="card p-8 group"
+                  className="card p-6 sm:p-7 md:p-8 group"
                 >
-                  <div className="w-16 h-16 rounded-xl bg-tertiary-bg flex items-center justify-center mb-6 group-hover:bg-accent-primary transition-all duration-300">
-                    <Icon className="w-8 h-8 text-accent-primary group-hover:text-primary-bg transition-colors duration-300" />
+                  <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-tertiary-bg flex items-center justify-center mb-5 sm:mb-6 group-hover:bg-accent-primary transition-all duration-300">
+                    <Icon className="w-7 h-7 sm:w-8 sm:h-8 text-accent-primary group-hover:text-primary-bg transition-colors duration-300" />
                   </div>
-                  <h3 className="text-2xl font-display font-bold mb-4 text-text-primary">
+                  <h3 className="text-xl sm:text-2xl font-display font-bold mb-3 sm:mb-4 text-text-primary">
                     {item.title}
                   </h3>
-                  <p className="text-text-secondary text-lg leading-relaxed">
+                  <p className="text-text-secondary text-base sm:text-lg leading-relaxed">
                     {item.description}
                   </p>
                 </motion.div>

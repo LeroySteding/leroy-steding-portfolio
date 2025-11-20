@@ -23,12 +23,41 @@ export default function Header({ onSearchClick }: HeaderProps) {
   const pathname = usePathname();
   const isHomePage = pathname === '/' || pathname === '/en' || pathname === '/nl';
   
+  // Only use scroll on home page to prevent cleanup errors
   const { scrollY } = useScroll();
   
-  // Transform values for the STEDING title animation (only on home page)translateX(-620px) translateY(-210px) scale(0.16)
-  const scale = useTransform(scrollY, [0, 500], [1.15, 0.14]);
-  const y = useTransform(scrollY, [0, 500], [100, -213.5]);
-  const x = useTransform(scrollY, [0, 500], [100, -605.5]);
+  // Responsive logo animation - scales based on viewport width
+  const [windowWidth, setWindowWidth] = useState(1440);
+  const [mounted, setMounted] = useState(false);
+  
+  useEffect(() => {
+    setMounted(true);
+    const updateWidth = () => setWindowWidth(window.innerWidth);
+    updateWidth();
+    window.addEventListener('resize', updateWidth);
+    return () => window.removeEventListener('resize', updateWidth);
+  }, []);
+  
+  // Calculate responsive transform values based on viewport
+  const isMobile = windowWidth < 768;
+  const isTablet = windowWidth >= 768 && windowWidth < 1024;
+  
+  // Mobile: smaller scale, different positioning
+  // Tablet: medium scale
+  // Desktop: original scale
+  const scaleStart = isMobile ? 0.8 : isTablet ? 1.0 : 1.15;
+  const scaleEnd = isMobile ? 0.25 : isTablet ? 0.18 : 0.14;
+  
+  const yStart = isMobile ? 50 : isTablet ? 80 : 100;
+  const yEnd = isMobile ? -60 : isTablet ? -150 : -213.5;
+  
+  // X transform relative to viewport width
+  const xStart = isMobile ? 0 : isTablet ? 50 : 100;
+  const xEnd = isMobile ? windowWidth * -0.35 : isTablet ? windowWidth * -0.45 : -605.5;
+  
+  const scale = useTransform(scrollY, [0, 500], [scaleStart, scaleEnd]);
+  const y = useTransform(scrollY, [0, 500], [yStart, yEnd]);
+  const x = useTransform(scrollY, [0, 500], [xStart, xEnd]);
   
   const navigation = [
     { name: t.nav.about, href: getLocalizedPath("/about") },
@@ -38,11 +67,7 @@ export default function Header({ onSearchClick }: HeaderProps) {
     { name: t.nav.contact, href: getLocalizedPath("/contact") },
   ];
 
-  const [mounted, setMounted] = useState(false);
-
   useEffect(() => {
-    setMounted(true);
-    
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
@@ -67,9 +92,9 @@ export default function Header({ onSearchClick }: HeaderProps) {
           style={{ scale, y, x }}
           className="fixed top-32 left-0 right-0 z-60 pointer-events-none"
         >
-          <div className="container mx-auto px-80 lg:px-16">
+          <div className="container mx-auto px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20">
             <h1 
-              className="ml:20 font-display font-black text-gradient whitespace-nowrap leading-none text-[20vw] md:text-[15vw] lg:text-[13vw]"
+              className="font-display font-black text-gradient whitespace-nowrap leading-none text-[22vw] sm:text-[18vw] md:text-[15vw] lg:text-[13vw] xl:text-[12vw]"
               style={{ 
                 width: '100%',
                 display: 'flex',

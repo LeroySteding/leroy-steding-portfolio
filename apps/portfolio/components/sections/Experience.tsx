@@ -1,9 +1,30 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { HorizontalTimelineCarousel, ExperienceCard } from '@steding/timeline-scroll';
 import { experiences } from '@/data/experiences';
 
 export default function Experience() {
+  const [windowWidth, setWindowWidth] = useState(1440);
+
+  useEffect(() => {
+    const updateWidth = () => setWindowWidth(window.innerWidth);
+    updateWidth();
+    window.addEventListener('resize', updateWidth);
+    return () => window.removeEventListener('resize', updateWidth);
+  }, []);
+
+  // Get responsive card width based on current viewport
+  const getResponsiveWidth = (exp: typeof experiences[0]) => {
+    if (windowWidth < 640) return 320;
+    if (windowWidth < 768) return 400;
+    if (windowWidth < 1024) return 450;
+    // Desktop: Vary based on content length
+    if (exp.achievements && exp.achievements.length > 3) return 600;
+    if (exp.technologies.length > 15) return 580;
+    return 550;
+  };
+
   // Transform experiences data into carousel items
   const experienceItems = experiences.map((exp) => ({
     id: exp.id,
@@ -19,12 +40,7 @@ export default function Experience() {
         companyLogo={exp.companyLogo}
         color={exp.color}
         href={`/experience/${exp.id}`}
-        width={
-          // Vary card widths based on content length
-          exp.achievements && exp.achievements.length > 3 ? 600 :
-          exp.technologies.length > 15 ? 580 :
-          550
-        }
+        width={getResponsiveWidth(exp)}
         showViewDetails={true}
       />
     ),

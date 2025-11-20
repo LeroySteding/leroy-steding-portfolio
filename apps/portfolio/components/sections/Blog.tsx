@@ -36,9 +36,9 @@ export default function Blog() {
       {/* Subtle accent line */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-accent-primary to-transparent" />
 
-      <div className="container relative z-10 mx-auto px-8 lg:px-16">
+      <div className="container relative z-10 mx-auto px-4 sm:px-6 md:px-8 lg:px-16">
         {/* Section header */}
-        <div className="mb-20">
+        <div className="mb-12 sm:mb-16 md:mb-20">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -53,7 +53,7 @@ export default function Blog() {
             whileInView={{ opacity: 1, scaleX: 1 }}
             transition={{ duration: 0.6, delay: 0.1 }}
             viewport={{ once: true }}
-            className="w-32 h-2 bg-accent-primary rounded-full mb-12"
+            className="w-32 h-2 bg-accent-primary rounded-full mb-8 sm:mb-10 md:mb-12"
           />
           
           {/* Category Filter */}
@@ -62,13 +62,13 @@ export default function Blog() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
-            className="flex flex-wrap gap-3"
+            className="flex flex-wrap gap-2 sm:gap-3"
           >
             {(['all', 'article', 'tutorial', 'research'] as CategoryFilter[]).map((category) => (
               <button
                 key={category}
                 onClick={() => setSelectedCategory(category)}
-                className={`px-6 py-3 rounded-xl font-bold text-base transition-all duration-300 ${
+                className={`px-4 sm:px-5 md:px-6 py-2.5 sm:py-3 rounded-xl font-bold text-sm sm:text-base transition-all duration-300 min-h-[44px] ${
                   selectedCategory === category
                     ? 'bg-accent-primary text-primary-bg shadow-lg scale-105'
                     : 'bg-surface text-text-secondary hover:bg-surface-light hover:text-accent-primary border-2 border-transparent hover:border-accent-primary/30'
@@ -88,7 +88,7 @@ export default function Blog() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16"
+            className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7 md:gap-8 mb-12 sm:mb-14 md:mb-16"
           >
             {filteredPosts.map((post, index) => {
               const CategoryIcon = categoryIcons[post.category];
@@ -114,7 +114,7 @@ export default function Blog() {
                   {/* Card content */}
                   <div className="relative card overflow-hidden h-full flex flex-col">
                     {/* Header with image or icon */}
-                    <div className="relative h-48 bg-secondary-bg overflow-hidden">
+                    <div className="relative h-44 sm:h-48 bg-secondary-bg overflow-hidden">
                       {post.coverImage ? (
                         <>
                           <img
@@ -136,29 +136,29 @@ export default function Blog() {
 
                     {/* Content */}
                     <Link href={language === 'nl' ? `/nl/blog/${post.slug}` : `/blog/${post.slug}`} className="flex-1 flex flex-col">
-                      <div className="p-8 flex-1 flex flex-col">
+                      <div className="p-5 sm:p-6 md:p-8 flex-1 flex flex-col">
                         {/* Meta Information */}
-                        <div className="flex items-center gap-4 mb-4 text-sm text-text-muted">
-                          <div className="flex items-center gap-2">
-                            <Calendar className="w-4 h-4" />
+                        <div className="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4 text-xs sm:text-sm text-text-muted">
+                          <div className="flex items-center gap-1.5 sm:gap-2">
+                            <Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                             <span className="font-semibold">{new Date(post.publishedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
                           </div>
-                          <div className="flex items-center gap-2">
-                            <Clock className="w-4 h-4" />
+                          <div className="flex items-center gap-1.5 sm:gap-2">
+                            <Clock className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                             <span className="font-semibold">{post.readingTime}</span>
                           </div>
                         </div>
 
-                        <h3 className="text-2xl font-display font-bold mb-3 text-text-primary group-hover:text-accent-primary transition-colors duration-300">
+                        <h3 className="text-xl sm:text-2xl font-display font-bold mb-2 sm:mb-3 text-text-primary group-hover:text-accent-primary transition-colors duration-300">
                           {post.title}
                         </h3>
                         
-                        <p className="text-text-secondary text-base leading-relaxed mb-6 line-clamp-3 flex-1">
+                        <p className="text-text-secondary text-sm sm:text-base leading-relaxed mb-4 sm:mb-6 line-clamp-3 flex-1">
                           {post.excerpt}
                         </p>
                         
                         {/* Tags - Scrollable */}
-                        <div className="flex gap-2 overflow-x-auto scrollbar-hide mb-6 pb-2 mt-auto">
+                        <div className="flex gap-2 overflow-x-auto scrollbar-hide mb-4 sm:mb-6 pb-2 mt-auto">
                           {post.tags.slice(0, 3).map((tag, i) => (
                             <motion.span
                               key={tag}
@@ -166,7 +166,7 @@ export default function Blog() {
                               whileInView={{ opacity: 1, x: 0 }}
                               transition={{ delay: i * 0.05 }}
                               viewport={{ once: true }}
-                              className="px-4 py-2 text-sm font-bold rounded-lg bg-surface text-text-secondary border-2 border-surface group-hover:border-accent-primary group-hover:text-accent-primary transition-all duration-300 whitespace-nowrap flex-shrink-0"
+                              className="px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-bold rounded-lg bg-surface text-text-secondary border-2 border-surface group-hover:border-accent-primary group-hover:text-accent-primary transition-all duration-300 whitespace-nowrap flex-shrink-0"
                             >
                               {tag}
                             </motion.span>
@@ -174,21 +174,21 @@ export default function Blog() {
                         </div>
 
                         {/* Read More Link */}
-                        <div className="flex items-center gap-2 text-accent-primary text-base font-bold">
+                        <div className="flex items-center gap-2 text-accent-primary text-sm sm:text-base font-bold">
                           Read Article
-                          <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform duration-300" />
+                          <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-2 transition-transform duration-300" />
                         </div>
                       </div>
                     </Link>
 
                     {/* Category badge */}
-                    <div className="absolute top-6 right-6 px-4 py-2 rounded-lg bg-accent-primary text-primary-bg text-sm font-bold shadow-lg capitalize">
+                    <div className="absolute top-4 right-4 sm:top-5 sm:right-5 md:top-6 md:right-6 px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg bg-accent-primary text-primary-bg text-xs sm:text-sm font-bold shadow-lg capitalize">
                       {post.category}
                     </div>
 
                     {/* Featured badge */}
                     {post.featured && (
-                      <div className="absolute top-6 left-6 px-4 py-2 rounded-lg bg-gradient-to-r from-yellow-500 to-orange-500 text-primary-bg text-sm font-bold shadow-lg">
+                      <div className="absolute top-4 left-4 sm:top-5 sm:left-5 md:top-6 md:left-6 px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg bg-gradient-to-r from-yellow-500 to-orange-500 text-primary-bg text-xs sm:text-sm font-bold shadow-lg">
                         Featured
                       </div>
                     )}
@@ -207,16 +207,16 @@ export default function Blog() {
           viewport={{ once: true }}
           className="text-center"
         >
-          <p className="text-xl text-text-secondary mb-8 font-medium">
+          <p className="text-base sm:text-lg md:text-xl text-text-secondary mb-6 sm:mb-8 font-medium">
             {t.blog.section.description}
           </p>
           <Link
             href={language === 'nl' ? '/nl/blog' : '/blog'}
-            className="btn-secondary inline-flex items-center gap-3"
+            className="btn-secondary inline-flex items-center gap-2 sm:gap-3 min-h-[48px]"
           >
-            <BookOpen className="w-6 h-6" />
+            <BookOpen className="w-5 h-5 sm:w-6 sm:h-6" />
             {t.blog.section.viewAll}
-            <ArrowRight className="w-5 h-5" />
+            <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
           </Link>
         </motion.div>
       </div>

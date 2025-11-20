@@ -412,3 +412,15 @@
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
+/* Prevent rapid double-clicks during navigation */
+.navigating,
+.navigating * {
+  pointer-events: none !important;
+  cursor: wait !important;
+}
+
+/* Add smooth transition for navigation state */
+body {
+  transition: pointer-events 0.1s;
+}

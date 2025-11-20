@@ -51,9 +51,9 @@ export default function Services() {
       {/* Subtle accent line */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-accent-primary to-transparent" />
 
-      <div className="container relative z-10 mx-auto px-8 lg:px-16">
+      <div className="container relative z-10 mx-auto px-4 sm:px-6 md:px-8 lg:px-16">
         {/* Section header */}
-        <div className="mb-20 text-center">
+        <div className="mb-12 sm:mb-16 md:mb-20 text-center">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -73,7 +73,7 @@ export default function Services() {
         </div>
 
         {/* Services grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+        <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7 md:gap-8 mb-12 sm:mb-14 md:mb-16">
           {displayedServices.map((service, index) => {
             const Icon = service.icon;
             return (
@@ -96,21 +96,21 @@ export default function Services() {
                 <div className="absolute -inset-1 bg-gradient-to-r from-accent-primary/20 to-accent-secondary/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                 {/* Card */}
-                <div className="relative card h-full p-8 flex flex-col items-center text-center">
+                <div className="relative card h-full p-6 sm:p-7 md:p-8 flex flex-col items-center text-center">
                   {/* Icon */}
                   <div
-                    className={`w-16 h-16 rounded-xl bg-gradient-to-br ${service.gradient} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}
+                    className={`w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-gradient-to-br ${service.gradient} flex items-center justify-center mb-5 sm:mb-6 group-hover:scale-110 transition-transform duration-300`}
                   >
-                    <Icon className="w-8 h-8 text-white" />
+                    <Icon className="w-7 h-7 sm:w-8 sm:h-8 text-white" />
                   </div>
 
                   {/* Title */}
-                  <h3 className="text-2xl font-display font-bold mb-4 text-text-primary group-hover:text-accent-primary transition-colors duration-300">
+                  <h3 className="text-xl sm:text-2xl font-display font-bold mb-3 sm:mb-4 text-text-primary group-hover:text-accent-primary transition-colors duration-300">
                     {(t.services as any)[service.titleKey]?.title || service.titleKey}
                   </h3>
 
                   {/* Description */}
-                  <p className="text-text-secondary text-base leading-relaxed">
+                  <p className="text-text-secondary text-sm sm:text-base leading-relaxed">
                     {(t.services as any)[service.titleKey]?.description || ''}
                   </p>
                 </div>
@@ -127,15 +127,15 @@ export default function Services() {
           viewport={{ once: true }}
           className="text-center"
         >
-          <p className="text-xl text-text-secondary mb-8 font-medium">
+          <p className="text-base sm:text-lg md:text-xl text-text-secondary mb-6 sm:mb-8 font-medium">
             Explore all our professional services
           </p>
           <Link
             href={getLocalizedPath("/services")}
-            className="btn-secondary inline-flex items-center gap-3"
+            className="btn-secondary inline-flex items-center gap-2 sm:gap-3 min-h-[48px]"
           >
             View All Services
-            <ArrowRight className="w-5 h-5" />
+            <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
           </Link>
         </motion.div>
       </div>

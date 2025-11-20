@@ -66,30 +66,30 @@ export default function Footer() {
     <footer className="bg-tertiary-bg border-t-2 border-surface">
       {/* Newsletter Section */}
       <div className="border-b-2 border-surface">
-        <div className="container mx-auto px-8 lg:px-16 py-16">
+        <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-16 py-12 sm:py-14 md:py-16">
           <NewsletterSubscribe variant="inline" className="max-w-2xl mx-auto text-center" />
         </div>
       </div>
 
       {/* Booking CTA Section */}
       <div className="border-b-2 border-surface bg-gradient-to-r from-accent-primary/5 via-accent-secondary/5 to-accent-primary/5">
-        <div className="container mx-auto px-8 lg:px-16 py-16">
+        <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-16 py-12 sm:py-14 md:py-16">
           <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-flex p-3 rounded-xl bg-accent-primary/10 mb-6">
-              <Calendar className="w-8 h-8 text-accent-primary" />
+            <div className="inline-flex p-2.5 sm:p-3 rounded-xl bg-accent-primary/10 mb-5 sm:mb-6">
+              <Calendar className="w-7 h-7 sm:w-8 sm:h-8 text-accent-primary" />
             </div>
             
-            <h3 className="text-3xl md:text-4xl font-display font-black mb-4">
+            <h3 className="text-2xl sm:text-3xl md:text-4xl font-display font-black mb-3 sm:mb-4">
               {t.nav.about === "Over Mij" ? "Klaar om te Starten?" : "Ready to Get Started?"}
             </h3>
             
-            <p className="text-lg text-text-secondary mb-8 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-base sm:text-lg text-text-secondary mb-6 sm:mb-8 max-w-2xl mx-auto leading-relaxed">
               {t.nav.about === "Over Mij" 
                 ? "Plan een gratis 30-minuten gesprek om uw project te bespreken en ontdek hoe we samen uw ideeën tot leven kunnen brengen."
                 : "Schedule a free 30-minute consultation to discuss your project and discover how we can bring your ideas to life together."}
             </p>
             
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
               <Link 
                 href={getLocalizedPath("/book")}
                 className="btn-primary group"
@@ -107,12 +107,12 @@ export default function Footer() {
               </Link>
             </div>
             
-            <div className="flex items-center justify-center gap-8 mt-8 text-sm text-text-muted">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 mt-6 sm:mt-8 text-xs sm:text-sm text-text-muted">
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
                 <span>{t.nav.about === "Over Mij" ? "Beschikbaar voor Nieuwe Projecten" : "Available for New Projects"}</span>
               </div>
-              <span>•</span>
+              <span className="hidden sm:inline">•</span>
               <div>{t.nav.about === "Over Mij" ? "Meestal binnen 24u reactie" : "Usually responds within 24h"}</div>
             </div>
           </div>
@@ -120,25 +120,25 @@ export default function Footer() {
       </div>
 
       {/* Main Footer Content */}
-      <div className="container mx-auto px-8 lg:px-16 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+      <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-16 py-12 sm:py-14 md:py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 md:gap-12 mb-10 sm:mb-12">
           {/* Branding */}
-          <div className="space-y-6">
-            <h3 className="text-3xl font-display font-black text-gradient">
+          <div className="space-y-5 sm:space-y-6">
+            <h3 className="text-2xl sm:text-3xl font-display font-black text-gradient">
               STEDING.
             </h3>
-            <p className="text-text-secondary text-base leading-relaxed font-medium">
+            <p className="text-text-secondary text-sm sm:text-base leading-relaxed font-medium">
               Full-Stack Developer & AI Automation Architect building scalable
               AI-driven web platforms and digital automation solutions.
             </p>
           </div>
 
           {/* Contact Info */}
-          <div className="space-y-6">
-            <h4 className="text-2xl font-display font-bold text-accent-primary">
+          <div className="space-y-5 sm:space-y-6">
+            <h4 className="text-xl sm:text-2xl font-display font-bold text-accent-primary">
               {t.nav.about === "Over Mij" ? "Contact" : "Contact"}
             </h4>
-            <ul className="space-y-3">
+            <ul className="space-y-2.5 sm:space-y-3">
               {contactInfo.map((item) => {
                 const Icon = item.icon;
                 return (
@@ -164,11 +164,11 @@ export default function Footer() {
           </div>
 
           {/* Quick Links */}
-          <div className="space-y-6">
-            <h4 className="text-2xl font-display font-bold text-accent-secondary">
+          <div className="space-y-5 sm:space-y-6">
+            <h4 className="text-xl sm:text-2xl font-display font-bold text-accent-secondary">
               {t.nav.about === "Over Mij" ? "Snelle Links" : "Quick Links"}
             </h4>
-            <ul className="space-y-3">
+            <ul className="space-y-2.5 sm:space-y-3">
               {footerLinks.map((link) => (
                 <li key={link.href}>
                   <Link
@@ -183,11 +183,11 @@ export default function Footer() {
           </div>
 
           {/* Social Links */}
-          <div className="space-y-6">
-            <h4 className="text-2xl font-display font-bold text-accent-primary">
+          <div className="space-y-5 sm:space-y-6">
+            <h4 className="text-xl sm:text-2xl font-display font-bold text-accent-primary">
               {t.nav.about === "Over Mij" ? "Social" : "Social"}
             </h4>
-            <div className="flex space-x-3">
+            <div className="flex space-x-2.5 sm:space-x-3">
               {socialLinks.map((social) => {
                 const Icon = social.icon;
                 return (
@@ -196,10 +196,10 @@ export default function Footer() {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="card p-4 hover:scale-110 transition-all duration-200 group"
+                    className="card p-3 sm:p-4 hover:scale-110 transition-all duration-200 group min-w-[48px] min-h-[48px] flex items-center justify-center"
                     aria-label={social.name}
                   >
-                    <Icon className="w-6 h-6 text-text-secondary group-hover:text-accent-primary transition-colors duration-200" />
+                    <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-text-secondary group-hover:text-accent-primary transition-colors duration-200" />
                   </a>
                 );
               })}
@@ -208,18 +208,18 @@ export default function Footer() {
         </div>
 
         {/* Copyright & Legal */}
-        <div className="pt-8 border-t-2 border-surface">
+        <div className="pt-6 sm:pt-8 border-t-2 border-surface">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-text-muted text-sm font-semibold">
+            <p className="text-text-muted text-xs sm:text-sm font-semibold text-center md:text-left">
               © {currentYear} Leroy Steding — {t.nav.about === "Over Mij" ? "Alle rechten voorbehouden" : "All rights reserved"}
             </p>
             
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-4 sm:gap-6">
               {legalLinks.map((link, index) => (
-                <span key={link.href} className="flex items-center gap-6">
+                <span key={link.href} className="flex items-center gap-4 sm:gap-6">
                   <Link
                     href={link.href}
-                    className="text-text-muted hover:text-accent-primary transition-colors duration-200 text-sm font-semibold"
+                    className="text-text-muted hover:text-accent-primary transition-colors duration-200 text-xs sm:text-sm font-semibold"
                   >
                     {link.name}
                   </Link>
