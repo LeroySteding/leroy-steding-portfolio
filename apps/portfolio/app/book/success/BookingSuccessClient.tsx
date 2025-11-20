@@ -1,210 +1,128 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { CheckCircle2, Calendar, Mail, Clock, ArrowRight, Download, MessageSquare, Linkedin } from "lucide-react";
+import { CheckCircle2, Calendar, Mail, Clock, FileText, ArrowRight, Linkedin, ExternalLink } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
-interface BookingSuccessClientProps {
-  language?: 'en' | 'nl';
-}
-
-export default function BookingSuccessClient({ language = 'en' }: BookingSuccessClientProps) {
-  const [countdown, setCountdown] = useState(3);
-
-  const content = {
-    en: {
-      title: "You're All Set!",
-      subtitle: "Booking Confirmed",
-      message: "Thank you for scheduling a call with me. You should receive a confirmation email shortly with all the meeting details and a calendar invite.",
-      nextSteps: {
-        title: "What Happens Next?",
-        steps: [
-          {
-            icon: Mail,
-            title: "Check Your Email",
-            description: "You'll receive a confirmation email with the meeting link and calendar invite",
-          },
-          {
-            icon: Calendar,
-            title: "Add to Calendar",
-            description: "Save the event to your calendar so you don't miss it",
-          },
-          {
-            icon: MessageSquare,
-            title: "Prepare Questions",
-            description: "Think about what you'd like to discuss during our call",
-          },
-        ],
-      },
-      tips: {
-        title: "Meeting Tips",
-        items: [
-          "Have your project requirements or questions ready",
-          "Be in a quiet space with good internet connection",
-          "Feel free to share your screen if needed",
-          "No need to prepare a formal presentation",
-        ],
-      },
-      actions: {
-        title: "In the Meantime",
-        buttons: [
-          {
-            label: "View My Projects",
-            href: "/projects",
-            icon: ArrowRight,
-            variant: "primary" as const,
-          },
-          {
-            label: "Read My Blog",
-            href: "/blog",
-            icon: ArrowRight,
-            variant: "secondary" as const,
-          },
-          {
-            label: "Download My CV",
-            href: "/cv",
-            icon: Download,
-            variant: "outline" as const,
-          },
-        ],
-      },
-      footer: {
-        needToReschedule: "Need to reschedule?",
-        checkEmail: "Check your confirmation email for the reschedule link.",
-        questions: "Have questions before the call?",
-        reachOut: "Feel free to reach out via",
-        email: "email",
-        or: "or",
-        linkedin: "LinkedIn",
-      },
-    },
-    nl: {
-      title: "Alles Geregeld!",
-      subtitle: "Afspraak Bevestigd",
-      message: "Bedankt voor het plannen van een gesprek met mij. U ontvangt binnenkort een bevestigingsmail met alle details en een agendauitnodiging.",
-      nextSteps: {
-        title: "Wat Gebeurt Er Nu?",
-        steps: [
-          {
-            icon: Mail,
-            title: "Controleer Uw Email",
-            description: "U ontvangt een bevestigingsmail met de meetinglink en agendauitnodiging",
-          },
-          {
-            icon: Calendar,
-            title: "Toevoegen aan Agenda",
-            description: "Bewaar de afspraak in uw agenda zodat u het niet vergeet",
-          },
-          {
-            icon: MessageSquare,
-            title: "Bereid Vragen Voor",
-            description: "Denk na over wat u tijdens ons gesprek wilt bespreken",
-          },
-        ],
-      },
-      tips: {
-        title: "Meeting Tips",
-        items: [
-          "Heb uw projectvereisten of vragen klaar",
-          "Zorg voor een rustige ruimte met goede internetverbinding",
-          "U kunt uw scherm delen indien nodig",
-          "Geen formele presentatie nodig",
-        ],
-      },
-      actions: {
-        title: "In de Tussentijd",
-        buttons: [
-          {
-            label: "Bekijk Mijn Projecten",
-            href: "/nl/projects",
-            icon: ArrowRight,
-            variant: "primary" as const,
-          },
-          {
-            label: "Lees Mijn Blog",
-            href: "/nl/blog",
-            icon: ArrowRight,
-            variant: "secondary" as const,
-          },
-          {
-            label: "Download Mijn CV",
-            href: "/nl/cv",
-            icon: Download,
-            variant: "outline" as const,
-          },
-        ],
-      },
-      footer: {
-        needToReschedule: "Moet u verzetten?",
-        checkEmail: "Controleer uw bevestigingsmail voor de link om te verzetten.",
-        questions: "Vragen voor het gesprek?",
-        reachOut: "Neem gerust contact op via",
-        email: "email",
-        or: "of",
-        linkedin: "LinkedIn",
-      },
-    },
-  };
-
-  const t = content[language];
-
-  // Auto-redirect countdown (optional)
+export default function BookingSuccessClient() {
   useEffect(() => {
-    if (countdown > 0) {
-      const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
-      return () => clearTimeout(timer);
+    // Track conversion
+    if (typeof window !== "undefined" && window.gtag) {
+      window.gtag("event", "booking_completed", {
+        event_category: "booking",
+        event_label: "success_page_view",
+        value: 1,
+      });
     }
-  }, [countdown]);
+  }, []);
+
+  const nextSteps = [
+    {
+      icon: Mail,
+      title: "Check Your Email",
+      description: "You'll receive a confirmation email with the meeting link and calendar invite within the next few minutes.",
+      color: "from-blue-500 to-cyan-500",
+    },
+    {
+      icon: Calendar,
+      title: "Add to Calendar",
+      description: "Click the calendar invite in your email to automatically add our meeting to your calendar.",
+      color: "from-purple-500 to-pink-500",
+    },
+    {
+      icon: FileText,
+      title: "Prepare Your Questions",
+      description: "Think about your project goals, technical challenges, and any specific questions you'd like to discuss.",
+      color: "from-green-500 to-emerald-500",
+    },
+  ];
+
+  const preparationTips = [
+    "Brief overview of your project or business challenge",
+    "Your main goals and success criteria",
+    "Current tech stack (if applicable)",
+    "Budget and timeline expectations",
+    "Any specific technical questions",
+  ];
+
+  const relatedContent = [
+    {
+      title: "How to Prepare for a Technical Consultation",
+      href: "/blog/technical-consultation-guide",
+      description: "Get the most out of your consultation with these preparation tips",
+    },
+    {
+      title: "Common Web Development Challenges",
+      href: "/blog/web-development-challenges",
+      description: "Learn about typical challenges and how to address them",
+    },
+    {
+      title: "Choosing the Right Tech Stack",
+      href: "/blog/choosing-tech-stack",
+      description: "A guide to selecting the best technologies for your project",
+    },
+  ];
 
   return (
     <div className="min-h-screen bg-primary-bg">
       {/* Success Hero */}
-      <section className="relative py-32 bg-secondary-bg overflow-hidden">
+      <section className="relative py-24 bg-secondary-bg overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-full opacity-20">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-green-500/30 rounded-full blur-3xl" />
-          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent-primary/30 rounded-full blur-3xl" />
+          <div className="absolute top-1/4 -left-48 w-96 h-96 bg-green-500/30 rounded-full blur-3xl" />
+          <div className="absolute bottom-1/4 -right-48 w-96 h-96 bg-blue-500/30 rounded-full blur-3xl" />
         </div>
 
         <div className="container relative z-10 mx-auto px-8 lg:px-16">
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="mx-auto text-center"
+            className="max-w-3xl mx-auto text-center"
           >
+            {/* Success Icon */}
             <motion.div
-              initial={{ opacity: 0, scale: 0 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.2, type: "spring", stiffness: 200 }}
-              className="inline-flex p-6 rounded-full bg-green-500/20 mb-8"
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ type: "spring", bounce: 0.5, delay: 0.2 }}
+              className="inline-flex p-6 rounded-full bg-gradient-to-br from-green-500/20 to-emerald-500/20 mb-8"
             >
-              <CheckCircle2 className="w-16 h-16 text-green-500" />
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-            >
-              <div className="inline-block px-4 py-2 rounded-full bg-green-500/20 text-green-500 font-bold text-sm mb-4">
-                {t.subtitle}
+              <div className="p-4 rounded-full bg-gradient-to-br from-green-500 to-emerald-500">
+                <CheckCircle2 className="w-16 h-16 text-white" />
               </div>
-              
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-black mb-6 text-gradient leading-tight">
-                {t.title}
-              </h1>
-
-              <p className="text-xl md:text-2xl text-text-secondary leading-relaxed max-w-2xl mx-auto">
-                {t.message}
-              </p>
             </motion.div>
+
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-black mb-6 leading-tight">
+              You're All Set! 🎉
+            </h1>
+
+            <p className="text-xl md:text-2xl text-text-secondary leading-relaxed mb-8">
+              Your consultation has been successfully booked. I'm looking forward to our conversation!
+            </p>
+
+            {/* Quick Actions */}
+            <div className="flex flex-wrap gap-4 justify-center">
+              <Link
+                href="/"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-accent-primary hover:bg-accent-primary/90 text-white font-semibold rounded-lg transition-all duration-200 hover:scale-105 shadow-lg"
+              >
+                Back to Home
+                <ArrowRight className="w-5 h-5" />
+              </Link>
+              <Link
+                href="/blog"
+                className="inline-flex items-center gap-2 px-6 py-3 border-2 border-accent-primary text-accent-primary hover:bg-accent-primary hover:text-white font-semibold rounded-lg transition-all duration-200 hover:scale-105"
+              >
+                Read Blog
+                <ExternalLink className="w-5 h-5" />
+              </Link>
+            </div>
           </motion.div>
         </div>
       </section>
 
       {/* Next Steps */}
-      <section className="py-24 bg-primary-bg">
+      <section className="py-20 bg-primary-bg">
         <div className="container mx-auto px-8 lg:px-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -214,12 +132,15 @@ export default function BookingSuccessClient({ language = 'en' }: BookingSuccess
             className="text-center mb-16"
           >
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
-              {t.nextSteps.title}
+              What Happens Next?
             </h2>
+            <p className="text-text-secondary text-lg max-w-2xl mx-auto">
+              Here's what you can expect in the next few minutes and days
+            </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto mb-20">
-            {t.nextSteps.steps.map((step, index) => {
+          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-20">
+            {nextSteps.map((step, index) => {
               const Icon = step.icon;
               return (
                 <motion.div
@@ -228,12 +149,14 @@ export default function BookingSuccessClient({ language = 'en' }: BookingSuccess
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: index * 0.1 }}
                   viewport={{ once: true }}
-                  className="card p-8 text-center"
+                  className="card p-8 hover:shadow-xl transition-all duration-300 group"
                 >
-                  <div className="inline-flex p-4 rounded-xl bg-accent-primary/10 mb-6">
-                    <Icon className="w-8 h-8 text-accent-primary" />
+                  <div className="mb-6">
+                    <div className={`inline-flex p-4 rounded-xl bg-gradient-to-br ${step.color} shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                      <Icon className="w-8 h-8 text-white" />
+                    </div>
                   </div>
-                  <h3 className="text-xl font-bold mb-3 text-text-primary">
+                  <h3 className="font-bold text-text-primary mb-3 text-xl">
                     {step.title}
                   </h3>
                   <p className="text-text-secondary leading-relaxed">
@@ -244,107 +167,136 @@ export default function BookingSuccessClient({ language = 'en' }: BookingSuccess
             })}
           </div>
 
-          {/* Meeting Tips */}
+          {/* Preparation Tips */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="mx-auto m-20"
+            className="max-w-4xl mx-auto"
           >
-            <div className="card p-8">
-              <h3 className="text-2xl font-display font-bold mb-6 text-center">
-                {t.tips.title}
-              </h3>
-              <ul className="space-y-4">
-                {t.tips.items.map((tip, index) => (
+            <div className="card p-10 bg-gradient-to-br from-accent-primary/5 to-accent-secondary/5 border-2 border-accent-primary/20">
+              <div className="flex items-start gap-6 mb-8">
+                <div className="p-4 rounded-xl bg-gradient-to-br from-accent-primary/20 to-accent-secondary/20 flex-shrink-0">
+                  <Clock className="w-8 h-8 text-accent-primary" />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold text-text-primary mb-3">
+                    While You Wait: Prepare for Maximum Value
+                  </h3>
+                  <p className="text-text-secondary leading-relaxed">
+                    Come prepared to make the most of our time together. Here's what to have ready:
+                  </p>
+                </div>
+              </div>
+
+              <ul className="space-y-3">
+                {preparationTips.map((tip, index) => (
                   <motion.li
                     key={index}
                     initial={{ opacity: 0, x: -20 }}
                     whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.4, delay: index * 0.1 }}
+                    transition={{ duration: 0.3, delay: index * 0.05 }}
                     viewport={{ once: true }}
                     className="flex items-start gap-3"
                   >
-                    <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0 mt-1" />
+                    <CheckCircle2 className="w-5 h-5 text-accent-primary flex-shrink-0 mt-0.5" />
                     <span className="text-text-secondary">{tip}</span>
                   </motion.li>
                 ))}
               </ul>
             </div>
           </motion.div>
+        </div>
+      </section>
 
-          {/* Actions */}
+      {/* Related Content */}
+      <section className="py-20 bg-secondary-bg border-t-2 border-surface">
+        <div className="container mx-auto px-8 lg:px-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="text-center"
+            className="text-center mb-16"
           >
-            <h3 className="text-2xl font-display font-bold mb-8">
-              {t.actions.title}
-            </h3>
-            <div className="flex flex-wrap items-center justify-center gap-4">
-              {t.actions.buttons.map((button) => {
-                const Icon = button.icon;
-                const buttonClass =
-                  button.variant === "primary"
-                    ? "btn-primary"
-                    : button.variant === "secondary"
-                    ? "btn-secondary"
-                    : "px-6 py-3 rounded-lg border-2 border-accent-primary text-accent-primary hover:bg-accent-primary hover:text-white transition-all duration-300 font-semibold flex items-center gap-2";
-
-                return (
-                  <Link key={button.label} href={button.href} className={buttonClass}>
-                    <span>{button.label}</span>
-                    <Icon className="w-5 h-5" />
-                  </Link>
-                );
-              })}
-            </div>
+            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
+              Recommended Reading
+            </h2>
+            <p className="text-text-secondary text-lg max-w-2xl mx-auto">
+              Get a head start by exploring these helpful resources
+            </p>
           </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            {relatedContent.map((item, index) => (
+              <motion.div
+                key={item.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
+                viewport={{ once: true }}
+              >
+                <Link
+                  href={item.href}
+                  className="block card p-6 hover:shadow-xl transition-all duration-300 group h-full"
+                >
+                  <h3 className="font-bold text-text-primary mb-3 text-lg group-hover:text-accent-primary transition-colors">
+                    {item.title}
+                  </h3>
+                  <p className="text-text-secondary text-sm leading-relaxed mb-4">
+                    {item.description}
+                  </p>
+                  <div className="flex items-center gap-2 text-accent-primary font-medium text-sm">
+                    <span>Read more</span>
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </Link>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* Footer Info */}
-      <section className="py-16 bg-secondary-bg border-t-2 border-surface">
+      {/* Stay Connected */}
+      <section className="py-20 bg-primary-bg">
         <div className="container mx-auto px-8 lg:px-16">
-          <div className="mx-auto text-center space-y-6">
-            <div className="card p-6">
-              <p className="text-text-secondary mb-2">
-                <strong className="text-text-primary">{t.footer.needToReschedule}</strong>
-              </p>
-              <p className="text-sm text-text-muted">{t.footer.checkEmail}</p>
-            </div>
-
-            <div className="card p-6">
-              <p className="text-text-secondary mb-3">
-                <strong className="text-text-primary">{t.footer.questions}</strong>
-              </p>
-              <p className="text-sm text-text-muted">
-                {t.footer.reachOut}{" "}
-                <a
-                  href="mailto:leroy@steding.digital"
-                  className="text-accent-primary hover:text-accent-secondary font-semibold underline"
-                >
-                  {t.footer.email}
-                </a>{" "}
-                {t.footer.or}{" "}
-                <a
-                  href="https://linkedin.com/in/leroysteding"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-accent-primary hover:text-accent-secondary font-semibold underline"
-                >
-                  {t.footer.linkedin}
-                </a>
-                .
-              </p>
-            </div>
-          </div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="max-w-3xl mx-auto text-center card p-12 bg-gradient-to-br from-accent-primary/10 to-accent-secondary/10 border-2 border-accent-primary/20"
+          >
+            <h2 className="text-2xl md:text-3xl font-display font-bold mb-4">
+              Let's Stay Connected
+            </h2>
+            <p className="text-text-secondary mb-8 text-lg">
+              Follow me on LinkedIn for tech insights, project updates, and industry news
+            </p>
+            <Link
+              href="https://linkedin.com/in/leroysteding"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-accent-secondary hover:bg-accent-secondary/90 text-white font-semibold text-lg rounded-lg transition-all duration-200 hover:scale-105 shadow-lg"
+            >
+              <Linkedin className="w-6 h-6" />
+              Connect on LinkedIn
+            </Link>
+          </motion.div>
         </div>
       </section>
     </div>
   );
+}
+
+// TypeScript declaration for gtag
+declare global {
+  interface Window {
+    gtag?: (
+      command: string,
+      action: string,
+      params: Record<string, any>
+    ) => void;
+  }
 }

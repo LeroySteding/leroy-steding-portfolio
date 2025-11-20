@@ -102,114 +102,141 @@ export default function Header({ onSearchClick }: HeaderProps) {
               )}
             </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-10">
+          {/* Desktop Navigation - Unified Sizing */}
+          <div className="hidden lg:flex items-center gap-1">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
-                className="text-text-secondary hover:text-accent-primary transition-colors duration-200 font-bold text-lg relative group"
+                className="px-3 py-2 text-text-secondary hover:text-accent-primary hover:bg-surface/50 rounded-md transition-all duration-200 font-medium text-sm relative group"
               >
                 {item.name}
-                <span className="absolute -bottom-1 left-0 w-0 h-1 bg-accent-primary transition-all duration-300 group-hover:w-full rounded-full" />
               </Link>
             ))}
-            
-            {/* Book a Call CTA Button */}
-            <Link
-              href="/book"
-              className="px-5 py-2.5 bg-accent-primary hover:bg-accent-primary/90 text-primary-bg font-bold text-base rounded-lg transition-all duration-200 flex items-center gap-2 shadow-lg hover:shadow-accent-primary/50 hover:scale-105"
-            >
-              <Calendar className="w-4 h-4" />
-              Book a Call
-            </Link>
           </div>
 
-          {/* Search, Language, Theme Toggle & Mobile Menu Button */}
-          <div className="flex items-center space-x-4">
-            {/* Search Button - Desktop */}
-            <button
-              onClick={onSearchClick}
-              className="hidden md:flex items-center gap-2 px-4 py-2 rounded-lg bg-surface hover:bg-surface-light transition-all duration-200 border border-surface-light hover:border-accent-primary group"
-              aria-label="Search"
+          {/* Right Side Actions - Unified Sizing */}
+          <div className="flex items-center gap-2">
+            {/* Book a Call CTA - Same Height as Other Buttons */}
+            <Link
+              href="/book"
+              className="hidden lg:flex items-center gap-2 px-3 py-2 bg-accent-primary hover:bg-accent-primary/90 text-white font-medium text-sm rounded-md transition-all duration-200 hover:scale-105"
             >
-              <Search className="w-5 h-5 text-text-muted group-hover:text-accent-primary transition-colors" />
-              <span className="text-sm text-text-muted group-hover:text-text-primary transition-colors">Search</span>
-              <kbd className="px-2 py-0.5 text-xs font-mono bg-secondary-bg border border-surface-light rounded text-text-muted">⌘K</kbd>
-            </button>
+              <Calendar className="w-4 h-4" />
+              <span>Book Call</span>
+            </Link>
 
-            {/* Language Switcher - Desktop */}
-            <div className="hidden md:block">
+            {/* Utility Actions - Same Sizing */}
+            <div className="hidden lg:flex items-center gap-1">
+              {/* Search Button */}
+              <button
+                onClick={onSearchClick}
+                className="p-2 rounded-md text-text-muted hover:text-accent-primary hover:bg-surface/50 transition-all duration-200"
+                aria-label="Search"
+                title="Search (⌘K)"
+              >
+                <Search className="w-4 h-4" />
+              </button>
+
+              {/* Language Switcher */}
               <LanguageSwitcher />
-            </div>
 
-            <button
-              onClick={toggleTheme}
-              className="p-3 rounded-lg bg-surface hover:bg-accent-primary hover:text-primary-bg transition-all duration-200 border-2 border-surface hover:border-accent-primary"
-              aria-label={t.nav.toggleTheme}
-            >
-              {theme === "dark" ? (
-                <Sun className="w-6 h-6 text-accent-primary" />
-              ) : (
-                <Moon className="w-6 h-6 text-accent-secondary" />
-              )}
-            </button>
+              {/* Theme Toggle */}
+              <button
+                onClick={toggleTheme}
+                className="p-2 rounded-md text-text-muted hover:text-accent-primary hover:bg-surface/50 transition-all duration-200"
+                aria-label={t.nav.toggleTheme}
+                title={theme === "dark" ? "Light mode" : "Dark mode"}
+              >
+                {theme === "dark" ? (
+                  <Sun className="w-4 h-4" />
+                ) : (
+                  <Moon className="w-4 h-4" />
+                )}
+              </button>
+            </div>
 
             {/* Mobile menu button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden p-3 rounded-lg bg-surface hover:bg-accent-primary hover:text-primary-bg transition-all duration-200 border-2 border-surface hover:border-accent-primary"
+              className="lg:hidden p-2.5 rounded-lg bg-surface hover:bg-accent-primary transition-all duration-200 border border-surface hover:border-accent-primary group"
               aria-label={t.nav.toggleMenu}
             >
               {isMobileMenuOpen ? (
-                <X className="w-6 h-6" />
+                <X className="w-5 h-5 text-text-primary group-hover:text-white" />
               ) : (
-                <Menu className="w-6 h-6" />
+                <Menu className="w-5 h-5 text-text-primary group-hover:text-white" />
               )}
             </button>
           </div>
         </div>
 
-        {/* Mobile Navigation */}
+        {/* Mobile Navigation - Cleaner */}
         {isMobileMenuOpen && (
-          <div className="md:hidden py-6 space-y-3 border-t-2 border-surface">
-            {/* Book a Call CTA - Mobile (Featured at top) */}
-            <Link
-              href="/book"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="flex items-center justify-center gap-3 mx-6 px-6 py-4 bg-accent-primary hover:bg-accent-primary/90 text-primary-bg font-bold text-lg rounded-lg transition-all duration-200 shadow-lg"
-            >
-              <Calendar className="w-5 h-5" />
-              <span>Book a Call</span>
-            </Link>
-            
-            {/* Search Button - Mobile */}
-            <button
-              onClick={() => {
-                onSearchClick?.();
-                setIsMobileMenuOpen(false);
-              }}
-              className="flex items-center gap-3 w-full px-6 py-3 text-lg font-bold text-text-secondary hover:text-accent-primary hover:bg-surface rounded-lg transition-all duration-200"
-            >
-              <Search className="w-5 h-5" />
-              <span>Search</span>
-            </button>
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.2 }}
+            className="lg:hidden border-t border-surface"
+          >
+            <div className="py-6 space-y-2">
+              {/* Book a Call CTA - Featured */}
+              <div className="px-6 mb-4">
+                <Link
+                  href="/book"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="flex items-center justify-center gap-2 px-6 py-3 bg-accent-primary hover:bg-accent-primary/90 text-white font-semibold text-base rounded-lg transition-all duration-200 shadow-lg w-full"
+                >
+                  <Calendar className="w-5 h-5" />
+                  <span>Book a Call</span>
+                </Link>
+              </div>
 
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="block px-6 py-3 text-lg font-bold text-text-secondary hover:text-accent-primary hover:bg-surface rounded-lg transition-all duration-200"
-              >
-                {item.name}
-              </Link>
-            ))}
-            {/* Language Switcher - Mobile */}
-            <div className="px-6 pt-4 border-t-2 border-surface">
-              <LanguageSwitcher />
+              {/* Navigation Links */}
+              {navigation.map((item) => (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="block px-6 py-3 text-base font-medium text-text-secondary hover:text-accent-primary hover:bg-surface/50 transition-all duration-200"
+                >
+                  {item.name}
+                </Link>
+              ))}
+
+              {/* Utility Section */}
+              <div className="px-6 pt-4 mt-4 border-t border-surface space-y-3">
+                {/* Search */}
+                <button
+                  onClick={() => {
+                    onSearchClick?.();
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className="flex items-center gap-3 w-full px-4 py-2.5 text-base font-medium text-text-secondary hover:text-accent-primary hover:bg-surface/50 rounded-lg transition-all duration-200"
+                >
+                  <Search className="w-5 h-5" />
+                  <span>Search</span>
+                </button>
+
+                {/* Language & Theme Row */}
+                <div className="flex items-center justify-between px-4">
+                  <LanguageSwitcher />
+                  <button
+                    onClick={toggleTheme}
+                    className="p-2 rounded-lg bg-surface hover:bg-surface-light transition-all duration-200"
+                    aria-label={t.nav.toggleTheme}
+                  >
+                    {theme === "dark" ? (
+                      <Sun className="w-5 h-5 text-text-muted" />
+                    ) : (
+                      <Moon className="w-5 h-5 text-text-muted" />
+                    )}
+                  </button>
+                </div>
+              </div>
             </div>
-          </div>
+          </motion.div>
         )}
         </nav>
       </header>

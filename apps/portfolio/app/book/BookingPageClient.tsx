@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Calendar, Mail, Linkedin, ExternalLink, CheckCircle2, Clock, Shield, MessageSquare, Users, Code, Star, Quote } from "lucide-react";
+import { Calendar, Mail, Linkedin, ExternalLink, CheckCircle2, Clock, Shield, MessageSquare, Users, Code, Star, Quote, ChevronDown, HelpCircle } from "lucide-react";
 import Link from "next/link";
 import { useTranslation } from "@/hooks/useTranslation";
 import UniversalCalendarWidget from "@/components/ui/UniversalCalendarWidget";
@@ -13,6 +13,7 @@ export default function BookingPageClient() {
   const t = useTranslation();
   const [selectedMeetingType, setSelectedMeetingType] = useState<MeetingType>("consultation");
   const [isLoadingCalendar, setIsLoadingCalendar] = useState(false);
+  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0); // First FAQ open by default
 
   // Map meeting types to Cal.com event URLs
   const getCalcomUrl = (type: MeetingType): string | undefined => {
@@ -40,22 +41,58 @@ export default function BookingPageClient() {
 
   const testimonials = [
     {
-      name: "Sarah Johnson",
-      role: "CEO, TechStart",
-      content: "Leroy's expertise in AI automation transformed our workflow. His consultation gave us clarity and a clear roadmap forward.",
+      name: "Sarah M.",
+      role: "Startup Founder",
+      company: "SaaS Platform",
+      content: "The consultation was incredibly valuable. Leroy helped us make critical architecture decisions that saved us months of technical debt. His insights on scaling our platform were spot-on.",
       rating: 5,
+      highlight: "Architecture Review",
+      image: null, // Add actual image path when available
     },
     {
-      name: "Mark Peters",
-      role: "CTO, InnovateCo",
-      content: "The technical deep dive was incredibly valuable. Leroy identified bottlenecks we didn't know existed and provided actionable solutions.",
+      name: "Thomas V.",
+      role: "CTO",
+      company: "E-commerce Company",
+      content: "Leroy's technical expertise is outstanding. He quickly identified performance bottlenecks in our system and provided actionable solutions. The ROI from that one consultation was remarkable.",
       rating: 5,
+      highlight: "Performance Optimization",
+      image: null,
     },
     {
-      name: "Lisa Chen",
-      role: "Product Manager, StartupXYZ",
-      content: "Professional, knowledgeable, and genuinely helpful. The 30-minute consultation exceeded my expectations.",
+      name: "Maria K.",
+      role: "Product Manager",
+      company: "Tech Startup",
+      content: "Professional, clear communication, and genuinely helpful. The 30-minute consultation gave us exactly what we needed to move forward with confidence.",
       rating: 5,
+      highlight: "Project Planning",
+      image: null,
+    },
+  ];
+
+  const faqs = [
+    {
+      question: "What should I prepare for the consultation?",
+      answer: "Come with a brief overview of your project or challenge, your main goals, and any specific technical questions. If you have existing documentation, architecture diagrams, or code repositories, feel free to share them 24 hours before our call.",
+    },
+    {
+      question: "Which meeting type should I choose?",
+      answer: "Choose Quick Chat (15 min) for brief questions or introductions. Project Consultation (30 min) is perfect for most projects and requirement discussions. Technical Deep Dive (60 min) is ideal for complex systems, architecture reviews, or comprehensive technical planning.",
+    },
+    {
+      question: "What if I need to reschedule or cancel?",
+      answer: "No problem! You can reschedule or cancel anytime through the confirmation email link. I ask for at least 4 hours notice when possible, but I understand things come up.",
+    },
+    {
+      question: "What happens after I book?",
+      answer: "You'll receive an immediate confirmation email with a Google Meet link and calendar invite. You'll also get reminder emails 24 hours and 1 hour before our scheduled time.",
+    },
+    {
+      question: "What timezone are the times shown in?",
+      answer: "Times are automatically shown in your local timezone. The system detects your timezone from your browser. All meetings are flexible and can accommodate clients worldwide.",
+    },
+    {
+      question: "Is this consultation really free?",
+      answer: "Yes! The initial consultation is completely free with no obligation. It's an opportunity for us to discuss your needs and see if we're a good fit to work together.",
     },
   ];
 
@@ -196,24 +233,24 @@ export default function BookingPageClient() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-16 bg-secondary-bg border-y-2 border-surface">
+      <section className="py-20 bg-secondary-bg border-y-2 border-surface">
         <div className="container mx-auto px-8 lg:px-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="text-center mb-12"
+            className="text-center mb-16"
           >
-            <h2 className="text-2xl md:text-3xl font-display font-bold mb-3">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold mb-4">
               What Clients Say
             </h2>
-            <p className="text-text-secondary">
-              Trusted by professionals and businesses worldwide
+            <p className="text-text-secondary text-lg max-w-2xl mx-auto">
+              Trusted by professionals and businesses worldwide to deliver exceptional results
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto">
             {testimonials.map((testimonial, index) => (
               <motion.div
                 key={testimonial.name}
@@ -221,30 +258,46 @@ export default function BookingPageClient() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="card p-6 hover:shadow-xl transition-shadow"
+                className="relative group"
               >
-                <div className="flex items-center gap-1 mb-4">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-yellow-500 text-yellow-500" />
-                  ))}
-                </div>
-                
-                <Quote className="w-8 h-8 text-accent-primary/20 mb-3" />
-                
-                <p className="text-text-secondary mb-6 leading-relaxed italic">
-                  "{testimonial.content}"
-                </p>
-                
-                <div className="flex items-center gap-3 pt-4 border-t border-surface">
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-accent-primary to-accent-secondary flex items-center justify-center text-white font-bold">
-                    {testimonial.name.charAt(0)}
+                {/* Highlight badge */}
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-10">
+                  <div className="px-4 py-1.5 rounded-full bg-gradient-to-r from-accent-primary to-accent-secondary text-white text-xs font-bold shadow-lg">
+                    {testimonial.highlight}
                   </div>
-                  <div>
-                    <div className="font-bold text-text-primary text-sm">
-                      {testimonial.name}
+                </div>
+
+                <div className="card p-8 hover:shadow-2xl transition-all duration-300 h-full flex flex-col">
+                  {/* Stars */}
+                  <div className="flex items-center gap-1 mb-6">
+                    {[...Array(testimonial.rating)].map((_, i) => (
+                      <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
+                    ))}
+                  </div>
+                  
+                  {/* Quote icon */}
+                  <Quote className="w-10 h-10 text-accent-primary/30 mb-4" />
+                  
+                  {/* Content */}
+                  <p className="text-text-secondary mb-6 leading-relaxed text-base flex-grow">
+                    "{testimonial.content}"
+                  </p>
+                  
+                  {/* Author */}
+                  <div className="flex items-center gap-4 pt-6 border-t border-surface">
+                    <div className="w-14 h-14 rounded-full bg-gradient-to-br from-accent-primary to-accent-secondary flex items-center justify-center text-white font-bold text-xl shadow-lg group-hover:scale-110 transition-transform">
+                      {testimonial.name.charAt(0)}
                     </div>
-                    <div className="text-xs text-text-muted">
-                      {testimonial.role}
+                    <div>
+                      <div className="font-bold text-text-primary text-base mb-1">
+                        {testimonial.name}
+                      </div>
+                      <div className="text-sm text-text-muted">
+                        {testimonial.role}
+                      </div>
+                      <div className="text-xs text-accent-primary font-medium">
+                        {testimonial.company}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -484,6 +537,113 @@ export default function BookingPageClient() {
                 );
               })}
             </div>
+          </motion.div>
+
+          {/* FAQ Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="max-w-4xl mx-auto mt-24"
+          >
+            <div className="text-center mb-12">
+              <motion.div
+                initial={{ scale: 0 }}
+                whileInView={{ scale: 1 }}
+                transition={{ type: "spring", bounce: 0.5, delay: 0.2 }}
+                viewport={{ once: true }}
+                className="inline-flex p-4 rounded-2xl bg-gradient-to-br from-accent-primary/20 to-accent-secondary/20 mb-6"
+              >
+                <HelpCircle className="w-8 h-8 text-accent-primary" />
+              </motion.div>
+              <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
+                Frequently Asked Questions
+              </h2>
+              <p className="text-text-secondary text-lg">
+                Everything you need to know about booking a consultation
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              {faqs.map((faq, index) => {
+                const isOpen = openFaqIndex === index;
+                
+                return (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: index * 0.05 }}
+                    viewport={{ once: true }}
+                    className="card overflow-hidden"
+                  >
+                    <button
+                      onClick={() => setOpenFaqIndex(isOpen ? null : index)}
+                      className="w-full text-left p-6 flex items-start justify-between gap-4 hover:bg-surface/50 transition-colors"
+                    >
+                      <div className="flex-1">
+                        <h3 className="font-bold text-text-primary text-lg mb-1">
+                          {faq.question}
+                        </h3>
+                        {isOpen && (
+                          <motion.p
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: "auto" }}
+                            exit={{ opacity: 0, height: 0 }}
+                            transition={{ duration: 0.3 }}
+                            className="text-text-secondary leading-relaxed mt-3"
+                          >
+                            {faq.answer}
+                          </motion.p>
+                        )}
+                      </div>
+                      <motion.div
+                        animate={{ rotate: isOpen ? 180 : 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="flex-shrink-0"
+                      >
+                        <ChevronDown className={`w-6 h-6 ${isOpen ? 'text-accent-primary' : 'text-text-muted'}`} />
+                      </motion.div>
+                    </button>
+                  </motion.div>
+                );
+              })}
+            </div>
+
+            {/* Still have questions CTA */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              viewport={{ once: true }}
+              className="mt-12 text-center card p-8 bg-gradient-to-br from-accent-primary/5 to-accent-secondary/5 border-2 border-accent-primary/20"
+            >
+              <h3 className="text-xl font-bold text-text-primary mb-3">
+                Still have questions?
+              </h3>
+              <p className="text-text-secondary mb-6">
+                Feel free to reach out directly. I'm here to help!
+              </p>
+              <div className="flex flex-wrap gap-4 justify-center">
+                <Link
+                  href="mailto:leroy@steding.digital"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-accent-primary hover:bg-accent-primary/90 text-white font-semibold transition-all hover:scale-105"
+                >
+                  <Mail className="w-5 h-5" />
+                  Send an Email
+                </Link>
+                <Link
+                  href="https://linkedin.com/in/leroysteding"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border-2 border-accent-secondary text-accent-secondary hover:bg-accent-secondary hover:text-white font-semibold transition-all hover:scale-105"
+                >
+                  <Linkedin className="w-5 h-5" />
+                  Connect on LinkedIn
+                </Link>
+              </div>
+            </motion.div>
           </motion.div>
 
           {/* Hidden old sidebar structure */}
