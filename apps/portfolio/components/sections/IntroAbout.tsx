@@ -4,9 +4,11 @@ import { motion } from "framer-motion";
 import { ArrowRight, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { useTranslation } from "@/hooks/useTranslation";
+import { useLocalizedPath } from "@/lib/localization";
 
 export default function IntroAbout() {
   const t = useTranslation();
+  const getLocalizedPath = useLocalizedPath();
 
   return (
     <section className="section relative bg-gradient-to-b from-primary-bg to-secondary-bg overflow-hidden">
@@ -59,7 +61,7 @@ export default function IntroAbout() {
             viewport={{ once: true }}
           >
             <Link
-              href="/about"
+              href={getLocalizedPath("/about")}
               className="btn-primary inline-flex items-center gap-3 group"
             >
               Learn More About Me

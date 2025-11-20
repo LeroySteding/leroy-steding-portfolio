@@ -8,6 +8,7 @@ import { usePathname } from "next/navigation";
 import { motion, useScroll, useTransform } from "framer-motion";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { useTranslation } from "@/hooks/useTranslation";
+import { useLocalizedPath } from "@/lib/localization";
 
 interface HeaderProps {
   onSearchClick?: () => void;
@@ -18,6 +19,7 @@ export default function Header({ onSearchClick }: HeaderProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { theme, setTheme } = useTheme();
   const t = useTranslation();
+  const getLocalizedPath = useLocalizedPath();
   const pathname = usePathname();
   const isHomePage = pathname === '/' || pathname === '/en' || pathname === '/nl';
   
@@ -29,12 +31,11 @@ export default function Header({ onSearchClick }: HeaderProps) {
   const x = useTransform(scrollY, [0, 500], [100, -605.5]);
   
   const navigation = [
-    { name: t.nav.about, href: "/#about" },
-    { name: t.nav.experience, href: "/#experience" },
-    { name: t.nav.skills, href: "/#skills" },
-    { name: t.nav.projects, href: "/#projects" },
-    { name: t.nav.blog, href: "/blog" },
-    { name: t.nav.contact, href: "/contact" },
+    { name: t.nav.about, href: getLocalizedPath("/about") },
+    { name: t.nav.services, href: getLocalizedPath("/services") },
+    { name: t.nav.projects, href: getLocalizedPath("/projects") },
+    { name: t.nav.blog, href: getLocalizedPath("/blog") },
+    { name: t.nav.contact, href: getLocalizedPath("/contact") },
   ];
 
   const [mounted, setMounted] = useState(false);
@@ -92,7 +93,7 @@ export default function Header({ onSearchClick }: HeaderProps) {
           <div className="flex items-center justify-between h-20 md:h-24">
             {/* Logo */}
             <Link
-              href="/"
+              href={getLocalizedPath("/")}
               className="flex items-center space-x-2 group"
             >
               {!isHomePage ? (
@@ -123,7 +124,7 @@ export default function Header({ onSearchClick }: HeaderProps) {
           <div className="flex items-center gap-2">
             {/* Book a Call CTA - Same Height as Other Buttons */}
             <Link
-              href="/book"
+              href={getLocalizedPath("/book")}
               className="hidden lg:flex items-center gap-2 px-3 py-2 bg-accent-primary hover:bg-accent-primary/90 text-white font-medium text-sm rounded-md transition-all duration-200 hover:scale-105"
             >
               <Calendar className="w-4 h-4" />
@@ -188,7 +189,7 @@ export default function Header({ onSearchClick }: HeaderProps) {
               {/* Book a Call CTA - Featured */}
               <div className="px-6 mb-4">
                 <Link
-                  href="/book"
+                  href={getLocalizedPath("/book")}
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="flex items-center justify-center gap-2 px-6 py-3 bg-accent-primary hover:bg-accent-primary/90 text-white font-semibold text-base rounded-lg transition-all duration-200 shadow-lg w-full"
                 >

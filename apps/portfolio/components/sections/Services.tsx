@@ -1,8 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Code, Sparkles, Zap, Rocket, Globe, Database } from "lucide-react";
+import { Code, Sparkles, Zap, Rocket, Globe, Database, ArrowRight } from "lucide-react";
+import Link from "next/link";
 import { useTranslation } from "@/hooks/useTranslation";
+import { useLocalizedPath } from "@/lib/localization";
 
 const services = [
   {
@@ -39,6 +41,10 @@ const services = [
 
 export default function Services() {
   const t = useTranslation();
+  const getLocalizedPath = useLocalizedPath();
+  
+  // Only show first 3 services on homepage
+  const displayedServices = services.slice(0, 3);
 
   return (
     <section id="services" className="section relative bg-primary-bg overflow-hidden">
@@ -67,8 +73,8 @@ export default function Services() {
         </div>
 
         {/* Services grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {services.map((service, index) => {
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+          {displayedServices.map((service, index) => {
             const Icon = service.icon;
             return (
               <motion.div
@@ -100,18 +106,38 @@ export default function Services() {
 
                   {/* Title */}
                   <h3 className="text-2xl font-display font-bold mb-4 text-text-primary group-hover:text-accent-primary transition-colors duration-300">
-                    {t.services[service.titleKey].title}
+                    {(t.services as any)[service.titleKey]?.title || service.titleKey}
                   </h3>
 
                   {/* Description */}
                   <p className="text-text-secondary text-base leading-relaxed">
-                    {t.services[service.titleKey].description}
+                    {(t.services as any)[service.titleKey]?.description || ''}
                   </p>
                 </div>
               </motion.div>
             );
           })}
         </div>
+
+        {/* CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          viewport={{ once: true }}
+          className="text-center"
+        >
+          <p className="text-xl text-text-secondary mb-8 font-medium">
+            Explore all our professional services
+          </p>
+          <Link
+            href={getLocalizedPath("/services")}
+            className="btn-secondary inline-flex items-center gap-3"
+          >
+            View All Services
+            <ArrowRight className="w-5 h-5" />
+          </Link>
+        </motion.div>
       </div>
     </section>
   );

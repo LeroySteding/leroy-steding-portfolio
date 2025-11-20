@@ -8,14 +8,16 @@ import Link from "next/link";
 import { useTranslation } from "@/hooks/useTranslation";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { getProjects } from "@/utils/getLocalizedData";
+import { useLocalizedPath } from "@/lib/localization";
 
 type CategoryFilter = 'all' | 'product' | 'client' | 'internal';
 
 export default function Projects() {
   const t = useTranslation();
   const { language } = useLanguage();
+  const getLocalizedPath = useLocalizedPath();
   const allProjects = getProjects(language);
-  const featuredProjects = allProjects.filter(p => p.featured);
+  const featuredProjects = allProjects.filter(p => p.featured).slice(0, 3); // Only show 3 featured projects
   
   const [filter, setFilter] = useState<CategoryFilter>('all');
   
@@ -31,7 +33,7 @@ export default function Projects() {
 
       <div className="container relative z-10 mx-auto px-8 lg:px-16">
         {/* Section header */}
-        <div className="mb-20">
+        <div className="mb-20 text-center">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -46,34 +48,8 @@ export default function Projects() {
             whileInView={{ opacity: 1, scaleX: 1 }}
             transition={{ duration: 0.6, delay: 0.1 }}
             viewport={{ once: true }}
-            className="w-32 h-2 bg-accent-primary rounded-full mb-12"
+            className="w-32 h-2 bg-accent-primary rounded-full mx-auto"
           />
-          
-          {/* Category Filter */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="flex flex-wrap gap-3"
-          >
-            {(['all', 'product', 'client', 'internal'] as CategoryFilter[]).map((category) => (
-              <button
-                key={category}
-                onClick={() => setFilter(category)}
-                className={`px-6 py-3 rounded-xl font-bold text-base transition-all duration-300 ${
-                  filter === category
-                    ? 'bg-accent-primary text-primary-bg shadow-lg scale-105'
-                    : 'bg-surface text-text-secondary hover:bg-surface-light hover:text-accent-primary border-2 border-transparent hover:border-accent-primary/30'
-                }`}
-              >
-                {category === 'all' ? 'All Projects' : 
-                 category === 'product' ? t.projects.categories.product :
-                 category === 'client' ? t.projects.categories.client :
-                 t.projects.categories.internal}
-              </button>
-            ))}
-          </motion.div>
         </div>
 
         {/* Projects grid */}
@@ -235,17 +211,14 @@ export default function Projects() {
           className="text-center"
         >
           <p className="text-xl text-text-secondary mb-8 font-medium">
-            {t.projects.moreProjects.text}
+            Want to see more projects?
           </p>
           <Link
-            href="https://github.com/leroysteding"
-            target="_blank"
-            rel="noopener noreferrer"
+            href={getLocalizedPath("/projects")}
             className="btn-secondary inline-flex items-center gap-3"
           >
-            <Github className="w-6 h-6" />
-            {t.projects.moreProjects.button}
-            <ExternalLink className="w-5 h-5" />
+            View All Projects
+            <ArrowRight className="w-5 h-5" />
           </Link>
         </motion.div>
       </div>

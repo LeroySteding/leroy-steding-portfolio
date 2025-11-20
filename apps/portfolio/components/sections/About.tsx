@@ -72,7 +72,7 @@ export default function About() {
               className="space-y-8 text-xl text-text-secondary leading-relaxed"
             >
               <p className="text-2xl font-semibold">
-                {parseTranslation(t.about.intro)}
+                {parseTranslation((typeof t.about.intro === 'object' && t.about.intro?.description) ? t.about.intro.description : String(t.about.intro))}
               </p>
               <p>{parseTranslation(t.about.expertise)}</p>
               <p>{parseTranslation(t.about.experience)}</p>

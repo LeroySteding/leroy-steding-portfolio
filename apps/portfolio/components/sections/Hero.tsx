@@ -4,9 +4,11 @@ import { ArrowRight, Download, Calendar } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useTranslation } from "@/hooks/useTranslation";
+import { useLocalizedPath } from "@/lib/localization";
 
 export default function Hero() {
   const t = useTranslation();
+  const getLocalizedPath = useLocalizedPath();
 
   return (
     <section className="relative min-h-screen flex flex-col justify-end overflow-hidden bg-primary-bg">
@@ -112,7 +114,7 @@ export default function Hero() {
             </Link>
             
             <Link
-              href="/cv"
+              href={getLocalizedPath("/cv")}
               target="_blank"
               className="group relative overflow-hidden bg-surface hover:bg-surface-light border-2 border-accent-primary/30 hover:border-accent-primary text-text-primary font-bold text-base md:text-lg px-10 py-5 rounded-xl transition-all duration-300 inline-flex items-center gap-3 shadow-xl hover:scale-105"
             >
@@ -121,7 +123,7 @@ export default function Hero() {
             </Link>
             
             <Link
-              href="/book"
+              href={getLocalizedPath("/book")}
               className="group relative overflow-hidden bg-surface hover:bg-surface-light border-2 border-accent-secondary/30 hover:border-accent-secondary text-text-primary font-bold text-base md:text-lg px-10 py-5 rounded-xl transition-all duration-300 inline-flex items-center gap-3 shadow-xl hover:scale-105"
             >
               <Calendar className="relative z-10 w-5 h-5 group-hover:scale-110 transition-transform duration-300" />

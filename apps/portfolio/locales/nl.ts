@@ -3,8 +3,7 @@ import { Translations } from "./en";
 export const nl: Translations = {
   nav: {
     about: "Over Mij",
-    experience: "Ervaring",
-    skills: "Vaardigheden",
+    services: "Diensten",
     projects: "Projecten",
     blog: "Journaal",
     contact: "Contact",

@@ -1,8 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Quote, Star } from "lucide-react";
+import { Quote, Star, ArrowRight } from "lucide-react";
+import Link from "next/link";
 import { useTranslation } from "@/hooks/useTranslation";
+import { useLocalizedPath } from "@/lib/localization";
 
 const testimonials = [
   {
@@ -30,6 +32,7 @@ const testimonials = [
 
 export default function Testimonials() {
   const t = useTranslation();
+  const getLocalizedPath = useLocalizedPath();
 
   return (
     <section id="testimonials" className="section relative bg-secondary-bg overflow-hidden">
@@ -61,7 +64,7 @@ export default function Testimonials() {
         </div>
 
         {/* Testimonials grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
           {testimonials.map((testimonial, index) => (
             <motion.div
               key={testimonial.nameKey}
@@ -97,22 +100,42 @@ export default function Testimonials() {
 
                 {/* Quote */}
                 <p className="text-text-secondary text-base leading-relaxed mb-6 flex-1 italic">
-                  "{t.testimonials[testimonial.quoteKey]}"
+                  "{(t.testimonials as any)[testimonial.quoteKey] || ''}"
                 </p>
 
                 {/* Author */}
                 <div className="border-t-2 border-surface pt-6">
                   <p className="font-bold text-lg text-text-primary">
-                    {t.testimonials[testimonial.nameKey]}
+                    {(t.testimonials as any)[testimonial.nameKey] || ''}
                   </p>
                   <p className="text-text-muted text-sm">
-                    {t.testimonials[testimonial.roleKey]} · {t.testimonials[testimonial.companyKey]}
+                    {(t.testimonials as any)[testimonial.roleKey] || ''} · {(t.testimonials as any)[testimonial.companyKey] || ''}
                   </p>
                 </div>
               </div>
             </motion.div>
           ))}
         </div>
+
+        {/* CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          viewport={{ once: true }}
+          className="text-center"
+        >
+          <p className="text-xl text-text-secondary mb-8 font-medium">
+            See what more clients have to say
+          </p>
+          <Link
+            href={getLocalizedPath("/testimonials")}
+            className="btn-secondary inline-flex items-center gap-3"
+          >
+            View All Testimonials
+            <ArrowRight className="w-5 h-5" />
+          </Link>
+        </motion.div>
       </div>
     </section>
   );

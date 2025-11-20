@@ -5,7 +5,11 @@ import { CheckCircle2, Calendar, Mail, Clock, FileText, ArrowRight, Linkedin, Ex
 import Link from "next/link";
 import { useEffect } from "react";
 
-export default function BookingSuccessClient() {
+interface BookingSuccessClientProps {
+  language?: string;
+}
+
+export default function BookingSuccessClient({ language = "en" }: BookingSuccessClientProps = {}) {
   useEffect(() => {
     // Track conversion
     if (typeof window !== "undefined" && window.gtag) {

@@ -3,10 +3,12 @@
 import { Github, Linkedin, Twitter, Mail, MapPin, Phone, Calendar } from "lucide-react";
 import Link from "next/link";
 import { useTranslation } from "@/hooks/useTranslation";
+import { useLocalizedPath } from "@/lib/localization";
 import NewsletterSubscribe from "@/components/ui/NewsletterSubscribe";
 
 export default function Footer() {
   const t = useTranslation();
+  const getLocalizedPath = useLocalizedPath();
   const currentYear = new Date().getFullYear();
 
   const socialLinks = [
@@ -48,16 +50,16 @@ export default function Footer() {
   ];
 
   const footerLinks = [
-    { name: t.nav.about, href: "/#about" },
-    { name: t.nav.experience, href: "/#experience" },
-    { name: t.nav.projects, href: "/#projects" },
-    { name: t.nav.blog, href: "/blog" },
-    { name: t.nav.contact, href: "/contact" },
+    { name: t.nav.about, href: getLocalizedPath("/about") },
+    { name: t.nav.services, href: getLocalizedPath("/services") },
+    { name: t.nav.projects, href: getLocalizedPath("/projects") },
+    { name: t.nav.blog, href: getLocalizedPath("/blog") },
+    { name: t.nav.contact, href: getLocalizedPath("/contact") },
   ];
 
   const legalLinks = [
-    { name: t.footer.links.privacy, href: "/privacy" },
-    { name: t.footer.links.terms, href: "/terms" },
+    { name: t.footer.links.privacy, href: getLocalizedPath("/privacy") },
+    { name: t.footer.links.terms, href: getLocalizedPath("/terms") },
   ];
 
   return (
@@ -89,7 +91,7 @@ export default function Footer() {
             
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link 
-                href="/book"
+                href={getLocalizedPath("/book")}
                 className="btn-primary group"
               >
                 <Calendar className="w-5 h-5 group-hover:scale-110 transition-transform" />
@@ -168,7 +170,7 @@ export default function Footer() {
             </h4>
             <ul className="space-y-3">
               {footerLinks.map((link) => (
-                <li key={link.name}>
+                <li key={link.href}>
                   <Link
                     href={link.href}
                     className="text-text-secondary hover:text-accent-secondary transition-colors duration-200 text-sm font-semibold"
@@ -214,7 +216,7 @@ export default function Footer() {
             
             <div className="flex items-center gap-6">
               {legalLinks.map((link, index) => (
-                <span key={link.name} className="flex items-center gap-6">
+                <span key={link.href} className="flex items-center gap-6">
                   <Link
                     href={link.href}
                     className="text-text-muted hover:text-accent-primary transition-colors duration-200 text-sm font-semibold"
