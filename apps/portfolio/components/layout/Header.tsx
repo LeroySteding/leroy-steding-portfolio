@@ -24,7 +24,7 @@ export default function Header({ onSearchClick }: HeaderProps) {
   const isHomePage = pathname === '/' || pathname === '/en' || pathname === '/nl';
   
   // Only use scroll on home page to prevent cleanup errors
-  const { scrollY } = useScroll();
+  const { scrollY } = isHomePage ? useScroll() : { scrollY: null };
   
   // Responsive logo animation - scales based on viewport width
   const [windowWidth, setWindowWidth] = useState(1440);
@@ -55,9 +55,10 @@ export default function Header({ onSearchClick }: HeaderProps) {
   const xStart = isMobile ? 0 : isTablet ? 50 : 100;
   const xEnd = isMobile ? windowWidth * -0.35 : isTablet ? windowWidth * -0.45 : -605.5;
   
-  const scale = useTransform(scrollY, [0, 500], [scaleStart, scaleEnd]);
-  const y = useTransform(scrollY, [0, 500], [yStart, yEnd]);
-  const x = useTransform(scrollY, [0, 500], [xStart, xEnd]);
+  // Only create transforms if on home page
+  const scale = isHomePage && scrollY ? useTransform(scrollY, [0, 500], [scaleStart, scaleEnd]) : null;
+  const y = isHomePage && scrollY ? useTransform(scrollY, [0, 500], [yStart, yEnd]) : null;
+  const x = isHomePage && scrollY ? useTransform(scrollY, [0, 500], [xStart, xEnd]) : null;
   
   const navigation = [
     { name: t.nav.about, href: getLocalizedPath("/about") },
@@ -87,7 +88,7 @@ export default function Header({ onSearchClick }: HeaderProps) {
   return (
     <>
       {/* Animated STEDING logo - only on home page */}
-      {isHomePage && (
+      {/*{isHomePage && scale && y && x && (
         <motion.div
           style={{ scale, y, x }}
           className="fixed top-32 left-0 right-0 z-60 pointer-events-none"
@@ -105,7 +106,7 @@ export default function Header({ onSearchClick }: HeaderProps) {
             </h1>
           </div>
         </motion.div>
-      )}
+      )}*/}
 
       <header
         className={`fixed top-0 left-0 right-0 z-55 transition-all duration-300 ${
@@ -119,9 +120,13 @@ export default function Header({ onSearchClick }: HeaderProps) {
             {/* Logo */}
             <Link
               href={getLocalizedPath("/")}
+              prefetch={false}
               className="flex items-center space-x-2 group"
             >
-              {!isHomePage ? (
+              <span className="text-3xl md:text-4xl font-display font-black text-gradient transition-all">
+                STEDING.
+              </span>
+              {/*{!isHomePage ? (
                 <span className="text-3xl md:text-4xl font-display font-black text-gradient transition-all">
                   STEDING.
                 </span>
@@ -129,7 +134,7 @@ export default function Header({ onSearchClick }: HeaderProps) {
                 <span className="text-3xl md:text-4xl font-display font-black text-outline">
                   STEDING.
                 </span>
-              )}
+              )}*/}
             </Link>
 
           {/* Desktop Navigation - Unified Sizing */}
@@ -138,6 +143,7 @@ export default function Header({ onSearchClick }: HeaderProps) {
               <Link
                 key={item.name}
                 href={item.href}
+                prefetch={false}
                 className="px-3 py-2 text-text-secondary hover:text-accent-primary hover:bg-surface/50 rounded-md transition-all duration-200 font-medium text-sm relative group"
               >
                 {item.name}
@@ -150,6 +156,7 @@ export default function Header({ onSearchClick }: HeaderProps) {
             {/* Book a Call CTA - Same Height as Other Buttons */}
             <Link
               href={getLocalizedPath("/book")}
+              prefetch={false}
               className="hidden lg:flex items-center gap-2 px-3 py-2 bg-accent-primary hover:bg-accent-primary/90 text-white font-medium text-sm rounded-md transition-all duration-200 hover:scale-105"
             >
               <Calendar className="w-4 h-4" />
@@ -215,6 +222,7 @@ export default function Header({ onSearchClick }: HeaderProps) {
               <div className="px-6 mb-4">
                 <Link
                   href={getLocalizedPath("/book")}
+                  prefetch={false}
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="flex items-center justify-center gap-2 px-6 py-3 bg-accent-primary hover:bg-accent-primary/90 text-white font-semibold text-base rounded-lg transition-all duration-200 shadow-lg w-full"
                 >
@@ -228,6 +236,7 @@ export default function Header({ onSearchClick }: HeaderProps) {
                 <Link
                   key={item.name}
                   href={item.href}
+                  prefetch={false}
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="block px-6 py-3 text-base font-medium text-text-secondary hover:text-accent-primary hover:bg-surface/50 transition-all duration-200"
                 >
