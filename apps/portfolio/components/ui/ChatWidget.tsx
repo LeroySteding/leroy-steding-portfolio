@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { MessageCircle, X, Send, Loader2, Sparkles } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Loader2, MessageCircle, Send, Sparkles, X } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { useTranslation } from "@/hooks/useTranslation";
 
@@ -28,7 +28,7 @@ export default function ChatWidget() {
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages]);
+  }, [scrollToBottom]);
 
   useEffect(() => {
     if (isOpen && inputRef.current) {
@@ -101,14 +101,15 @@ export default function ChatWidget() {
   };
 
   const handleStarterPrompt = (prompt: string) => {
-    setUsedPrompts(prev => new Set([...prev, prompt]));
+    setUsedPrompts((prev) => new Set([...prev, prompt]));
     sendMessage(prompt);
   };
 
   // Get available prompts (not yet used)
   const getAvailablePrompts = () => {
-    const allPrompts = messages.length === 0 ? t.chat.starterPrompts : t.chat.followUpPrompts;
-    return allPrompts.filter(prompt => !usedPrompts.has(prompt)).slice(0, 3);
+    const allPrompts =
+      messages.length === 0 ? t.chat.starterPrompts : t.chat.followUpPrompts;
+    return allPrompts.filter((prompt) => !usedPrompts.has(prompt)).slice(0, 3);
   };
 
   const availablePrompts = getAvailablePrompts();
@@ -162,7 +163,7 @@ export default function ChatWidget() {
           >
             {/* Glow effect */}
             <div className="absolute -inset-1 bg-gradient-to-br from-accent-primary/20 to-accent-secondary/20 rounded-2xl blur-xl" />
-            
+
             {/* Chat Container */}
             <div className="relative card overflow-hidden flex flex-col h-full">
               {/* Header */}
@@ -175,8 +176,12 @@ export default function ChatWidget() {
                     <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-bg-primary" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-text-primary">{t.chat.header.title}</h4>
-                    <p className="text-xs text-text-secondary">{t.chat.header.subtitle}</p>
+                    <h4 className="font-semibold text-text-primary">
+                      {t.chat.header.title}
+                    </h4>
+                    <p className="text-xs text-text-secondary">
+                      {t.chat.header.subtitle}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -196,7 +201,7 @@ export default function ChatWidget() {
                         {t.chat.welcome.description}
                       </p>
                     </div>
-                    
+
                     <div className="grid grid-cols-1 gap-2">
                       {t.chat.starterPrompts.map((prompt, index) => (
                         <button
@@ -224,27 +229,47 @@ export default function ChatWidget() {
                           }`}
                         >
                           {message.role === "user" ? (
-                            <p className="text-sm whitespace-pre-wrap">{message.content}</p>
+                            <p className="text-sm whitespace-pre-wrap">
+                              {message.content}
+                            </p>
                           ) : (
                             <div className="text-sm prose prose-invert prose-sm max-w-none">
                               <ReactMarkdown
                                 components={{
-                                  p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>,
-                                  ul: ({ children }) => <ul className="mb-2 ml-4 list-disc">{children}</ul>,
-                                  ol: ({ children }) => <ol className="mb-2 ml-4 list-decimal">{children}</ol>,
-                                  li: ({ children }) => <li className="mb-1">{children}</li>,
+                                  p: ({ children }) => (
+                                    <p className="mb-2 last:mb-0">{children}</p>
+                                  ),
+                                  ul: ({ children }) => (
+                                    <ul className="mb-2 ml-4 list-disc">
+                                      {children}
+                                    </ul>
+                                  ),
+                                  ol: ({ children }) => (
+                                    <ol className="mb-2 ml-4 list-decimal">
+                                      {children}
+                                    </ol>
+                                  ),
+                                  li: ({ children }) => (
+                                    <li className="mb-1">{children}</li>
+                                  ),
                                   a: ({ href, children }) => (
-                                    <a 
-                                      href={href} 
-                                      target="_blank" 
+                                    <a
+                                      href={href}
+                                      target="_blank"
                                       rel="noopener noreferrer"
                                       className="text-accent-primary hover:underline"
                                     >
                                       {children}
                                     </a>
                                   ),
-                                  strong: ({ children }) => <strong className="font-semibold">{children}</strong>,
-                                  em: ({ children }) => <em className="italic">{children}</em>,
+                                  strong: ({ children }) => (
+                                    <strong className="font-semibold">
+                                      {children}
+                                    </strong>
+                                  ),
+                                  em: ({ children }) => (
+                                    <em className="italic">{children}</em>
+                                  ),
                                   code: ({ children }) => (
                                     <code className="bg-bg-tertiary px-1 py-0.5 rounded text-xs font-mono">
                                       {children}
@@ -266,22 +291,26 @@ export default function ChatWidget() {
                         </div>
                       </div>
                     )}
-                    
+
                     {/* Show suggestion prompts after messages */}
-                    {messages.length > 0 && !isLoading && availablePrompts.length > 0 && (
-                      <div className="space-y-2 mt-4">
-                        <p className="text-xs text-text-tertiary">{t.chat.suggestions.title}</p>
-                        {availablePrompts.map((prompt, index) => (
-                          <button
-                            key={index}
-                            onClick={() => handleStarterPrompt(prompt)}
-                            className="w-full text-left p-2 rounded-lg bg-bg-secondary hover:bg-bg-tertiary border border-border transition-colors duration-200 text-xs text-text-secondary hover:text-text-primary"
-                          >
-                            {prompt}
-                          </button>
-                        ))}
-                      </div>
-                    )}
+                    {messages.length > 0 &&
+                      !isLoading &&
+                      availablePrompts.length > 0 && (
+                        <div className="space-y-2 mt-4">
+                          <p className="text-xs text-text-tertiary">
+                            {t.chat.suggestions.title}
+                          </p>
+                          {availablePrompts.map((prompt, index) => (
+                            <button
+                              key={index}
+                              onClick={() => handleStarterPrompt(prompt)}
+                              className="w-full text-left p-2 rounded-lg bg-bg-secondary hover:bg-bg-tertiary border border-border transition-colors duration-200 text-xs text-text-secondary hover:text-text-primary"
+                            >
+                              {prompt}
+                            </button>
+                          ))}
+                        </div>
+                      )}
                   </>
                 )}
                 <div ref={messagesEndRef} />

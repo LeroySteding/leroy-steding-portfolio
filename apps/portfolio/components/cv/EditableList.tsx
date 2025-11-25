@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import { GripVertical, Plus, Trash2 } from "lucide-react";
+import type React from "react";
+import { useState } from "react";
 import { useResumeBuilder } from "@/contexts/ResumeBuilderContext";
-import { Plus, Trash2, GripVertical } from "lucide-react";
 import { EditableField } from "./EditableField";
 
 interface EditableListProps {
@@ -47,7 +48,7 @@ export function EditableList({
     const draggedItem = newItems[draggedIndex];
     newItems.splice(draggedIndex, 1);
     newItems.splice(index, 0, draggedItem);
-    
+
     updateCVData(path, newItems);
     setDraggedIndex(index);
   };
@@ -82,7 +83,7 @@ export function EditableList({
                 </button>
               </div>
             )}
-            
+
             <div className="flex-1">
               {renderItem ? (
                 renderItem(item, index)

@@ -9,7 +9,8 @@ export interface CalendarConfig {
 
 // Get the active calendar provider from environment
 export function getCalendarProvider(): CalendarProvider {
-  const provider = process.env.NEXT_PUBLIC_CALENDAR_PROVIDER as CalendarProvider;
+  const provider = process.env
+    .NEXT_PUBLIC_CALENDAR_PROVIDER as CalendarProvider;
   return provider || "calendly"; // Default to Calendly
 }
 

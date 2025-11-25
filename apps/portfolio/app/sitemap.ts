@@ -1,6 +1,6 @@
-import { MetadataRoute } from "next";
-import { projects } from "@/data/projects";
+import type { MetadataRoute } from "next";
 import { experiences } from "@/data/experiences";
+import { projects } from "@/data/projects";
 
 const siteUrl = "https://leroysteding.nl";
 
@@ -34,7 +34,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
           nl: `${siteUrl}/projects/${project.id}?lang=nl`,
         },
       },
-    }))
+    })),
   );
 
   // Experience pages
@@ -50,7 +50,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
           nl: `${siteUrl}/experience/${experience.id}?lang=nl`,
         },
       },
-    }))
+    })),
   );
 
   // CV page

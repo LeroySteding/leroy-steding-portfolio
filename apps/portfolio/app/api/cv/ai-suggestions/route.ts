@@ -1,34 +1,39 @@
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 
 // Clean GPT response from common AI-like formatting
 function cleanGPTResponse(text: string): string {
-  return text
-    // Remove markdown formatting
-    .replace(/\*\*(.*?)\*\*/g, "$1") // Remove bold
-    .replace(/\*(.*?)\*/g, "$1") // Remove italic
-    .replace(/_{2}(.*?)_{2}/g, "$1") // Remove underline
-    .replace(/`{1,3}(.*?)`{1,3}/g, "$1") // Remove code blocks
-    
-    // Remove common separators and dividers
-    .replace(/^[-=_*]{3,}$/gm, "") // Remove lines like ---, ===, ***, ___
-    .replace(/^[•·▪▫■□●○◆◇★☆]+\s*/gm, "") // Remove bullet points
-    
-    // Remove numbering patterns
-    .replace(/^\d+[\.)]\s*/gm, "") // Remove numbered lists like "1. " or "1) "
-    
-    // Remove "Here's" or "Here is" style introductions
-    .replace(/^(here'?s?|here is)\s+/gi, "")
-    
-    // Remove meta-commentary
-    .replace(/\(.*?(improved|enhanced|better|version|revised|updated).*?\)/gi, "")
-    
-    // Clean up whitespace
-    .replace(/\n{3,}/g, "\n\n") // Max 2 newlines
-    .replace(/^\s+/gm, "") // Remove leading whitespace
-    .replace(/\s+$/gm, "") // Remove trailing whitespace
-    .trim()
-    // Remove surrounding quotes if present
-    .replace(/^["']|["']$/g, "");
+  return (
+    text
+      // Remove markdown formatting
+      .replace(/\*\*(.*?)\*\*/g, "$1") // Remove bold
+      .replace(/\*(.*?)\*/g, "$1") // Remove italic
+      .replace(/_{2}(.*?)_{2}/g, "$1") // Remove underline
+      .replace(/`{1,3}(.*?)`{1,3}/g, "$1") // Remove code blocks
+
+      // Remove common separators and dividers
+      .replace(/^[-=_*]{3,}$/gm, "") // Remove lines like ---, ===, ***, ___
+      .replace(/^[•·▪▫■□●○◆◇★☆]+\s*/gm, "") // Remove bullet points
+
+      // Remove numbering patterns
+      .replace(/^\d+[.)]\s*/gm, "") // Remove numbered lists like "1. " or "1) "
+
+      // Remove "Here's" or "Here is" style introductions
+      .replace(/^(here'?s?|here is)\s+/gi, "")
+
+      // Remove meta-commentary
+      .replace(
+        /\(.*?(improved|enhanced|better|version|revised|updated).*?\)/gi,
+        "",
+      )
+
+      // Clean up whitespace
+      .replace(/\n{3,}/g, "\n\n") // Max 2 newlines
+      .replace(/^\s+/gm, "") // Remove leading whitespace
+      .replace(/\s+$/gm, "") // Remove trailing whitespace
+      .trim()
+      // Remove surrounding quotes if present
+      .replace(/^["']|["']$/g, "")
+  );
 }
 
 // Extract JSON array from GPT response that might have extra text
@@ -53,7 +58,7 @@ function extractSuggestionsArray(response: string): string[] {
       }
     }
   }
-  
+
   // Fallback: split by newlines and clean
   return response
     .split("\n")
@@ -69,13 +74,13 @@ export async function POST(request: NextRequest) {
     if (!content) {
       return NextResponse.json(
         { error: "Content is required" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     // Check if OpenAI API key is configured
     const openaiApiKey = process.env.OPENAI_API_KEY;
-    
+
     if (!openaiApiKey) {
       console.warn("OpenAI API key not configured, using mock suggestions");
       return generateMockResponse(content, field);
@@ -93,12 +98,12 @@ export async function POST(request: NextRequest) {
     const fieldType = field.includes("summary")
       ? "summary"
       : field.includes("description")
-      ? "description"
-      : field.includes("achievement")
-      ? "achievement"
-      : field.includes("skill")
-      ? "skill"
-      : "default";
+        ? "description"
+        : field.includes("achievement")
+          ? "achievement"
+          : field.includes("skill")
+            ? "skill"
+            : "default";
 
     const systemPrompt = `You are a professional CV/resume writer with expertise in creating compelling, achievement-focused content. Your responses must be:
 1. Professional and formal in tone
@@ -171,7 +176,7 @@ Return format (JSON array only):
     console.error("Error generating AI suggestions:", error);
     return NextResponse.json(
       { error: "Failed to generate suggestions" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -180,12 +185,12 @@ function generateMockResponse(content: string, field: string) {
   const fieldType = field.includes("summary")
     ? "summary"
     : field.includes("description")
-    ? "description"
-    : field.includes("achievement")
-    ? "achievement"
-    : field.includes("skill")
-    ? "skill"
-    : "default";
+      ? "description"
+      : field.includes("achievement")
+        ? "achievement"
+        : field.includes("skill")
+          ? "skill"
+          : "default";
 
   const suggestions: Record<string, string[]> = {
     summary: [

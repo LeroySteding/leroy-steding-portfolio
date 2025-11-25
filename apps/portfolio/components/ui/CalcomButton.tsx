@@ -1,8 +1,8 @@
 "use client";
 
 import { getCalApi } from "@calcom/embed-react";
-import { useEffect, useState } from "react";
 import { Calendar } from "lucide-react";
+import { useEffect, useState } from "react";
 
 interface CalcomButtonProps {
   calLink?: string;
@@ -26,7 +26,7 @@ export default function CalcomButton({
   config,
 }: CalcomButtonProps) {
   const [isClient, setIsClient] = useState(false);
-  
+
   const calUsername = calLink || process.env.NEXT_PUBLIC_CALCOM_USERNAME || "";
 
   useEffect(() => {
@@ -36,9 +36,9 @@ export default function CalcomButton({
   useEffect(() => {
     if (!isClient || !calUsername) return;
 
-    (async function () {
+    (async () => {
       const cal = await getCalApi();
-      
+
       // Configure Cal.com UI
       cal("ui", {
         theme: config?.theme || "auto",
@@ -54,7 +54,7 @@ export default function CalcomButton({
   // Determine button class based on variant
   const getButtonClass = () => {
     if (className) return className;
-    
+
     switch (variant) {
       case "primary":
         return "btn-primary";
@@ -78,7 +78,7 @@ export default function CalcomButton({
     }
 
     const cal = await getCalApi();
-    
+
     // Build config object with only defined values
     const calConfig: Record<string, any> = {};
     if (config?.name) calConfig.name = config.name;
@@ -86,7 +86,7 @@ export default function CalcomButton({
     if (config?.notes) calConfig.notes = config.notes;
     if (config?.guests) calConfig.guests = config.guests;
     if (config?.theme) calConfig.theme = config.theme;
-    
+
     cal("modal", {
       calLink: calUsername,
       config: calConfig,
@@ -95,11 +95,7 @@ export default function CalcomButton({
 
   if (!isClient) {
     return (
-      <button
-        className={getButtonClass()}
-        disabled
-        title="Loading..."
-      >
+      <button className={getButtonClass()} disabled title="Loading...">
         <Calendar className="w-5 h-5" />
         {text}
       </button>
@@ -120,11 +116,7 @@ export default function CalcomButton({
   }
 
   return (
-    <button
-      onClick={handleClick}
-      className={getButtonClass()}
-      type="button"
-    >
+    <button onClick={handleClick} className={getButtonClass()} type="button">
       <Calendar className="w-5 h-5" />
       {text}
     </button>
@@ -137,7 +129,7 @@ declare global {
     gtag?: (
       command: string,
       action: string,
-      params: Record<string, any>
+      params: Record<string, any>,
     ) => void;
   }
 }

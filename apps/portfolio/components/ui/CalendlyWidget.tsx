@@ -1,7 +1,7 @@
 "use client";
 
-import { InlineWidget, useCalendlyEventListener } from "react-calendly";
 import { useEffect, useState } from "react";
+import { InlineWidget, useCalendlyEventListener } from "react-calendly";
 
 interface CalendlyWidgetProps {
   url?: string;
@@ -42,7 +42,7 @@ export default function CalendlyWidget({
   onEventTypeViewed,
 }: CalendlyWidgetProps) {
   const [isClient, setIsClient] = useState(false);
-  
+
   const calendlyUrl = url || process.env.NEXT_PUBLIC_CALENDLY_URL || "";
 
   useEffect(() => {
@@ -92,7 +92,7 @@ export default function CalendlyWidget({
   if (!isClient) {
     // Show loading skeleton on server-side
     return (
-      <div 
+      <div
         className="w-full bg-surface rounded-lg animate-pulse"
         style={{ height: styles.height || "700px" }}
       >
@@ -106,7 +106,9 @@ export default function CalendlyWidget({
   if (!calendlyUrl) {
     return (
       <div className="card p-8 text-center">
-        <p className="text-red-500 font-semibold mb-2">Calendly URL not configured</p>
+        <p className="text-red-500 font-semibold mb-2">
+          Calendly URL not configured
+        </p>
         <p className="text-text-secondary text-sm">
           Please set NEXT_PUBLIC_CALENDLY_URL in your .env.local file
         </p>
@@ -115,13 +117,13 @@ export default function CalendlyWidget({
   }
 
   return (
-    <div 
-      className="calendly-widget-container w-full h-full overflow-hidden" 
+    <div
+      className="calendly-widget-container w-full h-full overflow-hidden"
       style={{
-        position: 'relative',
-        width: '100%',
-        height: '100%',
-        minHeight: styles.height || '800px',
+        position: "relative",
+        width: "100%",
+        height: "100%",
+        minHeight: styles.height || "800px",
       }}
     >
       <InlineWidget
@@ -130,9 +132,9 @@ export default function CalendlyWidget({
         pageSettings={pageSettings}
         utm={utm}
         styles={{
-          width: '100%',
-          height: '100%',
-          minHeight: 'inherit',
+          width: "100%",
+          height: "100%",
+          minHeight: "inherit",
         }}
       />
     </div>
@@ -145,7 +147,7 @@ declare global {
     gtag?: (
       command: string,
       action: string,
-      params: Record<string, any>
+      params: Record<string, any>,
     ) => void;
   }
 }

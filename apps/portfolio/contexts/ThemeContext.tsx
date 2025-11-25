@@ -19,11 +19,17 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     setMounted(true);
     // Check localStorage or system preference
     const savedTheme = localStorage.getItem("theme") as Theme | null;
-    const systemTheme = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+    const systemTheme = window.matchMedia("(prefers-color-scheme: light)")
+      .matches
+      ? "light"
+      : "dark";
     const initialTheme = savedTheme || systemTheme;
-    
+
     setTheme(initialTheme);
-    document.documentElement.classList.toggle("light", initialTheme === "light");
+    document.documentElement.classList.toggle(
+      "light",
+      initialTheme === "light",
+    );
   }, []);
 
   const toggleTheme = () => {

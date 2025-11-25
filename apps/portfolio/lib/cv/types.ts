@@ -1,4 +1,4 @@
-import { CVData } from "@/data/cv";
+import type { CVData } from "@/data/cv";
 
 export interface ResumeBuilderState {
   cvData: CVData;

@@ -1,6 +1,5 @@
 "use client";
 
-import Head from "next/head";
 import { useEffect } from "react";
 
 interface MetaTagsProps {
@@ -52,7 +51,9 @@ export default function MetaTags({
     ogTitle.setAttribute("content", title);
 
     // Update OG description
-    let ogDescription = document.querySelector('meta[property="og:description"]');
+    let ogDescription = document.querySelector(
+      'meta[property="og:description"]',
+    );
     if (!ogDescription) {
       ogDescription = document.createElement("meta");
       ogDescription.setAttribute("property", "og:description");
@@ -90,7 +91,9 @@ export default function MetaTags({
     twitterTitle.setAttribute("content", title);
 
     // Update Twitter card description
-    let twitterDescription = document.querySelector('meta[name="twitter:description"]');
+    let twitterDescription = document.querySelector(
+      'meta[name="twitter:description"]',
+    );
     if (!twitterDescription) {
       twitterDescription = document.createElement("meta");
       twitterDescription.setAttribute("name", "twitter:description");

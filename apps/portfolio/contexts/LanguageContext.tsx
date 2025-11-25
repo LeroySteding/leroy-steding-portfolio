@@ -1,67 +1,64 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
-
-type Language = "en" | "nl";
+import { usePathname, useRouter } from "next/navigation";
+import { useLocale } from "next-intl";
+import { createContext, useCallback, useContext } from "react";
+import { defaultLocale, type Locale, locales } from "@/i18n/config";
 
 interface LanguageContextType {
-  language: Language;
-  setLanguage: (lang: Language) => void;
+  language: Locale;
+  setLanguage: (lang: Locale) => void;
   t: (key: string) => string;
 }
 
-const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
+const LanguageContext = createContext<LanguageContextType | undefined>(
+  undefined,
+);
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
+  const locale = useLocale() as Locale;
+  const router = useRouter();
   const pathname = usePathname();
-  const [language, setLanguageState] = useState<Language>("en");
 
-  useEffect(() => {
-    // Detect language from URL path
-    const isNlRoute = pathname?.startsWith("/nl");
-    const routeLang: Language = isNlRoute ? "nl" : "en";
-    
-    // Check localStorage for user preference (only if not on a specific language route)
-    const savedLang = localStorage.getItem("language") as Language | null;
-    
-    // Priority: URL route > saved preference > browser language
-    let detectedLang = routeLang;
-    
-    if (!isNlRoute && savedLang) {
-      detectedLang = savedLang;
-    } else if (!isNlRoute && !savedLang) {
-      const browserLang = navigator.language.toLowerCase().startsWith("nl") ? "nl" : "en";
-      detectedLang = browserLang;
-    }
-    
-    if (detectedLang !== language) {
-      setLanguageState(detectedLang);
-    }
-  }, [pathname, language]);
-
-  const setLanguage = (lang: Language) => {
-    setLanguageState(lang);
-    if (typeof window !== 'undefined') {
-      localStorage.setItem("language", lang);
-      
-      // Navigate to the appropriate route
-      const currentPath = window.location.pathname;
-      if (lang === "nl" && !currentPath.startsWith("/nl")) {
-        window.location.href = "/nl" + currentPath;
-      } else if (lang === "en" && currentPath.startsWith("/nl")) {
-        window.location.href = currentPath.replace("/nl", "") || "/";
+  const setLanguage = useCallback(
+    (lang: Locale) => {
+      if (typeof window !== "undefined") {
+        localStorage.setItem("language", lang);
       }
-    }
-  };
+
+      // Get the current path without locale prefix
+      let pathWithoutLocale = pathname;
+
+      // Remove current locale prefix if present
+      for (const loc of locales) {
+        if (pathname.startsWith(`/${loc}/`)) {
+          pathWithoutLocale = pathname.slice(loc.length + 1);
+          break;
+        } else if (pathname === `/${loc}`) {
+          pathWithoutLocale = "/";
+          break;
+        }
+      }
+
+      // Build new path with target locale
+      // Default locale (nl) doesn't need prefix, other locales do
+      const newPath =
+        lang === defaultLocale
+          ? pathWithoutLocale
+          : `/${lang}${pathWithoutLocale === "/" ? "" : pathWithoutLocale}`;
+
+      router.push(newPath || "/");
+    },
+    [pathname, router],
+  );
 
   const t = (key: string) => {
-    // Translation function - will be used throughout the app
+    // Placeholder translation function - actual translations use useTranslation hook
     return key;
   };
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+    <LanguageContext.Provider value={{ language: locale, setLanguage, t }}>
       {children}
     </LanguageContext.Provider>
   );
@@ -74,3 +71,7 @@ export function useLanguage() {
   }
   return context;
 }
+
+// Re-export locale types for convenience
+export type { Locale };
+export { locales, defaultLocale };

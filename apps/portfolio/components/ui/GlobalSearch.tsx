@@ -1,13 +1,19 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Search, X, FileText, Briefcase, ArrowRight, Command } from "lucide-react";
-import Link from "next/link";
+import { AnimatePresence, motion } from "framer-motion";
+import {
+  ArrowRight,
+  Briefcase,
+  Command,
+  FileText,
+  Search,
+  X,
+} from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { getProjects, getBlogPosts } from "@/utils/getLocalizedData";
 import { useTranslation } from "@/hooks/useTranslation";
+import { getBlogPosts, getProjects } from "@/utils/getLocalizedData";
 
 interface SearchResult {
   type: "blog" | "project";
@@ -57,9 +63,11 @@ export default function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
     const projectResults: SearchResult[] = projects
       .filter((project) => {
         const matchTitle = project.title.toLowerCase().includes(searchQuery);
-        const matchDescription = project.description.toLowerCase().includes(searchQuery);
+        const matchDescription = project.description
+          .toLowerCase()
+          .includes(searchQuery);
         const matchTechnologies = project.technologies.some((tech) =>
-          tech.toLowerCase().includes(searchQuery)
+          tech.toLowerCase().includes(searchQuery),
         );
         return matchTitle || matchDescription || matchTechnologies;
       })
@@ -76,8 +84,12 @@ export default function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
       .filter((post) => {
         const matchTitle = post.title.toLowerCase().includes(searchQuery);
         const matchExcerpt = post.excerpt.toLowerCase().includes(searchQuery);
-        const matchCategory = post.category?.toLowerCase().includes(searchQuery);
-        const matchTags = post.tags?.some((tag) => tag.toLowerCase().includes(searchQuery));
+        const matchCategory = post.category
+          ?.toLowerCase()
+          .includes(searchQuery);
+        const matchTags = post.tags?.some((tag) =>
+          tag.toLowerCase().includes(searchQuery),
+        );
         return matchTitle || matchExcerpt || matchCategory || matchTags;
       })
       .map((post) => ({
@@ -176,7 +188,9 @@ export default function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
                   ) : results.length === 0 ? (
                     <div className="p-12 text-center">
                       <div className="text-6xl mb-4">🔍</div>
-                      <h3 className="text-xl font-bold text-text-primary mb-2">{t.search.noResultsTitle}</h3>
+                      <h3 className="text-xl font-bold text-text-primary mb-2">
+                        {t.search.noResultsTitle}
+                      </h3>
                       <p className="text-text-secondary">
                         {t.search.noResultsDescription}
                       </p>
@@ -228,23 +242,26 @@ export default function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
                               <p className="text-sm text-text-secondary line-clamp-2 mb-2">
                                 {result.description}
                               </p>
-                              {result.technologies && result.technologies.length > 0 && (
-                                <div className="flex flex-wrap gap-1">
-                                  {result.technologies.slice(0, 3).map((tech) => (
-                                    <span
-                                      key={tech}
-                                      className="px-2 py-0.5 text-xs rounded bg-surface text-text-muted"
-                                    >
-                                      {tech}
-                                    </span>
-                                  ))}
-                                  {result.technologies.length > 3 && (
-                                    <span className="px-2 py-0.5 text-xs rounded bg-surface text-text-muted">
-                                      +{result.technologies.length - 3}
-                                    </span>
-                                  )}
-                                </div>
-                              )}
+                              {result.technologies &&
+                                result.technologies.length > 0 && (
+                                  <div className="flex flex-wrap gap-1">
+                                    {result.technologies
+                                      .slice(0, 3)
+                                      .map((tech) => (
+                                        <span
+                                          key={tech}
+                                          className="px-2 py-0.5 text-xs rounded bg-surface text-text-muted"
+                                        >
+                                          {tech}
+                                        </span>
+                                      ))}
+                                    {result.technologies.length > 3 && (
+                                      <span className="px-2 py-0.5 text-xs rounded bg-surface text-text-muted">
+                                        +{result.technologies.length - 3}
+                                      </span>
+                                    )}
+                                  </div>
+                                )}
                             </div>
 
                             {/* Arrow */}
@@ -266,13 +283,17 @@ export default function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
                 <div className="flex items-center justify-between px-6 py-4 bg-surface/50 border-t-2 border-surface">
                   <div className="flex items-center gap-2 text-sm text-text-muted">
                     <span>{t.search.footer.searchBy}</span>
-                    <span className="font-semibold text-accent-primary">STEDING.</span>
+                    <span className="font-semibold text-accent-primary">
+                      STEDING.
+                    </span>
                   </div>
                   <div className="flex items-center gap-2">
                     <kbd className="px-2 py-1 bg-secondary-bg border border-surface-light rounded text-xs font-mono text-text-secondary flex items-center gap-1">
                       <Command className="w-3 h-3" />K
                     </kbd>
-                    <span className="text-xs text-text-muted">{t.search.footer.toOpen}</span>
+                    <span className="text-xs text-text-muted">
+                      {t.search.footer.toOpen}
+                    </span>
                   </div>
                 </div>
               </div>

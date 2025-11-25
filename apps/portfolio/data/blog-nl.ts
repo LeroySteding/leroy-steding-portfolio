@@ -1,11 +1,12 @@
-import { BlogPost } from "./blog";
+import type { BlogPost } from "./blog";
 
 export const blogPostsNL: BlogPost[] = [
   {
-    id: '1',
-    slug: 'schaalbare-nextjs-apps-bouwen',
-    title: 'Schaalbare Next.js Applicaties Bouwen met Turborepo',
-    excerpt: 'Leer hoe u uw Next.js applicaties structureert en schaalt met Turborepo monorepo architectuur, gedeelde componenten en geoptimaliseerde build pipelines.',
+    id: "1",
+    slug: "schaalbare-nextjs-apps-bouwen",
+    title: "Schaalbare Next.js Applicaties Bouwen met Turborepo",
+    excerpt:
+      "Leer hoe u uw Next.js applicaties structureert en schaalt met Turborepo monorepo architectuur, gedeelde componenten en geoptimaliseerde build pipelines.",
     content: `
 # Schaalbare Next.js Applicaties Bouwen met Turborepo
 
@@ -58,19 +59,21 @@ Turborepo's remote caching kan build tijden met maximaal 70% verminderen. Config
 
 Turborepo transformeert hoe we Next.js applicaties bouwen en schalen, waardoor monorepos toegankelijk en performant worden.
     `,
-    category: 'tutorial',
-    tags: ['Next.js', 'Turborepo', 'Monorepo', 'Architectuur'],
-    author: 'Leroy Steding',
-    publishedAt: '2025-01-15',
-    readingTime: '8 min lezen',
-    coverImage: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&h=600&fit=crop',
+    category: "tutorial",
+    tags: ["Next.js", "Turborepo", "Monorepo", "Architectuur"],
+    author: "Leroy Steding",
+    publishedAt: "2025-01-15",
+    readingTime: "8 min lezen",
+    coverImage:
+      "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&h=600&fit=crop",
     featured: true,
   },
   {
-    id: '2',
-    slug: 'ai-automatisering-toekomst',
-    title: 'De Toekomst van AI-Gedreven Automatisering in Webontwikkeling',
-    excerpt: 'Onderzoek hoe kunstmatige intelligentie en automatisering de manier waarop we webapplicaties bouwen, testen en implementeren transformeren.',
+    id: "2",
+    slug: "ai-automatisering-toekomst",
+    title: "De Toekomst van AI-Gedreven Automatisering in Webontwikkeling",
+    excerpt:
+      "Onderzoek hoe kunstmatige intelligentie en automatisering de manier waarop we webapplicaties bouwen, testen en implementeren transformeren.",
     content: `
 # De Toekomst van AI-Gedreven Automatisering in Webontwikkeling
 
@@ -104,19 +107,21 @@ De toekomst biedt spannende mogelijkheden:
 - Voorspellende prestatie-optimalisatie
 - Geautomatiseerde toegankelijkheidsverbeteringen
     `,
-    category: 'article',
-    tags: ['AI', 'Automatisering', 'Webontwikkeling', 'Toekomsttechnologie'],
-    author: 'Leroy Steding',
-    publishedAt: '2025-01-10',
-    readingTime: '6 min lezen',
-    coverImage: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&h=600&fit=crop',
+    category: "article",
+    tags: ["AI", "Automatisering", "Webontwikkeling", "Toekomsttechnologie"],
+    author: "Leroy Steding",
+    publishedAt: "2025-01-10",
+    readingTime: "6 min lezen",
+    coverImage:
+      "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&h=600&fit=crop",
     featured: true,
   },
   {
-    id: '3',
-    slug: 'react-server-componenten-diepgaand',
-    title: 'React Server Componenten: Een Diepgaande Analyse',
-    excerpt: 'Begrip van de architectuur, voordelen en implementatiepatronen van React Server Componenten in Next.js 14.',
+    id: "3",
+    slug: "react-server-componenten-diepgaand",
+    title: "React Server Componenten: Een Diepgaande Analyse",
+    excerpt:
+      "Begrip van de architectuur, voordelen en implementatiepatronen van React Server Componenten in Next.js 14.",
     content: `
 # React Server Componenten: Een Diepgaande Analyse
 
@@ -163,19 +168,21 @@ Onze analyse toont:
 - 60% snellere initiële paginalaadtijd
 - Verbeterde Core Web Vitals scores
     `,
-    category: 'research',
-    tags: ['React', 'Next.js', 'Server Componenten', 'Prestaties'],
-    author: 'Leroy Steding',
-    publishedAt: '2025-01-05',
-    readingTime: '12 min lezen',
-    coverImage: 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=1200&h=600&fit=crop',
+    category: "research",
+    tags: ["React", "Next.js", "Server Componenten", "Prestaties"],
+    author: "Leroy Steding",
+    publishedAt: "2025-01-05",
+    readingTime: "12 min lezen",
+    coverImage:
+      "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=1200&h=600&fit=crop",
     featured: false,
   },
   {
-    id: '4',
-    slug: 'typescript-geavanceerde-patronen',
-    title: 'Geavanceerde TypeScript Patronen voor Enterprise Applicaties',
-    excerpt: 'Beheers geavanceerde TypeScript patronen inclusief conditional types, mapped types en template literal types voor het bouwen van robuuste applicaties.',
+    id: "4",
+    slug: "typescript-geavanceerde-patronen",
+    title: "Geavanceerde TypeScript Patronen voor Enterprise Applicaties",
+    excerpt:
+      "Beheers geavanceerde TypeScript patronen inclusief conditional types, mapped types en template literal types voor het bouwen van robuuste applicaties.",
     content: `
 # Geavanceerde TypeScript Patronen voor Enterprise Applicaties
 
@@ -216,18 +223,19 @@ Deze patronen maken mogelijk:
 
 Hoewel krachtig, kunnen complexe types compilatie vertragen. Balanceer type safety met build prestaties.
     `,
-    category: 'tutorial',
-    tags: ['TypeScript', 'Geavanceerde Patronen', 'Type Safety'],
-    author: 'Leroy Steding',
-    publishedAt: '2024-12-28',
-    readingTime: '10 min lezen',
+    category: "tutorial",
+    tags: ["TypeScript", "Geavanceerde Patronen", "Type Safety"],
+    author: "Leroy Steding",
+    publishedAt: "2024-12-28",
+    readingTime: "10 min lezen",
     featured: false,
   },
   {
-    id: '5',
-    slug: 'web-prestatie-optimalisatie',
-    title: 'Web Prestatie-optimalisatie: Een Uitgebreide Gids',
-    excerpt: 'Duik diep in moderne web prestatie-optimalisatietechnieken, van Core Web Vitals tot geavanceerde bundling strategieën.',
+    id: "5",
+    slug: "web-prestatie-optimalisatie",
+    title: "Web Prestatie-optimalisatie: Een Uitgebreide Gids",
+    excerpt:
+      "Duik diep in moderne web prestatie-optimalisatietechnieken, van Core Web Vitals tot geavanceerde bundling strategieën.",
     content: `
 # Web Prestatie-optimalisatie: Een Uitgebreide Gids
 
@@ -279,19 +287,21 @@ Na optimalisatie:
 - 40% vermindering in bundlegrootte
 - 90+ Lighthouse score
     `,
-    category: 'article',
-    tags: ['Prestaties', 'Optimalisatie', 'Web Vitals', 'Best Practices'],
-    author: 'Leroy Steding',
-    publishedAt: '2024-12-20',
-    readingTime: '15 min lezen',
-    coverImage: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=600&fit=crop',
+    category: "article",
+    tags: ["Prestaties", "Optimalisatie", "Web Vitals", "Best Practices"],
+    author: "Leroy Steding",
+    publishedAt: "2024-12-20",
+    readingTime: "15 min lezen",
+    coverImage:
+      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=600&fit=crop",
     featured: true,
   },
   {
-    id: '6',
-    slug: 'design-systemen-bouwen',
-    title: 'Schaalbare Design Systemen Bouwen met React en Tailwind',
-    excerpt: 'Leer hoe u onderhoudbare design systemen creëert die schalen over meerdere applicaties met React componenten en Tailwind CSS.',
+    id: "6",
+    slug: "design-systemen-bouwen",
+    title: "Schaalbare Design Systemen Bouwen met React en Tailwind",
+    excerpt:
+      "Leer hoe u onderhoudbare design systemen creëert die schalen over meerdere applicaties met React componenten en Tailwind CSS.",
     content: `
 # Schaalbare Design Systemen Bouwen met React en Tailwind
 
@@ -368,43 +378,45 @@ Elke component moet:
 
 Een solide design systeem versnelt ontwikkeling en garandeert consistentie over uw productecosysteem.
     `,
-    category: 'tutorial',
-    tags: ['Design System', 'React', 'Tailwind CSS', 'Componentenbibliotheek'],
-    author: 'Leroy Steding',
-    publishedAt: '2024-12-15',
-    readingTime: '11 min lezen',
-    coverImage: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=1200&h=600&fit=crop',
+    category: "tutorial",
+    tags: ["Design System", "React", "Tailwind CSS", "Componentenbibliotheek"],
+    author: "Leroy Steding",
+    publishedAt: "2024-12-15",
+    readingTime: "11 min lezen",
+    coverImage:
+      "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=1200&h=600&fit=crop",
     featured: false,
   },
 ];
 
 // Utility functies voor blog
 export function getAllPostsNL(): BlogPost[] {
-  return blogPostsNL.sort((a, b) => 
-    new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+  return blogPostsNL.sort(
+    (a, b) =>
+      new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
   );
 }
 
 export function getFeaturedPostsNL(): BlogPost[] {
-  return blogPostsNL.filter(post => post.featured);
+  return blogPostsNL.filter((post) => post.featured);
 }
 
 export function getPostBySlugNL(slug: string): BlogPost | undefined {
-  return blogPostsNL.find(post => post.slug === slug);
+  return blogPostsNL.find((post) => post.slug === slug);
 }
 
 export function getPostsByCategoryNL(category: string): BlogPost[] {
-  return blogPostsNL.filter(post => post.category === category);
+  return blogPostsNL.filter((post) => post.category === category);
 }
 
 export function getPostsByTagNL(tag: string): BlogPost[] {
-  return blogPostsNL.filter(post => post.tags.includes(tag));
+  return blogPostsNL.filter((post) => post.tags.includes(tag));
 }
 
 export function getAllCategoriesNL(): string[] {
-  return Array.from(new Set(blogPostsNL.map(post => post.category)));
+  return Array.from(new Set(blogPostsNL.map((post) => post.category)));
 }
 
 export function getAllTagsNL(): string[] {
-  return Array.from(new Set(blogPostsNL.flatMap(post => post.tags)));
+  return Array.from(new Set(blogPostsNL.flatMap((post) => post.tags)));
 }

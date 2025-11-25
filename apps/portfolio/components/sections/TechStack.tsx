@@ -1,19 +1,23 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
-import Image from "next/image";
+import { AnimatePresence, motion } from "framer-motion";
 import { Search, X } from "lucide-react";
-import { techStack } from "@/data/techStack";
-import { useState, useMemo } from "react";
-import { useTranslation } from "@/hooks/useTranslation";
+import Image from "next/image";
+import { useMemo, useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { techStack } from "@/data/techStack";
+import { useTranslation } from "@/hooks/useTranslation";
 
 // Helper function to get proficiency level
-const getProficiencyLevel = (proficiency: number): { label: string; color: string } => {
+const getProficiencyLevel = (
+  proficiency: number,
+): { label: string; color: string } => {
   if (proficiency >= 90) return { label: "Master", color: "text-green-400" };
-  if (proficiency >= 75) return { label: "Expert", color: "text-accent-primary" };
+  if (proficiency >= 75)
+    return { label: "Expert", color: "text-accent-primary" };
   if (proficiency >= 60) return { label: "Advanced", color: "text-blue-400" };
-  if (proficiency >= 40) return { label: "Intermediate", color: "text-accent-secondary" };
+  if (proficiency >= 40)
+    return { label: "Intermediate", color: "text-accent-secondary" };
   return { label: "Beginner", color: "text-text-muted" };
 };
 
@@ -25,24 +29,25 @@ export default function TechStack() {
 
   // Toggle category selection (multi-select)
   const toggleCategory = (categoryName: string) => {
-    setSelectedCategories(prev => 
+    setSelectedCategories((prev) =>
       prev.includes(categoryName)
-        ? prev.filter(c => c !== categoryName)
-        : [...prev, categoryName]
+        ? prev.filter((c) => c !== categoryName)
+        : [...prev, categoryName],
     );
   };
 
   // Filter technologies based on search and selected categories
   const displayTechnologies = useMemo(() => {
-    let technologies = selectedCategories.length > 0
-      ? techStack
-          .filter(cat => selectedCategories.includes(cat.name))
-          .flatMap(cat => cat.technologies)
-      : techStack.flatMap(cat => cat.technologies);
+    let technologies =
+      selectedCategories.length > 0
+        ? techStack
+            .filter((cat) => selectedCategories.includes(cat.name))
+            .flatMap((cat) => cat.technologies)
+        : techStack.flatMap((cat) => cat.technologies);
 
     if (searchQuery) {
-      technologies = technologies.filter(tech =>
-        tech.name.toLowerCase().includes(searchQuery.toLowerCase())
+      technologies = technologies.filter((tech) =>
+        tech.name.toLowerCase().includes(searchQuery.toLowerCase()),
       );
     }
 
@@ -50,7 +55,10 @@ export default function TechStack() {
   }, [selectedCategories, searchQuery]);
 
   return (
-    <section id="skills" className="section relative bg-tertiary-bg overflow-hidden">
+    <section
+      id="skills"
+      className="section relative bg-tertiary-bg overflow-hidden"
+    >
       {/* Subtle accent line */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-accent-secondary to-transparent" />
 
@@ -64,7 +72,8 @@ export default function TechStack() {
             viewport={{ once: true }}
             className="font-display font-black mb-6"
           >
-            {t.techStack.title} <span className="text-gradient">{t.techStack.titleHighlight}</span>
+            {t.techStack.title}{" "}
+            <span className="text-gradient">{t.techStack.titleHighlight}</span>
           </motion.h2>
           <motion.div
             initial={{ opacity: 0, scaleX: 0 }}
@@ -119,7 +128,9 @@ export default function TechStack() {
           className="mb-12"
         >
           <div className="flex items-center gap-4 mb-6">
-            <h3 className="text-lg font-bold text-text-primary">Filter by Category:</h3>
+            <h3 className="text-lg font-bold text-text-primary">
+              Filter by Category:
+            </h3>
             {selectedCategories.length > 0 && (
               <button
                 onClick={() => setSelectedCategories([])}
@@ -144,7 +155,9 @@ export default function TechStack() {
                   }`}
                 >
                   <span className="text-2xl">{category.icon}</span>
-                  <span>{language === 'nl' ? category.nameNL : category.name}</span>
+                  <span>
+                    {language === "nl" ? category.nameNL : category.name}
+                  </span>
                   {isSelected && (
                     <motion.span
                       initial={{ scale: 0 }}
@@ -165,7 +178,8 @@ export default function TechStack() {
             animate={{ opacity: 1, y: 0 }}
             className="mb-6 text-text-secondary font-semibold"
           >
-            Found {displayTechnologies.length} {displayTechnologies.length === 1 ? 'technology' : 'technologies'}
+            Found {displayTechnologies.length}{" "}
+            {displayTechnologies.length === 1 ? "technology" : "technologies"}
           </motion.div>
         )}
 
@@ -179,8 +193,12 @@ export default function TechStack() {
               className="card p-16 text-center mb-16"
             >
               <div className="text-6xl mb-4">🔍</div>
-              <h3 className="text-2xl font-bold text-text-primary mb-2">No technologies found</h3>
-              <p className="text-text-secondary mb-6">Try adjusting your search or filters</p>
+              <h3 className="text-2xl font-bold text-text-primary mb-2">
+                No technologies found
+              </h3>
+              <p className="text-text-secondary mb-6">
+                Try adjusting your search or filters
+              </p>
               <button
                 onClick={() => {
                   setSearchQuery("");
@@ -193,81 +211,85 @@ export default function TechStack() {
             </motion.div>
           ) : (
             <motion.div
-              key={`${selectedCategories.join('-')}-${searchQuery}`}
+              key={`${selectedCategories.join("-")}-${searchQuery}`}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
               className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6 mb-16"
             >
-            {displayTechnologies.map((tech, index) => (
-              <motion.div
-                key={tech.name}
-                initial={{ opacity: 0, y: 20, scale: 0.9 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                whileHover={{ y: -8, scale: 1.02 }}
-                transition={{ 
-                  duration: 0.6, 
-                  delay: index * 0.03,
-                  type: "spring",
-                  stiffness: 300,
-                  damping: 20
-                }}
-                className="relative group"
-              >
-                {/* Glow effect */}
-                <div className="absolute -inset-1 bg-gradient-to-r from-accent-secondary/20 to-accent-primary/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                
-                {/* Card content */}
-                <div className="relative card p-6 flex flex-col items-center justify-center gap-3 cursor-pointer h-full min-h-[200px]">
-                  {/* Tech icon */}
-                  <div className="relative w-16 h-16 flex items-center justify-center">
-                    {tech.icon.startsWith('http') ? (
-                      <Image
-                        src={tech.icon}
-                        alt={tech.name}
-                        width={64}
-                        height={64}
-                        className="object-contain group-hover:scale-110 transition-transform duration-300"
-                      />
-                    ) : (
-                      <span className="text-5xl group-hover:scale-110 transition-transform duration-300">{tech.icon}</span>
-                    )}
-                  </div>
+              {displayTechnologies.map((tech, index) => (
+                <motion.div
+                  key={tech.name}
+                  initial={{ opacity: 0, y: 20, scale: 0.9 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  whileHover={{ y: -8, scale: 1.02 }}
+                  transition={{
+                    duration: 0.6,
+                    delay: index * 0.03,
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 20,
+                  }}
+                  className="relative group"
+                >
+                  {/* Glow effect */}
+                  <div className="absolute -inset-1 bg-gradient-to-r from-accent-secondary/20 to-accent-primary/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                  {/* Tech name */}
-                  <h3 className="text-base font-bold text-text-primary text-center group-hover:text-accent-secondary transition-colors min-h-[48px] flex items-center">
-                    {tech.name}
-                  </h3>
-
-                  {/* Proficiency bar */}
-                  <div className="w-full">
-                    <div className="flex items-center justify-between mb-1.5">
-                      <span className={`text-xs font-bold ${getProficiencyLevel(tech.proficiency).color}`}>
-                        {getProficiencyLevel(tech.proficiency).label}
-                      </span>
-                      <span className="text-xs font-bold text-accent-secondary">
-                        {tech.proficiency}%
-                      </span>
+                  {/* Card content */}
+                  <div className="relative card p-6 flex flex-col items-center justify-center gap-3 cursor-pointer h-full min-h-[200px]">
+                    {/* Tech icon */}
+                    <div className="relative w-16 h-16 flex items-center justify-center">
+                      {tech.icon.startsWith("http") ? (
+                        <Image
+                          src={tech.icon}
+                          alt={tech.name}
+                          width={64}
+                          height={64}
+                          className="object-contain group-hover:scale-110 transition-transform duration-300"
+                        />
+                      ) : (
+                        <span className="text-5xl group-hover:scale-110 transition-transform duration-300">
+                          {tech.icon}
+                        </span>
+                      )}
                     </div>
-                    <div className="w-full bg-surface rounded-full h-2 overflow-hidden">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        animate={{ width: `${tech.proficiency}%` }}
-                        transition={{ 
-                          duration: 1, 
-                          delay: index * 0.03,
-                          ease: [0.22, 1, 0.36, 1]
-                        }}
-                        className="h-full bg-gradient-to-r from-accent-secondary to-accent-primary rounded-full relative"
-                      >
-                        <div className="absolute inset-0 bg-white/20 animate-pulse" />
-                      </motion.div>
+
+                    {/* Tech name */}
+                    <h3 className="text-base font-bold text-text-primary text-center group-hover:text-accent-secondary transition-colors min-h-[48px] flex items-center">
+                      {tech.name}
+                    </h3>
+
+                    {/* Proficiency bar */}
+                    <div className="w-full">
+                      <div className="flex items-center justify-between mb-1.5">
+                        <span
+                          className={`text-xs font-bold ${getProficiencyLevel(tech.proficiency).color}`}
+                        >
+                          {getProficiencyLevel(tech.proficiency).label}
+                        </span>
+                        <span className="text-xs font-bold text-accent-secondary">
+                          {tech.proficiency}%
+                        </span>
+                      </div>
+                      <div className="w-full bg-surface rounded-full h-2 overflow-hidden">
+                        <motion.div
+                          initial={{ width: 0 }}
+                          animate={{ width: `${tech.proficiency}%` }}
+                          transition={{
+                            duration: 1,
+                            delay: index * 0.03,
+                            ease: [0.22, 1, 0.36, 1],
+                          }}
+                          className="h-full bg-gradient-to-r from-accent-secondary to-accent-primary rounded-full relative"
+                        >
+                          <div className="absolute inset-0 bg-white/20 animate-pulse" />
+                        </motion.div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              ))}
             </motion.div>
           )}
         </AnimatePresence>
@@ -282,27 +304,35 @@ export default function TechStack() {
         >
           <div className="card p-8 text-center">
             <div className="text-5xl font-black text-accent-primary mb-3">
-              {techStack.flatMap(cat => cat.technologies).length}+
+              {techStack.flatMap((cat) => cat.technologies).length}+
             </div>
-            <div className="text-text-muted text-base font-semibold uppercase tracking-wide">Technologies</div>
+            <div className="text-text-muted text-base font-semibold uppercase tracking-wide">
+              Technologies
+            </div>
           </div>
           <div className="card p-8 text-center">
             <div className="text-5xl font-black text-accent-secondary mb-3">
               {techStack.length}
             </div>
-            <div className="text-text-muted text-base font-semibold uppercase tracking-wide">Categories</div>
+            <div className="text-text-muted text-base font-semibold uppercase tracking-wide">
+              Categories
+            </div>
           </div>
           <div className="card p-8 text-center">
             <div className="text-5xl font-black text-accent-primary mb-3">
               12+
             </div>
-            <div className="text-text-muted text-base font-semibold uppercase tracking-wide">{t.techStack.stats.experience}</div>
+            <div className="text-text-muted text-base font-semibold uppercase tracking-wide">
+              {t.techStack.stats.experience}
+            </div>
           </div>
           <div className="card p-8 text-center">
             <div className="text-5xl font-black text-accent-secondary mb-3">
               100+
             </div>
-            <div className="text-text-muted text-base font-semibold uppercase tracking-wide">{t.techStack.stats.projects}</div>
+            <div className="text-text-muted text-base font-semibold uppercase tracking-wide">
+              {t.techStack.stats.projects}
+            </div>
           </div>
         </motion.div>
       </div>

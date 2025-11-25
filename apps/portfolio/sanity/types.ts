@@ -1,19 +1,19 @@
 export interface SanityPost {
-  _id: string
-  title: string
+  _id: string;
+  title: string;
   slug: {
-    current: string
-  }
-  excerpt: string
-  coverImage?: string
-  content: string
-  category: 'article' | 'tutorial' | 'research'
-  tags: string[]
-  author: string
-  publishedAt: string
-  readingTime: string
-  featured: boolean
-  language: 'en' | 'nl'
+    current: string;
+  };
+  excerpt: string;
+  coverImage?: string;
+  content: string;
+  category: "article" | "tutorial" | "research";
+  tags: string[];
+  author: string;
+  publishedAt: string;
+  readingTime: string;
+  featured: boolean;
+  language: "en" | "nl";
 }
 
 // Transform Sanity post to match our existing BlogPost interface
@@ -31,5 +31,5 @@ export function transformSanityPost(sanityPost: SanityPost) {
     readingTime: sanityPost.readingTime,
     coverImage: sanityPost.coverImage,
     featured: sanityPost.featured,
-  }
+  };
 }

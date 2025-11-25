@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Image from "next/image";
 
 const skillCategories = [
   {
@@ -67,10 +66,13 @@ const item = {
 
 export default function Skills() {
   return (
-    <section id="skills" className="relative py-24 bg-cyber-dark overflow-hidden">
+    <section
+      id="skills"
+      className="relative py-24 bg-cyber-dark overflow-hidden"
+    >
       {/* Background decoration */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-px bg-gradient-to-r from-transparent via-neon-cyan to-transparent" />
-      
+
       {/* Gradient orbs */}
       <div className="absolute top-1/3 -right-48 w-96 h-96 bg-neon-cyan/10 rounded-full blur-3xl" />
       <div className="absolute bottom-1/3 -left-48 w-96 h-96 bg-neon-violet/10 rounded-full blur-3xl" />
@@ -85,7 +87,10 @@ export default function Skills() {
             viewport={{ once: true }}
             className="text-4xl sm:text-5xl font-display font-bold mb-4"
           >
-            Technical <span className="bg-gradient-to-r from-neon-cyan to-neon-violet bg-clip-text text-transparent">Skills</span>
+            Technical{" "}
+            <span className="bg-gradient-to-r from-neon-cyan to-neon-violet bg-clip-text text-transparent">
+              Skills
+            </span>
           </motion.h2>
           <motion.div
             initial={{ opacity: 0, scaleX: 0 }}
@@ -107,9 +112,19 @@ export default function Skills() {
               viewport={{ once: true }}
               className="p-6 rounded-xl bg-cyber-darker border border-cyber-gray-light glass hover:border-neon-cyan/50 transition-all duration-300"
             >
-              <h3 className={`text-2xl font-display font-bold mb-6 flex items-center gap-3`}>
-                <span className={`w-2 h-2 rounded-full bg-neon-${category.color} animate-glow-pulse`} />
-                <span className={category.color === "cyan" ? "text-neon-cyan" : "text-neon-violet"}>
+              <h3
+                className={`text-2xl font-display font-bold mb-6 flex items-center gap-3`}
+              >
+                <span
+                  className={`w-2 h-2 rounded-full bg-neon-${category.color} animate-glow-pulse`}
+                />
+                <span
+                  className={
+                    category.color === "cyan"
+                      ? "text-neon-cyan"
+                      : "text-neon-violet"
+                  }
+                >
                   {category.name}
                 </span>
               </h3>
@@ -134,17 +149,23 @@ export default function Skills() {
                           {skill.name}
                         </span>
                       </div>
-                      <span className={`text-sm font-bold ${category.color === "cyan" ? "text-neon-cyan" : "text-neon-violet"}`}>
+                      <span
+                        className={`text-sm font-bold ${category.color === "cyan" ? "text-neon-cyan" : "text-neon-violet"}`}
+                      >
                         {skill.level}%
                       </span>
                     </div>
-                    
+
                     {/* Progress bar */}
                     <div className="h-2 bg-cyber-gray rounded-full overflow-hidden">
                       <motion.div
                         initial={{ width: 0 }}
                         whileInView={{ width: `${skill.level}%` }}
-                        transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
+                        transition={{
+                          duration: 1,
+                          delay: 0.2,
+                          ease: "easeOut",
+                        }}
                         viewport={{ once: true }}
                         className={`h-full rounded-full ${
                           category.color === "cyan"

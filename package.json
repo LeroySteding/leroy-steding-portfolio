@@ -8,11 +8,16 @@
     "build": "turbo run build",
     "lint": "turbo run lint",
     "clean": "turbo run clean",
-    "typecheck": "turbo run typecheck"
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "test:e2e": "turbo run test:e2e",
+    "prepare": "husky || true"
   },
   "devDependencies": {
     "@biomejs/biome": "2.2.0",
     "dotenv": "^17.2.3",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.2.11",
     "tsup": "^8.0.1",
     "tsx": "^4.20.6",
     "turbo": "^2.3.0",

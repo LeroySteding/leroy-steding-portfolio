@@ -1,11 +1,11 @@
-import { Translations } from "./en";
+import type { Translations } from "./en";
 
 export const nl: Translations = {
   nav: {
-    about: "Over Mij",
+    about: "Over mij",
     services: "Diensten",
     projects: "Projecten",
-    blog: "Journaal",
+    blog: "Journal",
     contact: "Contact",
     toggleTheme: "Thema wisselen",
     toggleMenu: "Menu openen",
@@ -14,16 +14,17 @@ export const nl: Translations = {
     name: "Leroy Steding",
     title: "Full-Stack Developer",
     subtitle: "& AI Automatisering Architect",
-    tagline: "Bouwt schaalbare AI-gedreven webplatforms & digitale automatiseringsoplossingen.",
+    tagline:
+      "Bouwt schaalbare AI-gedreven webplatforms & digitale automatiseringsoplossingen.",
     cta: {
-      projects: "Bekijk Projecten",
+      projects: "Bekijk projecten",
       cv: "CV",
       contact: "Contact",
     },
     stats: {
-      experience: "Jaar Ervaring",
-      projects: "Projecten Voltooid",
-      clients: "Tevreden Klanten",
+      experience: "Jaar ervaring",
+      projects: "Projecten voltooid",
+      clients: "Tevreden klanten",
     },
     scroll: "Scroll om te ontdekken",
   },
@@ -32,64 +33,78 @@ export const nl: Translations = {
     titleHighlight: "Mij",
     intro: {
       title: "Full-Stack Developer & AI Automatisering Architect",
-      description: "Ik ben een Nederlandse full-stack developer en ondernemer met een passie voor het bouwen van geavanceerde webplatforms die de kracht van AI-automatisering benutten. Als oprichter van Hifive, specialiseer ik me in het creëren van schaalbare, intelligente oplossingen die transformeren hoe bedrijven opereren.",
+      description:
+        "Ik ben een Nederlandse full-stack developer en ondernemer met een passie voor het bouwen van geavanceerde webplatforms die de kracht van AI-automatisering benutten. Als oprichter van Hifive, specialiseer ik me in het creëren van schaalbare, intelligente oplossingen die transformeren hoe bedrijven opereren.",
     },
-    expertise: "Mijn expertise omvat de moderne web development stack, inclusief <highlight>Next.js 17</highlight>, <highlight>React 19</highlight>, <highlight>TypeScript</highlight>, en <highlight>Supabase</highlight> op de frontend, gecombineerd met <highlight>Python</highlight>, <highlight>FastAPI</highlight>, en <highlight>PostgreSQL</highlight> op de backend. Ik ben vooral gefocust op AI-automatisering, het bouwen van intelligente agents, en het creëren van naadloze workflows met tools zoals <strong>n8n</strong>.",
-    experience: "Van het architecteren van <highlight>monorepo SaaS-platforms</highlight> zoals het SURF Whitelabel Platform (Edusources & MBOdata) tot het bouwen van <highlight>AI-aangedreven offertes pipelines</highlight> voor industriële klanten, ik floreer bij het oplossen van complexe technische uitdagingen en het leveren van productie-klare oplossingen die schalen.",
+    expertise:
+      "Mijn expertise omvat de moderne web development stack, inclusief <highlight>Next.js</highlight>, <highlight>React</highlight>, <highlight>TypeScript</highlight>, en <highlight>Supabase</highlight> op de frontend, gecombineerd met <highlight>Python</highlight>, <highlight>FastAPI</highlight>, en <highlight>PostgreSQL</highlight> op de backend. Ik ben vooral gefocust op AI-automatisering, het bouwen van intelligente agents, en het creëren van naadloze workflows met tools zoals <strong>n8n</strong>.",
+    experience:
+      "Van het architecteren van <highlight>monorepo SaaS-platforms</highlight> zoals het SURF Whitelabel Platform (Edusources & MBOdata) tot het bouwen van <highlight>AI-aangedreven offertes pipelines</highlight> voor industriële klanten, ik floreer bij het oplossen van complexe technische uitdagingen en het leveren van productie-klare oplossingen die schalen.",
     highlights: {
       fullstack: {
         title: "Full-Stack Expertise",
-        description: "Next.js 17, React 19, TypeScript, Supabase, Python, FastAPI",
+        description: "Next.js, React, TypeScript, Supabase, Python, FastAPI",
       },
       ai: {
         title: "AI Automatisering",
-        description: "Bouwt intelligente automatiseringsoplossingen met AI-agents en n8n workflows",
+        description:
+          "Bouwt intelligente automatiseringsoplossingen met AI-agents en n8n workflows",
       },
       saas: {
         title: "SaaS Architectuur",
-        description: "Schaalbare platforms, monorepo structuren en moderne deployment pipelines",
+        description:
+          "Schaalbare platforms, monorepo structuren en moderne deployment pipelines",
       },
     },
   },
   services: {
     webDevelopment: {
       title: "Webontwikkeling",
-      description: "Moderne, responsieve webapplicaties gebouwd met Next.js, React en TypeScript voor optimale prestaties en gebruikerservaring.",
+      description:
+        "Moderne, responsieve webapplicaties gebouwd met Next.js, React en TypeScript voor optimale prestaties en gebruikerservaring.",
     },
     aiAutomation: {
       title: "AI Automatisering",
-      description: "Intelligente automatiseringsoplossingen die workflows stroomlijnen, handmatige taken verminderen en AI benutten om bedrijfsprocessen te transformeren.",
+      description:
+        "Intelligente automatiseringsoplossingen die workflows stroomlijnen, handmatige taken verminderen en AI benutten om bedrijfsprocessen te transformeren.",
     },
     apiIntegration: {
       title: "API Integratie",
-      description: "Naadloze integratie van externe services en API's om verbonden, krachtige applicaties te creëren die samenwerken.",
+      description:
+        "Naadloze integratie van externe services en API's om verbonden, krachtige applicaties te creëren die samenwerken.",
     },
     consulting: {
       title: "Technisch Advies",
-      description: "Deskundige begeleiding op het gebied van architectuur, technologie stack selectie en best practices om uw project te laten slagen.",
+      description:
+        "Deskundige begeleiding op het gebied van architectuur, technologie stack selectie en best practices om uw project te laten slagen.",
     },
     fullStack: {
       title: "Full-Stack Oplossingen",
-      description: "End-to-end ontwikkeling van database ontwerp tot frontend implementatie, met levering van complete, productie-klare applicaties.",
+      description:
+        "End-to-end ontwikkeling van database ontwerp tot frontend implementatie, met levering van complete, productie-klare applicaties.",
     },
     cloudInfra: {
       title: "Cloud Infrastructuur",
-      description: "Schaalbare cloud oplossingen met moderne DevOps praktijken, CI/CD pipelines en infrastructuur als code.",
+      description:
+        "Schaalbare cloud oplossingen met moderne DevOps praktijken, CI/CD pipelines en infrastructuur als code.",
     },
   },
   testimonials: {
     client1Name: "Jan Bakker",
     client1Role: "CEO",
     client1Company: "TechCorp",
-    client1Quote: "Leroy leverde een uitzonderlijk AI-aangedreven platform dat onze bedrijfsvoering transformeerde. Zijn expertise in full-stack ontwikkeling en automatisering is ongeëvenaard.",
+    client1Quote:
+      "Leroy leverde een uitzonderlijk AI-aangedreven platform dat onze bedrijfsvoering transformeerde. Zijn expertise in full-stack ontwikkeling en automatisering is ongeëvenaard.",
     client2Name: "Sophie de Vries",
     client2Role: "CTO",
     client2Company: "InnovateLab",
-    client2Quote: "Samenwerken met Leroy was een game-changer. Hij leverde niet alleen een robuust SaaS-platform, maar bood ook waardevolle technische begeleiding gedurende het hele project.",
+    client2Quote:
+      "Samenwerken met Leroy was een game-changer. Hij leverde niet alleen een robuust SaaS-platform, maar bood ook waardevolle technische begeleiding gedurende het hele project.",
     client3Name: "Michael Chen",
     client3Role: "Oprichter",
     client3Company: "StartupX",
-    client3Quote: "Leroy's vermogen om complexe vereisten te begrijpen en deze te vertalen naar elegante, schaalbare oplossingen is opmerkelijk. Zeer aanbevolen!",
+    client3Quote:
+      "Leroy's vermogen om complexe vereisten te begrijpen en deze te vertalen naar elegante, schaalbare oplossingen is opmerkelijk. Zeer aanbevolen!",
   },
   experience: {
     title: "Professionele",
@@ -118,7 +133,8 @@ export const nl: Translations = {
   techStack: {
     title: "Tech",
     titleHighlight: "Stack",
-    description: "Een uitgebreide toolkit van moderne technologieën die ik gebruik om schaalbare, performante applicaties te bouwen",
+    description:
+      "Een uitgebreide toolkit van moderne technologieën die ik gebruik om schaalbare, performante applicaties te bouwen",
     all: "Alle",
     categories: {
       languages: "Talen",
@@ -172,11 +188,13 @@ export const nl: Translations = {
   contact: {
     title: "Neem",
     titleHighlight: "Contact Op",
-    subtitle: "Heeft u een project in gedachten of wilt u samenwerken? Neem gerust contact op!",
+    subtitle:
+      "Heeft u een project in gedachten of wilt u samenwerken? Neem gerust contact op!",
     hero: {
       title: "Laten We",
       titleHighlight: "Connecten",
-      subtitle: "Heeft u een project in gedachten of wilt u gewoon praten? Ik sta altijd open voor het bespreken van nieuwe kansen, creatieve ideeën of manieren om deel uit te maken van uw visie.",
+      subtitle:
+        "Heeft u een project in gedachten of wilt u gewoon praten? Ik sta altijd open voor het bespreken van nieuwe kansen, creatieve ideeën of manieren om deel uit te maken van uw visie.",
     },
     info: {
       title: "Contactinformatie",
@@ -205,15 +223,18 @@ export const nl: Translations = {
       required: "verplicht",
       submit: "Verstuur Bericht",
       sending: "Verzenden...",
-      success: "✓ Bericht succesvol verzonden! Ik neem binnenkort contact met u op.",
-      error: "✗ Bericht verzenden mislukt. Probeer het opnieuw of stuur mij direct een e-mail.",
+      success:
+        "✓ Bericht succesvol verzonden! Ik neem binnenkort contact met u op.",
+      error:
+        "✗ Bericht verzenden mislukt. Probeer het opnieuw of stuur mij direct een e-mail.",
       trustIndicators: {
         responseTime: "Reactietijd",
         availableNow: "Nu Beschikbaar",
         securePrivate: "Veilig & Privé",
       },
       heading: "Verstuur een Bericht",
-      subheading: "Ik reageer meestal binnen 24 uur. Laat me weten hoe ik kan helpen!",
+      subheading:
+        "Ik reageer meestal binnen 24 uur. Laat me weten hoe ik kan helpen!",
       successMessage: {
         title: "Bericht succesvol verzonden!",
         body: "Bedankt voor uw bericht! Ik reageer op",
@@ -251,10 +272,12 @@ export const nl: Translations = {
     },
     chat: {
       title: "Leroy's personal Assistent",
-      subtitle: "Vraag me alles over Leroy's ervaring, projecten, vaardigheden of hoe samen te werken",
+      subtitle:
+        "Vraag me alles over Leroy's ervaring, projecten, vaardigheden of hoe samen te werken",
       placeholder: "Vraag me alles...",
       emptyStateTitle: "Hoi! Ik ben Leroy's personal Assistent",
-      emptyStateSubtitle: "Ik kan u helpen meer te leren over Leroy's ervaring, projecten en diensten. Probeer te vragen:",
+      emptyStateSubtitle:
+        "Ik kan u helpen meer te leren over Leroy's ervaring, projecten en diensten. Probeer te vragen:",
       suggestionsLabel: "U zou ook kunnen vragen:",
       starterPrompts: [
         "Wat zijn Leroy's belangrijkste vaardigheden?",
@@ -278,9 +301,11 @@ export const nl: Translations = {
     hero: {
       title: "Laten we praten over",
       titleHighlight: "Jouw Project",
-      subtitle: "Boek een gratis 30 minuten durend consult om jouw project te bespreken, technisch advies te krijgen, of samenwerkingsmogelijkheden te verkennen.",
+      subtitle:
+        "Boek een gratis 30 minuten durend consult om jouw project te bespreken, technisch advies te krijgen, of samenwerkingsmogelijkheden te verkennen.",
     },
-    description: "Kies een tijd die het beste bij je past. Ik stuur je een agenda-uitnodiging en meeting link.",
+    description:
+      "Kies een tijd die het beste bij je past. Ik stuur je een agenda-uitnodiging en meeting link.",
     trustIndicators: {
       response: "24u Reactie",
       availability: "Nu Beschikbaar",
@@ -309,15 +334,18 @@ export const nl: Translations = {
       items: [
         {
           title: "Gratis Consultatie",
-          description: "Geen verplichting, alleen waardevolle inzichten voor jouw project",
+          description:
+            "Geen verplichting, alleen waardevolle inzichten voor jouw project",
         },
         {
           title: "Technische Expertise",
-          description: "Krijg deskundig advies over architectuur, tech stack en implementatie",
+          description:
+            "Krijg deskundig advies over architectuur, tech stack en implementatie",
         },
         {
           title: "Duidelijke Vervolgstappen",
-          description: "Ga weg met bruikbare aanbevelingen en tijdlijnschattingen",
+          description:
+            "Ga weg met bruikbare aanbevelingen en tijdlijnschattingen",
         },
       ],
     },
@@ -350,7 +378,8 @@ export const nl: Translations = {
     page: {
       title: "Het",
       titleHighlight: "Journaal",
-      description: "Gedachten, tutorials en onderzoek over moderne webontwikkeling, AI-automatisering en het bouwen van schaalbare producten.",
+      description:
+        "Gedachten, tutorials en onderzoek over moderne webontwikkeling, AI-automatisering en het bouwen van schaalbare producten.",
       search: {
         placeholder: "Zoek artikelen, tutorials en onderzoek...",
       },
@@ -403,7 +432,8 @@ export const nl: Translations = {
   },
   newsletter: {
     title: "Blijf op de hoogte",
-    description: "Ontvang meldingen over nieuwe artikelen, projecten en inzichten direct in uw inbox.",
+    description:
+      "Ontvang meldingen over nieuwe artikelen, projecten en inzichten direct in uw inbox.",
     placeholder: "uw@email.nl",
     subscribe: "Inschrijven",
     buttons: {
@@ -412,7 +442,8 @@ export const nl: Translations = {
       subscribed: "Ingeschreven!",
     },
     messages: {
-      success: "Bedankt voor uw inschrijving! Controleer uw inbox voor bevestiging.",
+      success:
+        "Bedankt voor uw inschrijving! Controleer uw inbox voor bevestiging.",
     },
     errors: {
       generic: "Er is iets misgegaan. Probeer het opnieuw.",
@@ -430,30 +461,35 @@ export const nl: Translations = {
   cta: {
     primary: {
       title: "Laten We Samen Iets Geweldigs Bouwen",
-      description: "Heeft u een project in gedachten? Laten we bespreken hoe we uw ideeën tot leven kunnen brengen met geavanceerde technologie en innovatieve oplossingen.",
+      description:
+        "Heeft u een project in gedachten? Laten we bespreken hoe we uw ideeën tot leven kunnen brengen met geavanceerde technologie en innovatieve oplossingen.",
       primaryButton: "Start een Gesprek",
       secondaryButton: "Bekijk Mijn Werk",
     },
     secondary: {
       title: "Klaar om Samen te Werken?",
-      description: "Ik sta altijd open voor het bespreken van nieuwe projecten, creatieve ideeën of kansen om deel uit te maken van uw visie.",
+      description:
+        "Ik sta altijd open voor het bespreken van nieuwe projecten, creatieve ideeën of kansen om deel uit te maken van uw visie.",
       primaryButton: "Neem Contact Op",
     },
     contact: {
       title: "Laten We Praten",
-      description: "Of u nu een vraag heeft, een project wilt bespreken of gewoon wilt connecten, ik hoor graag van u.",
+      description:
+        "Of u nu een vraag heeft, een project wilt bespreken of gewoon wilt connecten, ik hoor graag van u.",
       primaryButton: "Stuur een Bericht",
       secondaryButton: "Plan een Gesprek",
     },
     project: {
       title: "Geïnteresseerd in Vergelijkbaar Werk?",
-      description: "Ik help u graag iets geweldigs te bouwen. Laten we uw projectvereisten bespreken en hoe ik kan bijdragen aan uw succes.",
+      description:
+        "Ik help u graag iets geweldigs te bouwen. Laten we uw projectvereisten bespreken en hoe ik kan bijdragen aan uw succes.",
       primaryButton: "Bespreek Uw Project",
       secondaryButton: "Bekijk Meer Projecten",
     },
     collaboration: {
       title: "Wilt u Samenwerken?",
-      description: "Ik ben altijd op zoek naar spannende kansen om samen te werken aan innovatieve projecten en impactvolle oplossingen te creëren.",
+      description:
+        "Ik ben altijd op zoek naar spannende kansen om samen te werken aan innovatieve projecten en impactvolle oplossingen te creëren.",
       primaryButton: "Laten We Connecten",
       secondaryButton: "Download CV",
     },
@@ -471,21 +507,25 @@ export const nl: Translations = {
   },
   cookies: {
     title: "🍪 Cookie Instellingen",
-    description: "Deze website gebruikt cookies om ervoor te zorgen dat u de beste ervaring krijgt. We gebruiken noodzakelijke cookies voor sitefunctionaliteit en optionele cookies voor analyses en verbeteringen.",
+    description:
+      "Deze website gebruikt cookies om ervoor te zorgen dat u de beste ervaring krijgt. We gebruiken noodzakelijke cookies voor sitefunctionaliteit en optionele cookies voor analyses en verbeteringen.",
     learnMore: "Lees meer in ons Privacybeleid",
     types: {
       necessary: {
         title: "Noodzakelijke Cookies",
         required: "Vereist",
-        description: "Essentieel voor het goed functioneren van de website. Deze cookies maken kernfunctionaliteit mogelijk zoals beveiliging en toegankelijkheid.",
+        description:
+          "Essentieel voor het goed functioneren van de website. Deze cookies maken kernfunctionaliteit mogelijk zoals beveiliging en toegankelijkheid.",
       },
       analytics: {
         title: "Analytische Cookies",
-        description: "Helpen ons te begrijpen hoe bezoekers omgaan met de website door anoniem informatie te verzamelen en te rapporteren.",
+        description:
+          "Helpen ons te begrijpen hoe bezoekers omgaan met de website door anoniem informatie te verzamelen en te rapporteren.",
       },
       marketing: {
         title: "Marketing Cookies",
-        description: "Gebruikt om bezoekers te volgen over websites om relevante en gepersonaliseerde inhoud weer te geven.",
+        description:
+          "Gebruikt om bezoekers te volgen over websites om relevante en gepersonaliseerde inhoud weer te geven.",
       },
     },
     buttons: {
@@ -504,7 +544,8 @@ export const nl: Translations = {
     },
     welcome: {
       title: "Hoi! Ik ben Leroy's persoonlijke Assistent",
-      description: "Ik kan u helpen meer te leren over Leroy's ervaring, projecten en diensten. Probeer te vragen:",
+      description:
+        "Ik kan u helpen meer te leren over Leroy's ervaring, projecten en diensten. Probeer te vragen:",
     },
     starterPrompts: [
       "Wat zijn Leroy's belangrijkste vaardigheden?",
@@ -530,8 +571,11 @@ export const nl: Translations = {
     },
     error: {
       title: "Fout",
-      message: "Sorry, ik ben een fout tegengekomen. Probeer het opnieuw of neem direct contact op met Leroy op leroysteding@gmail.com.",
+      message:
+        "Sorry, ik ben een fout tegengekomen. Probeer het opnieuw of neem direct contact op met Leroy op leroysteding@gmail.com.",
     },
     disclaimer: "AI kan fouten maken. Verifieer belangrijke informatie.",
   },
 };
+
+export default nl;

@@ -10,7 +10,10 @@ interface CVDownloadOptionsProps {
   language: "en" | "nl";
 }
 
-export default function CVDownloadOptions({ onDownload, language }: CVDownloadOptionsProps) {
+export default function CVDownloadOptions({
+  onDownload,
+  language,
+}: CVDownloadOptionsProps) {
   const [isDownloading, setIsDownloading] = useState(false);
 
   const handleDownload = async (version: CVVersion) => {
@@ -24,32 +27,32 @@ export default function CVDownloadOptions({ onDownload, language }: CVDownloadOp
       title: "Download CV",
       ats: {
         label: "ATS Optimized",
-        description: "Simple format for applicant tracking systems"
+        description: "Simple format for applicant tracking systems",
       },
       tech: {
         label: "Tech Version",
-        description: "Technical details and projects highlighted"
+        description: "Technical details and projects highlighted",
       },
       design: {
         label: "Design Version",
-        description: "Visual design with colors and styling"
-      }
+        description: "Visual design with colors and styling",
+      },
     },
     nl: {
       title: "Download CV",
       ats: {
         label: "ATS Geoptimaliseerd",
-        description: "Eenvoudig formaat voor sollicitatie systemen"
+        description: "Eenvoudig formaat voor sollicitatie systemen",
       },
       tech: {
         label: "Tech Versie",
-        description: "Technische details en projecten uitgelicht"
+        description: "Technische details en projecten uitgelicht",
       },
       design: {
         label: "Design Versie",
-        description: "Visueel ontwerp met kleuren en styling"
-      }
-    }
+        description: "Visueel ontwerp met kleuren en styling",
+      },
+    },
   };
 
   const t = downloadOptions[language];
@@ -61,7 +64,7 @@ export default function CVDownloadOptions({ onDownload, language }: CVDownloadOp
           <Download className="w-5 h-5 text-neon-cyan" />
           {t.title}
         </h3>
-        
+
         <div className="space-y-3">
           {/* ATS Version */}
           <button

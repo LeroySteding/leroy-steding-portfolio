@@ -1,10 +1,18 @@
 "use client";
 
-import { Github, Linkedin, Twitter, Mail, MapPin, Phone, Calendar } from "lucide-react";
+import {
+  Calendar,
+  Github,
+  Linkedin,
+  Mail,
+  MapPin,
+  Phone,
+  Twitter,
+} from "lucide-react";
 import Link from "next/link";
+import NewsletterSubscribe from "@/components/ui/NewsletterSubscribe";
 import { useTranslation } from "@/hooks/useTranslation";
 import { useLocalizedPath } from "@/lib/localization";
-import NewsletterSubscribe from "@/components/ui/NewsletterSubscribe";
 
 export default function Footer() {
   const t = useTranslation();
@@ -67,7 +75,10 @@ export default function Footer() {
       {/* Newsletter Section */}
       <div className="border-b-2 border-surface">
         <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-16 py-12 sm:py-14 md:py-16">
-          <NewsletterSubscribe variant="inline" className="max-w-2xl mx-auto text-center" />
+          <NewsletterSubscribe
+            variant="inline"
+            className="max-w-2xl mx-auto text-center"
+          />
         </div>
       </div>
 
@@ -78,42 +89,57 @@ export default function Footer() {
             <div className="inline-flex p-2.5 sm:p-3 rounded-xl bg-accent-primary/10 mb-5 sm:mb-6">
               <Calendar className="w-7 h-7 sm:w-8 sm:h-8 text-accent-primary" />
             </div>
-            
+
             <h3 className="text-2xl sm:text-3xl md:text-4xl font-display font-black mb-3 sm:mb-4">
-              {t.nav.about === "Over Mij" ? "Klaar om te Starten?" : "Ready to Get Started?"}
+              {t.nav.about === "Over Mij"
+                ? "Klaar om te Starten?"
+                : "Ready to Get Started?"}
             </h3>
-            
+
             <p className="text-base sm:text-lg text-text-secondary mb-6 sm:mb-8 max-w-2xl mx-auto leading-relaxed">
-              {t.nav.about === "Over Mij" 
+              {t.nav.about === "Over Mij"
                 ? "Plan een gratis 30-minuten gesprek om uw project te bespreken en ontdek hoe we samen uw ideeën tot leven kunnen brengen."
                 : "Schedule a free 30-minute consultation to discuss your project and discover how we can bring your ideas to life together."}
             </p>
-            
+
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
-              <Link 
+              <Link
                 href={getLocalizedPath("/book")}
                 className="btn-primary group"
               >
                 <Calendar className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                <span>{t.nav.about === "Over Mij" ? "Plan een Gesprek" : "Schedule a Call"}</span>
+                <span>
+                  {t.nav.about === "Over Mij"
+                    ? "Plan een Gesprek"
+                    : "Schedule a Call"}
+                </span>
               </Link>
-              
-              <Link 
-                href="/contact"
-                className="btn-secondary group"
-              >
+
+              <Link href="/contact" className="btn-secondary group">
                 <Mail className="w-5 h-5" />
-                <span>{t.nav.about === "Over Mij" ? "Stuur een Bericht" : "Send a Message"}</span>
+                <span>
+                  {t.nav.about === "Over Mij"
+                    ? "Stuur een Bericht"
+                    : "Send a Message"}
+                </span>
               </Link>
             </div>
-            
+
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 mt-6 sm:mt-8 text-xs sm:text-sm text-text-muted">
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                <span>{t.nav.about === "Over Mij" ? "Beschikbaar voor Nieuwe Projecten" : "Available for New Projects"}</span>
+                <span>
+                  {t.nav.about === "Over Mij"
+                    ? "Beschikbaar voor Nieuwe Projecten"
+                    : "Available for New Projects"}
+                </span>
               </div>
               <span className="hidden sm:inline">•</span>
-              <div>{t.nav.about === "Over Mij" ? "Meestal binnen 24u reactie" : "Usually responds within 24h"}</div>
+              <div>
+                {t.nav.about === "Over Mij"
+                  ? "Meestal binnen 24u reactie"
+                  : "Usually responds within 24h"}
+              </div>
             </div>
           </div>
         </div>
@@ -149,12 +175,16 @@ export default function Footer() {
                         className="flex items-center gap-3 text-text-secondary hover:text-accent-primary transition-colors duration-200 group"
                       >
                         <Icon className="w-4 h-4 flex-shrink-0" />
-                        <span className="text-sm font-semibold">{item.value}</span>
+                        <span className="text-sm font-semibold">
+                          {item.value}
+                        </span>
                       </a>
                     ) : (
                       <div className="flex items-center gap-3 text-text-secondary">
                         <Icon className="w-4 h-4 flex-shrink-0" />
-                        <span className="text-sm font-semibold">{item.value}</span>
+                        <span className="text-sm font-semibold">
+                          {item.value}
+                        </span>
                       </div>
                     )}
                   </li>
@@ -211,12 +241,18 @@ export default function Footer() {
         <div className="pt-6 sm:pt-8 border-t-2 border-surface">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-text-muted text-xs sm:text-sm font-semibold text-center md:text-left">
-              © {currentYear} Leroy Steding — {t.nav.about === "Over Mij" ? "Alle rechten voorbehouden" : "All rights reserved"}
+              © {currentYear} Leroy Steding —{" "}
+              {t.nav.about === "Over Mij"
+                ? "Alle rechten voorbehouden"
+                : "All rights reserved"}
             </p>
-            
+
             <div className="flex items-center gap-4 sm:gap-6">
               {legalLinks.map((link, index) => (
-                <span key={link.href} className="flex items-center gap-4 sm:gap-6">
+                <span
+                  key={link.href}
+                  className="flex items-center gap-4 sm:gap-6"
+                >
                   <Link
                     href={link.href}
                     className="text-text-muted hover:text-accent-primary transition-colors duration-200 text-xs sm:text-sm font-semibold"

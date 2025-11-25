@@ -1,8 +1,11 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { HorizontalTimelineCarousel, ExperienceCard } from '@steding/timeline-scroll';
-import { experiences } from '@/data/experiences';
+import {
+  ExperienceCard,
+  HorizontalTimelineCarousel,
+} from "@steding/timeline-scroll";
+import { useEffect, useState } from "react";
+import { experiences } from "@/data/experiences";
 
 export default function Experience() {
   const [windowWidth, setWindowWidth] = useState(1440);
@@ -10,12 +13,12 @@ export default function Experience() {
   useEffect(() => {
     const updateWidth = () => setWindowWidth(window.innerWidth);
     updateWidth();
-    window.addEventListener('resize', updateWidth);
-    return () => window.removeEventListener('resize', updateWidth);
+    window.addEventListener("resize", updateWidth);
+    return () => window.removeEventListener("resize", updateWidth);
   }, []);
 
   // Get responsive card width based on current viewport
-  const getResponsiveWidth = (exp: typeof experiences[0]) => {
+  const getResponsiveWidth = (exp: (typeof experiences)[0]) => {
     if (windowWidth < 640) return 320;
     if (windowWidth < 768) return 400;
     if (windowWidth < 1024) return 450;
@@ -67,34 +70,43 @@ export default function Experience() {
               Professional Journey
             </h2>
             <p className="text-xl md:text-2xl text-text-secondary mb-8 font-medium">
-              12+ years of experience across 17 companies, delivering 100+ projects
+              12+ years of experience across 17 companies, delivering 100+
+              projects
             </p>
-            
+
             {/* Career Stats */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               <div className="card p-6">
                 <div className="text-4xl md:text-5xl font-black text-accent-primary mb-2">
                   12+
                 </div>
-                <div className="text-sm md:text-base text-text-muted font-semibold uppercase tracking-wide">Years Experience</div>
+                <div className="text-sm md:text-base text-text-muted font-semibold uppercase tracking-wide">
+                  Years Experience
+                </div>
               </div>
               <div className="card p-6">
                 <div className="text-4xl md:text-5xl font-black text-accent-secondary mb-2">
                   17
                 </div>
-                <div className="text-sm md:text-base text-text-muted font-semibold uppercase tracking-wide">Companies</div>
+                <div className="text-sm md:text-base text-text-muted font-semibold uppercase tracking-wide">
+                  Companies
+                </div>
               </div>
               <div className="card p-6">
                 <div className="text-4xl md:text-5xl font-black text-accent-primary mb-2">
                   100+
                 </div>
-                <div className="text-sm md:text-base text-text-muted font-semibold uppercase tracking-wide">Projects</div>
+                <div className="text-sm md:text-base text-text-muted font-semibold uppercase tracking-wide">
+                  Projects
+                </div>
               </div>
               <div className="card p-6">
                 <div className="text-4xl md:text-5xl font-black text-accent-secondary mb-2">
                   50+
                 </div>
-                <div className="text-sm md:text-base text-text-muted font-semibold uppercase tracking-wide">Clients</div>
+                <div className="text-sm md:text-base text-text-muted font-semibold uppercase tracking-wide">
+                  Clients
+                </div>
               </div>
             </div>
           </div>

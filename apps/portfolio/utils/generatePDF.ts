@@ -1,5 +1,4 @@
 import jsPDF from "jspdf";
-import autoTable from "jspdf-autotable";
 
 export type CVVersion = "ats" | "tech" | "design";
 
@@ -57,7 +56,7 @@ export async function generateCVPDF(
   data: CVData,
   version: CVVersion,
   language: "en" | "nl",
-  profileImageUrl?: string
+  profileImageUrl?: string,
 ): Promise<void> {
   const doc = new jsPDF();
   const pageWidth = doc.internal.pageSize.getWidth();
@@ -65,9 +64,18 @@ export async function generateCVPDF(
   let yPosition = 20;
 
   // Version-specific styling
-  const colors = version === "design" 
-    ? { primary: [0, 255, 255] as [number, number, number], secondary: [138, 43, 226] as [number, number, number], text: [30, 30, 30] as [number, number, number] }
-    : { primary: [0, 0, 0] as [number, number, number], secondary: [80, 80, 80] as [number, number, number], text: [0, 0, 0] as [number, number, number] };
+  const colors =
+    version === "design"
+      ? {
+          primary: [0, 255, 255] as [number, number, number],
+          secondary: [138, 43, 226] as [number, number, number],
+          text: [30, 30, 30] as [number, number, number],
+        }
+      : {
+          primary: [0, 0, 0] as [number, number, number],
+          secondary: [80, 80, 80] as [number, number, number],
+          text: [0, 0, 0] as [number, number, number],
+        };
 
   const useColors = version !== "ats";
 
@@ -81,7 +89,7 @@ export async function generateCVPDF(
         img.onerror = reject;
         img.src = profileImageUrl;
       });
-      
+
       doc.addImage(img, "JPEG", pageWidth - 40, yPosition, 30, 30);
     } catch (error) {
       console.error("Error loading profile image:", error);
@@ -110,9 +118,11 @@ export async function generateCVPDF(
     data.personalInfo.location,
     data.personalInfo.website,
     data.personalInfo.linkedin,
-    data.personalInfo.github
-  ].filter(Boolean).join(" | ");
-  
+    data.personalInfo.github,
+  ]
+    .filter(Boolean)
+    .join(" | ");
+
   doc.text(contactInfo, 20, yPosition);
   yPosition += 8;
 
@@ -130,7 +140,11 @@ export async function generateCVPDF(
   doc.setFontSize(version === "ats" ? 11 : 12);
   doc.setFont("helvetica", "bold");
   if (useColors) doc.setTextColor(...colors.primary);
-  doc.text(language === "en" ? "PROFESSIONAL SUMMARY" : "PROFESSIONELE SAMENVATTING", 20, yPosition);
+  doc.text(
+    language === "en" ? "PROFESSIONAL SUMMARY" : "PROFESSIONELE SAMENVATTING",
+    20,
+    yPosition,
+  );
   yPosition += 6;
 
   doc.setFontSize(9);
@@ -144,22 +158,26 @@ export async function generateCVPDF(
   doc.setFontSize(version === "ats" ? 11 : 12);
   doc.setFont("helvetica", "bold");
   if (useColors) doc.setTextColor(...colors.primary);
-  doc.text(language === "en" ? "CORE COMPETENCIES" : "KERNCOMPETENTIES", 20, yPosition);
+  doc.text(
+    language === "en" ? "CORE COMPETENCIES" : "KERNCOMPETENTIES",
+    20,
+    yPosition,
+  );
   yPosition += 6;
 
   doc.setFontSize(9);
   doc.setFont("helvetica", "normal");
   doc.setTextColor(...colors.text);
-  
+
   data.skills.forEach((skillCategory) => {
     const skillText = `${skillCategory.category}: ${skillCategory.items.join(", ")}`;
     const skillLines = doc.splitTextToSize(skillText, pageWidth - 40);
-    
+
     if (yPosition + skillLines.length * 5 > pageHeight - 20) {
       doc.addPage();
       yPosition = 20;
     }
-    
+
     doc.text(skillLines, 20, yPosition);
     yPosition += skillLines.length * 5 + 3;
   });
@@ -174,10 +192,14 @@ export async function generateCVPDF(
   doc.setFontSize(version === "ats" ? 11 : 12);
   doc.setFont("helvetica", "bold");
   if (useColors) doc.setTextColor(...colors.primary);
-  doc.text(language === "en" ? "PROFESSIONAL EXPERIENCE" : "PROFESSIONELE ERVARING", 20, yPosition);
+  doc.text(
+    language === "en" ? "PROFESSIONAL EXPERIENCE" : "PROFESSIONELE ERVARING",
+    20,
+    yPosition,
+  );
   yPosition += 6;
 
-  data.experience.forEach((exp, index) => {
+  data.experience.forEach((exp, _index) => {
     if (yPosition > pageHeight - 40) {
       doc.addPage();
       yPosition = 20;
@@ -212,13 +234,16 @@ export async function generateCVPDF(
 
     // Achievements
     exp.achievements.forEach((achievement) => {
-      const bulletLines = doc.splitTextToSize(`• ${achievement}`, pageWidth - 40);
-      
+      const bulletLines = doc.splitTextToSize(
+        `• ${achievement}`,
+        pageWidth - 40,
+      );
+
       if (yPosition + bulletLines.length * 4.5 > pageHeight - 20) {
         doc.addPage();
         yPosition = 20;
       }
-      
+
       doc.text(bulletLines, 20, yPosition);
       yPosition += bulletLines.length * 4.5;
     });
@@ -279,7 +304,7 @@ export async function generateCVPDF(
         doc.text(edu.location, 20, yPosition);
         yPosition += 5;
       }
-      
+
       yPosition += 3;
     });
   }
@@ -294,7 +319,11 @@ export async function generateCVPDF(
     doc.setFontSize(version === "ats" ? 11 : 12);
     doc.setFont("helvetica", "bold");
     if (useColors) doc.setTextColor(...colors.primary);
-    doc.text(language === "en" ? "KEY PROJECTS" : "BELANGRIJKSTE PROJECTEN", 20, yPosition);
+    doc.text(
+      language === "en" ? "KEY PROJECTS" : "BELANGRIJKSTE PROJECTEN",
+      20,
+      yPosition,
+    );
     yPosition += 6;
 
     data.projects.forEach((project) => {
@@ -311,13 +340,19 @@ export async function generateCVPDF(
 
       doc.setFontSize(9);
       doc.setFont("helvetica", "normal");
-      const descLines = doc.splitTextToSize(project.description, pageWidth - 40);
+      const descLines = doc.splitTextToSize(
+        project.description,
+        pageWidth - 40,
+      );
       doc.text(descLines, 20, yPosition);
       yPosition += descLines.length * 4.5 + 2;
 
       // Achievements
       project.achievements.forEach((achievement) => {
-        const bulletLines = doc.splitTextToSize(`• ${achievement}`, pageWidth - 40);
+        const bulletLines = doc.splitTextToSize(
+          `• ${achievement}`,
+          pageWidth - 40,
+        );
         if (yPosition + bulletLines.length * 4.5 > pageHeight - 20) {
           doc.addPage();
           yPosition = 20;
@@ -352,7 +387,11 @@ export async function generateCVPDF(
     doc.setFontSize(version === "ats" ? 11 : 12);
     doc.setFont("helvetica", "bold");
     if (useColors) doc.setTextColor(...colors.primary);
-    doc.text(language === "en" ? "CERTIFICATIONS" : "CERTIFICERINGEN", 20, yPosition);
+    doc.text(
+      language === "en" ? "CERTIFICATIONS" : "CERTIFICERINGEN",
+      20,
+      yPosition,
+    );
     yPosition += 6;
 
     doc.setFontSize(9);
@@ -391,7 +430,8 @@ export async function generateCVPDF(
   }
 
   // Generate filename
-  const versionLabel = version === "ats" ? "ATS" : version === "tech" ? "Tech" : "Design";
+  const versionLabel =
+    version === "ats" ? "ATS" : version === "tech" ? "Tech" : "Design";
   const filename = `Leroy_Steding_CV_${versionLabel}_${language.toUpperCase()}.pdf`;
 
   // Save PDF

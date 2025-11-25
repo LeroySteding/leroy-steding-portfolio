@@ -1,0 +1,430 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - main [ref=e3]:
+      - generic [ref=e4]:
+        - generic [ref=e11]:
+          - generic [ref=e12]:
+            - heading "Full-Stack Developer & AI Automation Architect" [level=2] [ref=e14]:
+              - generic [ref=e15]: Full-Stack Developer
+              - generic [ref=e16]: "& AI Automation Architect"
+            - paragraph [ref=e17]: Building scalable AI-driven web platforms & digital automation solutions.
+          - generic [ref=e19]:
+            - link "View Projects" [ref=e20] [cursor=pointer]:
+              - /url: "#projects"
+              - generic [ref=e21]: View Projects
+              - img [ref=e22]
+            - link "Download CV" [ref=e25] [cursor=pointer]:
+              - /url: /cv
+              - img [ref=e26]
+              - generic [ref=e29]: Download CV
+            - link "Schedule a Call" [ref=e30] [cursor=pointer]:
+              - /url: /book
+              - img [ref=e31]
+              - generic [ref=e33]: Schedule a Call
+        - link "Scroll to explore" [ref=e35] [cursor=pointer]:
+          - /url: "#about"
+          - generic [ref=e36]: Scroll to explore
+          - img [ref=e42]
+      - generic [ref=e49]:
+        - img [ref=e51]
+        - heading "Full-Stack Developer & AI Automation Architect" [level=2] [ref=e54]
+        - paragraph [ref=e55]: I'm a Dutch full-stack developer and entrepreneur with a passion for building cutting-edge web platforms that leverage the power of AI automation. As the founder of Hifive, I specialize in creating scalable, intelligent solutions that transform how businesses operate.
+        - link "Learn More About Me" [ref=e57] [cursor=pointer]:
+          - /url: /about
+          - text: Learn More About Me
+          - img [ref=e58]
+      - generic [ref=e62]:
+        - heading "What I Offer" [level=2] [ref=e64]
+        - generic [ref=e66]:
+          - generic [ref=e69]:
+            - img [ref=e71]
+            - heading "Web Development" [level=3] [ref=e74]
+            - paragraph [ref=e75]: Modern, responsive web applications built with Next.js, React, and TypeScript for optimal performance and user experience.
+          - generic [ref=e78]:
+            - img [ref=e80]
+            - heading "AI Automation" [level=3] [ref=e83]
+            - paragraph [ref=e84]: Intelligent automation solutions that streamline workflows, reduce manual tasks, and leverage AI to transform business operations.
+          - generic [ref=e87]:
+            - img [ref=e89]
+            - heading "API Integration" [level=3] [ref=e91]
+            - paragraph [ref=e92]: Seamless integration of third-party services and APIs to create connected, powerful applications that work together.
+        - generic [ref=e93]:
+          - paragraph [ref=e94]: Explore all our professional services
+          - link "View All Services" [ref=e95] [cursor=pointer]:
+            - /url: /services
+            - text: View All Services
+            - img [ref=e96]
+      - generic [ref=e100]:
+        - heading "Featured Projects" [level=2] [ref=e102]
+        - generic [ref=e104]:
+          - generic [ref=e107]:
+            - generic [ref=e108]:
+              - img "AI ATS Recruitment Platform" [ref=e109]
+              - link "View project details" [ref=e112] [cursor=pointer]:
+                - /url: /projects/ai-ats
+                - img [ref=e113]
+            - link "2024 3 AI ATS Recruitment Platform Intelligent applicant tracking system for automated job-candidate matching. Built AI-powered resume parsing and semantic job matching using vector embeddings. Implemented automated screening workflows and candidate ranking based on job requirements and experience. Next.js OpenAI GPT-4 LangChain Pinecone PostgreSQL TypeScript Python View Details" [ref=e115] [cursor=pointer]:
+              - /url: /projects/ai-ats
+              - generic [ref=e116]:
+                - generic [ref=e117]:
+                  - generic [ref=e118]:
+                    - img [ref=e119]
+                    - generic [ref=e121]: "2024"
+                  - generic [ref=e122]:
+                    - img [ref=e123]
+                    - generic [ref=e126]: "3"
+                - heading "AI ATS Recruitment Platform" [level=3] [ref=e127]
+                - paragraph [ref=e128]: Intelligent applicant tracking system for automated job-candidate matching. Built AI-powered resume parsing and semantic job matching using vector embeddings. Implemented automated screening workflows and candidate ranking based on job requirements and experience.
+                - generic [ref=e129]:
+                  - generic [ref=e130]: Next.js
+                  - generic [ref=e131]: OpenAI GPT-4
+                  - generic [ref=e132]: LangChain
+                  - generic [ref=e133]: Pinecone
+                  - generic [ref=e134]: PostgreSQL
+                  - generic [ref=e135]: TypeScript
+                  - generic [ref=e136]: Python
+                - generic [ref=e137]:
+                  - text: View Details
+                  - img [ref=e138]
+            - generic [ref=e140]: Product
+          - generic [ref=e143]:
+            - generic [ref=e144]:
+              - img "3D CAD Quote Tool" [ref=e145]
+              - link "View project details" [ref=e148] [cursor=pointer]:
+                - /url: /projects/3d-cad-quote-tool
+                - img [ref=e149]
+            - link "2024 3 3D CAD Quote Tool Manufacturing quotation system with real-time 3D CAD file visualization and automated cost calculation. Integrated Three.js for interactive 3D rendering and Python-based parser for extracting specifications from STEP, STL, and DXF files. Next.js Three.js Python FastAPI PostgreSQL React Three Fiber TypeScript View Details" [ref=e151] [cursor=pointer]:
+              - /url: /projects/3d-cad-quote-tool
+              - generic [ref=e152]:
+                - generic [ref=e153]:
+                  - generic [ref=e154]:
+                    - img [ref=e155]
+                    - generic [ref=e157]: "2024"
+                  - generic [ref=e158]:
+                    - img [ref=e159]
+                    - generic [ref=e162]: "3"
+                - heading "3D CAD Quote Tool" [level=3] [ref=e163]
+                - paragraph [ref=e164]: Manufacturing quotation system with real-time 3D CAD file visualization and automated cost calculation. Integrated Three.js for interactive 3D rendering and Python-based parser for extracting specifications from STEP, STL, and DXF files.
+                - generic [ref=e165]:
+                  - generic [ref=e166]: Next.js
+                  - generic [ref=e167]: Three.js
+                  - generic [ref=e168]: Python
+                  - generic [ref=e169]: FastAPI
+                  - generic [ref=e170]: PostgreSQL
+                  - generic [ref=e171]: React Three Fiber
+                  - generic [ref=e172]: TypeScript
+                - generic [ref=e173]:
+                  - text: View Details
+                  - img [ref=e174]
+            - generic [ref=e176]: Client
+          - generic [ref=e179]:
+            - generic [ref=e180]:
+              - img "AI-Powered Manufacturing Solutions" [ref=e181]
+              - link "View project details" [ref=e184] [cursor=pointer]:
+                - /url: /projects/ai-manufacturing-solutions
+                - img [ref=e185]
+            - link "2024 3 AI-Powered Manufacturing Solutions Digital transformation initiative implementing AI automation for manufacturing operations. Built intelligent document processing using OpenAI GPT-4 and automated workflow orchestration with n8n connecting ERP and CRM systems. OpenAI GPT-4 LangChain Python FastAPI n8n Power BI PostgreSQL View Details" [ref=e187] [cursor=pointer]:
+              - /url: /projects/ai-manufacturing-solutions
+              - generic [ref=e188]:
+                - generic [ref=e189]:
+                  - generic [ref=e190]:
+                    - img [ref=e191]
+                    - generic [ref=e193]: "2024"
+                  - generic [ref=e194]:
+                    - img [ref=e195]
+                    - generic [ref=e198]: "3"
+                - heading "AI-Powered Manufacturing Solutions" [level=3] [ref=e199]
+                - paragraph [ref=e200]: Digital transformation initiative implementing AI automation for manufacturing operations. Built intelligent document processing using OpenAI GPT-4 and automated workflow orchestration with n8n connecting ERP and CRM systems.
+                - generic [ref=e201]:
+                  - generic [ref=e202]: OpenAI GPT-4
+                  - generic [ref=e203]: LangChain
+                  - generic [ref=e204]: Python
+                  - generic [ref=e205]: FastAPI
+                  - generic [ref=e206]: n8n
+                  - generic [ref=e207]: Power BI
+                  - generic [ref=e208]: PostgreSQL
+                - generic [ref=e209]:
+                  - text: View Details
+                  - img [ref=e210]
+            - generic [ref=e212]: Client
+        - generic [ref=e213]:
+          - paragraph [ref=e214]: Want to see more projects?
+          - link "View All Projects" [ref=e215] [cursor=pointer]:
+            - /url: /projects
+            - text: View All Projects
+            - img [ref=e216]
+      - generic [ref=e220]:
+        - generic [ref=e221]:
+          - heading "Latest from the Journal" [level=2] [ref=e222]
+          - generic [ref=e224]:
+            - button "All Posts" [ref=e225]
+            - button "Articles" [ref=e226]
+            - button "Tutorials" [ref=e227]
+            - button "Research" [ref=e228]
+        - generic [ref=e229]:
+          - generic [ref=e232]:
+            - img "Building Scalable Next.js Applications with Turborepo" [ref=e234]
+            - link "Jan 15, 2025 8 min read Building Scalable Next.js Applications with Turborepo Learn how to structure and scale your Next.js applications using Turborepo monorepo architecture, shared components, and optimized build pipelines. Next.js Turborepo Monorepo Read Article" [ref=e236] [cursor=pointer]:
+              - /url: /blog/building-scalable-nextjs-apps
+              - generic [ref=e237]:
+                - generic [ref=e238]:
+                  - generic [ref=e239]:
+                    - img [ref=e240]
+                    - generic [ref=e242]: Jan 15, 2025
+                  - generic [ref=e243]:
+                    - img [ref=e244]
+                    - generic [ref=e247]: 8 min read
+                - heading "Building Scalable Next.js Applications with Turborepo" [level=3] [ref=e248]
+                - paragraph [ref=e249]: Learn how to structure and scale your Next.js applications using Turborepo monorepo architecture, shared components, and optimized build pipelines.
+                - generic [ref=e250]:
+                  - generic [ref=e251]: Next.js
+                  - generic [ref=e252]: Turborepo
+                  - generic [ref=e253]: Monorepo
+                - generic [ref=e254]:
+                  - text: Read Article
+                  - img [ref=e255]
+            - generic [ref=e257]: tutorial
+            - generic [ref=e258]: Featured
+          - generic [ref=e261]:
+            - img "The Future of AI-Driven Automation in Web Development" [ref=e263]
+            - link "Jan 10, 2025 6 min read The Future of AI-Driven Automation in Web Development Exploring how artificial intelligence and automation are transforming the way we build, test, and deploy web applications. AI Automation Web Development Read Article" [ref=e265] [cursor=pointer]:
+              - /url: /blog/ai-automation-future
+              - generic [ref=e266]:
+                - generic [ref=e267]:
+                  - generic [ref=e268]:
+                    - img [ref=e269]
+                    - generic [ref=e271]: Jan 10, 2025
+                  - generic [ref=e272]:
+                    - img [ref=e273]
+                    - generic [ref=e276]: 6 min read
+                - heading "The Future of AI-Driven Automation in Web Development" [level=3] [ref=e277]
+                - paragraph [ref=e278]: Exploring how artificial intelligence and automation are transforming the way we build, test, and deploy web applications.
+                - generic [ref=e279]:
+                  - generic [ref=e280]: AI
+                  - generic [ref=e281]: Automation
+                  - generic [ref=e282]: Web Development
+                - generic [ref=e283]:
+                  - text: Read Article
+                  - img [ref=e284]
+            - generic [ref=e286]: article
+            - generic [ref=e287]: Featured
+          - generic [ref=e290]:
+            - 'img "Web Performance Optimization: A Comprehensive Guide" [ref=e292]'
+            - 'link "Dec 20, 2024 15 min read Web Performance Optimization: A Comprehensive Guide Dive deep into modern web performance optimization techniques, from Core Web Vitals to advanced bundling strategies. Performance Optimization Web Vitals Read Article" [ref=e294] [cursor=pointer]':
+              - /url: /blog/web-performance-optimization
+              - generic [ref=e295]:
+                - generic [ref=e296]:
+                  - generic [ref=e297]:
+                    - img [ref=e298]
+                    - generic [ref=e300]: Dec 20, 2024
+                  - generic [ref=e301]:
+                    - img [ref=e302]
+                    - generic [ref=e305]: 15 min read
+                - 'heading "Web Performance Optimization: A Comprehensive Guide" [level=3] [ref=e306]'
+                - paragraph [ref=e307]: Dive deep into modern web performance optimization techniques, from Core Web Vitals to advanced bundling strategies.
+                - generic [ref=e308]:
+                  - generic [ref=e309]: Performance
+                  - generic [ref=e310]: Optimization
+                  - generic [ref=e311]: Web Vitals
+                - generic [ref=e312]:
+                  - text: Read Article
+                  - img [ref=e313]
+            - generic [ref=e315]: article
+            - generic [ref=e316]: Featured
+        - generic [ref=e317]:
+          - paragraph [ref=e318]: Want to read more articles, tutorials, and research?
+          - link "View All Posts" [ref=e319] [cursor=pointer]:
+            - /url: /blog
+            - img [ref=e320]
+            - text: View All Posts
+            - img [ref=e322]
+      - generic [ref=e328]:
+        - heading "Client Testimonials" [level=2] [ref=e330]
+        - generic [ref=e332]:
+          - generic [ref=e335]:
+            - img [ref=e337]
+            - generic [ref=e340]:
+              - img [ref=e341]
+              - img [ref=e343]
+              - img [ref=e345]
+              - img [ref=e347]
+              - img [ref=e349]
+            - paragraph [ref=e351]: "\"Leroy delivered an exceptional AI-powered platform that transformed our business operations. His expertise in full-stack development and automation is unmatched.\""
+            - generic [ref=e352]:
+              - paragraph [ref=e353]: John Smith
+              - paragraph [ref=e354]: CEO · TechCorp
+          - generic [ref=e357]:
+            - img [ref=e359]
+            - generic [ref=e362]:
+              - img [ref=e363]
+              - img [ref=e365]
+              - img [ref=e367]
+              - img [ref=e369]
+              - img [ref=e371]
+            - paragraph [ref=e373]: "\"Working with Leroy was a game-changer. He not only delivered a robust SaaS platform but also provided invaluable technical guidance throughout the project.\""
+            - generic [ref=e374]:
+              - paragraph [ref=e375]: Sarah Johnson
+              - paragraph [ref=e376]: CTO · InnovateLab
+          - generic [ref=e379]:
+            - img [ref=e381]
+            - generic [ref=e384]:
+              - img [ref=e385]
+              - img [ref=e387]
+              - img [ref=e389]
+              - img [ref=e391]
+              - img [ref=e393]
+            - paragraph [ref=e395]: "\"Leroy's ability to understand complex requirements and translate them into elegant, scalable solutions is remarkable. Highly recommended!\""
+            - generic [ref=e396]:
+              - paragraph [ref=e397]: Michael Chen
+              - paragraph [ref=e398]: Founder · StartupX
+        - generic [ref=e399]:
+          - paragraph [ref=e400]: See what more clients have to say
+          - link "View All Testimonials" [ref=e401] [cursor=pointer]:
+            - /url: /testimonials
+            - text: View All Testimonials
+            - img [ref=e402]
+      - generic [ref=e406]:
+        - generic [ref=e407]:
+          - heading "Get In Touch" [level=2] [ref=e408]
+          - paragraph [ref=e410]: Have a project in mind or want to collaborate? Feel free to reach out!
+        - generic [ref=e411]:
+          - generic [ref=e412]:
+            - generic [ref=e413]:
+              - heading "Contact Information" [level=3] [ref=e414]
+              - generic [ref=e415]:
+                - link "Email leroy@steding.digital" [ref=e416] [cursor=pointer]:
+                  - /url: mailto:leroy@steding.digital
+                  - generic [ref=e417]:
+                    - img [ref=e419]
+                    - generic [ref=e422]:
+                      - generic [ref=e423]: Email
+                      - generic [ref=e424]: leroy@steding.digital
+                - generic [ref=e426]:
+                  - img [ref=e428]
+                  - generic [ref=e431]:
+                    - generic [ref=e432]: Location
+                    - generic [ref=e433]: Netherlands
+            - generic [ref=e434]:
+              - heading "Social Links" [level=3] [ref=e435]
+              - generic [ref=e436]:
+                - link "LinkedIn" [ref=e437] [cursor=pointer]:
+                  - /url: https://linkedin.com/in/leroysteding
+                  - img [ref=e438]
+                - link "GitHub" [ref=e442] [cursor=pointer]:
+                  - /url: https://github.com/leroysteding
+                  - img [ref=e443]
+                - link "Twitter" [ref=e446] [cursor=pointer]:
+                  - /url: https://twitter.com/leroysteding
+                  - img [ref=e447]
+          - generic [ref=e450]:
+            - generic [ref=e451]:
+              - generic [ref=e452]:
+                - generic [ref=e453]: Your Name
+                - textbox "Your Name" [ref=e454]:
+                  - /placeholder: John Doe
+              - generic [ref=e455]:
+                - generic [ref=e456]: Your Email
+                - textbox "Your Email" [ref=e457]:
+                  - /placeholder: john@example.com
+            - generic [ref=e458]:
+              - generic [ref=e459]: Subject
+              - textbox "Subject" [ref=e460]:
+                - /placeholder: Project inquiry
+            - generic [ref=e461]:
+              - generic [ref=e462]: Message
+              - textbox "Message" [ref=e463]:
+                - /placeholder: Tell me about your project...
+            - button "Send Message" [ref=e464]:
+              - text: Send Message
+              - img [ref=e465]
+    - button "Open chat" [ref=e468]:
+      - generic [ref=e469]:
+        - img [ref=e470]
+        - img [ref=e472]
+  - contentinfo [ref=e475]:
+    - generic [ref=e479]:
+      - textbox "your@email.com" [ref=e480]
+      - button [ref=e481]:
+        - img [ref=e482]
+    - generic [ref=e487]:
+      - img [ref=e489]
+      - heading "Ready to Get Started?" [level=3] [ref=e491]
+      - paragraph [ref=e492]: Schedule a free 30-minute consultation to discuss your project and discover how we can bring your ideas to life together.
+      - generic [ref=e493]:
+        - link "Schedule a Call" [ref=e494] [cursor=pointer]:
+          - /url: /book
+          - img [ref=e495]
+          - text: Schedule a Call
+        - link "Send a Message" [ref=e497] [cursor=pointer]:
+          - /url: /contact
+          - img [ref=e498]
+          - text: Send a Message
+      - generic [ref=e501]:
+        - generic [ref=e504]: Available for New Projects
+        - generic [ref=e505]: •
+        - generic [ref=e506]: Usually responds within 24h
+    - generic [ref=e507]:
+      - generic [ref=e508]:
+        - generic [ref=e509]:
+          - heading "STEDING." [level=3] [ref=e510]
+          - paragraph [ref=e511]: Full-Stack Developer & AI Automation Architect building scalable AI-driven web platforms and digital automation solutions.
+        - generic [ref=e512]:
+          - heading "Contact" [level=4] [ref=e513]
+          - list [ref=e514]:
+            - listitem [ref=e515]:
+              - link "leroy@steding.digital" [ref=e516] [cursor=pointer]:
+                - /url: mailto:leroy@steding.digital
+                - img [ref=e517]
+                - generic [ref=e520]: leroy@steding.digital
+            - listitem [ref=e521]:
+              - link "+31 6 12345678" [ref=e522] [cursor=pointer]:
+                - /url: tel:+31612345678
+                - img [ref=e523]
+                - generic [ref=e525]: +31 6 12345678
+            - listitem [ref=e526]:
+              - generic [ref=e527]:
+                - img [ref=e528]
+                - generic [ref=e531]: Netherlands
+        - generic [ref=e532]:
+          - heading "Quick Links" [level=4] [ref=e533]
+          - list [ref=e534]:
+            - listitem [ref=e535]:
+              - link "About" [ref=e536] [cursor=pointer]:
+                - /url: /about
+            - listitem [ref=e537]:
+              - link "Services" [ref=e538] [cursor=pointer]:
+                - /url: /services
+            - listitem [ref=e539]:
+              - link "Projects" [ref=e540] [cursor=pointer]:
+                - /url: /projects
+            - listitem [ref=e541]:
+              - link "Journal" [ref=e542] [cursor=pointer]:
+                - /url: /blog
+            - listitem [ref=e543]:
+              - link "Contact" [ref=e544] [cursor=pointer]:
+                - /url: /contact
+        - generic [ref=e545]:
+          - heading "Social" [level=4] [ref=e546]
+          - generic [ref=e547]:
+            - link "GitHub" [ref=e548] [cursor=pointer]:
+              - /url: https://github.com/leroysteding
+              - img [ref=e549]
+            - link "LinkedIn" [ref=e552] [cursor=pointer]:
+              - /url: https://linkedin.com/in/leroysteding
+              - img [ref=e553]
+            - link "Twitter" [ref=e557] [cursor=pointer]:
+              - /url: https://twitter.com/leroysteding
+              - img [ref=e558]
+      - generic [ref=e561]:
+        - paragraph [ref=e562]: © 2025 Leroy Steding — All rights reserved
+        - generic [ref=e563]:
+          - generic [ref=e564]:
+            - link "Privacy Policy" [ref=e565] [cursor=pointer]:
+              - /url: /privacy
+            - generic [ref=e566]: •
+          - link "Terms of Service" [ref=e568] [cursor=pointer]:
+            - /url: /terms
+```

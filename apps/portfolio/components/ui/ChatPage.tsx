@@ -1,8 +1,7 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
-import { motion } from "framer-motion";
-import { Send, Loader2, Sparkles, MessageCircle } from "lucide-react";
+import { Loader2, MessageCircle, Send, Sparkles } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 
 interface Message {
@@ -39,7 +38,7 @@ export default function ChatPage({ translations, locale }: ChatPageProps) {
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages]);
+  }, [scrollToBottom]);
 
   useEffect(() => {
     if (inputRef.current) {
@@ -91,9 +90,10 @@ export default function ChatPage({ translations, locale }: ChatPageProps) {
       console.error("Chat error:", error);
       const errorMessage: Message = {
         role: "assistant",
-        content: locale === "nl" 
-          ? "Sorry, er is een fout opgetreden. Probeer het opnieuw of neem direct contact op met Leroy via leroysteding@gmail.com."
-          : "Sorry, I encountered an error. Please try again or contact Leroy directly at leroysteding@gmail.com.",
+        content:
+          locale === "nl"
+            ? "Sorry, er is een fout opgetreden. Probeer het opnieuw of neem direct contact op met Leroy via leroysteding@gmail.com."
+            : "Sorry, I encountered an error. Please try again or contact Leroy directly at leroysteding@gmail.com.",
         timestamp: new Date(),
       };
       setMessages((prev) => [...prev, errorMessage]);
@@ -227,7 +227,9 @@ export default function ChatPage({ translations, locale }: ChatPageProps) {
                               </a>
                             ),
                             strong: ({ children }) => (
-                              <strong className="font-semibold">{children}</strong>
+                              <strong className="font-semibold">
+                                {children}
+                              </strong>
                             ),
                             em: ({ children }) => (
                               <em className="italic">{children}</em>

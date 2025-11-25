@@ -1,7 +1,15 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Code, Sparkles, Zap, Rocket, Globe, Database, ArrowRight } from "lucide-react";
+import {
+  ArrowRight,
+  Code,
+  Database,
+  Globe,
+  Rocket,
+  Sparkles,
+  Zap,
+} from "lucide-react";
 import Link from "next/link";
 import { useTranslation } from "@/hooks/useTranslation";
 import { useLocalizedPath } from "@/lib/localization";
@@ -42,12 +50,15 @@ const services = [
 export default function Services() {
   const t = useTranslation();
   const getLocalizedPath = useLocalizedPath();
-  
+
   // Only show first 3 services on homepage
   const displayedServices = services.slice(0, 3);
 
   return (
-    <section id="services" className="section relative bg-primary-bg overflow-hidden">
+    <section
+      id="services"
+      className="section relative bg-primary-bg overflow-hidden"
+    >
       {/* Subtle accent line */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-accent-primary to-transparent" />
 
@@ -106,12 +117,13 @@ export default function Services() {
 
                   {/* Title */}
                   <h3 className="text-xl sm:text-2xl font-display font-bold mb-3 sm:mb-4 text-text-primary group-hover:text-accent-primary transition-colors duration-300">
-                    {(t.services as any)[service.titleKey]?.title || service.titleKey}
+                    {(t.services as any)[service.titleKey]?.title ||
+                      service.titleKey}
                   </h3>
 
                   {/* Description */}
                   <p className="text-text-secondary text-sm sm:text-base leading-relaxed">
-                    {(t.services as any)[service.titleKey]?.description || ''}
+                    {(t.services as any)[service.titleKey]?.description || ""}
                   </p>
                 </div>
               </motion.div>

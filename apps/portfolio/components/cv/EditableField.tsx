@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import { Check, Loader2, Sparkles, X } from "lucide-react";
+import type React from "react";
+import { useEffect, useRef, useState } from "react";
 import { useResumeBuilder } from "@/contexts/ResumeBuilderContext";
-import { Sparkles, Check, X, Loader2 } from "lucide-react";
 
 interface EditableFieldProps {
   path: string;
@@ -117,7 +118,7 @@ export function EditableField({
               className="w-full px-3 py-2 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 border-2 border-cyan-500 dark:border-cyan-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 dark:focus:ring-cyan-400"
             />
           )}
-          
+
           <div className="flex items-center gap-1 flex-shrink-0">
             {aiSuggestionsEnabled && (
               <button

@@ -1,0 +1,5 @@
+# Run lint-staged in portfolio app
+cd apps/portfolio && pnpm lint-staged
+
+# Run type checking across monorepo
+cd ../.. && pnpm typecheck

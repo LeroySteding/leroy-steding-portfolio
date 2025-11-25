@@ -47,7 +47,13 @@ export const services: Service[] = [
       "Performance optimization",
       "SEO optimization",
     ],
-    technologies: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Supabase"],
+    technologies: [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Tailwind CSS",
+      "Supabase",
+    ],
     processSteps: [
       { titleKey: "discovery", descriptionKey: "discoveryDesc" },
       { titleKey: "design", descriptionKey: "designDesc" },
@@ -80,7 +86,8 @@ export const services: Service[] = [
     caseStudies: [
       {
         title: "E-commerce Platform",
-        description: "Built a high-performance e-commerce platform with Next.js, achieving excellent Core Web Vitals scores.",
+        description:
+          "Built a high-performance e-commerce platform with Next.js, achieving excellent Core Web Vitals scores.",
         results: [
           "60% faster page loads",
           "40% increase in conversions",
@@ -89,7 +96,8 @@ export const services: Service[] = [
       },
       {
         title: "SaaS Dashboard",
-        description: "Developed a complex SaaS dashboard with real-time data visualization and seamless UX.",
+        description:
+          "Developed a complex SaaS dashboard with real-time data visualization and seamless UX.",
         results: [
           "Real-time updates",
           "Scalable to 10K+ users",
@@ -147,7 +155,8 @@ export const services: Service[] = [
     caseStudies: [
       {
         title: "Document Processing Automation",
-        description: "Automated invoice processing using AI, reducing manual data entry by 90%.",
+        description:
+          "Automated invoice processing using AI, reducing manual data entry by 90%.",
         results: [
           "90% reduction in manual work",
           "99% accuracy rate",
@@ -205,7 +214,8 @@ export const services: Service[] = [
     caseStudies: [
       {
         title: "Payment Gateway Integration",
-        description: "Integrated multiple payment providers with robust error handling and webhook management.",
+        description:
+          "Integrated multiple payment providers with robust error handling and webhook management.",
         results: [
           "99.9% success rate",
           "Real-time processing",
@@ -230,7 +240,13 @@ export const services: Service[] = [
       "Team training & mentorship",
       "Best practices implementation",
     ],
-    technologies: ["Architecture", "DevOps", "Performance", "Security", "Testing"],
+    technologies: [
+      "Architecture",
+      "DevOps",
+      "Performance",
+      "Security",
+      "Testing",
+    ],
     processSteps: [
       { titleKey: "assessment", descriptionKey: "assessmentDesc" },
       { titleKey: "strategy", descriptionKey: "strategyDesc" },
@@ -263,7 +279,8 @@ export const services: Service[] = [
     caseStudies: [
       {
         title: "SaaS Architecture Review",
-        description: "Conducted comprehensive architecture review for a growing SaaS platform, identifying critical scalability issues.",
+        description:
+          "Conducted comprehensive architecture review for a growing SaaS platform, identifying critical scalability issues.",
         results: [
           "Reduced infrastructure costs by 40%",
           "Improved performance by 3x",
@@ -321,12 +338,9 @@ export const services: Service[] = [
     caseStudies: [
       {
         title: "E-learning Platform",
-        description: "Built complete e-learning platform from database to frontend, including payment integration and content management.",
-        results: [
-          "Launch in 3 months",
-          "10K+ active users",
-          "Seamless UX",
-        ],
+        description:
+          "Built complete e-learning platform from database to frontend, including payment integration and content management.",
+        results: ["Launch in 3 months", "10K+ active users", "Seamless UX"],
       },
     ],
   },
@@ -346,7 +360,13 @@ export const services: Service[] = [
       "Monitoring & alerting",
       "Disaster recovery planning",
     ],
-    technologies: ["AWS", "Docker", "Kubernetes", "Terraform", "GitHub Actions"],
+    technologies: [
+      "AWS",
+      "Docker",
+      "Kubernetes",
+      "Terraform",
+      "GitHub Actions",
+    ],
     processSteps: [
       { titleKey: "audit", descriptionKey: "auditDesc" },
       { titleKey: "design", descriptionKey: "designDesc" },
@@ -379,7 +399,8 @@ export const services: Service[] = [
     caseStudies: [
       {
         title: "Cloud Migration & Optimization",
-        description: "Migrated legacy monolith to modern cloud infrastructure with Kubernetes and automated deployments.",
+        description:
+          "Migrated legacy monolith to modern cloud infrastructure with Kubernetes and automated deployments.",
         results: [
           "Zero downtime migration",
           "50% cost reduction",

@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, Send, Check, AlertCircle } from "lucide-react";
+import { AlertCircle, Check, Mail, Send } from "lucide-react";
+import { useState } from "react";
 import { useTranslation } from "@/hooks/useTranslation";
 
 interface NewsletterSubscribeProps {
@@ -22,12 +22,14 @@ export default function NewsletterSubscribe({
 }: NewsletterSubscribeProps) {
   const t = useTranslation();
   const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [status, setStatus] = useState<
+    "idle" | "loading" | "success" | "error"
+  >("idle");
   const [message, setMessage] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!email || !email.includes("@")) {
       setStatus("error");
       setMessage(t.newsletter.errors.invalidEmail);
@@ -40,13 +42,13 @@ export default function NewsletterSubscribe({
     try {
       // TODO: Integrate with newsletter service (Mailchimp, ConvertKit, or Supabase)
       await new Promise((resolve) => setTimeout(resolve, 1500));
-      
+
       setStatus("success");
       setMessage(t.newsletter.messages.success);
       setEmail("");
-      
+
       setTimeout(() => setStatus("idle"), 5000);
-    } catch (error) {
+    } catch (_error) {
       setStatus("error");
       setMessage(t.newsletter.errors.generic);
       setTimeout(() => setStatus("idle"), 3000);
@@ -71,9 +73,7 @@ export default function NewsletterSubscribe({
             <h3 className="text-xl font-display font-bold text-text-primary mb-2">
               {defaultTitle}
             </h3>
-            <p className="text-sm text-text-secondary">
-              {defaultDescription}
-            </p>
+            <p className="text-sm text-text-secondary">{defaultDescription}</p>
           </div>
         </div>
 
@@ -265,7 +265,10 @@ export default function NewsletterSubscribe({
 
         <p className="text-sm text-text-muted mt-6">
           {t.newsletter.footer.text}{" "}
-          <a href="/privacy" className="text-accent-primary hover:underline font-semibold">
+          <a
+            href="/privacy"
+            className="text-accent-primary hover:underline font-semibold"
+          >
             {t.newsletter.footer.link}
           </a>
         </p>

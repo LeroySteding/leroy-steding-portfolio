@@ -1,14 +1,14 @@
 "use client";
 
+import { AnimatePresence, motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
-import { ThemeProvider } from "@/components/providers/ThemeProvider";
-import { LanguageProvider } from "@/contexts/LanguageContext";
-import { AnimatePresence, motion } from "framer-motion";
+import Footer from "@/components/layout/Footer";
 import { FrozenRouter } from "@/components/layout/FrozenRouter";
 import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
+import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import GlobalSearch from "@/components/ui/GlobalSearch";
+import { LanguageProvider } from "@/contexts/LanguageContext";
 import { useGlobalSearch } from "@/hooks/useGlobalSearch";
 
 export default function ClientLayout({
@@ -23,8 +23,8 @@ export default function ClientLayout({
 
   // Scroll to top on route change
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'instant' });
-  }, [pathname]);
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }, []);
 
   return (
     <LanguageProvider>
@@ -35,9 +35,9 @@ export default function ClientLayout({
         disableTransitionOnChange
       >
         {!isCVPage && <Header onSearchClick={openSearch} />}
-        
-        <AnimatePresence 
-          mode="wait" 
+
+        <AnimatePresence
+          mode="wait"
           initial={false}
           onExitComplete={() => {
             isNavigatingRef.current = false;
@@ -48,9 +48,9 @@ export default function ClientLayout({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ 
+            transition={{
               duration: 0.2,
-              ease: "easeInOut"
+              ease: "easeInOut",
             }}
             onAnimationStart={() => {
               isNavigatingRef.current = true;
@@ -59,9 +59,7 @@ export default function ClientLayout({
               isNavigatingRef.current = false;
             }}
           >
-            <FrozenRouter>
-              {children}
-            </FrozenRouter>
+            <FrozenRouter>{children}</FrozenRouter>
           </motion.div>
         </AnimatePresence>
 

@@ -1,10 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Code2, Sparkles, Rocket } from "lucide-react";
+import { Code2, Rocket, Sparkles } from "lucide-react";
+import Image from "next/image";
 import { useTranslation } from "@/hooks/useTranslation";
 import { parseTranslation } from "@/utils/parseTranslation";
-import Image from "next/image";
 
 export default function About() {
   const t = useTranslation();
@@ -72,7 +72,12 @@ export default function About() {
               className="space-y-6 sm:space-y-7 md:space-y-8 text-base sm:text-lg md:text-xl text-text-secondary leading-relaxed"
             >
               <p className="text-lg sm:text-xl md:text-2xl font-semibold">
-                {parseTranslation((typeof t.about.intro === 'object' && t.about.intro?.description) ? t.about.intro.description : String(t.about.intro))}
+                {parseTranslation(
+                  typeof t.about.intro === "object" &&
+                    t.about.intro?.description
+                    ? t.about.intro.description
+                    : String(t.about.intro),
+                )}
               </p>
               <p>{parseTranslation(t.about.expertise)}</p>
               <p>{parseTranslation(t.about.experience)}</p>

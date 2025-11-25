@@ -6,12 +6,12 @@ import { useLanguage } from "@/contexts/LanguageContext";
  * @param locale - The locale to use ("en" or "nl")
  * @returns The localized path (e.g., "/nl/about" for Dutch, "/about" for English)
  */
-export function getLocalizedPath(path: string, locale: 'en' | 'nl'): string {
+export function getLocalizedPath(path: string, locale: "en" | "nl"): string {
   // Remove any existing locale prefix
-  const cleanPath = path.replace(/^\/(en|nl)/, '') || '/';
-  
+  const cleanPath = path.replace(/^\/(en|nl)/, "") || "/";
+
   // Add locale prefix if Dutch (English is the default with no prefix)
-  return locale === 'nl' ? `/nl${cleanPath}` : cleanPath;
+  return locale === "nl" ? `/nl${cleanPath}` : cleanPath;
 }
 
 /**

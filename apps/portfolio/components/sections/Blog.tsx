@@ -1,15 +1,21 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Calendar, Clock, ArrowRight, BookOpen, Code, FlaskConical } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import {
+  ArrowRight,
+  BookOpen,
+  Calendar,
+  Clock,
+  Code,
+  FlaskConical,
+} from "lucide-react";
 import Link from "next/link";
-import { getBlogPosts } from "@/utils/getLocalizedData";
+import { useMemo, useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useTranslation } from "@/hooks/useTranslation";
-import type { BlogPost } from "@/data/blog";
+import { getBlogPosts } from "@/utils/getLocalizedData";
 
-type CategoryFilter = 'all' | 'article' | 'tutorial' | 'research';
+type CategoryFilter = "all" | "article" | "tutorial" | "research";
 
 const categoryIcons = {
   article: BookOpen,
@@ -20,19 +26,23 @@ const categoryIcons = {
 export default function Blog() {
   const { language } = useLanguage();
   const t = useTranslation();
-  const [selectedCategory, setSelectedCategory] = useState<CategoryFilter>('all');
-  
+  const [selectedCategory, setSelectedCategory] =
+    useState<CategoryFilter>("all");
+
   const allPosts = getBlogPosts(language);
-  const featuredPosts = allPosts.filter(p => p.featured).slice(0, 6);
+  const featuredPosts = allPosts.filter((p) => p.featured).slice(0, 6);
 
   const filteredPosts = useMemo(() => {
     const posts = featuredPosts;
-    if (selectedCategory === 'all') return posts;
-    return posts.filter(post => post.category === selectedCategory);
-  }, [featuredPosts, selectedCategory, language]);
+    if (selectedCategory === "all") return posts;
+    return posts.filter((post) => post.category === selectedCategory);
+  }, [featuredPosts, selectedCategory]);
 
   return (
-    <section id="blog" className="section relative bg-primary-bg overflow-hidden">
+    <section
+      id="blog"
+      className="section relative bg-primary-bg overflow-hidden"
+    >
       {/* Subtle accent line */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-accent-primary to-transparent" />
 
@@ -46,7 +56,10 @@ export default function Blog() {
             viewport={{ once: true }}
             className="font-display font-black mb-6"
           >
-            {t.blog.section.title} <span className="text-gradient">{t.blog.section.titleHighlight}</span>
+            {t.blog.section.title}{" "}
+            <span className="text-gradient">
+              {t.blog.section.titleHighlight}
+            </span>
           </motion.h2>
           <motion.div
             initial={{ opacity: 0, scaleX: 0 }}
@@ -55,7 +68,7 @@ export default function Blog() {
             viewport={{ once: true }}
             className="w-32 h-2 bg-accent-primary rounded-full mb-8 sm:mb-10 md:mb-12"
           />
-          
+
           {/* Category Filter */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -64,14 +77,16 @@ export default function Blog() {
             viewport={{ once: true }}
             className="flex flex-wrap gap-2 sm:gap-3"
           >
-            {(['all', 'article', 'tutorial', 'research'] as CategoryFilter[]).map((category) => (
+            {(
+              ["all", "article", "tutorial", "research"] as CategoryFilter[]
+            ).map((category) => (
               <button
                 key={category}
                 onClick={() => setSelectedCategory(category)}
                 className={`px-4 sm:px-5 md:px-6 py-2.5 sm:py-3 rounded-xl font-bold text-sm sm:text-base transition-all duration-300 min-h-[44px] ${
                   selectedCategory === category
-                    ? 'bg-accent-primary text-primary-bg shadow-lg scale-105'
-                    : 'bg-surface text-text-secondary hover:bg-surface-light hover:text-accent-primary border-2 border-transparent hover:border-accent-primary/30'
+                    ? "bg-accent-primary text-primary-bg shadow-lg scale-105"
+                    : "bg-surface text-text-secondary hover:bg-surface-light hover:text-accent-primary border-2 border-transparent hover:border-accent-primary/30"
                 }`}
               >
                 {t.blog.page.categories[category]}
@@ -82,7 +97,7 @@ export default function Blog() {
 
         {/* Blog Posts Grid */}
         <AnimatePresence mode="wait">
-          <motion.div 
+          <motion.div
             key={selectedCategory}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -98,19 +113,19 @@ export default function Blog() {
                   initial={{ opacity: 0, y: 30, scale: 0.95 }}
                   whileInView={{ opacity: 1, y: 0, scale: 1 }}
                   whileHover={{ y: -8, scale: 1.02 }}
-                  transition={{ 
-                    duration: 0.6, 
+                  transition={{
+                    duration: 0.6,
                     delay: index * 0.1,
                     type: "spring",
                     stiffness: 300,
-                    damping: 20
+                    damping: 20,
                   }}
                   viewport={{ once: true, margin: "0px 0px -100px 0px" }}
                   className="relative group h-full"
                 >
                   {/* Glow effect */}
                   <div className="absolute -inset-1 bg-gradient-to-r from-accent-primary/20 to-accent-secondary/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  
+
                   {/* Card content */}
                   <div className="relative card overflow-hidden h-full flex flex-col">
                     {/* Header with image or icon */}
@@ -135,28 +150,46 @@ export default function Blog() {
                     </div>
 
                     {/* Content */}
-                    <Link href={language === 'nl' ? `/nl/blog/${post.slug}` : `/blog/${post.slug}`} className="flex-1 flex flex-col">
+                    <Link
+                      href={
+                        language === "nl"
+                          ? `/nl/blog/${post.slug}`
+                          : `/blog/${post.slug}`
+                      }
+                      className="flex-1 flex flex-col"
+                    >
                       <div className="p-5 sm:p-6 md:p-8 flex-1 flex flex-col">
                         {/* Meta Information */}
                         <div className="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4 text-xs sm:text-sm text-text-muted">
                           <div className="flex items-center gap-1.5 sm:gap-2">
                             <Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                            <span className="font-semibold">{new Date(post.publishedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+                            <span className="font-semibold">
+                              {new Date(post.publishedAt).toLocaleDateString(
+                                "en-US",
+                                {
+                                  month: "short",
+                                  day: "numeric",
+                                  year: "numeric",
+                                },
+                              )}
+                            </span>
                           </div>
                           <div className="flex items-center gap-1.5 sm:gap-2">
                             <Clock className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                            <span className="font-semibold">{post.readingTime}</span>
+                            <span className="font-semibold">
+                              {post.readingTime}
+                            </span>
                           </div>
                         </div>
 
                         <h3 className="text-xl sm:text-2xl font-display font-bold mb-2 sm:mb-3 text-text-primary group-hover:text-accent-primary transition-colors duration-300">
                           {post.title}
                         </h3>
-                        
+
                         <p className="text-text-secondary text-sm sm:text-base leading-relaxed mb-4 sm:mb-6 line-clamp-3 flex-1">
                           {post.excerpt}
                         </p>
-                        
+
                         {/* Tags - Scrollable */}
                         <div className="flex gap-2 overflow-x-auto scrollbar-hide mb-4 sm:mb-6 pb-2 mt-auto">
                           {post.tags.slice(0, 3).map((tag, i) => (
@@ -211,7 +244,7 @@ export default function Blog() {
             {t.blog.section.description}
           </p>
           <Link
-            href={language === 'nl' ? '/nl/blog' : '/blog'}
+            href={language === "nl" ? "/nl/blog" : "/blog"}
             className="btn-secondary inline-flex items-center gap-2 sm:gap-3 min-h-[48px]"
           >
             <BookOpen className="w-5 h-5 sm:w-6 sm:h-6" />

@@ -1,8 +1,8 @@
 "use client";
 
-import { PopupModal, useCalendlyEventListener } from "react-calendly";
-import { useState, useEffect } from "react";
 import { Calendar } from "lucide-react";
+import { useEffect, useState } from "react";
+import { PopupModal, useCalendlyEventListener } from "react-calendly";
 
 interface CalendlyModalProps {
   url?: string;
@@ -34,7 +34,7 @@ export default function CalendlyModal({
 }: CalendlyModalProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [rootElement, setRootElement] = useState<HTMLElement | null>(null);
-  
+
   const calendlyUrl = url || process.env.NEXT_PUBLIC_CALENDLY_URL || "";
 
   useEffect(() => {
@@ -109,7 +109,7 @@ declare global {
     gtag?: (
       command: string,
       action: string,
-      params: Record<string, any>
+      params: Record<string, any>,
     ) => void;
   }
 }

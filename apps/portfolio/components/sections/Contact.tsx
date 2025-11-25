@@ -1,13 +1,13 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Mail, Send, MapPin, Linkedin, Github, Twitter } from "lucide-react";
+import { Github, Linkedin, Mail, MapPin, Send, Twitter } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "@/hooks/useTranslation";
 
 export default function Contact() {
   const t = useTranslation();
-  
+
   const contactInfo = [
     {
       icon: Mail,
@@ -47,21 +47,23 @@ export default function Contact() {
     message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
+  const [submitStatus, setSubmitStatus] = useState<
+    "idle" | "success" | "error"
+  >("idle");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     try {
       // TODO: Integrate with Formspree or Supabase Edge Function
       await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulated delay
-      
+
       setSubmitStatus("success");
       setFormData({ name: "", email: "", subject: "", message: "" });
-      
+
       setTimeout(() => setSubmitStatus("idle"), 5000);
-    } catch (error) {
+    } catch (_error) {
       setSubmitStatus("error");
       setTimeout(() => setSubmitStatus("idle"), 5000);
     } finally {
@@ -70,7 +72,7 @@ export default function Contact() {
   };
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     setFormData((prev) => ({
       ...prev,
@@ -79,7 +81,10 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="section relative bg-secondary-bg overflow-hidden">
+    <section
+      id="contact"
+      className="section relative bg-secondary-bg overflow-hidden"
+    >
       {/* Subtle accent line */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-accent-secondary to-transparent" />
 
@@ -93,7 +98,8 @@ export default function Contact() {
             viewport={{ once: true }}
             className="font-display font-black mb-6"
           >
-            {t.contact.title} <span className="text-gradient">{t.contact.titleHighlight}</span>
+            {t.contact.title}{" "}
+            <span className="text-gradient">{t.contact.titleHighlight}</span>
           </motion.h2>
           <motion.div
             initial={{ opacity: 0, scaleX: 0 }}
@@ -126,7 +132,7 @@ export default function Contact() {
               <h3 className="text-3xl font-display font-bold mb-8 text-accent-primary">
                 {t.contact.info.title}
               </h3>
-              
+
               <div className="space-y-6">
                 {contactInfo.map((item) => {
                   const Icon = item.icon;
@@ -136,14 +142,22 @@ export default function Contact() {
                         <Icon className="w-7 h-7 text-accent-primary" />
                       </div>
                       <div>
-                        <div className="text-sm text-text-muted mb-2 font-semibold uppercase tracking-wide">{item.label}</div>
-                        <div className="text-text-primary font-bold text-lg">{item.value}</div>
+                        <div className="text-sm text-text-muted mb-2 font-semibold uppercase tracking-wide">
+                          {item.label}
+                        </div>
+                        <div className="text-text-primary font-bold text-lg">
+                          {item.value}
+                        </div>
                       </div>
                     </div>
                   );
-                  
+
                   return item.href ? (
-                    <a key={item.label} href={item.href} className="block group">
+                    <a
+                      key={item.label}
+                      href={item.href}
+                      className="block group"
+                    >
                       {content}
                     </a>
                   ) : (
@@ -157,7 +171,7 @@ export default function Contact() {
               <h3 className="text-3xl font-display font-bold mb-8 text-accent-secondary">
                 Social Links
               </h3>
-              
+
               <div className="flex gap-4">
                 {socialLinks.map((social) => {
                   const Icon = social.icon;
@@ -189,7 +203,10 @@ export default function Contact() {
             <form onSubmit={handleSubmit} className="space-y-8">
               <div className="grid sm:grid-cols-2 gap-6">
                 <div>
-                  <label htmlFor="name" className="block text-base font-bold mb-3 text-text-primary">
+                  <label
+                    htmlFor="name"
+                    className="block text-base font-bold mb-3 text-text-primary"
+                  >
                     Your Name
                   </label>
                   <input
@@ -203,9 +220,12 @@ export default function Contact() {
                     placeholder={t.contact.form.namePlaceholder}
                   />
                 </div>
-                
+
                 <div>
-                  <label htmlFor="email" className="block text-base font-bold mb-3 text-text-primary">
+                  <label
+                    htmlFor="email"
+                    className="block text-base font-bold mb-3 text-text-primary"
+                  >
                     Your Email
                   </label>
                   <input
@@ -222,7 +242,10 @@ export default function Contact() {
               </div>
 
               <div>
-                <label htmlFor="subject" className="block text-base font-bold mb-3 text-text-primary">
+                <label
+                  htmlFor="subject"
+                  className="block text-base font-bold mb-3 text-text-primary"
+                >
                   Subject
                 </label>
                 <input
@@ -238,7 +261,10 @@ export default function Contact() {
               </div>
 
               <div>
-                <label htmlFor="message" className="block text-base font-bold mb-3 text-text-primary">
+                <label
+                  htmlFor="message"
+                  className="block text-base font-bold mb-3 text-text-primary"
+                >
                   Message
                 </label>
                 <textarea
@@ -277,7 +303,7 @@ export default function Contact() {
                   {t.contact.form.success}
                 </div>
               )}
-              
+
               {submitStatus === "error" && (
                 <div className="p-6 rounded-lg bg-red-500/10 border-2 border-red-500/50 text-red-500 font-bold text-lg">
                   {t.contact.form.error}

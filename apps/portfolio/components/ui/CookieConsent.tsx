@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
+import { Check, Cookie, Settings, X } from "lucide-react";
 import Link from "next/link";
-import { Cookie, X, Settings, Check } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "@/hooks/useTranslation";
 
 interface CookieConsentProps {
@@ -61,7 +61,7 @@ export default function CookieConsent({ className = "" }: CookieConsentProps) {
     localStorage.setItem("cookieConsent", JSON.stringify(consentData));
     localStorage.setItem("cookieConsentDate", new Date().toISOString());
     setIsVisible(false);
-    
+
     // Here you would typically integrate with your analytics tools
     if (consentData.analytics) {
       // Enable analytics
@@ -105,7 +105,10 @@ export default function CookieConsent({ className = "" }: CookieConsentProps) {
                     </h3>
                     <p className="text-text-secondary text-sm leading-relaxed">
                       {t.cookies.description}{" "}
-                      <Link href="/privacy" className="text-accent-primary hover:text-accent-secondary underline transition-colors">
+                      <Link
+                        href="/privacy"
+                        className="text-accent-primary hover:text-accent-secondary underline transition-colors"
+                      >
                         {t.cookies.learnMore}
                       </Link>
                     </p>
@@ -158,7 +161,9 @@ export default function CookieConsent({ className = "" }: CookieConsentProps) {
                             <button
                               onClick={() => toggleCookieType("analytics")}
                               className={`w-12 h-6 rounded-full transition-colors duration-300 flex items-center ${
-                                consent.analytics ? "bg-accent-primary justify-end" : "bg-surface justify-start"
+                                consent.analytics
+                                  ? "bg-accent-primary justify-end"
+                                  : "bg-surface justify-start"
                               } px-1`}
                             >
                               <div className="w-4 h-4 bg-white rounded-full shadow-md" />
@@ -180,7 +185,9 @@ export default function CookieConsent({ className = "" }: CookieConsentProps) {
                             <button
                               onClick={() => toggleCookieType("marketing")}
                               className={`w-12 h-6 rounded-full transition-colors duration-300 flex items-center ${
-                                consent.marketing ? "bg-accent-primary justify-end" : "bg-surface justify-start"
+                                consent.marketing
+                                  ? "bg-accent-primary justify-end"
+                                  : "bg-surface justify-start"
                               } px-1`}
                             >
                               <div className="w-4 h-4 bg-white rounded-full shadow-md" />
@@ -207,7 +214,9 @@ export default function CookieConsent({ className = "" }: CookieConsentProps) {
                     className="flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-surface hover:bg-surface-light text-text-primary font-semibold border border-surface-light hover:border-accent-primary transition-all duration-300"
                   >
                     <Settings className="w-4 h-4" />
-                    {showSettings ? t.cookies.buttons.hideSettings : t.cookies.buttons.customize}
+                    {showSettings
+                      ? t.cookies.buttons.hideSettings
+                      : t.cookies.buttons.customize}
                   </button>
 
                   {showSettings ? (

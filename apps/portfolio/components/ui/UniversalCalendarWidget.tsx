@@ -1,8 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
-import { getCalendarProvider, isCalendarConfigured } from "@/lib/calendar-config";
+import { useEffect, useState } from "react";
+import {
+  getCalendarProvider,
+  isCalendarConfigured,
+} from "@/lib/calendar-config";
 
 // Dynamically import calendar widgets to avoid loading both
 const CalendlyWidget = dynamic(() => import("./CalendlyWidget"), {
@@ -22,7 +25,7 @@ interface UniversalCalendarWidgetProps {
   onEventScheduled?: (event: any) => void;
   onDateAndTimeSelected?: () => void;
   onEventTypeViewed?: () => void;
-  
+
   // Calendly-specific props
   calendlyPageSettings?: {
     backgroundColor?: string;
@@ -44,7 +47,7 @@ interface UniversalCalendarWidgetProps {
     utmContent?: string;
     utmTerm?: string;
   };
-  
+
   // Cal.com-specific props
   calcomConfig?: {
     name?: string;
@@ -57,7 +60,7 @@ interface UniversalCalendarWidgetProps {
 
 function CalendarLoadingSkeleton() {
   return (
-    <div 
+    <div
       className="w-full bg-surface rounded-lg animate-pulse flex items-center justify-center"
       style={{ height: "700px" }}
     >
@@ -92,9 +95,12 @@ export default function UniversalCalendarWidget({
   if (!isCalendarConfigured()) {
     return (
       <div className="card p-8 text-center">
-        <p className="text-red-500 font-semibold mb-2">Calendar not configured</p>
+        <p className="text-red-500 font-semibold mb-2">
+          Calendar not configured
+        </p>
         <p className="text-text-secondary text-sm">
-          Please set NEXT_PUBLIC_CALENDAR_PROVIDER and the corresponding URL in your .env.local file
+          Please set NEXT_PUBLIC_CALENDAR_PROVIDER and the corresponding URL in
+          your .env.local file
         </p>
       </div>
     );

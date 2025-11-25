@@ -27,9 +27,13 @@ export default function CalcomWidget({
   onEventTypeViewed,
 }: CalcomWidgetProps) {
   const [isClient, setIsClient] = useState(false);
-  
+
   // Get Cal.com event URL from config or env (e.g., "steding/consultation")
-  const calEventUrl = calLink || process.env.NEXT_PUBLIC_CALCOM_URL || process.env.NEXT_PUBLIC_CALCOM_USERNAME || "";
+  const calEventUrl =
+    calLink ||
+    process.env.NEXT_PUBLIC_CALCOM_URL ||
+    process.env.NEXT_PUBLIC_CALCOM_USERNAME ||
+    "";
 
   useEffect(() => {
     setIsClient(true);
@@ -38,9 +42,9 @@ export default function CalcomWidget({
   useEffect(() => {
     if (!isClient || !calEventUrl) return;
 
-    (async function () {
+    (async () => {
       const cal = await getCalApi();
-      
+
       // Set up event listeners for analytics and callbacks
       cal("on", {
         action: "bookingSuccessful",
@@ -71,12 +75,12 @@ export default function CalcomWidget({
         layout: "month_view",
       });
     })();
-  }, [isClient, calEventUrl, config, onEventScheduled, onDateAndTimeSelected, onEventTypeViewed]);
+  }, [isClient, calEventUrl, config, onEventScheduled]);
 
   if (!isClient) {
     // Show loading skeleton on server-side
     return (
-      <div 
+      <div
         className="w-full bg-surface rounded-lg animate-pulse"
         style={{ height: styles.height || "700px" }}
       >
@@ -90,9 +94,12 @@ export default function CalcomWidget({
   if (!calEventUrl) {
     return (
       <div className="card p-8 text-center">
-        <p className="text-red-500 font-semibold mb-2">Cal.com event URL not configured</p>
+        <p className="text-red-500 font-semibold mb-2">
+          Cal.com event URL not configured
+        </p>
         <p className="text-text-secondary text-sm">
-          Please set NEXT_PUBLIC_CALCOM_URL in your .env.local file (e.g., "steding/consultation")
+          Please set NEXT_PUBLIC_CALCOM_URL in your .env.local file (e.g.,
+          "steding/consultation")
         </p>
       </div>
     );
@@ -100,22 +107,19 @@ export default function CalcomWidget({
 
   // Build config object with only defined values
   const calConfig: Record<string, any> = {
-    layout: 'month_view',
-    hideEventTypeDetails: true
+    layout: "month_view",
+    hideEventTypeDetails: true,
   };
   if (config?.name) calConfig.name = config.name;
   if (config?.email) calConfig.email = config.email;
   if (config?.notes) calConfig.notes = config.notes;
   if (config?.guests) calConfig.guests = config.guests;
-  if (config?.theme) calConfig.theme = config.theme || 'dark';
+  if (config?.theme) calConfig.theme = config.theme || "dark";
 
   return (
-    <div 
-      className="calcom-widget-container overflow-hidden" 
-    
-    >
+    <div className="calcom-widget-container overflow-hidden">
       <Cal
-        style={{width:"100%",height:"100%",overflow:"scroll"}}
+        style={{ width: "100%", height: "100%", overflow: "scroll" }}
         calLink={calEventUrl}
         config={calConfig}
         embedJsUrl="https://app.cal.com/embed/embed.js"
@@ -130,7 +134,7 @@ declare global {
     gtag?: (
       command: string,
       action: string,
-      params: Record<string, any>
+      params: Record<string, any>,
     ) => void;
   }
 }

@@ -1,8 +1,8 @@
 "use client";
 
 import { getCalApi } from "@calcom/embed-react";
-import { useState, useEffect } from "react";
 import { Calendar } from "lucide-react";
+import { useEffect, useState } from "react";
 
 interface CalcomModalProps {
   calLink?: string;
@@ -26,7 +26,7 @@ export default function CalcomModal({
   onEventScheduled,
 }: CalcomModalProps) {
   const [isClient, setIsClient] = useState(false);
-  
+
   const calUsername = calLink || process.env.NEXT_PUBLIC_CALCOM_USERNAME || "";
 
   useEffect(() => {
@@ -36,9 +36,9 @@ export default function CalcomModal({
   useEffect(() => {
     if (!isClient || !calUsername) return;
 
-    (async function () {
+    (async () => {
       const cal = await getCalApi();
-      
+
       // Set up event listener for booking success
       cal("on", {
         action: "bookingSuccessful",
@@ -77,7 +77,7 @@ export default function CalcomModal({
     }
 
     const cal = await getCalApi();
-    
+
     // Build config object with only defined values
     const calConfig: Record<string, any> = {};
     if (config?.name) calConfig.name = config.name;
@@ -85,7 +85,7 @@ export default function CalcomModal({
     if (config?.notes) calConfig.notes = config.notes;
     if (config?.guests) calConfig.guests = config.guests;
     if (config?.theme) calConfig.theme = config.theme;
-    
+
     cal("modal", {
       calLink: calUsername,
       config: calConfig,
@@ -94,11 +94,7 @@ export default function CalcomModal({
 
   if (!isClient) {
     return (
-      <button
-        className={buttonClassName}
-        disabled
-        title="Loading..."
-      >
+      <button className={buttonClassName} disabled title="Loading...">
         <Calendar className="w-5 h-5" />
         {buttonText}
       </button>
@@ -119,11 +115,7 @@ export default function CalcomModal({
   }
 
   return (
-    <button
-      onClick={handleOpenModal}
-      className={buttonClassName}
-      type="button"
-    >
+    <button onClick={handleOpenModal} className={buttonClassName} type="button">
       <Calendar className="w-5 h-5" />
       {buttonText}
     </button>
@@ -136,7 +128,7 @@ declare global {
     gtag?: (
       command: string,
       action: string,
-      params: Record<string, any>
+      params: Record<string, any>,
     ) => void;
   }
 }

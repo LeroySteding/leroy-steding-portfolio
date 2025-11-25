@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
 
 type Language = "en" | "nl";
 
@@ -50,7 +50,7 @@ export const metadataByLanguage: Record<Language, MetadataConfig> = {
 
 export function generateMetadata(
   language: Language = "en",
-  config?: Partial<MetadataConfig>
+  config?: Partial<MetadataConfig>,
 ): Metadata {
   const baseConfig = metadataByLanguage[language];
   const title = config?.title || baseConfig.title;
@@ -59,7 +59,7 @@ export function generateMetadata(
   const path = config?.path || "";
 
   const url = `${siteUrl}${path}`;
-  const alternateLanguage = language === "en" ? "nl" : "en";
+  const _alternateLanguage = language === "en" ? "nl" : "en";
 
   return {
     title,
@@ -115,7 +115,7 @@ export function generateMetadata(
 export function generateProjectMetadata(
   projectTitle: string,
   projectDescription: string,
-  language: Language = "en"
+  language: Language = "en",
 ): Metadata {
   const baseTitle =
     language === "en"
@@ -133,7 +133,7 @@ export function generateExperienceMetadata(
   experienceTitle: string,
   company: string,
   experienceDescription: string,
-  language: Language = "en"
+  language: Language = "en",
 ): Metadata {
   const baseTitle =
     language === "en"

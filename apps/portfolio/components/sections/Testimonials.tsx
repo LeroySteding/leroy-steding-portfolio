@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Quote, Star, ArrowRight } from "lucide-react";
+import { ArrowRight, Quote, Star } from "lucide-react";
 import Link from "next/link";
 import { useTranslation } from "@/hooks/useTranslation";
 import { useLocalizedPath } from "@/lib/localization";
@@ -35,7 +35,10 @@ export default function Testimonials() {
   const getLocalizedPath = useLocalizedPath();
 
   return (
-    <section id="testimonials" className="section relative bg-secondary-bg overflow-hidden">
+    <section
+      id="testimonials"
+      className="section relative bg-secondary-bg overflow-hidden"
+    >
       {/* Background decoration */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute top-20 right-10 w-96 h-96 bg-accent-primary rounded-full blur-3xl" />
@@ -94,22 +97,26 @@ export default function Testimonials() {
                 {/* Rating */}
                 <div className="flex gap-1 mb-4">
                   {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 fill-yellow-500 text-yellow-500" />
+                    <Star
+                      key={i}
+                      className="w-5 h-5 fill-yellow-500 text-yellow-500"
+                    />
                   ))}
                 </div>
 
                 {/* Quote */}
                 <p className="text-text-secondary text-base leading-relaxed mb-6 flex-1 italic">
-                  "{(t.testimonials as any)[testimonial.quoteKey] || ''}"
+                  "{(t.testimonials as any)[testimonial.quoteKey] || ""}"
                 </p>
 
                 {/* Author */}
                 <div className="border-t-2 border-surface pt-6">
                   <p className="font-bold text-lg text-text-primary">
-                    {(t.testimonials as any)[testimonial.nameKey] || ''}
+                    {(t.testimonials as any)[testimonial.nameKey] || ""}
                   </p>
                   <p className="text-text-muted text-sm">
-                    {(t.testimonials as any)[testimonial.roleKey] || ''} · {(t.testimonials as any)[testimonial.companyKey] || ''}
+                    {(t.testimonials as any)[testimonial.roleKey] || ""} ·{" "}
+                    {(t.testimonials as any)[testimonial.companyKey] || ""}
                   </p>
                 </div>
               </div>

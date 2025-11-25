@@ -4,7 +4,7 @@ export interface BlogPost {
   slug: string;
   excerpt: string;
   content: string;
-  category: 'article' | 'tutorial' | 'research';
+  category: "article" | "tutorial" | "research";
   tags: string[];
   author: string;
   publishedAt: string;
@@ -15,10 +15,11 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
-    id: '1',
-    slug: 'building-scalable-nextjs-apps',
-    title: 'Building Scalable Next.js Applications with Turborepo',
-    excerpt: 'Learn how to structure and scale your Next.js applications using Turborepo monorepo architecture, shared components, and optimized build pipelines.',
+    id: "1",
+    slug: "building-scalable-nextjs-apps",
+    title: "Building Scalable Next.js Applications with Turborepo",
+    excerpt:
+      "Learn how to structure and scale your Next.js applications using Turborepo monorepo architecture, shared components, and optimized build pipelines.",
     content: `
 # Building Scalable Next.js Applications with Turborepo
 
@@ -71,19 +72,21 @@ Turborepo's remote caching can reduce build times by up to 70%. Configure it in 
 
 Turborepo transforms how we build and scale Next.js applications, making monorepos accessible and performant.
     `,
-    category: 'tutorial',
-    tags: ['Next.js', 'Turborepo', 'Monorepo', 'Architecture'],
-    author: 'Leroy Steding',
-    publishedAt: '2025-01-15',
-    readingTime: '8 min read',
-    coverImage: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&h=600&fit=crop',
+    category: "tutorial",
+    tags: ["Next.js", "Turborepo", "Monorepo", "Architecture"],
+    author: "Leroy Steding",
+    publishedAt: "2025-01-15",
+    readingTime: "8 min read",
+    coverImage:
+      "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&h=600&fit=crop",
     featured: true,
   },
   {
-    id: '2',
-    slug: 'ai-automation-future',
-    title: 'The Future of AI-Driven Automation in Web Development',
-    excerpt: 'Exploring how artificial intelligence and automation are transforming the way we build, test, and deploy web applications.',
+    id: "2",
+    slug: "ai-automation-future",
+    title: "The Future of AI-Driven Automation in Web Development",
+    excerpt:
+      "Exploring how artificial intelligence and automation are transforming the way we build, test, and deploy web applications.",
     content: `
 # The Future of AI-Driven Automation in Web Development
 
@@ -117,19 +120,21 @@ The future holds exciting possibilities:
 - Predictive performance optimization
 - Automated accessibility improvements
     `,
-    category: 'article',
-    tags: ['AI', 'Automation', 'Web Development', 'Future Tech'],
-    author: 'Leroy Steding',
-    publishedAt: '2025-01-10',
-    readingTime: '6 min read',
-    coverImage: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&h=600&fit=crop',
+    category: "article",
+    tags: ["AI", "Automation", "Web Development", "Future Tech"],
+    author: "Leroy Steding",
+    publishedAt: "2025-01-10",
+    readingTime: "6 min read",
+    coverImage:
+      "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&h=600&fit=crop",
     featured: true,
   },
   {
-    id: '3',
-    slug: 'react-server-components-deep-dive',
-    title: 'React Server Components: A Deep Dive',
-    excerpt: 'Understanding the architecture, benefits, and implementation patterns of React Server Components in Next.js 14.',
+    id: "3",
+    slug: "react-server-components-deep-dive",
+    title: "React Server Components: A Deep Dive",
+    excerpt:
+      "Understanding the architecture, benefits, and implementation patterns of React Server Components in Next.js 14.",
     content: `
 # React Server Components: A Deep Dive
 
@@ -176,19 +181,21 @@ Our analysis shows:
 - 60% faster initial page load
 - Improved Core Web Vitals scores
     `,
-    category: 'research',
-    tags: ['React', 'Next.js', 'Server Components', 'Performance'],
-    author: 'Leroy Steding',
-    publishedAt: '2025-01-05',
-    readingTime: '12 min read',
-    coverImage: 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=1200&h=600&fit=crop',
+    category: "research",
+    tags: ["React", "Next.js", "Server Components", "Performance"],
+    author: "Leroy Steding",
+    publishedAt: "2025-01-05",
+    readingTime: "12 min read",
+    coverImage:
+      "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=1200&h=600&fit=crop",
     featured: false,
   },
   {
-    id: '4',
-    slug: 'typescript-advanced-patterns',
-    title: 'Advanced TypeScript Patterns for Enterprise Applications',
-    excerpt: 'Master advanced TypeScript patterns including conditional types, mapped types, and template literal types for building robust applications.',
+    id: "4",
+    slug: "typescript-advanced-patterns",
+    title: "Advanced TypeScript Patterns for Enterprise Applications",
+    excerpt:
+      "Master advanced TypeScript patterns including conditional types, mapped types, and template literal types for building robust applications.",
     content: `
 # Advanced TypeScript Patterns for Enterprise Applications
 
@@ -229,18 +236,19 @@ These patterns enable:
 
 While powerful, complex types can slow down compilation. Balance type safety with build performance.
     `,
-    category: 'tutorial',
-    tags: ['TypeScript', 'Advanced Patterns', 'Type Safety'],
-    author: 'Leroy Steding',
-    publishedAt: '2024-12-28',
-    readingTime: '10 min read',
+    category: "tutorial",
+    tags: ["TypeScript", "Advanced Patterns", "Type Safety"],
+    author: "Leroy Steding",
+    publishedAt: "2024-12-28",
+    readingTime: "10 min read",
     featured: false,
   },
   {
-    id: '5',
-    slug: 'web-performance-optimization',
-    title: 'Web Performance Optimization: A Comprehensive Guide',
-    excerpt: 'Dive deep into modern web performance optimization techniques, from Core Web Vitals to advanced bundling strategies.',
+    id: "5",
+    slug: "web-performance-optimization",
+    title: "Web Performance Optimization: A Comprehensive Guide",
+    excerpt:
+      "Dive deep into modern web performance optimization techniques, from Core Web Vitals to advanced bundling strategies.",
     content: `
 # Web Performance Optimization: A Comprehensive Guide
 
@@ -292,19 +300,21 @@ After optimization:
 - 40% reduction in bundle size
 - 90+ Lighthouse score
     `,
-    category: 'article',
-    tags: ['Performance', 'Optimization', 'Web Vitals', 'Best Practices'],
-    author: 'Leroy Steding',
-    publishedAt: '2024-12-20',
-    readingTime: '15 min read',
-    coverImage: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=600&fit=crop',
+    category: "article",
+    tags: ["Performance", "Optimization", "Web Vitals", "Best Practices"],
+    author: "Leroy Steding",
+    publishedAt: "2024-12-20",
+    readingTime: "15 min read",
+    coverImage:
+      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=600&fit=crop",
     featured: true,
   },
   {
-    id: '6',
-    slug: 'building-design-systems',
-    title: 'Building Scalable Design Systems with React and Tailwind',
-    excerpt: 'Learn how to create maintainable design systems that scale across multiple applications using React components and Tailwind CSS.',
+    id: "6",
+    slug: "building-design-systems",
+    title: "Building Scalable Design Systems with React and Tailwind",
+    excerpt:
+      "Learn how to create maintainable design systems that scale across multiple applications using React components and Tailwind CSS.",
     content: `
 # Building Scalable Design Systems with React and Tailwind
 
@@ -381,43 +391,45 @@ Every component must:
 
 A solid design system accelerates development and ensures consistency across your product ecosystem.
     `,
-    category: 'tutorial',
-    tags: ['Design System', 'React', 'Tailwind CSS', 'Component Library'],
-    author: 'Leroy Steding',
-    publishedAt: '2024-12-15',
-    readingTime: '11 min read',
-    coverImage: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=1200&h=600&fit=crop',
+    category: "tutorial",
+    tags: ["Design System", "React", "Tailwind CSS", "Component Library"],
+    author: "Leroy Steding",
+    publishedAt: "2024-12-15",
+    readingTime: "11 min read",
+    coverImage:
+      "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=1200&h=600&fit=crop",
     featured: false,
   },
 ];
 
 // Utility functions for blog
 export function getAllPosts(): BlogPost[] {
-  return blogPosts.sort((a, b) => 
-    new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+  return blogPosts.sort(
+    (a, b) =>
+      new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
   );
 }
 
 export function getFeaturedPosts(): BlogPost[] {
-  return blogPosts.filter(post => post.featured);
+  return blogPosts.filter((post) => post.featured);
 }
 
 export function getPostBySlug(slug: string): BlogPost | undefined {
-  return blogPosts.find(post => post.slug === slug);
+  return blogPosts.find((post) => post.slug === slug);
 }
 
 export function getPostsByCategory(category: string): BlogPost[] {
-  return blogPosts.filter(post => post.category === category);
+  return blogPosts.filter((post) => post.category === category);
 }
 
 export function getPostsByTag(tag: string): BlogPost[] {
-  return blogPosts.filter(post => post.tags.includes(tag));
+  return blogPosts.filter((post) => post.tags.includes(tag));
 }
 
 export function getAllCategories(): string[] {
-  return Array.from(new Set(blogPosts.map(post => post.category)));
+  return Array.from(new Set(blogPosts.map((post) => post.category)));
 }
 
 export function getAllTags(): string[] {
-  return Array.from(new Set(blogPosts.flatMap(post => post.tags)));
+  return Array.from(new Set(blogPosts.flatMap((post) => post.tags)));
 }

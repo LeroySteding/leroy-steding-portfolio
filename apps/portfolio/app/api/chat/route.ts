@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import { cvData } from "@/data/cv";
 import { projects } from "@/data/projects";
 
@@ -20,26 +20,40 @@ ${cvData.summary}
 - Website: ${cvData.personalInfo.website}
 
 # Core Expertise
-${cvData.skills.map(category => `
+${cvData.skills
+  .map(
+    (category) => `
 ## ${category.category}
 ${category.items.slice(0, 10).join(", ")}
-`).join("\n")}
+`,
+  )
+  .join("\n")}
 
 # Featured Projects
-${projects.filter(p => p.featured).map(project => `
+${projects
+  .filter((p) => p.featured)
+  .map(
+    (project) => `
 ## ${project.title}
 ${project.description}
 Technologies: ${project.technologies.join(", ")}
 ${project.impact ? `Impact: ${project.impact.join("; ")}` : ""}
-`).join("\n")}
+`,
+  )
+  .join("\n")}
 
 # Professional Experience
-${cvData.experience.slice(0, 3).map(exp => `
+${cvData.experience
+  .slice(0, 3)
+  .map(
+    (exp) => `
 ## ${exp.title} at ${exp.company}
 ${exp.period} | ${exp.location}
 ${exp.description}
 Key achievements: ${exp.achievements.slice(0, 3).join("; ")}
-`).join("\n")}
+`,
+  )
+  .join("\n")}
 
 # Services Offered
 - Full-Stack Web Development (React, Next.js, Node.js, Python)
@@ -79,17 +93,19 @@ export async function POST(request: NextRequest) {
     if (!messages || !Array.isArray(messages)) {
       return NextResponse.json(
         { error: "Messages array is required" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     const openaiApiKey = process.env.OPENAI_API_KEY?.trim();
-    
+
     if (!openaiApiKey) {
-      console.error("OpenAI API key not configured. Please set OPENAI_API_KEY in .env.local");
+      console.error(
+        "OpenAI API key not configured. Please set OPENAI_API_KEY in .env.local",
+      );
       return NextResponse.json(
         { error: "Chat service is not configured. Please check server logs." },
-        { status: 503 }
+        { status: 503 },
       );
     }
 
@@ -110,7 +126,7 @@ export async function POST(request: NextRequest) {
 # Language
 - Respond in ${locale === "nl" ? "Dutch (Nederlands)" : "English"}
 - Use appropriate cultural references and tone for ${locale === "nl" ? "Dutch" : "English"} audience
-- Keep technical terms in English but explanations in the target language`
+- Keep technical terms in English but explanations in the target language`,
     };
 
     // Call OpenAI API
@@ -134,7 +150,7 @@ export async function POST(request: NextRequest) {
       console.error("OpenAI API error:", error);
       return NextResponse.json(
         { error: "Failed to generate response" },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
@@ -144,7 +160,7 @@ export async function POST(request: NextRequest) {
     if (!assistantMessage) {
       return NextResponse.json(
         { error: "No response generated" },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
@@ -156,7 +172,7 @@ export async function POST(request: NextRequest) {
     console.error("Error in chat API:", error);
     return NextResponse.json(
       { error: "An unexpected error occurred" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

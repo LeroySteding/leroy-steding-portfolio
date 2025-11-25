@@ -1,11 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useTheme } from "next-themes";
-import { Moon, Sun, Menu, X, Search, Calendar } from "lucide-react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { Calendar, Menu, Moon, Search, Sun, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { useTranslation } from "@/hooks/useTranslation";
 import { useLocalizedPath } from "@/lib/localization";
@@ -17,49 +17,54 @@ interface HeaderProps {
 export default function Header({ onSearchClick }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(1440);
+  const [mounted, setMounted] = useState(false);
+
   const { theme, setTheme } = useTheme();
   const t = useTranslation();
   const getLocalizedPath = useLocalizedPath();
   const pathname = usePathname();
-  const isHomePage = pathname === '/' || pathname === '/en' || pathname === '/nl';
-  
-  // Only use scroll on home page to prevent cleanup errors
-  const { scrollY } = isHomePage ? useScroll() : { scrollY: null };
-  
-  // Responsive logo animation - scales based on viewport width
-  const [windowWidth, setWindowWidth] = useState(1440);
-  const [mounted, setMounted] = useState(false);
-  
+
+  // Always call useScroll unconditionally (Rules of Hooks)
+  const { scrollY } = useScroll();
+
+  const _isHomePage =
+    pathname === "/" || pathname === "/en" || pathname === "/nl";
+
   useEffect(() => {
     setMounted(true);
     const updateWidth = () => setWindowWidth(window.innerWidth);
     updateWidth();
-    window.addEventListener('resize', updateWidth);
-    return () => window.removeEventListener('resize', updateWidth);
+    window.addEventListener("resize", updateWidth);
+    return () => window.removeEventListener("resize", updateWidth);
   }, []);
-  
+
   // Calculate responsive transform values based on viewport
   const isMobile = windowWidth < 768;
   const isTablet = windowWidth >= 768 && windowWidth < 1024;
-  
+
   // Mobile: smaller scale, different positioning
   // Tablet: medium scale
   // Desktop: original scale
   const scaleStart = isMobile ? 0.8 : isTablet ? 1.0 : 1.15;
   const scaleEnd = isMobile ? 0.25 : isTablet ? 0.18 : 0.14;
-  
+
   const yStart = isMobile ? 50 : isTablet ? 80 : 100;
   const yEnd = isMobile ? -60 : isTablet ? -150 : -213.5;
-  
+
   // X transform relative to viewport width
   const xStart = isMobile ? 0 : isTablet ? 50 : 100;
-  const xEnd = isMobile ? windowWidth * -0.35 : isTablet ? windowWidth * -0.45 : -605.5;
-  
-  // Only create transforms if on home page
-  const scale = isHomePage && scrollY ? useTransform(scrollY, [0, 500], [scaleStart, scaleEnd]) : null;
-  const y = isHomePage && scrollY ? useTransform(scrollY, [0, 500], [yStart, yEnd]) : null;
-  const x = isHomePage && scrollY ? useTransform(scrollY, [0, 500], [xStart, xEnd]) : null;
-  
+  const xEnd = isMobile
+    ? windowWidth * -0.35
+    : isTablet
+      ? windowWidth * -0.45
+      : -605.5;
+
+  // Always call useTransform unconditionally (Rules of Hooks)
+  const _scale = useTransform(scrollY, [0, 500], [scaleStart, scaleEnd]);
+  const _y = useTransform(scrollY, [0, 500], [yStart, yEnd]);
+  const _x = useTransform(scrollY, [0, 500], [xStart, xEnd]);
+
   const navigation = [
     { name: t.nav.about, href: getLocalizedPath("/about") },
     { name: t.nav.services, href: getLocalizedPath("/services") },
@@ -86,56 +91,25 @@ export default function Header({ onSearchClick }: HeaderProps) {
   }
 
   return (
-    <>
-      {/* Animated STEDING logo - only on home page */}
-      {/*{isHomePage && scale && y && x && (
-        <motion.div
-          style={{ scale, y, x }}
-          className="fixed top-32 left-0 right-0 z-60 pointer-events-none"
-        >
-          <div className="container mx-auto px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20">
-            <h1 
-              className="font-display font-black text-gradient whitespace-nowrap leading-none text-[22vw] sm:text-[18vw] md:text-[15vw] lg:text-[13vw] xl:text-[12vw]"
-              style={{ 
-                width: '100%',
-                display: 'flex',
-                justifyContent: 'space-between',
-              }}
-            >
+    <header
+      className={`fixed top-0 left-0 right-0 z-55 transition-all duration-300 ${
+        isScrolled
+          ? "bg-primary-bg/95 backdrop-blur-md border-b-2 border-surface"
+          : "bg-transparent"
+      }`}
+    >
+      <nav className="container mx-auto px-8 lg:px-16">
+        <div className="flex items-center justify-between h-20 md:h-24">
+          {/* Logo */}
+          <Link
+            href={getLocalizedPath("/")}
+            prefetch={false}
+            className="flex items-center space-x-2 group"
+          >
+            <span className="text-3xl md:text-4xl font-display font-black text-gradient transition-all">
               STEDING.
-            </h1>
-          </div>
-        </motion.div>
-      )}*/}
-
-      <header
-        className={`fixed top-0 left-0 right-0 z-55 transition-all duration-300 ${
-          isScrolled
-            ? "bg-primary-bg/95 backdrop-blur-md border-b-2 border-surface"
-            : "bg-transparent"
-        }`}
-      >
-        <nav className="container mx-auto px-8 lg:px-16">
-          <div className="flex items-center justify-between h-20 md:h-24">
-            {/* Logo */}
-            <Link
-              href={getLocalizedPath("/")}
-              prefetch={false}
-              className="flex items-center space-x-2 group"
-            >
-              <span className="text-3xl md:text-4xl font-display font-black text-gradient transition-all">
-                STEDING.
-              </span>
-              {/*{!isHomePage ? (
-                <span className="text-3xl md:text-4xl font-display font-black text-gradient transition-all">
-                  STEDING.
-                </span>
-              ) : (
-                <span className="text-3xl md:text-4xl font-display font-black text-outline">
-                  STEDING.
-                </span>
-              )}*/}
-            </Link>
+            </span>
+          </Link>
 
           {/* Desktop Navigation - Unified Sizing */}
           <div className="hidden lg:flex items-center gap-1">
@@ -277,8 +251,7 @@ export default function Header({ onSearchClick }: HeaderProps) {
             </div>
           </motion.div>
         )}
-        </nav>
-      </header>
-    </>
+      </nav>
+    </header>
   );
 }

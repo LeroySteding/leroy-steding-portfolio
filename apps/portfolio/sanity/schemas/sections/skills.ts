@@ -1,51 +1,56 @@
-import { defineType, defineField } from 'sanity'
+import { defineField, defineType } from "sanity";
 
 export default defineType({
-  name: 'skillsSection',
-  title: 'Skills Section',
-  type: 'document',
+  name: "skillsSection",
+  title: "Skills Section",
+  type: "document",
   fields: [
     defineField({
-      name: 'title',
-      title: 'Title',
-      type: 'string',
+      name: "title",
+      title: "Title",
+      type: "string",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'language',
-      title: 'Language',
-      type: 'string',
+      name: "language",
+      title: "Language",
+      type: "string",
       options: {
         list: [
-          { title: 'English', value: 'en' },
-          { title: 'Nederlands', value: 'nl' },
+          { title: "English", value: "en" },
+          { title: "Nederlands", value: "nl" },
         ],
       },
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'titleHighlight',
-      title: 'Title Highlight',
-      type: 'string',
-      description: 'The highlighted part of the title',
+      name: "titleHighlight",
+      title: "Title Highlight",
+      type: "string",
+      description: "The highlighted part of the title",
     }),
     defineField({
-      name: 'description',
-      title: 'Description',
-      type: 'text',
+      name: "description",
+      title: "Description",
+      type: "text",
       rows: 3,
     }),
     defineField({
-      name: 'skills',
-      title: 'Skills',
-      type: 'array',
+      name: "skills",
+      title: "Skills",
+      type: "array",
       of: [
         {
-          type: 'object',
+          type: "object",
           fields: [
-            { name: 'name', title: 'Skill Name', type: 'string' },
-            { name: 'category', title: 'Category', type: 'string' },
-            { name: 'level', title: 'Level', type: 'number', validation: (Rule) => Rule.min(1).max(100) },
+            { name: "name", title: "Skill Name", type: "string" },
+            { name: "category", title: "Category", type: "string" },
+            {
+              name: "level",
+              title: "Level",
+              type: "number",
+              validation: (Rule) => Rule.min(1).max(100),
+            },
           ],
         },
       ],
@@ -53,8 +58,8 @@ export default defineType({
   ],
   preview: {
     select: {
-      title: 'title',
-      subtitle: 'language',
+      title: "title",
+      subtitle: "language",
     },
   },
-})
+});

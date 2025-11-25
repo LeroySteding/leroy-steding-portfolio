@@ -12,7 +12,8 @@ export const en = {
     name: "Leroy Steding",
     title: "Full-Stack Developer",
     subtitle: "& AI Automation Architect",
-    tagline: "Building scalable AI-driven web platforms & digital automation solutions.",
+    tagline:
+      "Building scalable AI-driven web platforms & digital automation solutions.",
     cta: {
       projects: "View Projects",
       cv: "Download CV",
@@ -30,10 +31,13 @@ export const en = {
     titleHighlight: "Me",
     intro: {
       title: "Full-Stack Developer & AI Automation Architect",
-      description: "I'm a Dutch full-stack developer and entrepreneur with a passion for building cutting-edge web platforms that leverage the power of AI automation. As the founder of Hifive, I specialize in creating scalable, intelligent solutions that transform how businesses operate.",
+      description:
+        "I'm a Dutch full-stack developer and entrepreneur with a passion for building cutting-edge web platforms that leverage the power of AI automation. As the founder of Hifive, I specialize in creating scalable, intelligent solutions that transform how businesses operate.",
     },
-    expertise: "My expertise spans the modern web development stack, including <strong>Next.js</strong>, <strong>React</strong>, <strong>TypeScript</strong>, and <strong>Supabase</strong> on the frontend, paired with <strong>Python</strong>, <strong>FastAPI</strong>, and <strong>PostgreSQL</strong> on the backend. I'm particularly focused on <strong>AI automation</strong>, building intelligent agents, and creating seamless workflows with tools like <strong>n8n</strong>.",
-    experience: "From architecting <strong>monorepo SaaS platforms</strong> like a Whitelabel Platform to building <strong>AI-powered quotation pipelines</strong> for industrial clients, I thrive on solving complex technical challenges and delivering production-ready solutions that scale.",
+    expertise:
+      "My expertise spans the modern web development stack, including <strong>Next.js</strong>, <strong>React</strong>, <strong>TypeScript</strong>, and <strong>Supabase</strong> on the frontend, paired with <strong>Python</strong>, <strong>FastAPI</strong>, and <strong>PostgreSQL</strong> on the backend. I'm particularly focused on <strong>AI automation</strong>, building intelligent agents, and creating seamless workflows with tools like <strong>n8n</strong>.",
+    experience:
+      "From architecting <strong>monorepo SaaS platforms</strong> like a Whitelabel Platform to building <strong>AI-powered quotation pipelines</strong> for industrial clients, I thrive on solving complex technical challenges and delivering production-ready solutions that scale.",
     highlights: {
       fullstack: {
         title: "Full-Stack Expertise",
@@ -41,53 +45,64 @@ export const en = {
       },
       ai: {
         title: "AI Automation",
-        description: "Building intelligent automation solutions with AI agents and n8n workflows",
+        description:
+          "Building intelligent automation solutions with AI agents and n8n workflows",
       },
       saas: {
         title: "SaaS Architecture",
-        description: "Scalable platforms, monorepo structures, and modern deployment pipelines",
+        description:
+          "Scalable platforms, monorepo structures, and modern deployment pipelines",
       },
     },
   },
   services: {
     webDevelopment: {
       title: "Web Development",
-      description: "Modern, responsive web applications built with Next.js, React, and TypeScript for optimal performance and user experience.",
+      description:
+        "Modern, responsive web applications built with Next.js, React, and TypeScript for optimal performance and user experience.",
     },
     aiAutomation: {
       title: "AI Automation",
-      description: "Intelligent automation solutions that streamline workflows, reduce manual tasks, and leverage AI to transform business operations.",
+      description:
+        "Intelligent automation solutions that streamline workflows, reduce manual tasks, and leverage AI to transform business operations.",
     },
     apiIntegration: {
       title: "API Integration",
-      description: "Seamless integration of third-party services and APIs to create connected, powerful applications that work together.",
+      description:
+        "Seamless integration of third-party services and APIs to create connected, powerful applications that work together.",
     },
     consulting: {
       title: "Technical Consulting",
-      description: "Expert guidance on architecture, technology stack selection, and best practices to help your project succeed.",
+      description:
+        "Expert guidance on architecture, technology stack selection, and best practices to help your project succeed.",
     },
     fullStack: {
       title: "Full-Stack Solutions",
-      description: "End-to-end development from database design to frontend implementation, delivering complete, production-ready applications.",
+      description:
+        "End-to-end development from database design to frontend implementation, delivering complete, production-ready applications.",
     },
     cloudInfra: {
       title: "Cloud Infrastructure",
-      description: "Scalable cloud solutions with modern DevOps practices, CI/CD pipelines, and infrastructure as code.",
+      description:
+        "Scalable cloud solutions with modern DevOps practices, CI/CD pipelines, and infrastructure as code.",
     },
   },
   testimonials: {
     client1Name: "John Smith",
     client1Role: "CEO",
     client1Company: "TechCorp",
-    client1Quote: "Leroy delivered an exceptional AI-powered platform that transformed our business operations. His expertise in full-stack development and automation is unmatched.",
+    client1Quote:
+      "Leroy delivered an exceptional AI-powered platform that transformed our business operations. His expertise in full-stack development and automation is unmatched.",
     client2Name: "Sarah Johnson",
     client2Role: "CTO",
     client2Company: "InnovateLab",
-    client2Quote: "Working with Leroy was a game-changer. He not only delivered a robust SaaS platform but also provided invaluable technical guidance throughout the project.",
+    client2Quote:
+      "Working with Leroy was a game-changer. He not only delivered a robust SaaS platform but also provided invaluable technical guidance throughout the project.",
     client3Name: "Michael Chen",
     client3Role: "Founder",
     client3Company: "StartupX",
-    client3Quote: "Leroy's ability to understand complex requirements and translate them into elegant, scalable solutions is remarkable. Highly recommended!",
+    client3Quote:
+      "Leroy's ability to understand complex requirements and translate them into elegant, scalable solutions is remarkable. Highly recommended!",
   },
   experience: {
     title: "Professional",
@@ -116,7 +131,8 @@ export const en = {
   techStack: {
     title: "Tech",
     titleHighlight: "Stack",
-    description: "A comprehensive toolkit of modern technologies I use to build scalable, performant applications",
+    description:
+      "A comprehensive toolkit of modern technologies I use to build scalable, performant applications",
     all: "All",
     categories: {
       languages: "Languages",
@@ -170,11 +186,13 @@ export const en = {
   contact: {
     title: "Get In",
     titleHighlight: "Touch",
-    subtitle: "Have a project in mind or want to collaborate? Feel free to reach out!",
+    subtitle:
+      "Have a project in mind or want to collaborate? Feel free to reach out!",
     hero: {
       title: "Let's",
       titleHighlight: "Connect",
-      subtitle: "Have a project in mind or just want to chat? I'm always open to discussing new opportunities, creative ideas, or ways to be part of your vision.",
+      subtitle:
+        "Have a project in mind or just want to chat? I'm always open to discussing new opportunities, creative ideas, or ways to be part of your vision.",
     },
     info: {
       title: "Contact Information",
@@ -211,7 +229,8 @@ export const en = {
         securePrivate: "Secure & Private",
       },
       heading: "Send a Message",
-      subheading: "I typically respond within 24 hours. Let me know how I can help!",
+      subheading:
+        "I typically respond within 24 hours. Let me know how I can help!",
       successMessage: {
         title: "Message sent successfully!",
         body: "Thanks for reaching out! I'll respond to",
@@ -249,10 +268,12 @@ export const en = {
     },
     chat: {
       title: "Leroy's AI Assistant",
-      subtitle: "Ask me anything about Leroy's experience, projects, skills, or how to work together",
+      subtitle:
+        "Ask me anything about Leroy's experience, projects, skills, or how to work together",
       placeholder: "Ask me anything...",
       emptyStateTitle: "Hi! I'm Leroy's AI Assistant",
-      emptyStateSubtitle: "I can help you learn about Leroy's experience, projects, and services. Try asking:",
+      emptyStateSubtitle:
+        "I can help you learn about Leroy's experience, projects, and services. Try asking:",
       suggestionsLabel: "You might also ask:",
       starterPrompts: [
         "What are Leroy's main skills?",
@@ -276,9 +297,11 @@ export const en = {
     hero: {
       title: "Let's Talk About",
       titleHighlight: "Your Project",
-      subtitle: "Book a free 30-minute consultation to discuss your project, get technical advice, or explore collaboration opportunities.",
+      subtitle:
+        "Book a free 30-minute consultation to discuss your project, get technical advice, or explore collaboration opportunities.",
     },
-    description: "Choose a time that works best for you. I'll send you a calendar invite and meeting link.",
+    description:
+      "Choose a time that works best for you. I'll send you a calendar invite and meeting link.",
     trustIndicators: {
       response: "24h Response",
       availability: "Available Now",
@@ -311,11 +334,13 @@ export const en = {
         },
         {
           title: "Technical Expertise",
-          description: "Get expert advice on architecture, tech stack, and implementation",
+          description:
+            "Get expert advice on architecture, tech stack, and implementation",
         },
         {
           title: "Clear Next Steps",
-          description: "Walk away with actionable recommendations and timeline estimates",
+          description:
+            "Walk away with actionable recommendations and timeline estimates",
         },
       ],
     },
@@ -328,7 +353,8 @@ export const en = {
   },
   footer: {
     copyright: "© 2025 Leroy Steding. All rights reserved.",
-    builtWith: "Built with Next.js, TypeScript, Tailwind CSS, and Framer Motion",
+    builtWith:
+      "Built with Next.js, TypeScript, Tailwind CSS, and Framer Motion",
     links: {
       privacy: "Privacy Policy",
       terms: "Terms of Service",
@@ -348,7 +374,8 @@ export const en = {
     page: {
       title: "The",
       titleHighlight: "Journal",
-      description: "Thoughts, tutorials, and research on modern web development, AI automation, and building scalable products.",
+      description:
+        "Thoughts, tutorials, and research on modern web development, AI automation, and building scalable products.",
       search: {
         placeholder: "Search articles, tutorials, and research...",
       },
@@ -401,7 +428,8 @@ export const en = {
   },
   newsletter: {
     title: "Stay in the loop",
-    description: "Get notified about new articles, projects, and insights delivered straight to your inbox.",
+    description:
+      "Get notified about new articles, projects, and insights delivered straight to your inbox.",
     placeholder: "your@email.com",
     subscribe: "Subscribe",
     buttons: {
@@ -428,30 +456,35 @@ export const en = {
   cta: {
     primary: {
       title: "Let's Build Something Amazing Together",
-      description: "Have a project in mind? Let's discuss how we can bring your ideas to life with cutting-edge technology and innovative solutions.",
+      description:
+        "Have a project in mind? Let's discuss how we can bring your ideas to life with cutting-edge technology and innovative solutions.",
       primaryButton: "Start a Conversation",
       secondaryButton: "View My Work",
     },
     secondary: {
       title: "Ready to Collaborate?",
-      description: "I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.",
+      description:
+        "I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.",
       primaryButton: "Get in Touch",
     },
     contact: {
       title: "Let's Talk",
-      description: "Whether you have a question, want to discuss a project, or just want to connect, I'd love to hear from you.",
+      description:
+        "Whether you have a question, want to discuss a project, or just want to connect, I'd love to hear from you.",
       primaryButton: "Send a Message",
       secondaryButton: "Schedule a Call",
     },
     project: {
       title: "Interested in Similar Work?",
-      description: "I'd love to help you build something great. Let's discuss your project requirements and how I can contribute to your success.",
+      description:
+        "I'd love to help you build something great. Let's discuss your project requirements and how I can contribute to your success.",
       primaryButton: "Discuss Your Project",
       secondaryButton: "View More Projects",
     },
     collaboration: {
       title: "Want to Work Together?",
-      description: "I'm always looking for exciting opportunities to collaborate on innovative projects and create impactful solutions.",
+      description:
+        "I'm always looking for exciting opportunities to collaborate on innovative projects and create impactful solutions.",
       primaryButton: "Let's Connect",
       secondaryButton: "Download Resume",
     },
@@ -469,21 +502,25 @@ export const en = {
   },
   cookies: {
     title: "🍪 Cookie Settings",
-    description: "This website uses cookies to ensure you get the best experience. We use necessary cookies for site functionality, and optional cookies for analytics and improvements.",
+    description:
+      "This website uses cookies to ensure you get the best experience. We use necessary cookies for site functionality, and optional cookies for analytics and improvements.",
     learnMore: "Learn more in our Privacy Policy",
     types: {
       necessary: {
         title: "Necessary Cookies",
         required: "Required",
-        description: "Essential for the website to function properly. These cookies enable core functionality such as security and accessibility.",
+        description:
+          "Essential for the website to function properly. These cookies enable core functionality such as security and accessibility.",
       },
       analytics: {
         title: "Analytics Cookies",
-        description: "Help us understand how visitors interact with the website by collecting and reporting information anonymously.",
+        description:
+          "Help us understand how visitors interact with the website by collecting and reporting information anonymously.",
       },
       marketing: {
         title: "Marketing Cookies",
-        description: "Used to track visitors across websites to display relevant and personalized content.",
+        description:
+          "Used to track visitors across websites to display relevant and personalized content.",
       },
     },
     buttons: {
@@ -502,7 +539,8 @@ export const en = {
     },
     welcome: {
       title: "Hi! I'm Leroy's personal Assistant",
-      description: "I can help you learn about Leroy's experience, projects, and services. Try asking:",
+      description:
+        "I can help you learn about Leroy's experience, projects, and services. Try asking:",
     },
     starterPrompts: [
       "What are Leroy's main skills?",
@@ -528,10 +566,12 @@ export const en = {
     },
     error: {
       title: "Error",
-      message: "Sorry, I encountered an error. Please try again or contact Leroy directly at leroysteding@gmail.com.",
+      message:
+        "Sorry, I encountered an error. Please try again or contact Leroy directly at leroysteding@gmail.com.",
     },
     disclaimer: "AI can make mistakes. Verify important info.",
   },
 };
 
 export type Translations = typeof en;
+export default en;

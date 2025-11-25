@@ -1,4 +1,4 @@
-import { groq } from 'next-sanity'
+import { groq } from "next-sanity";
 
 // Get all blog posts with optional language filter
 export const postsQuery = groq`
@@ -17,7 +17,7 @@ export const postsQuery = groq`
     featured,
     language
   }
-`
+`;
 
 // Get a single blog post by slug and language
 export const postBySlugQuery = groq`
@@ -36,7 +36,7 @@ export const postBySlugQuery = groq`
     featured,
     language
   }
-`
+`;
 
 // Get featured blog posts
 export const featuredPostsQuery = groq`
@@ -55,7 +55,7 @@ export const featuredPostsQuery = groq`
     featured,
     language
   }
-`
+`;
 
 // Get posts by category
 export const postsByCategoryQuery = groq`
@@ -74,7 +74,7 @@ export const postsByCategoryQuery = groq`
     featured,
     language
   }
-`
+`;
 
 // Get posts by tag
 export const postsByTagQuery = groq`
@@ -93,14 +93,14 @@ export const postsByTagQuery = groq`
     featured,
     language
   }
-`
+`;
 
 // Get all unique categories
 export const categoriesQuery = groq`
   array::unique(*[_type == "post" && language == $language].category)
-`
+`;
 
 // Get all unique tags
 export const tagsQuery = groq`
   array::unique(*[_type == "post" && language == $language].tags[])
-`
+`;

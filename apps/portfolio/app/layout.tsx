@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
-import ClientLayout from "@/components/layout/ClientLayout";
-import HreflangTags from "@/components/seo/HreflangTags";
-import CookieConsent from "@/components/ui/CookieConsent";
-import ChatWidget from "@/components/ui/ChatWidget";
 import { Analytics } from "@vercel/analytics/react";
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale, getMessages } from "next-intl/server";
+import ClientLayout from "@/components/layout/ClientLayout";
+import ChatWidget from "@/components/ui/ChatWidget";
+import CookieConsent from "@/components/ui/CookieConsent";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -23,25 +24,29 @@ const spaceGrotesk = Space_Grotesk({
 
 export const metadata: Metadata = {
   title: "STEDING. | Full-Stack Developer & AI Automation Architect",
-  description: "Building scalable AI-driven web platforms & digital automation solutions. Full-stack developer specializing in Next.js, TypeScript, React, and AI automation.",
-  keywords: ["Leroy Steding", "Full-Stack Developer", "AI Automation", "Next.js", "TypeScript", "React", "Hifive", "Web Development", "Netherlands"],
+  description:
+    "Building scalable AI-driven web platforms & digital automation solutions. Full-stack developer specializing in Next.js, TypeScript, React, and AI automation.",
+  keywords: [
+    "Leroy Steding",
+    "Full-Stack Developer",
+    "AI Automation",
+    "Next.js",
+    "TypeScript",
+    "React",
+    "Hifive",
+    "Web Development",
+    "Netherlands",
+  ],
   authors: [{ name: "Leroy Steding" }],
   creator: "Leroy Steding",
   metadataBase: new URL("https://leroysteding.nl"),
-  alternates: {
-    canonical: "https://leroysteding.nl",
-    languages: {
-      'en': 'https://leroysteding.nl',
-      'nl': 'https://leroysteding.nl/nl',
-    },
-  },
   openGraph: {
     type: "website",
-    locale: "en_US",
     url: "https://leroysteding.nl",
     siteName: "STEDING. Portfolio",
     title: "Steding | Full-Stack Developer & AI Automation Architect",
-    description: "Building scalable AI-driven web platforms & digital automation solutions.",
+    description:
+      "Building scalable AI-driven web platforms & digital automation solutions.",
     images: [
       {
         url: "/og-image.png",
@@ -54,7 +59,8 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Full-Stack Developer & AI Automation Architect",
-    description: "Building scalable AI-driven web platforms & digital automation solutions.",
+    description:
+      "Building scalable AI-driven web platforms & digital automation solutions.",
     images: ["/og-image.png"],
   },
   robots: {
@@ -70,21 +76,29 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getLocale();
+  const messages = await getMessages();
+
   return (
-    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${spaceGrotesk.variable}`}>
+    <html
+      lang={locale}
+      suppressHydrationWarning
+      className={`${inter.variable} ${spaceGrotesk.variable}`}
+    >
       <body className="antialiased bg-black text-gray-100">
-        <HreflangTags />
-        <ClientLayout>
-          {children}
-          <Analytics />
-          <CookieConsent />
-          <ChatWidget />
-        </ClientLayout>
+        <NextIntlClientProvider messages={messages}>
+          <ClientLayout>
+            {children}
+            <Analytics />
+            <CookieConsent />
+            <ChatWidget />
+          </ClientLayout>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

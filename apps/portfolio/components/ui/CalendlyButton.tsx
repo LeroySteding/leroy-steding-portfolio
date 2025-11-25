@@ -1,8 +1,8 @@
 "use client";
 
-import { PopupButton } from "react-calendly";
-import { useEffect, useState } from "react";
 import { Calendar } from "lucide-react";
+import { useEffect, useState } from "react";
+import { PopupButton } from "react-calendly";
 
 interface CalendlyButtonProps {
   url?: string;
@@ -33,7 +33,7 @@ export default function CalendlyButton({
   utm,
 }: CalendlyButtonProps) {
   const [rootElement, setRootElement] = useState<HTMLElement | null>(null);
-  
+
   const calendlyUrl = url || process.env.NEXT_PUBLIC_CALENDLY_URL || "";
 
   useEffect(() => {
@@ -43,7 +43,7 @@ export default function CalendlyButton({
   // Determine button class based on variant
   const getButtonClass = () => {
     if (className) return className;
-    
+
     switch (variant) {
       case "primary":
         return "btn-primary";
