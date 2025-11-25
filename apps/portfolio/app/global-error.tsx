@@ -57,6 +57,7 @@ export default function GlobalError({
             )}
 
             <button
+              type="button"
               onClick={reset}
               className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-white text-black hover:bg-gray-200 transition-colors font-semibold"
             >

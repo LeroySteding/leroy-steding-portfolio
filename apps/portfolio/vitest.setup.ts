@@ -59,14 +59,20 @@ vi.mock("framer-motion", () => ({
 }));
 
 // Mock IntersectionObserver
-global.IntersectionObserver = class IntersectionObserver {
+global.IntersectionObserver = class IntersectionObserver
+  implements globalThis.IntersectionObserver
+{
+  readonly root: Element | Document | null = null;
+  readonly rootMargin: string = "";
+  readonly thresholds: ReadonlyArray<number> = [];
+
   disconnect() {}
   observe() {}
-  takeRecords() {
+  takeRecords(): IntersectionObserverEntry[] {
     return [];
   }
   unobserve() {}
-} as any;
+};
 
 // Mock window.matchMedia
 Object.defineProperty(window, "matchMedia", {

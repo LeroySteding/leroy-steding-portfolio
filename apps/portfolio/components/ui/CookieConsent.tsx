@@ -114,6 +114,7 @@ export default function CookieConsent({ className = "" }: CookieConsentProps) {
                     </p>
                   </div>
                   <button
+                    type="button"
                     onClick={handleAcceptNecessary}
                     className="flex-shrink-0 text-text-muted hover:text-text-primary transition-colors"
                     aria-label="Close and accept necessary cookies only"
@@ -159,6 +160,7 @@ export default function CookieConsent({ className = "" }: CookieConsentProps) {
                         <div className="flex items-start gap-4">
                           <div className="flex-shrink-0 mt-1">
                             <button
+                              type="button"
                               onClick={() => toggleCookieType("analytics")}
                               className={`w-12 h-6 rounded-full transition-colors duration-300 flex items-center ${
                                 consent.analytics
@@ -183,6 +185,7 @@ export default function CookieConsent({ className = "" }: CookieConsentProps) {
                         <div className="flex items-start gap-4">
                           <div className="flex-shrink-0 mt-1">
                             <button
+                              type="button"
                               onClick={() => toggleCookieType("marketing")}
                               className={`w-12 h-6 rounded-full transition-colors duration-300 flex items-center ${
                                 consent.marketing
@@ -210,6 +213,7 @@ export default function CookieConsent({ className = "" }: CookieConsentProps) {
                 {/* Action Buttons */}
                 <div className="flex flex-col sm:flex-row gap-3">
                   <button
+                    type="button"
                     onClick={() => setShowSettings(!showSettings)}
                     className="flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-surface hover:bg-surface-light text-text-primary font-semibold border border-surface-light hover:border-accent-primary transition-all duration-300"
                   >
@@ -221,6 +225,7 @@ export default function CookieConsent({ className = "" }: CookieConsentProps) {
 
                   {showSettings ? (
                     <button
+                      type="button"
                       onClick={handleSavePreferences}
                       className="flex-1 flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-accent-primary hover:bg-accent-primary/90 text-white font-bold transition-all duration-300 shadow-lg shadow-accent-primary/20"
                     >
@@ -230,12 +235,14 @@ export default function CookieConsent({ className = "" }: CookieConsentProps) {
                   ) : (
                     <>
                       <button
+                        type="button"
                         onClick={handleAcceptNecessary}
                         className="flex-1 px-6 py-3 rounded-xl bg-surface hover:bg-surface-light text-text-primary font-semibold border border-surface-light hover:border-text-muted transition-all duration-300"
                       >
                         {t.cookies.buttons.necessaryOnly}
                       </button>
                       <button
+                        type="button"
                         onClick={handleAcceptAll}
                         className="flex-1 px-6 py-3 rounded-xl bg-accent-primary hover:bg-accent-primary/90 text-white font-bold transition-all duration-300 shadow-lg shadow-accent-primary/20"
                       >

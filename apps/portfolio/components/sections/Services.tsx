@@ -119,13 +119,22 @@ export default function Services() {
 
                   {/* Title */}
                   <h3 className="text-xl sm:text-2xl font-display font-bold mb-3 sm:mb-4 text-text-primary group-hover:text-accent-primary transition-colors duration-300">
-                    {(t.services as any)[service.titleKey]?.title ||
-                      service.titleKey}
+                    {(
+                      t.services[
+                        service.titleKey as keyof typeof t.services
+                      ] as { title: string; description: string }
+                    ).title || service.titleKey}
                   </h3>
 
                   {/* Description */}
                   <p className="text-text-secondary text-sm sm:text-base leading-relaxed">
-                    {(t.services as any)[service.titleKey]?.description || ""}
+                    {
+                      (
+                        t.services[
+                          service.titleKey as keyof typeof t.services
+                        ] as { title: string; description: string }
+                      ).description
+                    }
                   </p>
                 </div>
               </motion.div>

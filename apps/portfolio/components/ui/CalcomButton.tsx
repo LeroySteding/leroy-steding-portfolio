@@ -3,6 +3,7 @@
 import { getCalApi } from "@calcom/embed-react";
 import { Calendar } from "lucide-react";
 import { useEffect, useState } from "react";
+import type { CalConfig } from "@/types/calendar";
 
 interface CalcomButtonProps {
   calLink?: string;
@@ -80,12 +81,11 @@ export default function CalcomButton({
     const cal = await getCalApi();
 
     // Build config object with only defined values
-    const calConfig: Record<string, any> = {};
+    const calConfig: CalConfig = {};
     if (config?.name) calConfig.name = config.name;
     if (config?.email) calConfig.email = config.email;
     if (config?.notes) calConfig.notes = config.notes;
-    if (config?.guests) calConfig.guests = config.guests;
-    if (config?.theme) calConfig.theme = config.theme;
+    if (config?.guests) calConfig.guests = config.guests.join(",");
 
     cal("modal", {
       calLink: calUsername,
@@ -95,7 +95,12 @@ export default function CalcomButton({
 
   if (!isClient) {
     return (
-      <button className={getButtonClass()} disabled title="Loading...">
+      <button
+        type="button"
+        className={getButtonClass()}
+        disabled
+        title="Loading..."
+      >
         <Calendar className="w-5 h-5" />
         {text}
       </button>
@@ -105,6 +110,7 @@ export default function CalcomButton({
   if (!calUsername) {
     return (
       <button
+        type="button"
         className={getButtonClass()}
         disabled
         title="Cal.com username not configured"
@@ -116,20 +122,11 @@ export default function CalcomButton({
   }
 
   return (
-    <button onClick={handleClick} className={getButtonClass()} type="button">
+    <button type="button" onClick={handleClick} className={getButtonClass()}>
       <Calendar className="w-5 h-5" />
       {text}
     </button>
   );
 }
 
-// TypeScript declaration for gtag
-declare global {
-  interface Window {
-    gtag?: (
-      command: string,
-      action: string,
-      params: Record<string, any>,
-    ) => void;
-  }
-}
+// Note: Window.gtag type is defined in @/types/calendar.d.ts

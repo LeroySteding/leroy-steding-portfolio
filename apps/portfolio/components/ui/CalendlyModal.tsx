@@ -3,6 +3,7 @@
 import { Calendar } from "lucide-react";
 import { useEffect, useState } from "react";
 import { PopupModal, useCalendlyEventListener } from "react-calendly";
+import type { CalendlyEventScheduledEvent } from "@/types/calendar";
 
 interface CalendlyModalProps {
   url?: string;
@@ -21,7 +22,7 @@ interface CalendlyModalProps {
     utmContent?: string;
     utmTerm?: string;
   };
-  onEventScheduled?: (event: any) => void;
+  onEventScheduled?: (event: CalendlyEventScheduledEvent) => void;
 }
 
 export default function CalendlyModal({
@@ -70,6 +71,7 @@ export default function CalendlyModal({
   if (!calendlyUrl || !rootElement) {
     return (
       <button
+        type="button"
         className={buttonClassName}
         disabled
         title="Calendly URL not configured"
@@ -83,9 +85,9 @@ export default function CalendlyModal({
   return (
     <>
       <button
+        type="button"
         onClick={handleOpenModal}
         className={buttonClassName}
-        type="button"
       >
         <Calendar className="w-5 h-5" />
         {buttonText}
@@ -103,13 +105,4 @@ export default function CalendlyModal({
   );
 }
 
-// TypeScript declaration for gtag
-declare global {
-  interface Window {
-    gtag?: (
-      command: string,
-      action: string,
-      params: Record<string, any>,
-    ) => void;
-  }
-}
+// Note: Window.gtag type is defined in @/types/calendar.d.ts

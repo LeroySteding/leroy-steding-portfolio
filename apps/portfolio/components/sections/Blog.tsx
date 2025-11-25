@@ -83,6 +83,7 @@ export default function Blog() {
               ["all", "article", "tutorial", "research"] as CategoryFilter[]
             ).map((category) => (
               <button
+                type="button"
                 key={category}
                 onClick={() => setSelectedCategory(category)}
                 className={`px-4 sm:px-5 md:px-6 py-2.5 sm:py-3 rounded-xl font-bold text-sm sm:text-base transition-all duration-300 min-h-[44px] ${

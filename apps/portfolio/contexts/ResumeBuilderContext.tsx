@@ -10,7 +10,7 @@ import type {
 } from "@/lib/cv/types";
 
 interface ResumeBuilderContextType extends ResumeBuilderState {
-  updateCVData: (path: string, value: any) => void;
+  updateCVData: (path: string, value: unknown) => void;
   setIsEditing: (isEditing: boolean) => void;
   setEditingField: (field: string | null) => void;
   requestAISuggestions: (field: string, content: string) => Promise<void>;
@@ -50,10 +50,11 @@ export function ResumeBuilderProvider({
     layout: "single-column",
   });
 
-  const updateCVData = useCallback((path: string, value: any) => {
+  const updateCVData = useCallback((path: string, value: unknown) => {
     setCvData((prev) => {
       const newData = { ...prev };
       const keys = path.split(".");
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       let current: any = newData;
 
       for (let i = 0; i < keys.length - 1; i++) {

@@ -108,17 +108,36 @@ export default function Testimonials() {
 
                 {/* Quote */}
                 <p className="text-text-secondary text-base leading-relaxed mb-6 flex-1 italic">
-                  "{(t.testimonials as any)[testimonial.quoteKey] || ""}"
+                  "
+                  {String(
+                    t.testimonials[
+                      testimonial.quoteKey as keyof typeof t.testimonials
+                    ] || "",
+                  )}
+                  "
                 </p>
 
                 {/* Author */}
                 <div className="border-t-2 border-surface pt-6">
                   <p className="font-bold text-lg text-text-primary">
-                    {(t.testimonials as any)[testimonial.nameKey] || ""}
+                    {String(
+                      t.testimonials[
+                        testimonial.nameKey as keyof typeof t.testimonials
+                      ] || "",
+                    )}
                   </p>
                   <p className="text-text-muted text-sm">
-                    {(t.testimonials as any)[testimonial.roleKey] || ""} ·{" "}
-                    {(t.testimonials as any)[testimonial.companyKey] || ""}
+                    {String(
+                      t.testimonials[
+                        testimonial.roleKey as keyof typeof t.testimonials
+                      ] || "",
+                    )}{" "}
+                    ·{" "}
+                    {String(
+                      t.testimonials[
+                        testimonial.companyKey as keyof typeof t.testimonials
+                      ] || "",
+                    )}
                   </p>
                 </div>
               </div>

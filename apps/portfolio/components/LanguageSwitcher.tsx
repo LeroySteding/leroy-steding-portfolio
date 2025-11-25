@@ -44,6 +44,7 @@ export default function LanguageSwitcher() {
   return (
     <div className="flex items-center gap-1">
       <button
+        type="button"
         onClick={() => switchLocale("en")}
         aria-label="Switch to English"
         className={`px-3 py-2 text-sm font-medium rounded-md transition-all duration-200 ${
@@ -55,6 +56,7 @@ export default function LanguageSwitcher() {
         EN
       </button>
       <button
+        type="button"
         onClick={() => switchLocale("nl")}
         aria-label="Switch to Dutch"
         className={`px-3 py-2 text-sm font-medium rounded-md transition-all duration-200 ${

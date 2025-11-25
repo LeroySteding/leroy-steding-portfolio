@@ -13,8 +13,11 @@ test.describe("Performance Budgets", () => {
         // Largest Contentful Paint (LCP)
         new PerformanceObserver((list) => {
           const entries = list.getEntries();
-          const lastEntry = entries[entries.length - 1] as any;
-          metrics.lcp = lastEntry.renderTime || lastEntry.loadTime;
+          const lastEntry = entries[entries.length - 1] as PerformanceEntry & {
+            renderTime?: number;
+            loadTime?: number;
+          };
+          metrics.lcp = lastEntry.renderTime || lastEntry.loadTime || 0;
         }).observe({ type: "largest-contentful-paint", buffered: true });
 
         // First Input Delay (FID) - simulated with First Contentful Paint
@@ -28,9 +31,11 @@ test.describe("Performance Budgets", () => {
         // Cumulative Layout Shift (CLS)
         let clsScore = 0;
         new PerformanceObserver((list) => {
-          for (const entry of list.getEntries() as any[]) {
+          for (const entry of list.getEntries() as Array<
+            PerformanceEntry & { hadRecentInput?: boolean; value?: number }
+          >) {
             if (!entry.hadRecentInput) {
-              clsScore += entry.value;
+              clsScore += entry.value || 0;
             }
           }
           metrics.cls = clsScore;

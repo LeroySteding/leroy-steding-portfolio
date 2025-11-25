@@ -78,7 +78,7 @@ export const postsByCategoryQuery = groq`
 
 // Get posts by tag
 export const postsByTagQuery = groq`
-  *[_type == "post" && $tag in tags && language == $language] | order(publishedAt desc) {
+  *[_type == "post" && $tagName in tags && language == $language] | order(publishedAt desc) {
     _id,
     title,
     slug,

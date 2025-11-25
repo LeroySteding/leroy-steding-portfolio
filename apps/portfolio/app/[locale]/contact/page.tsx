@@ -236,6 +236,7 @@ export default function ContactPage() {
 
                       <div className="flex flex-col sm:flex-row gap-3 mt-6">
                         <button
+                          type="button"
                           onClick={resetForm}
                           className="btn-primary flex-1 sm:flex-none"
                         >

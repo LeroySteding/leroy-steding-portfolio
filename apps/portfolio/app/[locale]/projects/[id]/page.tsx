@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { ArrowLeft, Calendar, ExternalLink, Github, Tag } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import MetaTags from "@/components/seo/MetaTags";
@@ -55,10 +56,13 @@ export default function ProjectDetailPage() {
           {/* Featured Image Background */}
           {project.image ? (
             <div className="absolute inset-0">
-              <img
+              <Image
                 src={project.image}
                 alt={project.title}
                 className="w-full h-full object-cover"
+                fill
+                style={{ objectFit: "cover" }}
+                priority
               />
               {/* Dark gradient overlay for readability */}
               <div className="absolute inset-0 bg-gradient-to-b from-primary-bg/60 via-primary-bg/80 to-primary-bg" />

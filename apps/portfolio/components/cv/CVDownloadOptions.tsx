@@ -68,6 +68,7 @@ export default function CVDownloadOptions({
         <div className="space-y-3">
           {/* ATS Version */}
           <button
+            type="button"
             onClick={() => handleDownload("ats")}
             disabled={isDownloading}
             className="w-full flex items-start gap-3 p-3 rounded-lg bg-cyber-gray hover:bg-cyber-gray-light transition-all duration-200 group text-left disabled:opacity-50"
@@ -85,6 +86,7 @@ export default function CVDownloadOptions({
 
           {/* Tech Version */}
           <button
+            type="button"
             onClick={() => handleDownload("tech")}
             disabled={isDownloading}
             className="w-full flex items-start gap-3 p-3 rounded-lg bg-cyber-gray hover:bg-cyber-gray-light transition-all duration-200 group text-left disabled:opacity-50"
@@ -102,6 +104,7 @@ export default function CVDownloadOptions({
 
           {/* Design Version */}
           <button
+            type="button"
             onClick={() => handleDownload("design")}
             disabled={isDownloading}
             className="w-full flex items-start gap-3 p-3 rounded-lg bg-cyber-gray hover:bg-cyber-gray-light transition-all duration-200 group text-left disabled:opacity-50"

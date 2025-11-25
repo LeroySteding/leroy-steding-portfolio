@@ -2,6 +2,7 @@
 
 import Cal, { getCalApi } from "@calcom/embed-react";
 import { useEffect, useState } from "react";
+import type { CalBookingSuccessfulEvent, CalConfig } from "@/types/calendar";
 
 interface CalcomWidgetProps {
   calLink?: string;
@@ -13,7 +14,7 @@ interface CalcomWidgetProps {
     theme?: "light" | "dark" | "auto";
   };
   styles?: React.CSSProperties;
-  onEventScheduled?: (event: any) => void;
+  onEventScheduled?: (event: CalBookingSuccessfulEvent) => void;
   onDateAndTimeSelected?: () => void;
   onEventTypeViewed?: () => void;
 }
@@ -48,7 +49,7 @@ export default function CalcomWidget({
       // Set up event listeners for analytics and callbacks
       cal("on", {
         action: "bookingSuccessful",
-        callback: (e: any) => {
+        callback: (e: CalBookingSuccessfulEvent) => {
           if (typeof window !== "undefined" && window.gtag) {
             window.gtag("event", "calcom_event_scheduled", {
               event_category: "calcom",
@@ -106,15 +107,13 @@ export default function CalcomWidget({
   }
 
   // Build config object with only defined values
-  const calConfig: Record<string, any> = {
+  const calConfig: CalConfig = {
     layout: "month_view",
-    hideEventTypeDetails: true,
   };
   if (config?.name) calConfig.name = config.name;
   if (config?.email) calConfig.email = config.email;
   if (config?.notes) calConfig.notes = config.notes;
-  if (config?.guests) calConfig.guests = config.guests;
-  if (config?.theme) calConfig.theme = config.theme || "dark";
+  if (config?.guests) calConfig.guests = config.guests.join(",");
 
   return (
     <div className="calcom-widget-container overflow-hidden">
@@ -128,13 +127,4 @@ export default function CalcomWidget({
   );
 }
 
-// TypeScript declaration for gtag
-declare global {
-  interface Window {
-    gtag?: (
-      command: string,
-      action: string,
-      params: Record<string, any>,
-    ) => void;
-  }
-}
+// Note: Window.gtag type is defined in @/types/calendar.d.ts

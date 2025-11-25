@@ -157,6 +157,7 @@ function ResumeBuilderContent() {
 
             <div className="flex items-center gap-2">
               <button
+                type="button"
                 onClick={() => setIsEditing(!isEditing)}
                 className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
                   isEditing
@@ -169,6 +170,7 @@ function ResumeBuilderContent() {
               </button>
 
               <button
+                type="button"
                 onClick={() => setShowCustomization(!showCustomization)}
                 className="flex items-center gap-2 px-4 py-2 rounded-lg bg-violet-500 text-white hover:bg-violet-600 transition-colors"
               >
@@ -177,6 +179,7 @@ function ResumeBuilderContent() {
               </button>
 
               <button
+                type="button"
                 onClick={() => setAtsMode(!atsMode)}
                 className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
                   atsMode
@@ -190,6 +193,7 @@ function ResumeBuilderContent() {
               </button>
 
               <button
+                type="button"
                 onClick={resetToOriginal}
                 className="flex items-center gap-2 px-4 py-2 rounded-lg bg-orange-500 text-white hover:bg-orange-600 transition-colors"
                 title={t.reset}
@@ -200,6 +204,7 @@ function ResumeBuilderContent() {
 
               <div className="flex items-center gap-1 border-l border-gray-300 dark:border-gray-600 pl-2 ml-2">
                 <button
+                  type="button"
                   onClick={() => handleDownloadPDF(false)}
                   className="flex items-center gap-2 px-4 py-2 rounded-lg bg-green-500 text-white hover:bg-green-600 transition-colors"
                   title="Download styled PDF (Beautiful version)"
@@ -210,6 +215,7 @@ function ResumeBuilderContent() {
                 </button>
 
                 <button
+                  type="button"
                   onClick={() => handleDownloadPDF(true)}
                   className="flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition-colors"
                   title="Download ATS-optimized PDF (No colors/graphics)"
@@ -245,6 +251,7 @@ function ResumeBuilderContent() {
                       ["default", "professional", "modern", "creative"] as const
                     ).map((scheme) => (
                       <button
+                        type="button"
                         key={scheme}
                         onClick={() =>
                           updateCustomization({ colorScheme: scheme })
@@ -270,7 +277,11 @@ function ResumeBuilderContent() {
                     value={customization.fontFamily}
                     onChange={(e) =>
                       updateCustomization({
-                        fontFamily: e.target.value as any,
+                        fontFamily: e.target.value as
+                          | "inter"
+                          | "roboto"
+                          | "merriweather"
+                          | "playfair",
                       })
                     }
                     className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700"
@@ -290,6 +301,7 @@ function ResumeBuilderContent() {
                   <div className="grid grid-cols-3 gap-2">
                     {(["small", "medium", "large"] as const).map((size) => (
                       <button
+                        type="button"
                         key={size}
                         onClick={() => updateCustomization({ fontSize: size })}
                         className={`px-3 py-2 rounded-lg border-2 text-sm capitalize transition-colors ${
@@ -313,6 +325,7 @@ function ResumeBuilderContent() {
                     {(["compact", "normal", "relaxed"] as const).map(
                       (spacing) => (
                         <button
+                          type="button"
                           key={spacing}
                           onClick={() => updateCustomization({ spacing })}
                           className={`px-3 py-2 rounded-lg border-2 text-sm capitalize transition-colors ${

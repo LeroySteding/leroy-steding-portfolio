@@ -15,6 +15,7 @@ import {
   Tag,
   Twitter,
 } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
@@ -25,8 +26,23 @@ import CTA from "@/components/ui/CTA";
 import NewsletterSubscribe from "@/components/ui/NewsletterSubscribe";
 import { getBlogPosts } from "@/utils/getLocalizedData";
 
+interface BlogPost {
+  id: string;
+  slug: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  coverImage?: string;
+  category: string;
+  tags: string[];
+  author: string;
+  publishedAt: string;
+  readingTime: string;
+  featured?: boolean;
+}
+
 interface BlogPostClientProps {
-  post: any;
+  post: BlogPost;
   language?: "en" | "nl";
 }
 
@@ -154,10 +170,12 @@ export default function BlogPostClient({
       <div className="relative min-h-[70vh] flex items-end overflow-hidden">
         {post.coverImage ? (
           <div className="absolute inset-0">
-            <img
+            <Image
               src={post.coverImage}
               alt={post.title}
-              className="w-full h-full object-cover"
+              fill
+              className="object-cover"
+              priority
             />
             <div className="absolute inset-0 bg-gradient-to-b from-primary-bg/60 via-primary-bg/80 to-primary-bg" />
             <div className="absolute inset-0 bg-gradient-to-r from-primary-bg/40 to-transparent" />
@@ -244,7 +262,7 @@ export default function BlogPostClient({
                     return match ? (
                       <div className="my-8 rounded-xl overflow-hidden">
                         <SyntaxHighlighter
-                          style={vscDarkPlus as any}
+                          style={vscDarkPlus}
                           language={match[1]}
                           PreTag="div"
                           customStyle={{
@@ -436,6 +454,7 @@ export default function BlogPostClient({
                 </h4>
                 <div className="space-y-3">
                   <button
+                    type="button"
                     onClick={shareToTwitter}
                     className="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-surface hover:bg-surface-light text-text-secondary hover:text-accent-primary transition-all font-bold"
                   >
@@ -443,6 +462,7 @@ export default function BlogPostClient({
                     <span>Twitter</span>
                   </button>
                   <button
+                    type="button"
                     onClick={shareToLinkedIn}
                     className="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-surface hover:bg-surface-light text-text-secondary hover:text-accent-primary transition-all font-bold"
                   >
@@ -450,6 +470,7 @@ export default function BlogPostClient({
                     <span>LinkedIn</span>
                   </button>
                   <button
+                    type="button"
                     onClick={shareToFacebook}
                     className="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-surface hover:bg-surface-light text-text-secondary hover:text-accent-primary transition-all font-bold"
                   >
@@ -457,6 +478,7 @@ export default function BlogPostClient({
                     <span>Facebook</span>
                   </button>
                   <button
+                    type="button"
                     onClick={copyLink}
                     className="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-surface hover:bg-surface-light text-text-secondary hover:text-accent-primary transition-all font-bold"
                   >

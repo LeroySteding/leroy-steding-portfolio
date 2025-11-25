@@ -19,7 +19,7 @@ interface ErrorContext {
   };
   tags?: Record<string, string>;
   level?: "fatal" | "error" | "warning" | "info" | "debug";
-  extra?: Record<string, any>;
+  extra?: Record<string, unknown>;
 }
 
 /**
@@ -213,7 +213,7 @@ export function clearUser(): void {
  */
 export function addBreadcrumb(
   message: string,
-  data?: Record<string, any>,
+  data?: Record<string, unknown>,
 ): void {
   if (process.env.NODE_ENV === "development") {
     console.log("Breadcrumb:", message, data);

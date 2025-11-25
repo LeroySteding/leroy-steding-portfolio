@@ -234,6 +234,7 @@ async function createDefaultSections() {
   try {
     for (const section of sections) {
       console.log(`Creating ${section._type} (${section.language})...`);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       await client.createOrReplace(section as any);
     }
     console.log("✅ All default sections created successfully!");

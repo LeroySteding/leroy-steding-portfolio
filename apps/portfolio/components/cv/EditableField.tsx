@@ -122,6 +122,7 @@ export function EditableField({
           <div className="flex items-center gap-1 flex-shrink-0">
             {aiSuggestionsEnabled && (
               <button
+                type="button"
                 onClick={handleRequestAI}
                 disabled={isLoadingSuggestions}
                 className="p-2 bg-violet-500 hover:bg-violet-600 text-white rounded-lg transition-colors disabled:opacity-50"
@@ -135,6 +136,7 @@ export function EditableField({
               </button>
             )}
             <button
+              type="button"
               onClick={handleSave}
               className="p-2 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors"
               title="Save changes"
@@ -142,6 +144,7 @@ export function EditableField({
               <Check className="w-4 h-4" />
             </button>
             <button
+              type="button"
               onClick={handleCancel}
               className="p-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors"
               title="Cancel"
@@ -162,6 +165,7 @@ export function EditableField({
             <div className="space-y-2">
               {aiSuggestions[path].map((suggestion, index) => (
                 <button
+                  type="button"
                   key={index}
                   onClick={() => handleApplySuggestion(suggestion)}
                   className="w-full text-left p-3 bg-white dark:bg-gray-800 hover:bg-violet-100 dark:hover:bg-violet-900/30 border border-violet-200 dark:border-violet-700 rounded-lg transition-colors text-sm text-gray-900 dark:text-white"

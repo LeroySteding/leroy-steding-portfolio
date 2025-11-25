@@ -59,6 +59,7 @@ export default function CalendlyButton({
   if (!calendlyUrl || !rootElement) {
     return (
       <button
+        type="button"
         className={getButtonClass()}
         disabled
         title="Calendly URL not configured"

@@ -128,23 +128,27 @@ export default function TestimonialsPage() {
                   {/* Quote */}
                   <p className="text-text-secondary text-base leading-relaxed mb-6 flex-1 italic">
                     "
-                    {(t.testimonials as any)[testimonial.quoteKey] ||
-                      testimonial.quoteKey}
+                    {t.testimonials[
+                      testimonial.quoteKey as keyof typeof t.testimonials
+                    ] || testimonial.quoteKey}
                     "
                   </p>
 
                   {/* Author */}
                   <div className="border-t-2 border-surface pt-6">
                     <p className="font-bold text-lg text-text-primary">
-                      {(t.testimonials as any)[testimonial.nameKey] ||
-                        testimonial.nameKey}
+                      {t.testimonials[
+                        testimonial.nameKey as keyof typeof t.testimonials
+                      ] || testimonial.nameKey}
                     </p>
                     <p className="text-text-muted text-sm">
-                      {(t.testimonials as any)[testimonial.roleKey] ||
-                        testimonial.roleKey}{" "}
+                      {t.testimonials[
+                        testimonial.roleKey as keyof typeof t.testimonials
+                      ] || testimonial.roleKey}{" "}
                       ·{" "}
-                      {(t.testimonials as any)[testimonial.companyKey] ||
-                        testimonial.companyKey}
+                      {t.testimonials[
+                        testimonial.companyKey as keyof typeof t.testimonials
+                      ] || testimonial.companyKey}
                     </p>
                   </div>
                 </div>

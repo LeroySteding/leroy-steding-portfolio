@@ -163,6 +163,7 @@ export default function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
                     className="flex-1 bg-transparent text-text-primary text-lg placeholder:text-text-muted focus:outline-none"
                   />
                   <button
+                    type="button"
                     onClick={onClose}
                     className="text-text-muted hover:text-text-primary transition-colors"
                     aria-label="Close search"

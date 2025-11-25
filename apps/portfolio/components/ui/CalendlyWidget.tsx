@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { InlineWidget, useCalendlyEventListener } from "react-calendly";
+import type { CalendlyEventScheduledEvent } from "@/types/calendar";
 
 interface CalendlyWidgetProps {
   url?: string;
@@ -26,7 +27,7 @@ interface CalendlyWidgetProps {
     utmTerm?: string;
   };
   styles?: React.CSSProperties;
-  onEventScheduled?: (event: any) => void;
+  onEventScheduled?: (event: CalendlyEventScheduledEvent) => void;
   onDateAndTimeSelected?: () => void;
   onEventTypeViewed?: () => void;
 }
@@ -141,13 +142,4 @@ export default function CalendlyWidget({
   );
 }
 
-// TypeScript declaration for gtag
-declare global {
-  interface Window {
-    gtag?: (
-      command: string,
-      action: string,
-      params: Record<string, any>,
-    ) => void;
-  }
-}
+// Note: Window.gtag type is defined in @/types/calendar.d.ts

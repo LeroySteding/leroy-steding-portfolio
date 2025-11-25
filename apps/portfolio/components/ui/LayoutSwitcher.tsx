@@ -42,6 +42,7 @@ export default function LayoutSwitcher() {
 
         {/* Toggle Button */}
         <button
+          type="button"
           onClick={toggleLayoutMode}
           className="flex items-center gap-3 px-4 py-3 rounded-xl bg-surface/95 backdrop-blur-md border border-surface-light shadow-2xl hover:shadow-accent-primary/20 hover:border-accent-primary/50 transition-all duration-300 group"
           aria-label={`Switch to ${layoutMode === "full-width" ? "contained" : "full-width"} layout`}

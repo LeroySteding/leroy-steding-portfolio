@@ -314,14 +314,3 @@ export default function BookingSuccessClient({
     </div>
   );
 }
-
-// TypeScript declaration for gtag
-declare global {
-  interface Window {
-    gtag?: (
-      command: string,
-      action: string,
-      params: Record<string, any>,
-    ) => void;
-  }
-}

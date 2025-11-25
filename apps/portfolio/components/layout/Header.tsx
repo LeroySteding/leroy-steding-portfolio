@@ -143,6 +143,7 @@ export default function Header({ onSearchClick }: HeaderProps) {
             <div className="hidden lg:flex items-center gap-1">
               {/* Search Button */}
               <button
+                type="button"
                 onClick={onSearchClick}
                 className="p-2 rounded-md text-text-muted hover:text-accent-primary hover:bg-surface/50 transition-all duration-200"
                 aria-label="Search"
@@ -156,6 +157,7 @@ export default function Header({ onSearchClick }: HeaderProps) {
 
               {/* Theme Toggle */}
               <button
+                type="button"
                 onClick={toggleTheme}
                 className="p-2 rounded-md text-text-muted hover:text-accent-primary hover:bg-surface/50 transition-all duration-200"
                 aria-label={t.nav.toggleTheme}
@@ -171,6 +173,7 @@ export default function Header({ onSearchClick }: HeaderProps) {
 
             {/* Mobile menu button */}
             <button
+              type="button"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="lg:hidden p-2.5 rounded-lg bg-surface hover:bg-accent-primary transition-all duration-200 border border-surface hover:border-accent-primary group"
               aria-label={t.nav.toggleMenu}
@@ -224,6 +227,7 @@ export default function Header({ onSearchClick }: HeaderProps) {
               <div className="px-6 pt-4 mt-4 border-t border-surface space-y-3">
                 {/* Search */}
                 <button
+                  type="button"
                   onClick={() => {
                     onSearchClick?.();
                     setIsMobileMenuOpen(false);
@@ -238,6 +242,7 @@ export default function Header({ onSearchClick }: HeaderProps) {
                 <div className="flex items-center justify-between px-4">
                   <LanguageSwitcher />
                   <button
+                    type="button"
                     onClick={toggleTheme}
                     className="p-2 rounded-lg bg-surface hover:bg-surface-light transition-all duration-200"
                     aria-label={t.nav.toggleTheme}

@@ -9,6 +9,7 @@ import {
   FolderKanban,
   Github,
 } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import LayoutContainer, { LayoutGrid } from "@/components/ui/LayoutContainer";
@@ -104,10 +105,12 @@ export default function ProjectsPage() {
                     <div className="relative h-64 bg-secondary-bg overflow-hidden">
                       {project.image ? (
                         <>
-                          <img
+                          <Image
                             src={project.image}
                             alt={project.title}
                             className="w-full h-full object-cover"
+                            fill
+                            style={{ objectFit: "cover" }}
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-primary-bg/60 to-transparent" />
                         </>

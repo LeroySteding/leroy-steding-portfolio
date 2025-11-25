@@ -4,8 +4,16 @@ import CalendlyButton from "@/components/ui/CalendlyButton";
 
 // Mock react-calendly
 vi.mock("react-calendly", () => ({
-  PopupButton: ({ text, className, disabled }: any) => (
-    <button className={className} disabled={disabled}>
+  PopupButton: ({
+    text,
+    className,
+    disabled,
+  }: {
+    text?: string;
+    className?: string;
+    disabled?: boolean;
+  }) => (
+    <button type="button" className={className} disabled={disabled}>
       {text}
     </button>
   ),

@@ -22,7 +22,7 @@ interface UniversalCalendarWidgetProps {
   // Common props
   url?: string;
   styles?: React.CSSProperties;
-  onEventScheduled?: (event: any) => void;
+  onEventScheduled?: (event: unknown) => void;
   onDateAndTimeSelected?: () => void;
   onEventTypeViewed?: () => void;
 

@@ -15,6 +15,7 @@ import {
   Tag,
   X,
 } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useLocale } from "next-intl";
 import { useMemo, useState } from "react";
@@ -147,10 +148,12 @@ export default function BlogPage() {
                   <div className="relative h-full rounded-2xl overflow-hidden">
                     {/* Background Image */}
                     {mainFeatured.coverImage ? (
-                      <img
+                      <Image
                         src={mainFeatured.coverImage}
                         alt={mainFeatured.title}
-                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-700"
+                        priority
                       />
                     ) : (
                       <div className="absolute inset-0 bg-linear-to-br from-accent-primary/30 to-accent-secondary/30" />
@@ -244,10 +247,11 @@ export default function BlogPage() {
                       >
                         {/* Background Image */}
                         {post.coverImage ? (
-                          <img
+                          <Image
                             src={post.coverImage}
                             alt={post.title}
-                            className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                            fill
+                            className="object-cover group-hover:scale-105 transition-transform duration-700"
                           />
                         ) : (
                           <div className="absolute inset-0 bg-gradient-to-br from-accent-secondary/30 to-accent-primary/30" />
@@ -325,6 +329,7 @@ export default function BlogPage() {
                 />
                 {searchQuery && (
                   <button
+                    type="button"
                     onClick={() => setSearchQuery("")}
                     className="absolute right-4 top-1/2 -translate-y-1/2 p-1 hover:bg-surface-hover rounded-lg transition-colors"
                   >
@@ -372,10 +377,11 @@ export default function BlogPage() {
                             <div className="relative h-44 overflow-hidden">
                               {post.coverImage ? (
                                 <>
-                                  <img
+                                  <Image
                                     src={post.coverImage}
                                     alt={post.title}
-                                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                    fill
+                                    className="object-cover group-hover:scale-105 transition-transform duration-500"
                                   />
                                   <div className="absolute inset-0 bg-gradient-to-t from-surface to-transparent" />
                                 </>
@@ -447,6 +453,7 @@ export default function BlogPage() {
                     {t.blog.page.empty.subtitle}
                   </p>
                   <button
+                    type="button"
                     onClick={clearFilters}
                     className="px-5 py-2 bg-accent-primary text-primary-bg rounded-lg font-bold hover:scale-105 transition-transform"
                   >
@@ -464,6 +471,7 @@ export default function BlogPage() {
                 className="flex items-center justify-center gap-2 mt-12"
               >
                 <button
+                  type="button"
                   onClick={() =>
                     setCurrentPage((prev) => Math.max(1, prev - 1))
                   }
@@ -476,6 +484,7 @@ export default function BlogPage() {
                 {Array.from({ length: totalPages }, (_, i) => i + 1).map(
                   (page) => (
                     <button
+                      type="button"
                       key={page}
                       onClick={() => setCurrentPage(page)}
                       className={`w-10 h-10 rounded-lg font-bold transition-all ${
@@ -490,6 +499,7 @@ export default function BlogPage() {
                 )}
 
                 <button
+                  type="button"
                   onClick={() =>
                     setCurrentPage((prev) => Math.min(totalPages, prev + 1))
                   }
@@ -524,6 +534,7 @@ export default function BlogPage() {
                       : allPosts.filter((p) => p.category === category).length;
                   return (
                     <button
+                      type="button"
                       key={category}
                       onClick={() => setSelectedCategory(category)}
                       className={`w-full flex items-center justify-between px-4 py-3 rounded-lg font-medium transition-all ${
@@ -556,6 +567,7 @@ export default function BlogPage() {
                 <div className="flex flex-wrap gap-2">
                   {allTags.map((tag) => (
                     <button
+                      type="button"
                       key={tag}
                       onClick={() => toggleTag(tag)}
                       className={`px-3 py-1.5 text-sm rounded-lg font-medium transition-all ${
@@ -576,6 +588,7 @@ export default function BlogPage() {
               searchQuery ||
               selectedTags.length > 0) && (
               <button
+                type="button"
                 onClick={clearFilters}
                 className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-lg border-2 border-accent-primary/50 text-accent-primary font-bold hover:bg-accent-primary hover:text-primary-bg transition-all"
               >

@@ -78,14 +78,15 @@ export default function ServicesPage() {
 
                       {/* Title */}
                       <h3 className="text-2xl font-display font-bold mb-4 text-text-primary group-hover:text-accent-primary transition-colors duration-300">
-                        {(t.services as any)[service.titleKey]?.title ||
-                          service.titleKey}
+                        {t.services[service.titleKey as keyof typeof t.services]
+                          ?.title || service.titleKey}
                       </h3>
 
                       {/* Description */}
                       <p className="text-text-secondary text-base leading-relaxed mb-6 flex-1">
-                        {(t.services as any)[service.descriptionKey]
-                          ?.description || ""}
+                        {t.services[
+                          service.descriptionKey as keyof typeof t.services
+                        ]?.description || ""}
                       </p>
 
                       {/* Features preview */}

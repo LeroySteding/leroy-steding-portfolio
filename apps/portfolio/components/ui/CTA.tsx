@@ -123,7 +123,9 @@ export default function CTA({
     title: title || preset.title,
     description: description || preset.description,
     primaryButton: primaryButton || preset.primaryButton,
-    secondaryButton: secondaryButton || (preset as any).secondaryButton,
+    secondaryButton:
+      secondaryButton ||
+      ("secondaryButton" in preset ? preset.secondaryButton : undefined),
   };
 
   const PrimaryIcon = config.primaryButton?.icon

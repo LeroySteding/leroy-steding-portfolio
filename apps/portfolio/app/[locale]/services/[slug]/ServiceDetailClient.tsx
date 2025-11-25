@@ -106,7 +106,8 @@ export default function ServiceDetailClient({
               transition={{ duration: 0.6, delay: 0.2 }}
               className="font-display font-black text-5xl md:text-6xl lg:text-7xl mb-6"
             >
-              {(t.services as any)[service.titleKey]?.title || service.titleKey}
+              {t.services[service.titleKey as keyof typeof t.services]?.title ||
+                service.titleKey}
             </motion.h1>
 
             <motion.p
@@ -115,8 +116,8 @@ export default function ServiceDetailClient({
               transition={{ duration: 0.6, delay: 0.3 }}
               className="text-xl text-text-secondary leading-relaxed mb-10"
             >
-              {(t.services as any)[service.titleKey]?.description ||
-                service.descriptionKey}
+              {t.services[service.titleKey as keyof typeof t.services]
+                ?.description || service.descriptionKey}
             </motion.p>
 
             <motion.div
@@ -398,7 +399,8 @@ export default function ServiceDetailClient({
             <p className="text-xl text-text-secondary mb-10 leading-relaxed">
               Let's discuss how{" "}
               {(
-                (t.services as any)[service.titleKey]?.title || service.titleKey
+                t.services[service.titleKey as keyof typeof t.services]
+                  ?.title || service.titleKey
               ).toLowerCase()}{" "}
               can help you achieve your goals
             </p>

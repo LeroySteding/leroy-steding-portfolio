@@ -165,6 +165,7 @@ export default function ChatPage({ translations, locale }: ChatPageProps) {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 w-full max-w-2xl">
                 {translations.starterPrompts.map((prompt, index) => (
                   <button
+                    type="button"
                     key={index}
                     onClick={() => handleStarterPrompt(prompt)}
                     className="text-left p-4 rounded-xl bg-bg-secondary hover:bg-bg-tertiary border border-border transition-all duration-200 text-sm text-text-secondary hover:text-text-primary hover:border-accent-primary/50"
@@ -267,6 +268,7 @@ export default function ChatPage({ translations, locale }: ChatPageProps) {
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
                       {availablePrompts.map((prompt, index) => (
                         <button
+                          type="button"
                           key={index}
                           onClick={() => handleStarterPrompt(prompt)}
                           className="text-left p-3 rounded-lg bg-bg-secondary hover:bg-bg-tertiary border border-border transition-colors duration-200 text-sm text-text-secondary hover:text-text-primary"

@@ -349,6 +349,7 @@ export default function BookingPageClient() {
 
                 return (
                   <motion.button
+                    type="button"
                     key={type.id}
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -605,6 +606,7 @@ export default function BookingPageClient() {
                     className="card overflow-hidden"
                   >
                     <button
+                      type="button"
                       onClick={() => setOpenFaqIndex(isOpen ? null : index)}
                       className="w-full text-left p-6 flex items-start justify-between gap-4 hover:bg-surface/50 transition-colors"
                     >

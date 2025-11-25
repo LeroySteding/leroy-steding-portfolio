@@ -112,6 +112,7 @@ export default function TechStack() {
             />
             {searchQuery && (
               <button
+                type="button"
                 onClick={() => setSearchQuery("")}
                 className="absolute right-4 top-1/2 -translate-y-1/2 p-1 hover:bg-surface-light rounded-full transition-colors"
               >
@@ -135,6 +136,7 @@ export default function TechStack() {
             </h3>
             {selectedCategories.length > 0 && (
               <button
+                type="button"
                 onClick={() => setSelectedCategories([])}
                 className="text-sm font-semibold text-accent-primary hover:text-accent-secondary transition-colors flex items-center gap-2"
               >
@@ -148,6 +150,7 @@ export default function TechStack() {
               const isSelected = selectedCategories.includes(category.name);
               return (
                 <button
+                  type="button"
                   key={category.name}
                   onClick={() => toggleCategory(category.name)}
                   className={`px-6 py-3 rounded-xl font-bold text-base transition-all duration-300 flex items-center gap-3 ${
@@ -202,6 +205,7 @@ export default function TechStack() {
                 Try adjusting your search or filters
               </p>
               <button
+                type="button"
                 onClick={() => {
                   setSearchQuery("");
                   setSelectedCategories([]);

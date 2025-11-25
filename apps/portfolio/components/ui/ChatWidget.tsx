@@ -205,6 +205,7 @@ export default function ChatWidget() {
                     <div className="grid grid-cols-1 gap-2">
                       {t.chat.starterPrompts.map((prompt, index) => (
                         <button
+                          type="button"
                           key={index}
                           onClick={() => handleStarterPrompt(prompt)}
                           className="text-left p-3 rounded-lg bg-bg-secondary hover:bg-bg-tertiary border border-border transition-colors duration-200 text-sm text-text-secondary hover:text-text-primary"
@@ -302,6 +303,7 @@ export default function ChatWidget() {
                           </p>
                           {availablePrompts.map((prompt, index) => (
                             <button
+                              type="button"
                               key={index}
                               onClick={() => handleStarterPrompt(prompt)}
                               className="w-full text-left p-2 rounded-lg bg-bg-secondary hover:bg-bg-tertiary border border-border transition-colors duration-200 text-xs text-text-secondary hover:text-text-primary"

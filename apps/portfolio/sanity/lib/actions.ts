@@ -80,9 +80,9 @@ export async function getPostsByTag(
 ): Promise<BlogPost[]> {
   try {
     const posts = await client.fetch<SanityPost[]>(postsByTagQuery, {
-      tag,
+      tagName: tag,
       language,
-    } as any);
+    });
     return posts.map(transformSanityPost);
   } catch (error) {
     console.error("Error fetching posts by tag:", error);

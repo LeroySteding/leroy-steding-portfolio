@@ -104,6 +104,7 @@ export class ErrorBoundary extends Component<
 
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <button
+                type="button"
                 onClick={this.handleReset}
                 className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors font-semibold"
               >
@@ -111,6 +112,7 @@ export class ErrorBoundary extends Component<
                 Try Again
               </button>
               <button
+                type="button"
                 onClick={this.handleGoHome}
                 className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-all font-semibold"
               >

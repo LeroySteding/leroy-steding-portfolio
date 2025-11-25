@@ -3,6 +3,7 @@
 import { getCalApi } from "@calcom/embed-react";
 import { Calendar } from "lucide-react";
 import { useEffect, useState } from "react";
+import type { CalBookingSuccessfulEvent, CalConfig } from "@/types/calendar";
 
 interface CalcomModalProps {
   calLink?: string;
@@ -15,7 +16,7 @@ interface CalcomModalProps {
     guests?: string[];
     theme?: "light" | "dark" | "auto";
   };
-  onEventScheduled?: (event: any) => void;
+  onEventScheduled?: (event: CalBookingSuccessfulEvent) => void;
 }
 
 export default function CalcomModal({
@@ -42,7 +43,7 @@ export default function CalcomModal({
       // Set up event listener for booking success
       cal("on", {
         action: "bookingSuccessful",
-        callback: (e: any) => {
+        callback: (e: CalBookingSuccessfulEvent) => {
           if (typeof window !== "undefined" && window.gtag) {
             window.gtag("event", "calcom_modal_booking", {
               event_category: "calcom",
@@ -79,12 +80,11 @@ export default function CalcomModal({
     const cal = await getCalApi();
 
     // Build config object with only defined values
-    const calConfig: Record<string, any> = {};
+    const calConfig: CalConfig = {};
     if (config?.name) calConfig.name = config.name;
     if (config?.email) calConfig.email = config.email;
     if (config?.notes) calConfig.notes = config.notes;
-    if (config?.guests) calConfig.guests = config.guests;
-    if (config?.theme) calConfig.theme = config.theme;
+    if (config?.guests) calConfig.guests = config.guests.join(",");
 
     cal("modal", {
       calLink: calUsername,
@@ -94,7 +94,12 @@ export default function CalcomModal({
 
   if (!isClient) {
     return (
-      <button className={buttonClassName} disabled title="Loading...">
+      <button
+        type="button"
+        className={buttonClassName}
+        disabled
+        title="Loading..."
+      >
         <Calendar className="w-5 h-5" />
         {buttonText}
       </button>
@@ -104,6 +109,7 @@ export default function CalcomModal({
   if (!calUsername) {
     return (
       <button
+        type="button"
         className={buttonClassName}
         disabled
         title="Cal.com username not configured"
@@ -115,20 +121,11 @@ export default function CalcomModal({
   }
 
   return (
-    <button onClick={handleOpenModal} className={buttonClassName} type="button">
+    <button type="button" onClick={handleOpenModal} className={buttonClassName}>
       <Calendar className="w-5 h-5" />
       {buttonText}
     </button>
   );
 }
 
-// TypeScript declaration for gtag
-declare global {
-  interface Window {
-    gtag?: (
-      command: string,
-      action: string,
-      params: Record<string, any>,
-    ) => void;
-  }
-}
+// Note: Window.gtag type is defined in @/types/calendar.d.ts

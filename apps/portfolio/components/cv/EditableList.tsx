@@ -75,6 +75,7 @@ export function EditableList({
               <div className="flex items-center gap-1 mt-1 flex-shrink-0">
                 <GripVertical className="w-4 h-4 text-gray-400 dark:text-gray-500 cursor-move" />
                 <button
+                  type="button"
                   onClick={() => handleRemoveItem(index)}
                   className="p-1 hover:bg-red-100 dark:hover:bg-red-900/30 text-red-600 dark:text-red-400 rounded transition-colors"
                   title="Remove item"
@@ -102,6 +103,7 @@ export function EditableList({
 
       {isEditing && (
         <button
+          type="button"
           onClick={handleAddItem}
           className="mt-3 flex items-center gap-2 px-4 py-2 bg-cyan-500 hover:bg-cyan-600 text-white rounded-lg transition-colors text-sm font-medium"
         >
