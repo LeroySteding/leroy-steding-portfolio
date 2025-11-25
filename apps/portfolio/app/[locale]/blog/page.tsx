@@ -1,11 +1,10 @@
-import { FileText } from "lucide-react";
 import { getLocale } from "next-intl/server";
 import LayoutContainer from "@/components/ui/LayoutContainer";
-import PageHero from "@/components/ui/PageHero";
 import { getTranslations } from "@/lib/translations";
 import { client } from "@/sanity/lib/client";
 import { postsQuery } from "@/sanity/lib/queries";
 import BlogContent from "./BlogContent";
+import BlogHero from "./BlogHero";
 
 export interface SanityBlogPost {
   _id: string;
@@ -60,13 +59,10 @@ export default async function BlogPage() {
   return (
     <main className="min-h-screen bg-primary-bg">
       {/* Hero Section */}
-      <PageHero
+      <BlogHero
         title={t.blog.page.title}
         titleHighlight={t.blog.page.titleHighlight}
         subtitle={t.blog.page.description}
-        icon={FileText}
-        breadcrumbs={[{ label: "Blog" }]}
-        backgroundImage="https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=1920&q=80"
       />
 
       <LayoutContainer className="pb-20">
