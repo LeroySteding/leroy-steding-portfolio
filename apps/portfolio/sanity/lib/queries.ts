@@ -1,13 +1,14 @@
 import { groq } from "next-sanity";
 
 // Get all blog posts with optional language filter
+// coverImage can be either a Sanity image reference or a direct URL string
 export const postsQuery = groq`
   *[_type == "post" && language == $language] | order(publishedAt desc) {
     _id,
     title,
     slug,
     excerpt,
-    "coverImage": coverImage.asset->url,
+    "coverImage": coalesce(coverImage.asset->url, coverImage),
     content,
     category,
     tags,
@@ -26,7 +27,7 @@ export const postBySlugQuery = groq`
     title,
     slug,
     excerpt,
-    "coverImage": coverImage.asset->url,
+    "coverImage": coalesce(coverImage.asset->url, coverImage),
     content,
     category,
     tags,
@@ -45,7 +46,7 @@ export const featuredPostsQuery = groq`
     title,
     slug,
     excerpt,
-    "coverImage": coverImage.asset->url,
+    "coverImage": coalesce(coverImage.asset->url, coverImage),
     content,
     category,
     tags,
@@ -64,7 +65,7 @@ export const postsByCategoryQuery = groq`
     title,
     slug,
     excerpt,
-    "coverImage": coverImage.asset->url,
+    "coverImage": coalesce(coverImage.asset->url, coverImage),
     content,
     category,
     tags,
@@ -83,7 +84,7 @@ export const postsByTagQuery = groq`
     title,
     slug,
     excerpt,
-    "coverImage": coverImage.asset->url,
+    "coverImage": coalesce(coverImage.asset->url, coverImage),
     content,
     category,
     tags,
