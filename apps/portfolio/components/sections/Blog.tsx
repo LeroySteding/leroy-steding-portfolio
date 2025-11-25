@@ -12,6 +12,7 @@ import {
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useLayout } from "@/contexts/LayoutContext";
 import { useTranslation } from "@/hooks/useTranslation";
 import { getBlogPosts } from "@/utils/getLocalizedData";
 
@@ -26,6 +27,7 @@ const categoryIcons = {
 export default function Blog() {
   const { language } = useLanguage();
   const t = useTranslation();
+  const { containerClass, gridClass } = useLayout();
   const [selectedCategory, setSelectedCategory] =
     useState<CategoryFilter>("all");
 
@@ -46,7 +48,7 @@ export default function Blog() {
       {/* Subtle accent line */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-accent-primary to-transparent" />
 
-      <div className="container relative z-10 mx-auto px-4 sm:px-6 md:px-8 lg:px-16">
+      <div className={`relative z-10 ${containerClass}`}>
         {/* Section header */}
         <div className="mb-12 sm:mb-16 md:mb-20">
           <motion.h2
@@ -103,7 +105,7 @@ export default function Blog() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7 md:gap-8 mb-12 sm:mb-14 md:mb-16"
+            className={`${gridClass} mb-12 sm:mb-14 md:mb-16`}
           >
             {filteredPosts.map((post, index) => {
               const CategoryIcon = categoryIcons[post.category];

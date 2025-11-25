@@ -3,6 +3,8 @@
 import { motion } from "framer-motion";
 import { Cookie, Database, Eye, Lock, Mail, Shield } from "lucide-react";
 import Link from "next/link";
+import LayoutContainer, { LayoutGrid } from "@/components/ui/LayoutContainer";
+import PageHero from "@/components/ui/PageHero";
 
 export default function PrivacyContent() {
   const sections = [
@@ -111,53 +113,27 @@ export default function PrivacyContent() {
   return (
     <div className="min-h-screen bg-primary-bg">
       {/* Hero Section */}
-      <section className="relative py-32 bg-secondary-bg overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-full opacity-20">
-          <div className="absolute top-1/4 -left-48 w-96 h-96 bg-accent-primary/30 rounded-full blur-3xl" />
-          <div className="absolute bottom-1/4 -right-48 w-96 h-96 bg-accent-secondary/30 rounded-full blur-3xl" />
-        </div>
-
-        <div className="container relative z-10 mx-auto px-8 lg:px-16">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="max-w-4xl mx-auto text-center"
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="inline-flex p-4 rounded-2xl bg-gradient-to-br from-accent-primary/20 to-accent-secondary/20 mb-6"
-            >
-              <Shield className="w-12 h-12 text-accent-primary" />
-            </motion.div>
-
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-black mb-6 leading-tight">
-              Privacy <span className="text-gradient">Policy</span>
-            </h1>
-
-            <p className="text-xl md:text-2xl text-text-secondary leading-relaxed mb-6">
-              Your privacy is important to me. This policy explains how I
-              collect, use, and protect your personal information.
-            </p>
-
-            <p className="text-sm text-text-muted">
-              Last updated:{" "}
-              {new Date().toLocaleDateString("en-US", {
-                month: "long",
-                day: "numeric",
-                year: "numeric",
-              })}
-            </p>
-          </motion.div>
-        </div>
-      </section>
+      <PageHero
+        title="Privacy"
+        titleHighlight="Policy"
+        subtitle="Your privacy is important to me. This policy explains how I collect, use, and protect your personal information."
+        icon={Shield}
+        breadcrumbs={[{ label: "Privacy" }]}
+      >
+        <p className="text-sm text-text-muted">
+          Last updated:{" "}
+          {new Date().toLocaleDateString("en-US", {
+            month: "long",
+            day: "numeric",
+            year: "numeric",
+          })}
+        </p>
+      </PageHero>
 
       {/* Content Section */}
       <section className="py-24 bg-primary-bg">
-        <div className="container relative z-10 mx-auto px-8 lg:px-16">
-          <div className="max-w-4xl mx-auto space-y-16">
+        <LayoutContainer>
+          <LayoutGrid containedCols={2} fullWidthCols={3}>
             {sections.map((section, index) => {
               const Icon = section.icon;
               return (
@@ -200,7 +176,7 @@ export default function PrivacyContent() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
-              className="card p-10 bg-gradient-to-br from-accent-secondary/10 to-accent-primary/10 border-2 border-accent-primary/30"
+              className="md:col-span-2 xl:col-span-3 card p-10 bg-gradient-to-br from-accent-secondary/10 to-accent-primary/10 border-2 border-accent-primary/30"
             >
               <h2 className="text-3xl font-display font-bold text-text-primary mb-4">
                 Questions About Privacy?
@@ -218,8 +194,8 @@ export default function PrivacyContent() {
                 </Link>
               </div>
             </motion.div>
-          </div>
-        </div>
+          </LayoutGrid>
+        </LayoutContainer>
       </section>
     </div>
   );

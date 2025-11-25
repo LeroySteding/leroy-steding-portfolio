@@ -19,6 +19,8 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
+import LayoutContainer from "@/components/ui/LayoutContainer";
+import PageHero from "@/components/ui/PageHero";
 import UniversalCalendarWidget from "@/components/ui/UniversalCalendarWidget";
 import { useTranslation } from "@/hooks/useTranslation";
 
@@ -211,66 +213,39 @@ export default function BookingPageClient() {
   return (
     <div className="min-h-screen bg-primary-bg">
       {/* Hero Section */}
-      <section className="relative py-32 bg-secondary-bg overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-full opacity-20">
-          <div className="absolute top-1/4 -left-48 w-96 h-96 bg-accent-primary/30 rounded-full blur-3xl" />
-          <div className="absolute bottom-1/4 -right-48 w-96 h-96 bg-accent-secondary/30 rounded-full blur-3xl" />
+      <PageHero
+        title={t.booking.hero.title}
+        titleHighlight={t.booking.hero.titleHighlight}
+        subtitle={t.booking.hero.subtitle}
+        icon={Calendar}
+        breadcrumbs={[{ label: "Book" }]}
+        backgroundImage="https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=1920&q=80"
+      >
+        {/* Trust Indicators */}
+        <div className="grid grid-cols-3 gap-4 max-w-2xl mx-auto">
+          {trustIndicators.map((indicator, index) => {
+            const Icon = indicator.icon;
+            return (
+              <motion.div
+                key={indicator.label}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.2 + index * 0.1 }}
+                className="text-center p-4 rounded-xl bg-surface"
+              >
+                <Icon className="w-6 h-6 text-accent-primary mx-auto mb-2" />
+                <div className="text-sm font-semibold text-text-primary">
+                  {indicator.label}
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
-
-        <div className="container relative z-10 mx-auto px-8 lg:px-16">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="max-w-4xl mx-auto text-center"
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="inline-flex p-4 rounded-2xl bg-gradient-to-br from-accent-primary/20 to-accent-secondary/20 mb-6"
-            >
-              <Calendar className="w-12 h-12 text-accent-primary" />
-            </motion.div>
-
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-black mb-6 leading-tight">
-              {t.booking.hero.title}{" "}
-              <span className="text-gradient">
-                {t.booking.hero.titleHighlight}
-              </span>
-            </h1>
-
-            <p className="text-xl md:text-2xl text-text-secondary leading-relaxed">
-              {t.booking.hero.subtitle}
-            </p>
-
-            {/* Trust Indicators */}
-            <div className="grid grid-cols-3 gap-4 mt-12 max-w-2xl mx-auto">
-              {trustIndicators.map((indicator, index) => {
-                const Icon = indicator.icon;
-                return (
-                  <motion.div
-                    key={indicator.label}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, delay: 0.2 + index * 0.1 }}
-                    className="text-center p-4 rounded-xl bg-surface"
-                  >
-                    <Icon className="w-6 h-6 text-accent-primary mx-auto mb-2" />
-                    <div className="text-sm font-semibold text-text-primary">
-                      {indicator.label}
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      </PageHero>
 
       {/* Testimonials Section */}
       <section className="py-20 bg-secondary-bg border-y-2 border-surface">
-        <div className="container mx-auto px-8 lg:px-16">
+        <LayoutContainer>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -287,7 +262,7 @@ export default function BookingPageClient() {
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+          <div className="grid md:grid-cols-3 xl:grid-cols-3 gap-6 lg:gap-8">
             {testimonials.map((testimonial, index) => (
               <motion.div
                 key={testimonial.name}
@@ -344,12 +319,12 @@ export default function BookingPageClient() {
               </motion.div>
             ))}
           </div>
-        </div>
+        </LayoutContainer>
       </section>
 
       {/* Main Content */}
       <section className="py-24 bg-primary-bg">
-        <div className="container relative z-10 mx-auto px-8 lg:px-16">
+        <LayoutContainer>
           {/* Meeting Type Selection */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -367,7 +342,7 @@ export default function BookingPageClient() {
               </p>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            <div className="grid md:grid-cols-3 gap-6">
               {meetingTypes.map((type, index) => {
                 const Icon = type.icon;
                 const isSelected = selectedMeetingType === type.id;
@@ -443,7 +418,7 @@ export default function BookingPageClient() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="max-w-7xl mx-auto mb-16"
+            className="mb-16"
           >
             <div className="relative">
               {/* Loading overlay */}
@@ -501,7 +476,7 @@ export default function BookingPageClient() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="max-w-7xl mx-auto mb-20"
+            className="mb-20"
           >
             <div className="text-center mb-12">
               <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
@@ -544,7 +519,7 @@ export default function BookingPageClient() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="max-w-6xl mx-auto"
+            className=""
           >
             <div className="text-center mb-10">
               <h3 className="text-2xl md:text-3xl font-display font-bold mb-3 text-text-primary">
@@ -596,7 +571,7 @@ export default function BookingPageClient() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="max-w-4xl mx-auto mt-24"
+            className="mt-24"
           >
             <div className="text-center mb-12">
               <motion.div
@@ -782,7 +757,7 @@ export default function BookingPageClient() {
               </div>
             </motion.div>
           </div>
-        </div>
+        </LayoutContainer>
       </section>
     </div>
   );

@@ -11,6 +11,7 @@ import {
   Zap,
 } from "lucide-react";
 import Link from "next/link";
+import { useLayout } from "@/contexts/LayoutContext";
 import { useTranslation } from "@/hooks/useTranslation";
 import { useLocalizedPath } from "@/lib/localization";
 
@@ -50,6 +51,7 @@ const services = [
 export default function Services() {
   const t = useTranslation();
   const getLocalizedPath = useLocalizedPath();
+  const { containerClass, gridClass } = useLayout();
 
   // Only show first 3 services on homepage
   const displayedServices = services.slice(0, 3);
@@ -62,7 +64,7 @@ export default function Services() {
       {/* Subtle accent line */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-accent-primary to-transparent" />
 
-      <div className="container relative z-10 mx-auto px-4 sm:px-6 md:px-8 lg:px-16">
+      <div className={`relative z-10 ${containerClass}`}>
         {/* Section header */}
         <div className="mb-12 sm:mb-16 md:mb-20 text-center">
           <motion.h2
@@ -84,7 +86,7 @@ export default function Services() {
         </div>
 
         {/* Services grid */}
-        <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7 md:gap-8 mb-12 sm:mb-14 md:mb-16">
+        <div className={`${gridClass} mb-12 sm:mb-14 md:mb-16`}>
           {displayedServices.map((service, index) => {
             const Icon = service.icon;
             return (

@@ -118,6 +118,16 @@
     color: #737373;
   }
 
+  /* Light theme headings - ensure visibility */
+  .light h1,
+  .light h2,
+  .light h3,
+  .light h4,
+  .light h5,
+  .light h6 {
+    color: #0a0a0a;
+  }
+
   .light .text-accent-primary {
     color: #c4a574;
   }
@@ -389,9 +399,9 @@
   background-clip: text;
 }
 
-/* Light theme gradient - darker for better contrast */
+/* Light theme gradient - rich, visible colors for light backgrounds */
 .light .text-gradient {
-  background: linear-gradient(135deg, #a08555 0%, #8a6f42 100%);
+  background: linear-gradient(135deg, #8b4513 0%, #654321 50%, #a0522d 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

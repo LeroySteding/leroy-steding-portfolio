@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import About from "@/components/sections/About";
 import Experience from "@/components/sections/Experience";
 import TechStack from "@/components/sections/TechStack";
+import AboutPageHero from "./AboutPageHero";
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -49,6 +50,7 @@ export async function generateMetadata({
 export default function AboutPage() {
   return (
     <main className="min-h-screen bg-primary-bg">
+      <AboutPageHero />
       <About />
       <Experience />
       <TechStack />

@@ -5,6 +5,7 @@ import { Search, X } from "lucide-react";
 import Image from "next/image";
 import { useMemo, useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useLayout } from "@/contexts/LayoutContext";
 import { techStack } from "@/data/techStack";
 import { useTranslation } from "@/hooks/useTranslation";
 
@@ -24,6 +25,7 @@ const getProficiencyLevel = (
 export default function TechStack() {
   const t = useTranslation();
   const { language } = useLanguage();
+  const { containerClass } = useLayout();
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -62,7 +64,7 @@ export default function TechStack() {
       {/* Subtle accent line */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-accent-secondary to-transparent" />
 
-      <div className="container relative z-10 mx-auto px-8 lg:px-16">
+      <div className={`relative z-10 ${containerClass}`}>
         {/* Section header */}
         <div className="mb-20">
           <motion.h2

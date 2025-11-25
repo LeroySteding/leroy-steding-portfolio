@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import {
   ArrowRight,
+  Briefcase,
   Code,
   Database,
   Globe,
@@ -11,6 +12,8 @@ import {
   Zap,
 } from "lucide-react";
 import Link from "next/link";
+import LayoutContainer, { LayoutGrid } from "@/components/ui/LayoutContainer";
+import PageHero from "@/components/ui/PageHero";
 import { services } from "@/data/services";
 import { useTranslation } from "@/hooks/useTranslation";
 
@@ -29,40 +32,19 @@ export default function ServicesPage() {
   return (
     <main className="min-h-screen bg-primary-bg">
       {/* Hero Section */}
-      <section className="section relative bg-gradient-to-b from-primary-bg to-secondary-bg overflow-hidden pt-32">
-        {/* Background decoration */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-accent-primary rounded-full blur-3xl" />
-          <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent-secondary rounded-full blur-3xl" />
-        </div>
-
-        <div className="container relative z-10 mx-auto px-8 lg:px-16">
-          <div className="max-w-4xl mx-auto text-center mb-20">
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="font-display font-black text-5xl md:text-6xl lg:text-7xl mb-6"
-            >
-              Professional <span className="text-gradient">Services</span>
-            </motion.h1>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-xl text-text-secondary leading-relaxed"
-            >
-              Comprehensive solutions to transform your business with modern
-              technology and AI automation
-            </motion.p>
-          </div>
-        </div>
-      </section>
+      <PageHero
+        title="Professional"
+        titleHighlight="Services"
+        subtitle="Comprehensive solutions to transform your business with modern technology and AI automation"
+        icon={Briefcase}
+        breadcrumbs={[{ label: "Services" }]}
+        backgroundImage="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1920&q=80"
+      />
 
       {/* Services Grid */}
       <section className="section relative bg-primary-bg">
-        <div className="container relative z-10 mx-auto px-8 lg:px-16">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <LayoutContainer>
+          <LayoutGrid>
             {services.map((service, index) => {
               const Icon = iconMap[service.icon as keyof typeof iconMap];
               return (
@@ -133,19 +115,19 @@ export default function ServicesPage() {
                 </motion.div>
               );
             })}
-          </div>
-        </div>
+          </LayoutGrid>
+        </LayoutContainer>
       </section>
 
       {/* CTA Section */}
       <section className="section relative bg-secondary-bg overflow-hidden">
-        <div className="container relative z-10 mx-auto px-8 lg:px-16">
+        <LayoutContainer>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="max-w-4xl mx-auto text-center"
+            className="text-center"
           >
             <h2 className="font-display font-black text-4xl md:text-5xl mb-6">
               Ready to Get <span className="text-gradient">Started?</span>
@@ -162,7 +144,7 @@ export default function ServicesPage() {
               <ArrowRight className="w-5 h-5" />
             </Link>
           </motion.div>
-        </div>
+        </LayoutContainer>
       </section>
     </main>
   );

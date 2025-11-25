@@ -3,11 +3,13 @@
 import { motion } from "framer-motion";
 import { Code2, Rocket, Sparkles } from "lucide-react";
 import Image from "next/image";
+import { useLayout } from "@/contexts/LayoutContext";
 import { useTranslation } from "@/hooks/useTranslation";
 import { parseTranslation } from "@/utils/parseTranslation";
 
 export default function About() {
   const t = useTranslation();
+  const { containerClass } = useLayout();
 
   const highlights = [
     {
@@ -34,7 +36,7 @@ export default function About() {
       {/* Subtle accent line */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-linear-to-r from-transparent via-accent-primary to-transparent" />
 
-      <div className="container relative z-10 mx-auto px-4 sm:px-6 md:px-8 lg:px-16">
+      <div className={`relative z-10 ${containerClass}`}>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}

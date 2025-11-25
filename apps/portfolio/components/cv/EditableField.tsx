@@ -177,12 +177,13 @@ export function EditableField({
   }
 
   return (
-    <div
+    <button
+      type="button"
       onClick={handleClick}
-      className={`${className} cursor-pointer hover:bg-cyan-50 dark:hover:bg-cyan-900/20 hover:ring-2 hover:ring-cyan-300 dark:hover:ring-cyan-700 rounded px-2 py-1 -mx-2 -my-1 transition-all`}
+      className={`${className} cursor-pointer hover:bg-cyan-50 dark:hover:bg-cyan-900/20 hover:ring-2 hover:ring-cyan-300 dark:hover:ring-cyan-700 rounded px-2 py-1 -mx-2 -my-1 transition-all text-left w-full`}
       title="Click to edit"
     >
       {children || value}
-    </div>
+    </button>
   );
 }

@@ -19,7 +19,9 @@ import {
 import Link from "next/link";
 import { useState } from "react";
 import ChatPage from "@/components/ui/ChatPage";
+import LayoutContainer from "@/components/ui/LayoutContainer";
 import NewsletterSubscribe from "@/components/ui/NewsletterSubscribe";
+import PageHero from "@/components/ui/PageHero";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useTranslation } from "@/hooks/useTranslation";
 
@@ -145,45 +147,18 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen bg-primary-bg">
       {/* Hero Section */}
-      <section className="relative py-32 bg-secondary-bg overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-full opacity-20">
-          <div className="absolute top-1/4 -left-48 w-96 h-96 bg-accent-primary/30 rounded-full blur-3xl" />
-          <div className="absolute bottom-1/4 -right-48 w-96 h-96 bg-accent-secondary/30 rounded-full blur-3xl" />
-        </div>
-
-        <div className="container relative z-10 mx-auto px-8 lg:px-16">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="max-w-4xl mx-auto text-center"
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="inline-flex p-4 rounded-2xl bg-gradient-to-br from-accent-primary/20 to-accent-secondary/20 mb-6"
-            >
-              <Mail className="w-12 h-12 text-accent-primary" />
-            </motion.div>
-
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-black mb-6 leading-tight">
-              {t.contact.hero.title}{" "}
-              <span className="text-gradient">
-                {t.contact.hero.titleHighlight}
-              </span>
-            </h1>
-
-            <p className="text-xl md:text-2xl text-text-secondary leading-relaxed">
-              {t.contact.hero.subtitle}
-            </p>
-          </motion.div>
-        </div>
-      </section>
+      <PageHero
+        title={t.contact.hero.title}
+        titleHighlight={t.contact.hero.titleHighlight}
+        subtitle={t.contact.hero.subtitle}
+        icon={Mail}
+        breadcrumbs={[{ label: "Contact" }]}
+        backgroundImage="https://images.unsplash.com/photo-1423666639041-f56000c27a9a?w=1920&q=80"
+      />
 
       {/* Main Content */}
       <section className="py-24 bg-primary-bg">
-        <div className="container relative z-10 mx-auto px-8 lg:px-16">
+        <LayoutContainer>
           {/* Form First on Mobile, Grid on Desktop */}
           <div className="grid lg:grid-cols-5 gap-12 lg:gap-16 mb-24">
             {/* Contact Form - Order 1 on mobile, Order 2 on desktop */}
@@ -648,7 +623,7 @@ export default function ContactPage() {
           >
             <NewsletterSubscribe variant="default" />
           </motion.div>
-        </div>
+        </LayoutContainer>
       </section>
     </div>
   );

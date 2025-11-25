@@ -3,12 +3,14 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Sparkles } from "lucide-react";
 import Link from "next/link";
+import { useLayout } from "@/contexts/LayoutContext";
 import { useTranslation } from "@/hooks/useTranslation";
 import { useLocalizedPath } from "@/lib/localization";
 
 export default function IntroAbout() {
   const t = useTranslation();
   const getLocalizedPath = useLocalizedPath();
+  const { containerClass } = useLayout();
 
   return (
     <section className="section relative bg-gradient-to-b from-primary-bg to-secondary-bg overflow-hidden">
@@ -18,7 +20,7 @@ export default function IntroAbout() {
         <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent-secondary rounded-full blur-3xl" />
       </div>
 
-      <div className="container relative z-10 mx-auto px-8 lg:px-16">
+      <div className={`relative z-10 ${containerClass}`}>
         <div className="max-w-4xl mx-auto text-center">
           {/* Icon */}
           <motion.div

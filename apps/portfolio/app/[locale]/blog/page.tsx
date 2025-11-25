@@ -9,6 +9,7 @@ import {
   ChevronRight,
   Clock,
   Code,
+  FileText,
   FlaskConical,
   Search,
   Tag,
@@ -17,6 +18,8 @@ import {
 import Link from "next/link";
 import { useLocale } from "next-intl";
 import { useMemo, useState } from "react";
+import LayoutContainer from "@/components/ui/LayoutContainer";
+import PageHero from "@/components/ui/PageHero";
 import { getAllPosts } from "@/data/blog";
 import { getAllPostsNL } from "@/data/blog-nl";
 import { useTranslation } from "@/hooks/useTranslation";
@@ -114,30 +117,18 @@ export default function BlogPage() {
   const secondaryFeatured = featuredPosts.slice(1, 3);
 
   return (
-    <main className="min-h-screen bg-primary-bg pt-32 pb-20">
-      <div className="container relative z-10 mx-auto px-8 lg:px-16">
-        {/* Page Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="mb-12"
-        >
-          <h1 className="font-display font-black mb-6 text-5xl md:text-6xl lg:text-7xl">
-            {t.blog.page.title}{" "}
-            <span className="text-gradient">{t.blog.page.titleHighlight}</span>
-          </h1>
-          <motion.div
-            initial={{ opacity: 0, scaleX: 0 }}
-            animate={{ opacity: 1, scaleX: 1 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="w-32 h-1.5 bg-accent-primary rounded-full mb-6"
-          />
-          <p className="text-lg text-text-secondary max-w-2xl leading-relaxed">
-            {t.blog.page.description}
-          </p>
-        </motion.div>
+    <main className="min-h-screen bg-primary-bg">
+      {/* Hero Section */}
+      <PageHero
+        title={t.blog.page.title}
+        titleHighlight={t.blog.page.titleHighlight}
+        subtitle={t.blog.page.description}
+        icon={FileText}
+        breadcrumbs={[{ label: "Blog" }]}
+        backgroundImage="https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=1920&q=80"
+      />
 
+      <LayoutContainer className="pb-20">
         {/* Featured Posts Hero - Bento Grid */}
         {featuredPosts.length > 0 && (
           <motion.div
@@ -162,11 +153,11 @@ export default function BlogPage() {
                         className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                       />
                     ) : (
-                      <div className="absolute inset-0 bg-gradient-to-br from-accent-primary/30 to-accent-secondary/30" />
+                      <div className="absolute inset-0 bg-linear-to-br from-accent-primary/30 to-accent-secondary/30" />
                     )}
 
                     {/* Overlay Gradient */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20" />
+                    <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/50 to-black/20" />
 
                     {/* Content */}
                     <div className="absolute inset-0 p-8 flex flex-col justify-end">
@@ -610,7 +601,7 @@ export default function BlogPage() {
             </div>
           </motion.aside>
         </div>
-      </div>
+      </LayoutContainer>
     </main>
   );
 }

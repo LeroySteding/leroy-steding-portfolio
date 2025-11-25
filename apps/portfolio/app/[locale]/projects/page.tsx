@@ -6,10 +6,13 @@ import {
   Award,
   Calendar,
   ExternalLink,
+  FolderKanban,
   Github,
 } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
+import LayoutContainer, { LayoutGrid } from "@/components/ui/LayoutContainer";
+import PageHero from "@/components/ui/PageHero";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useTranslation } from "@/hooks/useTranslation";
 import { getProjects } from "@/utils/getLocalizedData";
@@ -33,77 +36,48 @@ export default function ProjectsPage() {
   return (
     <main className="min-h-screen bg-primary-bg">
       {/* Hero Section */}
-      <section className="section relative bg-gradient-to-b from-primary-bg to-secondary-bg overflow-hidden pt-32">
-        {/* Background decoration */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-accent-primary rounded-full blur-3xl" />
-          <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent-secondary rounded-full blur-3xl" />
+      <PageHero
+        title={t.projects.title || "Featured"}
+        titleHighlight={t.projects.titleHighlight || "Projects"}
+        subtitle="Explore my portfolio of web applications, AI automation solutions, and client projects"
+        icon={FolderKanban}
+        breadcrumbs={[{ label: "Projects" }]}
+        backgroundImage="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1920&q=80"
+      >
+        {/* Category Filter */}
+        <div className="flex flex-wrap gap-3 justify-center">
+          {(["all", "product", "client", "internal"] as CategoryFilter[]).map(
+            (category) => (
+              <button
+                key={category}
+                type="button"
+                onClick={() => setFilter(category)}
+                className={`px-6 py-3 rounded-xl font-bold text-base transition-all duration-300 ${
+                  filter === category
+                    ? "bg-accent-primary text-primary-bg shadow-lg scale-105"
+                    : "bg-surface text-text-secondary hover:bg-surface-light hover:text-accent-primary border-2 border-transparent hover:border-accent-primary/30"
+                }`}
+              >
+                {category === "all"
+                  ? "All Projects"
+                  : category === "product"
+                    ? t.projects.categories.product
+                    : category === "client"
+                      ? t.projects.categories.client
+                      : t.projects.categories.internal}
+              </button>
+            ),
+          )}
         </div>
-
-        <div className="container relative z-10 mx-auto px-8 lg:px-16">
-          <div className="max-w-4xl mx-auto text-center mb-20">
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="font-display font-black text-5xl md:text-6xl lg:text-7xl mb-6"
-            >
-              Featured <span className="text-gradient">Projects</span>
-            </motion.h1>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-xl text-text-secondary leading-relaxed"
-            >
-              Explore my portfolio of web applications, AI automation solutions,
-              and client projects
-            </motion.p>
-          </div>
-
-          {/* Category Filter */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="flex flex-wrap gap-3 justify-center mb-12"
-          >
-            {(["all", "product", "client", "internal"] as CategoryFilter[]).map(
-              (category) => (
-                <button
-                  key={category}
-                  onClick={() => setFilter(category)}
-                  className={`px-6 py-3 rounded-xl font-bold text-base transition-all duration-300 ${
-                    filter === category
-                      ? "bg-accent-primary text-primary-bg shadow-lg scale-105"
-                      : "bg-surface text-text-secondary hover:bg-surface-light hover:text-accent-primary border-2 border-transparent hover:border-accent-primary/30"
-                  }`}
-                >
-                  {category === "all"
-                    ? "All Projects"
-                    : category === "product"
-                      ? t.projects.categories.product
-                      : category === "client"
-                        ? t.projects.categories.client
-                        : t.projects.categories.internal}
-                </button>
-              ),
-            )}
-          </motion.div>
-        </div>
-      </section>
+      </PageHero>
 
       {/* Projects Grid */}
       <section className="section relative bg-primary-bg">
-        <div className="container relative z-10 mx-auto px-8 lg:px-16">
+        <LayoutContainer>
           <AnimatePresence mode="wait">
-            <motion.div
+            <LayoutGrid
               key={filter}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+              className="animate-in fade-in duration-300"
             >
               {projects.map((project, index) => (
                 <motion.div
@@ -254,9 +228,9 @@ export default function ProjectsPage() {
                   </div>
                 </motion.div>
               ))}
-            </motion.div>
+            </LayoutGrid>
           </AnimatePresence>
-        </div>
+        </LayoutContainer>
       </section>
     </main>
   );

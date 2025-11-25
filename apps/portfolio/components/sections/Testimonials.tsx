@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Quote, Star } from "lucide-react";
 import Link from "next/link";
+import { useLayout } from "@/contexts/LayoutContext";
 import { useTranslation } from "@/hooks/useTranslation";
 import { useLocalizedPath } from "@/lib/localization";
 
@@ -33,6 +34,7 @@ const testimonials = [
 export default function Testimonials() {
   const t = useTranslation();
   const getLocalizedPath = useLocalizedPath();
+  const { containerClass, gridClass } = useLayout();
 
   return (
     <section
@@ -45,7 +47,7 @@ export default function Testimonials() {
         <div className="absolute bottom-20 left-10 w-72 h-72 bg-accent-secondary rounded-full blur-3xl" />
       </div>
 
-      <div className="container relative z-10 mx-auto px-8 lg:px-16">
+      <div className={`relative z-10 ${containerClass}`}>
         {/* Section header */}
         <div className="mb-20 text-center">
           <motion.h2
@@ -67,7 +69,7 @@ export default function Testimonials() {
         </div>
 
         {/* Testimonials grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+        <div className={`${gridClass} mb-16`}>
           {testimonials.map((testimonial, index) => (
             <motion.div
               key={testimonial.nameKey}

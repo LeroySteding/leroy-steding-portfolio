@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import { useLayout } from "@/contexts/LayoutContext";
 import { useTranslation } from "@/hooks/useTranslation";
 import { useLocalizedPath } from "@/lib/localization";
 
@@ -24,6 +25,7 @@ export default function Header({ onSearchClick }: HeaderProps) {
   const t = useTranslation();
   const getLocalizedPath = useLocalizedPath();
   const pathname = usePathname();
+  const { containerClass } = useLayout();
 
   // Always call useScroll unconditionally (Rules of Hooks)
   const { scrollY } = useScroll();
@@ -98,7 +100,7 @@ export default function Header({ onSearchClick }: HeaderProps) {
           : "bg-transparent"
       }`}
     >
-      <nav className="container mx-auto px-8 lg:px-16">
+      <nav className={containerClass}>
         <div className="flex items-center justify-between h-20 md:h-24">
           {/* Logo */}
           <Link

@@ -3,12 +3,36 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Calendar, Download } from "lucide-react";
 import Link from "next/link";
+import { useLayout } from "@/contexts/LayoutContext";
 import { useTranslation } from "@/hooks/useTranslation";
 import { useLocalizedPath } from "@/lib/localization";
 
 export default function Hero() {
   const t = useTranslation();
   const getLocalizedPath = useLocalizedPath();
+  const { layoutMode, heroContainerClass, heroMaxWidthClass } = useLayout();
+
+  // Scale text sizes based on layout mode
+  const titleSizes =
+    layoutMode === "full-width"
+      ? "text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl"
+      : "text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl";
+
+  const subtitleSizes =
+    layoutMode === "full-width"
+      ? "text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl"
+      : "text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl";
+
+  const taglineSizes =
+    layoutMode === "full-width"
+      ? "text-lg sm:text-xl md:text-2xl lg:text-3xl"
+      : "text-base sm:text-lg md:text-xl lg:text-2xl";
+
+  // Content layout - spread in full-width, centered in contained
+  const contentLayoutClass =
+    layoutMode === "full-width"
+      ? "flex flex-col lg:flex-row items-center lg:justify-between gap-8 sm:gap-12 lg:gap-16 xl:gap-24"
+      : "flex flex-col lg:flex-row items-center justify-center gap-8 sm:gap-12 lg:gap-16 xl:gap-24";
 
   return (
     <section className="relative min-h-screen flex flex-col justify-end overflow-hidden bg-primary-bg">
@@ -24,13 +48,15 @@ export default function Hero() {
         />
       </div>
 
-      <div className="z-10 w-full min-h-screen flex items-center justify-center px-4 sm:px-6 md:px-8 lg:px-16">
+      <div
+        className={`z-10 w-full min-h-screen flex items-center justify-center ${heroContainerClass}`}
+      >
         {/* Main Content - Centered */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="flex flex-col lg:flex-row items-center justify-center gap-8 sm:gap-12 lg:gap-16 xl:gap-24 max-w-7xl mx-auto"
+          className={`${contentLayoutClass} ${heroMaxWidthClass}`}
         >
           {/* Left side - Text content */}
           <div className="space-y-4 sm:space-y-6 md:space-y-8 text-center lg:text-left">
@@ -40,10 +66,14 @@ export default function Hero() {
               transition={{ duration: 0.8, delay: 0.2 }}
             >
               <h2 className="font-display font-black leading-[0.9]">
-                <span className="block text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-gradient mb-3 sm:mb-4 md:mb-6 drop-shadow-2xl">
+                <span
+                  className={`block ${titleSizes} text-gradient mb-3 sm:mb-4 md:mb-6 drop-shadow-2xl`}
+                >
                   {t.hero.title}
                 </span>
-                <span className="block text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-accent-secondary font-bold drop-shadow-lg">
+                <span
+                  className={`block ${subtitleSizes} text-accent-secondary font-bold drop-shadow-lg`}
+                >
                   {t.hero.subtitle}
                 </span>
               </h2>
@@ -53,7 +83,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="text-base sm:text-lg md:text-xl lg:text-2xl text-text-secondary leading-relaxed max-w-2xl mx-auto lg:mx-0"
+              className={`${taglineSizes} text-text-secondary leading-relaxed max-w-2xl mx-auto lg:mx-0`}
             >
               {t.hero.tagline}
             </motion.p>

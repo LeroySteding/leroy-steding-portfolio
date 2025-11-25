@@ -5,10 +5,12 @@ import {
   HorizontalTimelineCarousel,
 } from "@steding/timeline-scroll";
 import { useEffect, useState } from "react";
+import { useLayout } from "@/contexts/LayoutContext";
 import { experiences } from "@/data/experiences";
 
 export default function Experience() {
   const [windowWidth, setWindowWidth] = useState(1440);
+  const { containerClass } = useLayout();
 
   useEffect(() => {
     const updateWidth = () => setWindowWidth(window.innerWidth);
@@ -65,17 +67,17 @@ export default function Experience() {
         progressBarColor="rgba(232, 213, 196, 0.9)"
         sectionClassName="bg-primary-bg"
         header={
-          <div className="text-center max-w-4xl mx-auto mb-6">
+          <div className={`text-center mb-6 ${containerClass}`}>
             <h2 className="text-5xl md:text-7xl font-black mb-6 text-gradient">
               Professional Journey
             </h2>
-            <p className="text-xl md:text-2xl text-text-secondary mb-8 font-medium">
+            <p className="text-xl md:text-2xl text-text-secondary mb-8 font-medium max-w-4xl mx-auto">
               12+ years of experience across 17 companies, delivering 100+
               projects
             </p>
 
             {/* Career Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
               <div className="card p-6">
                 <div className="text-4xl md:text-5xl font-black text-accent-primary mb-2">
                   12+

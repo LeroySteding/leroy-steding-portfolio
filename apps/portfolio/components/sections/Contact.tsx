@@ -3,10 +3,12 @@
 import { motion } from "framer-motion";
 import { Github, Linkedin, Mail, MapPin, Send, Twitter } from "lucide-react";
 import { useState } from "react";
+import { useLayout } from "@/contexts/LayoutContext";
 import { useTranslation } from "@/hooks/useTranslation";
 
 export default function Contact() {
   const t = useTranslation();
+  const { containerClass } = useLayout();
 
   const contactInfo = [
     {
@@ -88,7 +90,7 @@ export default function Contact() {
       {/* Subtle accent line */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-accent-secondary to-transparent" />
 
-      <div className="container relative z-10 mx-auto px-8 lg:px-16">
+      <div className={`relative z-10 ${containerClass}`}>
         {/* Section header */}
         <div className="mb-20">
           <motion.h2

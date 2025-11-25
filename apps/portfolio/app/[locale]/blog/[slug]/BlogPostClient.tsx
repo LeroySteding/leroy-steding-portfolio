@@ -484,12 +484,10 @@ export default function BlogPostClient({
                         }`}
                         onClick={(e) => {
                           e.preventDefault();
-                          document
-                            .getElementById(heading.id)
-                            ?.scrollIntoView({
-                              behavior: "smooth",
-                              block: "start",
-                            });
+                          document.getElementById(heading.id)?.scrollIntoView({
+                            behavior: "smooth",
+                            block: "start",
+                          });
                         }}
                       >
                         {heading.text}

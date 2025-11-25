@@ -7,6 +7,8 @@ import { getLocale, getMessages } from "next-intl/server";
 import ClientLayout from "@/components/layout/ClientLayout";
 import ChatWidget from "@/components/ui/ChatWidget";
 import CookieConsent from "@/components/ui/CookieConsent";
+import LayoutSwitcher from "@/components/ui/LayoutSwitcher";
+import { LayoutProvider } from "@/contexts/LayoutContext";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -92,12 +94,15 @@ export default async function RootLayout({
     >
       <body className="antialiased bg-black text-gray-100">
         <NextIntlClientProvider messages={messages}>
-          <ClientLayout>
-            {children}
-            <Analytics />
-            <CookieConsent />
-            <ChatWidget />
-          </ClientLayout>
+          <LayoutProvider>
+            <ClientLayout>
+              {children}
+              <Analytics />
+              <CookieConsent />
+              <ChatWidget />
+              <LayoutSwitcher />
+            </ClientLayout>
+          </LayoutProvider>
         </NextIntlClientProvider>
       </body>
     </html>

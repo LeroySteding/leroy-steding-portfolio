@@ -56,21 +56,7 @@ const nextConfig: NextConfig = {
     return `build-${Date.now()}`;
   },
 
-  // Redirects for old /nl/ URLs to new root structure
-  async redirects() {
-    return [
-      {
-        source: "/nl",
-        destination: "/",
-        permanent: true,
-      },
-      {
-        source: "/nl/:path*",
-        destination: "/:path*",
-        permanent: true,
-      },
-    ];
-  },
+  // No redirects needed - next-intl middleware handles locale routing
 };
 
 export default withBundleAnalyzer(withNextIntl(nextConfig));

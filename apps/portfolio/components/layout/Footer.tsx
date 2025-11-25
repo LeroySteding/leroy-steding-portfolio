@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import NewsletterSubscribe from "@/components/ui/NewsletterSubscribe";
+import { useLayout } from "@/contexts/LayoutContext";
 import { useTranslation } from "@/hooks/useTranslation";
 import { useLocalizedPath } from "@/lib/localization";
 
@@ -18,6 +19,7 @@ export default function Footer() {
   const t = useTranslation();
   const getLocalizedPath = useLocalizedPath();
   const currentYear = new Date().getFullYear();
+  const { containerClass } = useLayout();
 
   const socialLinks = [
     {
@@ -74,7 +76,7 @@ export default function Footer() {
     <footer className="bg-tertiary-bg border-t-2 border-surface">
       {/* Newsletter Section */}
       <div className="border-b-2 border-surface">
-        <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-16 py-12 sm:py-14 md:py-16">
+        <div className={`${containerClass} py-12 sm:py-14 md:py-16`}>
           <NewsletterSubscribe
             variant="inline"
             className="max-w-2xl mx-auto text-center"
@@ -84,7 +86,7 @@ export default function Footer() {
 
       {/* Booking CTA Section */}
       <div className="border-b-2 border-surface bg-gradient-to-r from-accent-primary/5 via-accent-secondary/5 to-accent-primary/5">
-        <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-16 py-12 sm:py-14 md:py-16">
+        <div className={`${containerClass} py-12 sm:py-14 md:py-16`}>
           <div className="max-w-4xl mx-auto text-center">
             <div className="inline-flex p-2.5 sm:p-3 rounded-xl bg-accent-primary/10 mb-5 sm:mb-6">
               <Calendar className="w-7 h-7 sm:w-8 sm:h-8 text-accent-primary" />
@@ -146,7 +148,7 @@ export default function Footer() {
       </div>
 
       {/* Main Footer Content */}
-      <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-16 py-12 sm:py-14 md:py-16">
+      <div className={`${containerClass} py-12 sm:py-14 md:py-16`}>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 md:gap-12 mb-10 sm:mb-12">
           {/* Branding */}
           <div className="space-y-5 sm:space-y-6">

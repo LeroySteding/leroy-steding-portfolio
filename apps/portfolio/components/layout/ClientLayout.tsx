@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef } from "react";
+import { useCallback, useRef } from "react";
 import Footer from "@/components/layout/Footer";
 import { FrozenRouter } from "@/components/layout/FrozenRouter";
 import Header from "@/components/layout/Header";
@@ -20,11 +20,16 @@ export default function ClientLayout({
   const isCVPage = pathname === "/cv";
   const { isOpen, openSearch, closeSearch } = useGlobalSearch();
   const isNavigatingRef = useRef(false);
+  const previousPathRef = useRef(pathname);
 
-  // Scroll to top on route change
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "instant" });
-  }, []);
+  // Scroll to top after exit animation completes (on route change)
+  const handleExitComplete = useCallback(() => {
+    isNavigatingRef.current = false;
+    if (previousPathRef.current !== pathname) {
+      window.scrollTo({ top: 0, behavior: "instant" });
+      previousPathRef.current = pathname;
+    }
+  }, [pathname]);
 
   return (
     <LanguageProvider>
@@ -39,9 +44,7 @@ export default function ClientLayout({
         <AnimatePresence
           mode="wait"
           initial={false}
-          onExitComplete={() => {
-            isNavigatingRef.current = false;
-          }}
+          onExitComplete={handleExitComplete}
         >
           <motion.div
             key={pathname}
