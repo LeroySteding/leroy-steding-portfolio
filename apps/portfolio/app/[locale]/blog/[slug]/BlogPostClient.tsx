@@ -186,7 +186,7 @@ export default function BlogPostClient({
 
         <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-accent-primary to-transparent" />
 
-        <div className="container relative z-10 mx-auto px-8 lg:px-16 pb-16 pt-32">
+        <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 pb-16 pt-32">
           <Link
             href={language === "nl" ? "/nl/blog" : "/blog"}
             className="inline-flex items-center gap-2 text-text-secondary hover:text-accent-primary transition-colors mb-8 group font-bold backdrop-blur-sm bg-primary-bg/50 px-4 py-2 rounded-xl"
@@ -250,17 +250,17 @@ export default function BlogPostClient({
       </div>
 
       {/* Main Content Area */}
-      <div className="container relative z-10 mx-auto px-8 lg:px-16 py-20">
-        <div className="grid lg:grid-cols-[1fr_300px] gap-16">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 py-20">
+        <div className="grid lg:grid-cols-[1fr_300px] gap-12">
           {/* Article Content */}
-          <article>
-            <div className="prose prose-invert prose-xl max-w-none mb-16">
+          <article className="min-w-0">
+            <div className="prose prose-invert prose-lg max-w-none mb-16 overflow-hidden">
               <ReactMarkdown
                 components={{
                   code({ node, className, children }) {
                     const match = /language-(\w+)/.exec(className || "");
                     return match ? (
-                      <div className="my-8 rounded-xl overflow-hidden">
+                      <div className="my-8 rounded-xl overflow-x-auto">
                         <SyntaxHighlighter
                           style={vscDarkPlus}
                           language={match[1]}
@@ -268,15 +268,17 @@ export default function BlogPostClient({
                           customStyle={{
                             margin: 0,
                             padding: "1.5rem",
-                            fontSize: "0.95rem",
-                            lineHeight: "1.7",
+                            fontSize: "0.875rem",
+                            lineHeight: "1.6",
+                            borderRadius: "0.75rem",
                           }}
+                          wrapLongLines={true}
                         >
                           {String(children).replace(/\n$/, "")}
                         </SyntaxHighlighter>
                       </div>
                     ) : (
-                      <code className="px-2 py-1 rounded-lg bg-surface text-accent-primary font-mono text-base">
+                      <code className="px-2 py-1 rounded-lg bg-surface text-accent-primary font-mono text-sm break-words">
                         {children}
                       </code>
                     );
