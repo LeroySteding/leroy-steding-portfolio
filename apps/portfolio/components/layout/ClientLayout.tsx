@@ -46,7 +46,8 @@ export default function ClientLayout({
           initial={false}
           onExitComplete={handleExitComplete}
         >
-          <motion.div
+          <motion.main
+            id="main-content"
             key={pathname}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -63,7 +64,7 @@ export default function ClientLayout({
             }}
           >
             <FrozenRouter>{children}</FrozenRouter>
-          </motion.div>
+          </motion.main>
         </AnimatePresence>
 
         {!isCVPage && <Footer />}

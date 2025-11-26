@@ -52,30 +52,32 @@ export default function Experience({ data, sectionData }: ExperienceProps) {
     if (windowWidth < 1024) return 450;
     // Desktop: Vary based on content length
     if (exp.achievements && exp.achievements.length > 3) return 600;
-    if (exp.technologies.length > 15) return 580;
+    if (exp.technologies && exp.technologies.length > 15) return 580;
     return 550;
   };
 
-  // Transform experiences data into carousel items
-  const experienceItems = experiences.map((exp) => ({
-    id: exp.id,
-    content: (
-      <ExperienceCard
-        title={exp.title}
-        company={exp.company}
-        period={exp.period}
-        location={exp.location}
-        description={exp.description}
-        achievements={exp.achievements}
-        technologies={exp.technologies}
-        companyLogo={exp.companyLogo}
-        color={exp.color as ExperienceColor}
-        href={`/experience/${exp.id}`}
-        width={getResponsiveWidth(exp)}
-        showViewDetails={true}
-      />
-    ),
-  }));
+  // Transform experiences data into carousel items with null handling
+  const experienceItems = experiences
+    .filter((exp) => exp.title && exp.company) // Filter out incomplete entries
+    .map((exp) => ({
+      id: exp.id,
+      content: (
+        <ExperienceCard
+          title={exp.title}
+          company={exp.company}
+          period={exp.period || ""}
+          location={exp.location || ""}
+          description={exp.description || ""}
+          achievements={exp.achievements || []}
+          technologies={exp.technologies || []}
+          companyLogo={exp.companyLogo}
+          color={(exp.color as ExperienceColor) || "violet"}
+          href={`/experience/${exp.id}`}
+          width={getResponsiveWidth(exp)}
+          showViewDetails={true}
+        />
+      ),
+    }));
 
   return (
     <section id="experience" className="relative">

@@ -8,6 +8,7 @@ import {
   ExternalLink,
   Github,
 } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -36,7 +37,11 @@ export default function Projects({ data, sectionData }: ProjectsProps) {
   // Use Sanity data if available, otherwise fall back to static data
   const staticProjects = getStaticProjects(language);
   const allProjects = data && data.length > 0 ? data : staticProjects;
-  const featuredProjects = allProjects.filter((p) => p.featured).slice(0, 3);
+  // Filter out incomplete projects and get featured ones
+  const featuredProjects = allProjects
+    .filter((p) => p.title && p.description) // Exclude incomplete entries
+    .filter((p) => p.featured)
+    .slice(0, 3);
 
   // Section title from Sanity or static translations
   const sectionTitle = sectionData?.title || t.projects.title;
@@ -116,10 +121,13 @@ export default function Projects({ data, sectionData }: ProjectsProps) {
                   <div className="relative h-48 sm:h-56 md:h-64 bg-secondary-bg overflow-hidden">
                     {project.image ? (
                       <>
-                        <img
+                        <Image
                           src={project.image}
-                          alt={project.title}
-                          className="w-full h-full object-cover"
+                          alt={project.title || "Project image"}
+                          fill
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                          className="object-cover"
+                          loading="lazy"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-primary-bg/60 to-transparent" />
                       </>
@@ -205,7 +213,7 @@ export default function Projects({ data, sectionData }: ProjectsProps) {
 
                       {/* Technologies - Scrollable */}
                       <div className="flex gap-2 overflow-x-auto scrollbar-hide mb-4 sm:mb-6 pb-2 mt-auto">
-                        {project.technologies.map((tech, i) => (
+                        {(project.technologies || []).map((tech, i) => (
                           <motion.span
                             key={tech}
                             initial={{ opacity: 0, x: -10 }}

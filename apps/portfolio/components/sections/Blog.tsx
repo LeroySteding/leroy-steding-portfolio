@@ -9,6 +9,7 @@ import {
   Code,
   FlaskConical,
 } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -152,10 +153,13 @@ export default function Blog({ data, sectionData }: BlogProps) {
                     <div className="relative h-44 sm:h-48 bg-secondary-bg overflow-hidden">
                       {post.coverImage ? (
                         <>
-                          <img
+                          <Image
                             src={post.coverImage}
-                            alt={post.title}
-                            className="w-full h-full object-cover"
+                            alt={post.title || "Blog post image"}
+                            fill
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                            className="object-cover"
+                            loading="lazy"
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-primary-bg/80 to-transparent" />
                         </>
@@ -212,7 +216,7 @@ export default function Blog({ data, sectionData }: BlogProps) {
 
                         {/* Tags - Scrollable */}
                         <div className="flex gap-2 overflow-x-auto scrollbar-hide mb-4 sm:mb-6 pb-2 mt-auto">
-                          {post.tags.slice(0, 3).map((tag, i) => (
+                          {(post.tags || []).slice(0, 3).map((tag, i) => (
                             <motion.span
                               key={tag}
                               initial={{ opacity: 0, x: -10 }}
