@@ -32,8 +32,9 @@ export default defineType({
     }),
     defineField({
       name: "coverImage",
-      title: "Cover Image",
+      title: "Cover Image (Upload)",
       type: "image",
+      description: "Upload an image directly to Sanity",
       options: {
         hotspot: true,
       },
@@ -44,6 +45,13 @@ export default defineType({
           title: "Alternative Text",
         },
       ],
+    }),
+    defineField({
+      name: "coverImageUrl",
+      title: "Cover Image URL (External)",
+      type: "url",
+      description:
+        "Or provide an external image URL (e.g., Unsplash). This will be used if no uploaded image is provided.",
     }),
     defineField({
       name: "content",
@@ -115,11 +123,21 @@ export default defineType({
       featured: "featured",
     },
     prepare(selection) {
-      const { title, author, category, featured } = selection;
+      const { title, author, category, featured, media } = selection;
+
+      // Check if media is a valid Sanity image object (has _type and asset)
+      // If it's a string (URL) or doesn't have asset, don't use it as media
+      const isValidSanityImage =
+        media &&
+        typeof media === "object" &&
+        media._type === "image" &&
+        media.asset;
+
       return {
-        title,
-        subtitle: `${category} ${featured ? "⭐ Featured" : ""} by ${author}`,
-        media: selection.media,
+        title: title || "Untitled",
+        subtitle:
+          `${category || ""} ${featured ? "⭐ Featured" : ""} by ${author || "Unknown"}`.trim(),
+        media: isValidSanityImage ? media : BookOpen,
       };
     },
   },
