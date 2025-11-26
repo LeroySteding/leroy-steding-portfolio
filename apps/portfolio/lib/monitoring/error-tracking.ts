@@ -1,15 +1,12 @@
 /**
  * Error Tracking Service Configuration
  *
- * This module provides centralized error tracking and monitoring.
- * Supports multiple providers: Sentry, LogRocket, Bugsnag, etc.
- *
- * To enable error tracking:
- * 1. Install your preferred provider: pnpm add @sentry/nextjs
- * 2. Add environment variables (see .env.example)
- * 3. Uncomment the provider configuration below
- * 4. Update error.tsx and global-error.tsx to call logError()
+ * Uses Sentry for error tracking and monitoring.
+ * Configuration is in sentry.client.config.ts, sentry.server.config.ts, and sentry.edge.config.ts
  */
+
+import * as Sentry from "@sentry/nextjs";
+import logger from "@/lib/logger";
 
 interface ErrorContext {
   user?: {
@@ -24,142 +21,69 @@ interface ErrorContext {
 
 /**
  * Initialize error tracking service
- * Call this in your root layout or _app.tsx
+ * Note: Sentry is auto-initialized via config files, this is for manual initialization if needed
  */
 export function initErrorTracking(): void {
   if (process.env.NODE_ENV === "development") {
-    console.log("🔍 Error tracking initialized (development mode)");
+    logger.info(
+      "🔍 Error tracking initialized (development mode - Sentry disabled)",
+    );
     return;
   }
 
-  // TODO: Uncomment and configure your preferred error tracking service
-
-  /* Sentry Configuration
-  if (process.env.NEXT_PUBLIC_SENTRY_DSN) {
-    const Sentry = require('@sentry/nextjs');
-    
-    Sentry.init({
-      dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
-      environment: process.env.NEXT_PUBLIC_VERCEL_ENV || 'development',
-      tracesSampleRate: process.env.NODE_ENV === 'production' ? 0.1 : 1.0,
-      
-      // Filter out non-critical errors
-      beforeSend(event, hint) {
-        // Don't send events in development
-        if (process.env.NODE_ENV === 'development') {
-          return null;
-        }
-        
-        // Filter out known third-party errors
-        const error = hint.originalException as Error;
-        if (error?.message?.includes('third-party-service')) {
-          return null;
-        }
-        
-        return event;
-      },
-      
-      integrations: [
-        new Sentry.BrowserTracing(),
-        new Sentry.Replay({
-          maskAllText: true,
-          blockAllMedia: true,
-        }),
-      ],
-      
-      // Session Replay sampling
-      replaysSessionSampleRate: 0.1,
-      replaysOnErrorSampleRate: 1.0,
-    });
-    
-    console.log('🔍 Sentry error tracking initialized');
+  if (!process.env.NEXT_PUBLIC_SENTRY_DSN) {
+    logger.warn(
+      "⚠️ NEXT_PUBLIC_SENTRY_DSN not configured - error tracking disabled",
+    );
+    return;
   }
-  */
 
-  /* LogRocket Configuration
-  if (process.env.NEXT_PUBLIC_LOGROCKET_APP_ID) {
-    const LogRocket = require('logrocket');
-    
-    LogRocket.init(process.env.NEXT_PUBLIC_LOGROCKET_APP_ID, {
-      console: {
-        shouldAggregateConsoleErrors: true,
-      },
-      network: {
-        requestSanitizer: (request) => {
-          // Remove sensitive headers
-          if (request.headers.Authorization) {
-            request.headers.Authorization = '[REDACTED]';
-          }
-          return request;
-        },
-      },
-    });
-    
-    console.log('🔍 LogRocket initialized');
-  }
-  */
-
-  console.log("⚠️ Error tracking not configured - add your preferred service");
+  logger.info("🔍 Sentry error tracking active");
 }
 
 /**
- * Log an error to the error tracking service
+ * Log an error to Sentry
  */
 export function logError(error: Error, context?: ErrorContext): void {
   // Always log to console in development
   if (process.env.NODE_ENV === "development") {
-    console.error("Error logged:", error, context);
+    logger.error("Error logged:", error, context);
     return;
   }
 
-  // TODO: Uncomment based on your error tracking service
-
-  /* Sentry
-  if (typeof window !== 'undefined' && process.env.NEXT_PUBLIC_SENTRY_DSN) {
-    const Sentry = require('@sentry/nextjs');
-    
+  // Send to Sentry in production
+  if (process.env.NEXT_PUBLIC_SENTRY_DSN) {
     Sentry.withScope((scope) => {
       // Set user context
       if (context?.user) {
         scope.setUser(context.user);
       }
-      
+
       // Set tags
       if (context?.tags) {
         Object.entries(context.tags).forEach(([key, value]) => {
           scope.setTag(key, value);
         });
       }
-      
+
       // Set level
       if (context?.level) {
         scope.setLevel(context.level);
       }
-      
+
       // Set extra context
       if (context?.extra) {
         Object.entries(context.extra).forEach(([key, value]) => {
           scope.setExtra(key, value);
         });
       }
-      
+
       Sentry.captureException(error);
     });
+  } else {
+    // Fallback: log to console
+    logger.error("Error occurred:", error, context);
   }
-  */
-
-  /* LogRocket
-  if (typeof window !== 'undefined' && process.env.NEXT_PUBLIC_LOGROCKET_APP_ID) {
-    const LogRocket = require('logrocket');
-    LogRocket.captureException(error, {
-      tags: context?.tags,
-      extra: context?.extra,
-    });
-  }
-  */
-
-  // Fallback: log to console
-  console.error("Error occurred:", error, context);
 }
 
 /**
@@ -171,41 +95,22 @@ export function setUser(user: {
   username?: string;
 }): void {
   if (process.env.NODE_ENV === "development") {
-    console.log("User context set:", user);
+    logger.debug("User context set:", user);
     return;
   }
 
-  /* Sentry
-  if (typeof window !== 'undefined' && process.env.NEXT_PUBLIC_SENTRY_DSN) {
-    const Sentry = require('@sentry/nextjs');
+  if (process.env.NEXT_PUBLIC_SENTRY_DSN) {
     Sentry.setUser(user);
   }
-  */
-
-  /* LogRocket
-  if (typeof window !== 'undefined' && process.env.NEXT_PUBLIC_LOGROCKET_APP_ID) {
-    const LogRocket = require('logrocket');
-    LogRocket.identify(user.id, {
-      email: user.email,
-      name: user.username,
-    });
-  }
-  */
 }
 
 /**
  * Clear user context (on logout)
  */
 export function clearUser(): void {
-  /* Sentry
-  if (typeof window !== 'undefined' && process.env.NEXT_PUBLIC_SENTRY_DSN) {
-    const Sentry = require('@sentry/nextjs');
+  if (process.env.NEXT_PUBLIC_SENTRY_DSN) {
     Sentry.setUser(null);
   }
-  */
-  /* LogRocket
-  // LogRocket doesn't have a clear user method
-  */
 }
 
 /**
@@ -216,20 +121,17 @@ export function addBreadcrumb(
   data?: Record<string, unknown>,
 ): void {
   if (process.env.NODE_ENV === "development") {
-    console.log("Breadcrumb:", message, data);
+    logger.debug("Breadcrumb:", message, data);
     return;
   }
 
-  /* Sentry
-  if (typeof window !== 'undefined' && process.env.NEXT_PUBLIC_SENTRY_DSN) {
-    const Sentry = require('@sentry/nextjs');
+  if (process.env.NEXT_PUBLIC_SENTRY_DSN) {
     Sentry.addBreadcrumb({
       message,
       data,
-      level: 'info',
+      level: "info",
     });
   }
-  */
 }
 
 /**
@@ -240,14 +142,11 @@ export function captureMessage(
   level: "info" | "warning" | "error" = "info",
 ): void {
   if (process.env.NODE_ENV === "development") {
-    console.log(`[${level.toUpperCase()}]`, message);
+    logger.debug(`[${level.toUpperCase()}]`, message);
     return;
   }
 
-  /* Sentry
-  if (typeof window !== 'undefined' && process.env.NEXT_PUBLIC_SENTRY_DSN) {
-    const Sentry = require('@sentry/nextjs');
+  if (process.env.NEXT_PUBLIC_SENTRY_DSN) {
     Sentry.captureMessage(message, level);
   }
-  */
 }

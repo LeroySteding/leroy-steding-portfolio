@@ -40,8 +40,16 @@ export default function NewsletterSubscribe({
     setStatus("loading");
 
     try {
-      // TODO: Integrate with newsletter service (Mailchimp, ConvertKit, or Supabase)
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      const response = await fetch("/api/newsletter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error || "Failed to subscribe");
+      }
 
       setStatus("success");
       setMessage(t.newsletter.messages.success);

@@ -2,13 +2,14 @@
 
 import { AlertTriangle, Home, RefreshCw } from "lucide-react";
 import { useEffect } from "react";
+import { logError } from "@/lib/monitoring/error-tracking";
 
 /**
  * Next.js Error Component
  * Automatically wraps route segments in an error boundary
  * @see https://nextjs.org/docs/app/api-reference/file-conventions/error
  */
-export default function Error({
+export default function ErrorPage({
   error,
   reset,
 }: {
@@ -16,13 +17,14 @@ export default function Error({
   reset: () => void;
 }) {
   useEffect(() => {
-    // Log error to console in development
-    if (process.env.NODE_ENV === "development") {
-      console.error("Application Error:", error);
-    }
-
-    // TODO: Log to error tracking service
-    // Example: Sentry.captureException(error);
+    // Log error to error tracking service (Sentry)
+    logError(error, {
+      tags: {
+        errorBoundary: "segment",
+        digest: error.digest || "unknown",
+      },
+      level: "error",
+    });
   }, [error]);
 
   return (

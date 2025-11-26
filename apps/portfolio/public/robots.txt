@@ -1,0 +1,18 @@
+# robots.txt for leroysteding.nl
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://www.leroysteding.nl/sitemap.xml
+
+# Block access to API routes
+Disallow: /api/
+Disallow: /studio/
+
+# Block draft mode
+Disallow: /*?*sanity-preview*
+
+# Block internal Next.js paths
+Disallow: /_next/
+Disallow: /_vercel/

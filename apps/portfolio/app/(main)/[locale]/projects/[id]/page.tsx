@@ -23,6 +23,30 @@ export default function ProjectDetailPage() {
   const pageDescription = project?.description || "";
   const pageUrl = `https://leroysteding.nl/projects/${params.id}`;
 
+  // Generate JSON-LD structured data for SEO
+  const jsonLd = project
+    ? {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        headline: project.title,
+        description: project.description,
+        url: pageUrl,
+        image: project.image || "https://leroysteding.nl/images/og-default.jpg",
+        author: {
+          "@type": "Person",
+          name: "Leroy Steding",
+          url: "https://leroysteding.nl",
+        },
+        publisher: {
+          "@type": "Organization",
+          name: "STEDING.",
+          url: "https://leroysteding.nl",
+        },
+        keywords: project.technologies.join(", "),
+        inLanguage: language === "nl" ? "nl-NL" : "en-US",
+      }
+    : undefined;
+
   if (!project) {
     return (
       <div className="min-h-screen bg-primary-bg flex items-center justify-center">
@@ -49,6 +73,7 @@ export default function ProjectDetailPage() {
         description={pageDescription}
         url={pageUrl}
         keywords={project?.technologies || []}
+        jsonLd={jsonLd}
       />
       <div className="min-h-screen bg-primary-bg">
         {/* Hero Section with Featured Image */}

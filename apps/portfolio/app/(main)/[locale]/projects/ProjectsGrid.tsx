@@ -8,6 +8,7 @@ import {
   ExternalLink,
   Github,
 } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import type { Translations } from "@/locales/en";
@@ -107,10 +108,12 @@ export default function ProjectsGrid({
                   <div className="relative h-48 sm:h-56 md:h-64 bg-secondary-bg overflow-hidden">
                     {project.image ? (
                       <>
-                        <img
+                        <Image
                           src={project.image}
                           alt={project.title}
-                          className="w-full h-full object-cover"
+                          fill
+                          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                          className="object-cover"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-primary-bg/60 to-transparent" />
                       </>

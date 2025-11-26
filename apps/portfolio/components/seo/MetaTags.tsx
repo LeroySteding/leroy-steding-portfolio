@@ -8,6 +8,7 @@ interface MetaTagsProps {
   keywords?: string[];
   ogImage?: string;
   url?: string;
+  jsonLd?: Record<string, unknown>;
 }
 
 export default function MetaTags({
@@ -16,6 +17,7 @@ export default function MetaTags({
   keywords = [],
   ogImage = "/og-image.png",
   url,
+  jsonLd,
 }: MetaTagsProps) {
   useEffect(() => {
     // Update document title
@@ -109,7 +111,23 @@ export default function MetaTags({
       document.head.appendChild(twitterImage);
     }
     twitterImage.setAttribute("content", ogImage);
-  }, [title, description, keywords, ogImage, url]);
+
+    // Add JSON-LD structured data
+    if (jsonLd) {
+      const existingScript = document.querySelector(
+        'script[type="application/ld+json"][data-metatags]',
+      );
+      if (existingScript) {
+        existingScript.textContent = JSON.stringify(jsonLd);
+      } else {
+        const script = document.createElement("script");
+        script.type = "application/ld+json";
+        script.setAttribute("data-metatags", "true");
+        script.textContent = JSON.stringify(jsonLd);
+        document.head.appendChild(script);
+      }
+    }
+  }, [title, description, keywords, ogImage, url, jsonLd]);
 
   return null;
 }

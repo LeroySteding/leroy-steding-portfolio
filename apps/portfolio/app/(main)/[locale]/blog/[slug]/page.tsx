@@ -1,5 +1,7 @@
 import { notFound } from "next/navigation";
+import JsonLd from "@/components/JsonLd";
 import { locales } from "@/i18n/config";
+import { getBlogPostSchema, getBreadcrumbSchema } from "@/lib/structured-data";
 import { client } from "@/sanity/lib/client";
 import { postBySlugQuery, postsQuery } from "@/sanity/lib/queries";
 import BlogPostClient from "./BlogPostClient";
@@ -97,5 +99,33 @@ export default async function BlogPostPage({ params }: PageProps) {
 
   const post = transformPost(sanityPost);
 
-  return <BlogPostClient post={post} language={locale as "en" | "nl"} />;
+  // Generate structured data for SEO
+  const blogPostSchema = getBlogPostSchema({
+    title: post.title,
+    description: post.excerpt,
+    slug: post.slug,
+    publishedAt: post.publishedAt,
+    image: post.coverImage,
+    author: post.author,
+    locale,
+  });
+
+  const breadcrumbSchema = getBreadcrumbSchema([
+    {
+      name: locale === "nl" ? "Home" : "Home",
+      url: locale === "nl" ? "/" : "/en",
+    },
+    { name: "Blog", url: locale === "nl" ? "/blog" : "/en/blog" },
+    {
+      name: post.title,
+      url: locale === "nl" ? `/blog/${post.slug}` : `/en/blog/${post.slug}`,
+    },
+  ]);
+
+  return (
+    <>
+      <JsonLd data={[blogPostSchema, breadcrumbSchema]} />
+      <BlogPostClient post={post} language={locale as "en" | "nl"} />
+    </>
+  );
 }
