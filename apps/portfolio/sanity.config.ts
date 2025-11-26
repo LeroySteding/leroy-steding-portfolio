@@ -50,6 +50,179 @@ const config: Config = defineConfig({
         },
       },
       resolve: {
+        // Map documents to their preview URLs
+        locations: {
+          // Pages use their slug for routing
+          page: {
+            select: {
+              slug: "slug.current",
+              language: "language",
+            },
+            resolve: (doc) => {
+              const lang = doc?.language || "en";
+              const slug = doc?.slug;
+              if (slug === "home") {
+                return {
+                  locations: [
+                    { title: `Homepage (${lang})`, href: `/${lang}` },
+                  ],
+                };
+              }
+              return {
+                locations: [
+                  { title: `${slug} (${lang})`, href: `/${lang}/${slug}` },
+                ],
+              };
+            },
+          },
+          // Blog posts
+          post: {
+            select: {
+              slug: "slug.current",
+              title: "title",
+              language: "language",
+            },
+            resolve: (doc) => {
+              const lang = doc?.language || "en";
+              return {
+                locations: [
+                  {
+                    title: doc?.title || "Blog Post",
+                    href: `/${lang}/blog/${doc?.slug}`,
+                  },
+                ],
+              };
+            },
+          },
+          // Projects
+          project: {
+            select: {
+              slug: "slug.current",
+              title: "title",
+              language: "language",
+            },
+            resolve: (doc) => {
+              const lang = doc?.language || "en";
+              return {
+                locations: [
+                  {
+                    title: doc?.title || "Project",
+                    href: `/${lang}/projects/${doc?.slug}`,
+                  },
+                ],
+              };
+            },
+          },
+          // Experience
+          experience: {
+            select: {
+              slug: "slug.current",
+              title: "title",
+              language: "language",
+            },
+            resolve: (doc) => {
+              const lang = doc?.language || "en";
+              return {
+                locations: [
+                  {
+                    title: doc?.title || "Experience",
+                    href: `/${lang}/experience/${doc?.slug}`,
+                  },
+                ],
+              };
+            },
+          },
+          // Section documents - show where they appear
+          hero: {
+            select: { language: "language" },
+            resolve: (doc) => ({
+              locations: [
+                {
+                  title: "Homepage",
+                  href: `/${doc?.language || "en"}`,
+                },
+              ],
+            }),
+          },
+          aboutSection: {
+            select: { language: "language" },
+            resolve: (doc) => ({
+              locations: [
+                {
+                  title: "About Page",
+                  href: `/${doc?.language || "en"}/about`,
+                },
+              ],
+            }),
+          },
+          contactSection: {
+            select: { language: "language" },
+            resolve: (doc) => ({
+              locations: [
+                {
+                  title: "Contact Page",
+                  href: `/${doc?.language || "en"}/contact`,
+                },
+              ],
+            }),
+          },
+          projectsSection: {
+            select: { language: "language" },
+            resolve: (doc) => ({
+              locations: [
+                {
+                  title: "Projects Page",
+                  href: `/${doc?.language || "en"}/projects`,
+                },
+              ],
+            }),
+          },
+          experienceSection: {
+            select: { language: "language" },
+            resolve: (doc) => ({
+              locations: [
+                {
+                  title: "Homepage (Experience)",
+                  href: `/${doc?.language || "en"}`,
+                },
+              ],
+            }),
+          },
+          skillsSection: {
+            select: { language: "language" },
+            resolve: (doc) => ({
+              locations: [
+                {
+                  title: "Homepage (Skills)",
+                  href: `/${doc?.language || "en"}`,
+                },
+              ],
+            }),
+          },
+          blogSection: {
+            select: { language: "language" },
+            resolve: (doc) => ({
+              locations: [
+                {
+                  title: "Blog Page",
+                  href: `/${doc?.language || "en"}/blog`,
+                },
+              ],
+            }),
+          },
+          techStackSection: {
+            select: { language: "language" },
+            resolve: (doc) => ({
+              locations: [
+                {
+                  title: "Homepage (Tech Stack)",
+                  href: `/${doc?.language || "en"}`,
+                },
+              ],
+            }),
+          },
+        },
+        // Map routes to documents for the preview iframe
         mainDocuments: [
           // Homepage routes
           {
@@ -64,7 +237,20 @@ const config: Config = defineConfig({
             route: "/nl",
             filter: `_type == "page" && slug.current == "home" && language == "nl"`,
           },
-          // Blog routes
+          // Blog listing routes
+          {
+            route: "/blog",
+            filter: `_type == "blogSection" && (language == "en" || !defined(language))`,
+          },
+          {
+            route: "/en/blog",
+            filter: `_type == "blogSection" && (language == "en" || !defined(language))`,
+          },
+          {
+            route: "/nl/blog",
+            filter: `_type == "blogSection" && language == "nl"`,
+          },
+          // Blog post routes
           {
             route: "/blog/:slug",
             filter: `_type == "post" && slug.current == $slug`,
@@ -77,46 +263,7 @@ const config: Config = defineConfig({
             route: "/nl/blog/:slug",
             filter: `_type == "post" && slug.current == $slug && language == "nl"`,
           },
-          // Projects routes
-          {
-            route: "/projects/:id",
-            filter: `_type == "project" && slug.current == $id`,
-          },
-          {
-            route: "/en/projects/:id",
-            filter: `_type == "project" && slug.current == $id && (language == "en" || !defined(language))`,
-          },
-          {
-            route: "/nl/projects/:id",
-            filter: `_type == "project" && slug.current == $id && language == "nl"`,
-          },
-          // Experience routes
-          {
-            route: "/experience/:id",
-            filter: `_type == "experience" && slug.current == $id`,
-          },
-          {
-            route: "/en/experience/:id",
-            filter: `_type == "experience" && slug.current == $id && (language == "en" || !defined(language))`,
-          },
-          {
-            route: "/nl/experience/:id",
-            filter: `_type == "experience" && slug.current == $id && language == "nl"`,
-          },
-          // About page
-          {
-            route: "/about",
-            filter: `_type == "aboutSection" && (language == "en" || !defined(language))`,
-          },
-          {
-            route: "/en/about",
-            filter: `_type == "aboutSection" && (language == "en" || !defined(language))`,
-          },
-          {
-            route: "/nl/about",
-            filter: `_type == "aboutSection" && language == "nl"`,
-          },
-          // Projects listing page
+          // Projects listing routes
           {
             route: "/projects",
             filter: `_type == "projectsSection" && (language == "en" || !defined(language))`,
@@ -129,7 +276,46 @@ const config: Config = defineConfig({
             route: "/nl/projects",
             filter: `_type == "projectsSection" && language == "nl"`,
           },
-          // Contact page
+          // Project detail routes
+          {
+            route: "/projects/:slug",
+            filter: `_type == "project" && slug.current == $slug`,
+          },
+          {
+            route: "/en/projects/:slug",
+            filter: `_type == "project" && slug.current == $slug && (language == "en" || !defined(language))`,
+          },
+          {
+            route: "/nl/projects/:slug",
+            filter: `_type == "project" && slug.current == $slug && language == "nl"`,
+          },
+          // Experience routes
+          {
+            route: "/experience/:slug",
+            filter: `_type == "experience" && slug.current == $slug`,
+          },
+          {
+            route: "/en/experience/:slug",
+            filter: `_type == "experience" && slug.current == $slug && (language == "en" || !defined(language))`,
+          },
+          {
+            route: "/nl/experience/:slug",
+            filter: `_type == "experience" && slug.current == $slug && language == "nl"`,
+          },
+          // About page routes
+          {
+            route: "/about",
+            filter: `_type == "aboutSection" && (language == "en" || !defined(language))`,
+          },
+          {
+            route: "/en/about",
+            filter: `_type == "aboutSection" && (language == "en" || !defined(language))`,
+          },
+          {
+            route: "/nl/about",
+            filter: `_type == "aboutSection" && language == "nl"`,
+          },
+          // Contact page routes
           {
             route: "/contact",
             filter: `_type == "contactSection" && (language == "en" || !defined(language))`,
