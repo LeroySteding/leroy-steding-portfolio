@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import { Inter, Space_Grotesk } from "next/font/google";
+import { draftMode } from "next/headers";
 import "../globals.css";
 import { Analytics } from "@vercel/analytics/react";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
 import ClientLayout from "@/components/layout/ClientLayout";
+import { VisualEditing } from "@/components/sanity/VisualEditing";
 import ChatWidget from "@/components/ui/ChatWidget";
 import CookieConsent from "@/components/ui/CookieConsent";
 import LayoutSwitcher from "@/components/ui/LayoutSwitcher";
@@ -85,6 +87,7 @@ export default async function MainLayout({
 }>) {
   const locale = await getLocale();
   const messages = await getMessages();
+  const { isEnabled: isDraftMode } = await draftMode();
 
   return (
     <html
@@ -104,6 +107,7 @@ export default async function MainLayout({
             </ClientLayout>
           </LayoutProvider>
         </NextIntlClientProvider>
+        {isDraftMode && <VisualEditing />}
       </body>
     </html>
   );
