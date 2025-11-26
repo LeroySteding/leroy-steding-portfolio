@@ -6,11 +6,37 @@ import {
 } from "@steding/timeline-scroll";
 import { useEffect, useState } from "react";
 import { useLayout } from "@/contexts/LayoutContext";
-import { experiences } from "@/data/experiences";
+import { experiences as staticExperiences } from "@/data/experiences";
+import type {
+  SanityExperience,
+  SanityExperienceSection,
+} from "@/lib/sanity-content";
 
-export default function Experience() {
+// Type for experience card colors
+type ExperienceColor =
+  | "violet"
+  | "cyan"
+  | "purple"
+  | "blue"
+  | "green"
+  | "orange"
+  | "pink";
+
+interface ExperienceProps {
+  data?: SanityExperience[] | null;
+  sectionData?: SanityExperienceSection | null;
+}
+
+export default function Experience({ data, sectionData }: ExperienceProps) {
   const [windowWidth, setWindowWidth] = useState(1440);
   const { containerClass } = useLayout();
+
+  // Use Sanity data if available, otherwise fall back to static data
+  const experiences = data && data.length > 0 ? data : staticExperiences;
+
+  // Section content from Sanity or defaults
+  const sectionTitle = sectionData?.title || "Professional";
+  const sectionTitleHighlight = sectionData?.titleHighlight || "Journey";
 
   useEffect(() => {
     const updateWidth = () => setWindowWidth(window.innerWidth);
@@ -43,7 +69,7 @@ export default function Experience() {
         achievements={exp.achievements}
         technologies={exp.technologies}
         companyLogo={exp.companyLogo}
-        color={exp.color}
+        color={exp.color as ExperienceColor}
         href={`/experience/${exp.id}`}
         width={getResponsiveWidth(exp)}
         showViewDetails={true}
@@ -69,7 +95,7 @@ export default function Experience() {
         header={
           <div className={`text-center mb-6 ${containerClass}`}>
             <h2 className="text-5xl md:text-7xl font-black mb-6 text-gradient">
-              Professional Journey
+              {sectionTitle} {sectionTitleHighlight}
             </h2>
             <p className="text-xl md:text-2xl text-text-secondary mb-8 font-medium max-w-4xl mx-auto">
               12+ years of experience across 17 companies, delivering 100+

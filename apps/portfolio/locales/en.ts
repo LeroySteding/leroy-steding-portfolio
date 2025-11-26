@@ -163,6 +163,9 @@ export const en = {
       text: "Interested in seeing more of my work?",
       button: "View All on GitHub",
     },
+    filter: {
+      all: "All Projects",
+    },
     categories: {
       product: "Product",
       client: "Client",

@@ -120,9 +120,9 @@ export const projectsQuery = groq`
     "slug": slug.current,
     "id": slug.current,
     description,
-    longDescription,
+    "longDescription": pt::text(longDescription),
     "image": coalesce(image.asset->url, imageUrl, image),
-    technologies,
+    "technologies": technologies[]->name,
     liveUrl,
     githubUrl,
     featured,
@@ -146,9 +146,9 @@ export const projectBySlugQuery = groq`
     "slug": slug.current,
     "id": slug.current,
     description,
-    longDescription,
+    "longDescription": pt::text(longDescription),
     "image": coalesce(image.asset->url, imageUrl, image),
-    technologies,
+    "technologies": technologies[]->name,
     liveUrl,
     githubUrl,
     featured,
@@ -173,7 +173,7 @@ export const featuredProjectsQuery = groq`
     "id": slug.current,
     description,
     "image": coalesce(image.asset->url, imageUrl, image),
-    technologies,
+    "technologies": technologies[]->name,
     category,
     year,
     language
@@ -188,7 +188,7 @@ export const cvProjectsQuery = groq`
     "slug": slug.current,
     "id": slug.current,
     description,
-    technologies,
+    "technologies": technologies[]->name,
     category,
     year,
     language
@@ -211,9 +211,9 @@ export const experiencesQuery = groq`
     startDate,
     endDate,
     location,
-    description,
-    longDescription,
-    technologies,
+    "description": pt::text(description),
+    "longDescription": pt::text(longDescription),
+    "technologies": technologies[]->name,
     color,
     highlights,
     achievements,
@@ -238,15 +238,123 @@ export const experienceBySlugQuery = groq`
     startDate,
     endDate,
     location,
-    description,
-    longDescription,
-    technologies,
+    "description": pt::text(description),
+    "longDescription": pt::text(longDescription),
+    "technologies": technologies[]->name,
     color,
     highlights,
     achievements,
     responsibilities,
     teamSize,
     impact,
+    language
+  }
+`;
+
+// ==================== SECTION QUERIES ====================
+
+// Get Hero section by language
+export const heroSectionQuery = groq`
+  *[_type == "hero" && ${languageFilter}][0] {
+    _id,
+    name,
+    title,
+    subtitle,
+    tagline,
+    ctaButtons,
+    stats,
+    language
+  }
+`;
+
+// Get About section by language
+export const aboutSectionQuery = groq`
+  *[_type == "aboutSection" && ${languageFilter}][0] {
+    _id,
+    name,
+    title,
+    "subtitle": titleHighlight,
+    "description": pt::text(intro),
+    highlights,
+    "image": coalesce(image.asset->url, image),
+    language
+  }
+`;
+
+// Get Contact section by language
+export const contactSectionQuery = groq`
+  *[_type == "contactSection" && ${languageFilter}][0] {
+    _id,
+    name,
+    title,
+    subtitle,
+    description,
+    email,
+    phone,
+    location,
+    socialLinks,
+    language
+  }
+`;
+
+// Get Projects section by language
+export const projectsSectionQuery = groq`
+  *[_type == "projectsSection" && ${languageFilter}][0] {
+    _id,
+    name,
+    title,
+    titleHighlight,
+    subtitle,
+    language
+  }
+`;
+
+// Get Experience section by language
+export const experienceSectionQuery = groq`
+  *[_type == "experienceSection" && ${languageFilter}][0] {
+    _id,
+    name,
+    title,
+    titleHighlight,
+    subtitle,
+    language
+  }
+`;
+
+// Get Skills section by language
+export const skillsSectionQuery = groq`
+  *[_type == "skillsSection" && ${languageFilter}][0] {
+    _id,
+    name,
+    title,
+    titleHighlight,
+    subtitle,
+    skills,
+    language
+  }
+`;
+
+// Get Blog section by language
+export const blogSectionQuery = groq`
+  *[_type == "blogSection" && ${languageFilter}][0] {
+    _id,
+    name,
+    title,
+    titleHighlight,
+    subtitle,
+    language
+  }
+`;
+
+// Get Tech Stack section by language
+export const techStackSectionQuery = groq`
+  *[_type == "techStackSection" && ${languageFilter}][0] {
+    _id,
+    name,
+    title,
+    titleHighlight,
+    subtitle,
+    technologies,
     language
   }
 `;

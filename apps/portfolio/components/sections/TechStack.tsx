@@ -8,6 +8,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { useLayout } from "@/contexts/LayoutContext";
 import { techStack } from "@/data/techStack";
 import { useTranslation } from "@/hooks/useTranslation";
+import type { SanityTechStackSection } from "@/lib/sanity-content";
 
 // Helper function to get proficiency level
 const getProficiencyLevel = (
@@ -22,12 +23,21 @@ const getProficiencyLevel = (
   return { label: "Beginner", color: "text-text-muted" };
 };
 
-export default function TechStack() {
+interface TechStackProps {
+  sectionData?: SanityTechStackSection | null;
+}
+
+export default function TechStack({ sectionData }: TechStackProps) {
   const t = useTranslation();
   const { language } = useLanguage();
   const { containerClass } = useLayout();
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
+
+  // Section content from Sanity or defaults
+  const sectionTitle = sectionData?.title || t.techStack.title;
+  const sectionTitleHighlight =
+    sectionData?.titleHighlight || t.techStack.titleHighlight;
 
   // Toggle category selection (multi-select)
   const toggleCategory = (categoryName: string) => {
@@ -74,8 +84,8 @@ export default function TechStack() {
             viewport={{ once: true }}
             className="font-display font-black mb-6"
           >
-            {t.techStack.title}{" "}
-            <span className="text-gradient">{t.techStack.titleHighlight}</span>
+            {sectionTitle}{" "}
+            <span className="text-gradient">{sectionTitleHighlight}</span>
           </motion.h2>
           <motion.div
             initial={{ opacity: 0, scaleX: 0 }}

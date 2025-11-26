@@ -137,11 +137,14 @@ export async function getProjects(
     longDescription: project.longDescription,
     image: project.image,
     technologies: project.technologies,
-    liveUrl: project.liveUrl,
-    githubUrl: project.githubUrl,
+    liveUrl: project.liveUrl ?? undefined,
+    githubUrl: project.githubUrl ?? undefined,
     featured: project.featured,
     category: project.category as "product" | "client" | "internal",
-    year: project.year,
+    year:
+      typeof project.year === "string"
+        ? parseInt(project.year, 10)
+        : project.year,
     challenges: project.challenges,
     solutions: project.solutions,
     impact: project.impact,
@@ -173,11 +176,14 @@ export async function getProjectBySlug(
     longDescription: staticProject.longDescription,
     image: staticProject.image,
     technologies: staticProject.technologies,
-    liveUrl: staticProject.liveUrl,
-    githubUrl: staticProject.githubUrl,
+    liveUrl: staticProject.liveUrl ?? undefined,
+    githubUrl: staticProject.githubUrl ?? undefined,
     featured: staticProject.featured,
     category: staticProject.category as "product" | "client" | "internal",
-    year: staticProject.year,
+    year:
+      typeof staticProject.year === "string"
+        ? parseInt(staticProject.year, 10)
+        : staticProject.year,
     challenges: staticProject.challenges,
     solutions: staticProject.solutions,
     impact: staticProject.impact,
@@ -207,7 +213,10 @@ export async function getFeaturedProjects(
     image: project.image,
     technologies: project.technologies,
     category: project.category as "product" | "client" | "internal",
-    year: project.year,
+    year:
+      typeof project.year === "string"
+        ? parseInt(project.year, 10)
+        : project.year,
     featured: true,
     language,
   }));

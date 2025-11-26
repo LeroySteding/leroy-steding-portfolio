@@ -10,90 +10,81 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
-import { useLanguage } from "@/contexts/LanguageContext";
-import { useLayout } from "@/contexts/LayoutContext";
-import { useTranslation } from "@/hooks/useTranslation";
-import { useLocalizedPath } from "@/lib/localization";
-import type {
-  SanityProject,
-  SanityProjectsSection,
-} from "@/lib/sanity-content";
-import { getProjects as getStaticProjects } from "@/utils/getLocalizedData";
+import type { Translations } from "@/locales/en";
+import type { SanityProject } from "./page";
 
 type CategoryFilter = "all" | "product" | "client" | "internal";
 
-interface ProjectsProps {
-  data?: SanityProject[] | null;
-  sectionData?: SanityProjectsSection | null;
+interface ProjectsGridProps {
+  projects: SanityProject[];
+  translations: Translations;
+  locale: string;
 }
 
-export default function Projects({ data, sectionData }: ProjectsProps) {
-  const t = useTranslation();
-  const { language } = useLanguage();
-  const getLocalizedPath = useLocalizedPath();
-  const { containerClass, gridClass } = useLayout();
-
-  // Use Sanity data if available, otherwise fall back to static data
-  const staticProjects = getStaticProjects(language);
-  const allProjects = data && data.length > 0 ? data : staticProjects;
-  const featuredProjects = allProjects.filter((p) => p.featured).slice(0, 3);
-
-  // Section title from Sanity or static translations
-  const sectionTitle = sectionData?.title || t.projects.title;
-  const sectionTitleHighlight =
-    sectionData?.titleHighlight || t.projects.titleHighlight;
-
-  const [filter, _setFilter] = useState<CategoryFilter>("all");
+export default function ProjectsGrid({
+  projects,
+  translations: t,
+  locale,
+}: ProjectsGridProps) {
+  const [filter, setFilter] = useState<CategoryFilter>("all");
 
   // Filter projects based on selected category
-  const projects =
-    filter === "all"
-      ? featuredProjects
-      : featuredProjects.filter((p) => p.category === filter);
+  const filteredProjects =
+    filter === "all" ? projects : projects.filter((p) => p.category === filter);
+
+  const getLocalizedPath = (path: string) => {
+    return locale === "nl" ? path : `/en${path}`;
+  };
 
   return (
-    <section
-      id="projects"
-      className="section relative bg-primary-bg overflow-hidden"
-    >
-      {/* Subtle accent line */}
-      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-accent-primary to-transparent" />
+    <>
+      {/* Filter buttons */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.2 }}
+        viewport={{ once: true }}
+        className="flex flex-wrap gap-2 sm:gap-3 mb-12"
+      >
+        {(["all", "product", "client", "internal"] as CategoryFilter[]).map(
+          (category) => (
+            <button
+              type="button"
+              key={category}
+              onClick={() => setFilter(category)}
+              className={`px-4 sm:px-5 md:px-6 py-2.5 sm:py-3 rounded-xl font-bold text-sm sm:text-base transition-all duration-300 min-h-[44px] ${
+                filter === category
+                  ? "bg-accent-primary text-primary-bg shadow-lg scale-105"
+                  : "bg-surface text-text-secondary hover:bg-surface-light hover:text-accent-primary border-2 border-transparent hover:border-accent-primary/30"
+              }`}
+            >
+              {category === "all"
+                ? t.projects.filter.all
+                : t.projects.categories[category]}
+            </button>
+          ),
+        )}
+      </motion.div>
 
-      <div className={`relative z-10 ${containerClass}`}>
-        {/* Section header */}
-        <div className="mb-12 sm:mb-16 md:mb-20 text-center">
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="font-display font-black mb-6"
-          >
-            {sectionTitle}{" "}
-            <span className="text-gradient">{sectionTitleHighlight}</span>
-          </motion.h2>
-          <motion.div
-            initial={{ opacity: 0, scaleX: 0 }}
-            whileInView={{ opacity: 1, scaleX: 1 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            viewport={{ once: true }}
-            className="w-32 h-2 bg-accent-primary rounded-full mx-auto"
-          />
-        </div>
-
-        {/* Projects grid */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={filter}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className={`${gridClass} mb-12 sm:mb-14 md:mb-16`}
-          >
-            {projects.map((project, index) => (
+      {/* Projects grid */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={filter}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3 }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+        >
+          {filteredProjects.map((project, index) => {
+            // Handle slug as either string or object
+            const projectSlug =
+              typeof project.slug === "object" && project.slug !== null
+                ? (project.slug as { current?: string }).current || project._id
+                : project.slug || project._id;
+            return (
               <motion.div
-                key={project.id}
+                key={project._id}
                 initial={{ opacity: 0, y: 30, scale: 0.95 }}
                 whileInView={{ opacity: 1, y: 0, scale: 1 }}
                 whileHover={{ y: -8, scale: 1.02 }}
@@ -132,10 +123,10 @@ export default function Projects({ data, sectionData }: ProjectsProps) {
                       </>
                     )}
 
-                    {/* Action buttons - Always visible on mobile, hover on desktop */}
+                    {/* Action buttons */}
                     <div className="absolute bottom-4 right-4 flex items-center gap-2 sm:gap-3 md:opacity-0 md:group-hover:opacity-100 md:bottom-1/2 md:right-1/2 md:translate-x-1/2 md:translate-y-1/2 transition-opacity duration-300">
                       <Link
-                        href={`/projects/${project.id}`}
+                        href={getLocalizedPath(`/projects/${projectSlug}`)}
                         className="p-3 sm:p-4 rounded-lg bg-accent-primary text-primary-bg hover:scale-110 transition-transform duration-200 font-bold shadow-lg min-w-[48px] min-h-[48px] flex items-center justify-center"
                         aria-label={t.projects.viewLive}
                       >
@@ -168,7 +159,7 @@ export default function Projects({ data, sectionData }: ProjectsProps) {
 
                   {/* Content */}
                   <Link
-                    href={`/projects/${project.id}`}
+                    href={getLocalizedPath(`/projects/${projectSlug}`)}
                     className="flex-1 flex flex-col"
                   >
                     <div className="p-5 sm:p-6 md:p-8 flex-1 flex flex-col">
@@ -203,20 +194,28 @@ export default function Projects({ data, sectionData }: ProjectsProps) {
                         {project.description}
                       </p>
 
-                      {/* Technologies - Scrollable */}
+                      {/* Technologies */}
                       <div className="flex gap-2 overflow-x-auto scrollbar-hide mb-4 sm:mb-6 pb-2 mt-auto">
-                        {project.technologies.map((tech, i) => (
-                          <motion.span
-                            key={tech}
-                            initial={{ opacity: 0, x: -10 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            transition={{ delay: i * 0.05 }}
-                            viewport={{ once: true }}
-                            className="px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-bold rounded-lg bg-surface text-text-secondary border-2 border-surface group-hover:border-accent-primary group-hover:text-accent-primary transition-all duration-300 whitespace-nowrap flex-shrink-0"
-                          >
-                            {tech}
-                          </motion.span>
-                        ))}
+                        {project.technologies.slice(0, 4).map((tech, i) => {
+                          // Handle both string and potential object formats from Sanity
+                          const techName =
+                            typeof tech === "string"
+                              ? tech
+                              : (tech as { name?: string })?.name || "";
+                          if (!techName) return null;
+                          return (
+                            <motion.span
+                              key={techName}
+                              initial={{ opacity: 0, x: -10 }}
+                              whileInView={{ opacity: 1, x: 0 }}
+                              transition={{ delay: i * 0.05 }}
+                              viewport={{ once: true }}
+                              className="px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-bold rounded-lg bg-surface text-text-secondary border-2 border-surface group-hover:border-accent-primary group-hover:text-accent-primary transition-all duration-300 whitespace-nowrap flex-shrink-0"
+                            >
+                              {techName}
+                            </motion.span>
+                          );
+                        })}
                       </div>
 
                       {/* View Details Link */}
@@ -229,38 +228,27 @@ export default function Projects({ data, sectionData }: ProjectsProps) {
 
                   {/* Category badge */}
                   <div className="absolute top-4 right-4 sm:top-5 sm:right-5 md:top-6 md:right-6 px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg bg-accent-primary text-primary-bg text-xs sm:text-sm font-bold shadow-lg">
-                    {project.category === "product"
-                      ? t.projects.categories.product
-                      : project.category === "client"
-                        ? t.projects.categories.client
-                        : t.projects.categories.internal}
+                    {t.projects.categories[project.category]}
                   </div>
                 </div>
               </motion.div>
-            ))}
-          </motion.div>
-        </AnimatePresence>
-
-        {/* CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          viewport={{ once: true }}
-          className="text-center"
-        >
-          <p className="text-base sm:text-lg md:text-xl text-text-secondary mb-6 sm:mb-8 font-medium">
-            Want to see more projects?
-          </p>
-          <Link
-            href={getLocalizedPath("/projects")}
-            className="btn-secondary inline-flex items-center gap-2 sm:gap-3 min-h-[48px]"
-          >
-            View All Projects
-            <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
-          </Link>
+            );
+          })}
         </motion.div>
-      </div>
-    </section>
+      </AnimatePresence>
+
+      {/* Empty state */}
+      {filteredProjects.length === 0 && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="text-center py-16"
+        >
+          <p className="text-text-secondary text-lg">
+            No projects found in this category.
+          </p>
+        </motion.div>
+      )}
+    </>
   );
 }

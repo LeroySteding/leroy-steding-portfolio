@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import type { LucideIcon } from "lucide-react";
+import * as LucideIcons from "lucide-react";
 import { ChevronRight, Home } from "lucide-react";
 import Link from "next/link";
 import { useLayout } from "@/contexts/LayoutContext";
@@ -11,11 +11,28 @@ interface Breadcrumb {
   href?: string;
 }
 
+// Icon name type for common page icons
+type IconName =
+  | "FolderKanban"
+  | "User"
+  | "Briefcase"
+  | "Mail"
+  | "BookOpen"
+  | "Settings"
+  | "Code"
+  | "Layers"
+  | "FileText"
+  | "Calendar"
+  | "Star";
+
 interface PageHeroProps {
   title: string;
   titleHighlight?: string;
   subtitle?: string;
-  icon?: LucideIcon;
+  /** @deprecated Use iconName for Server Components. icon still works from Client Components. */
+  icon?: LucideIcons.LucideIcon;
+  /** Icon name as string - use this from Server Components */
+  iconName?: IconName;
   breadcrumbs?: Breadcrumb[];
   backgroundImage?: string;
   centered?: boolean;
@@ -26,13 +43,19 @@ export default function PageHero({
   title,
   titleHighlight,
   subtitle,
-  icon: Icon,
+  icon: IconProp,
+  iconName,
   breadcrumbs,
   backgroundImage,
   centered = true,
   children,
 }: PageHeroProps) {
   const { containerClass, layoutMode } = useLayout();
+
+  // Get the icon component from the name (for Server Components) or use the direct prop (for Client Components)
+  const Icon =
+    IconProp ||
+    (iconName ? (LucideIcons[iconName] as LucideIcons.LucideIcon) : null);
 
   // Scale text sizes based on layout mode
   const titleSizes =

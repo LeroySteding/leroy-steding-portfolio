@@ -1,7 +1,14 @@
 import type { Metadata } from "next";
+import { getLocale } from "next-intl/server";
 import About from "@/components/sections/About";
 import Experience from "@/components/sections/Experience";
 import TechStack from "@/components/sections/TechStack";
+import {
+  getAboutSection,
+  getExperienceSection,
+  getExperiences,
+  getTechStackSection,
+} from "@/lib/sanity-content";
 import AboutPageHero from "./AboutPageHero";
 
 interface PageProps {
@@ -47,13 +54,24 @@ export async function generateMetadata({
   };
 }
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const locale = await getLocale();
+
+  // Fetch all Sanity data in parallel
+  const [aboutData, experienceSection, experiences, techStackSection] =
+    await Promise.all([
+      getAboutSection(locale),
+      getExperienceSection(locale),
+      getExperiences(locale),
+      getTechStackSection(locale),
+    ]);
+
   return (
     <main className="min-h-screen bg-primary-bg">
       <AboutPageHero />
-      <About />
-      <Experience />
-      <TechStack />
+      <About data={aboutData} />
+      <Experience data={experiences} sectionData={experienceSection} />
+      <TechStack sectionData={techStackSection} />
     </main>
   );
 }

@@ -5,11 +5,25 @@ import { Code2, Rocket, Sparkles } from "lucide-react";
 import Image from "next/image";
 import { useLayout } from "@/contexts/LayoutContext";
 import { useTranslation } from "@/hooks/useTranslation";
+import type { SanityAboutSection } from "@/lib/sanity-content";
 import { parseTranslation } from "@/utils/parseTranslation";
 
-export default function About() {
+interface AboutProps {
+  data?: SanityAboutSection | null;
+}
+
+export default function About({ data }: AboutProps) {
   const t = useTranslation();
   const { containerClass } = useLayout();
+
+  // Use Sanity data with static translation fallbacks
+  const sectionTitle = data?.title || t.about.title;
+  const sectionTitleHighlight = data?.subtitle || t.about.titleHighlight;
+  const introDescription =
+    data?.description ||
+    (typeof t.about.intro === "object" && t.about.intro?.description
+      ? t.about.intro.description
+      : String(t.about.intro));
 
   const highlights = [
     {
@@ -52,8 +66,8 @@ export default function About() {
               viewport={{ once: true }}
               className="font-display font-black mb-6"
             >
-              {t.about.title}{" "}
-              <span className="text-gradient">{t.about.titleHighlight}</span>
+              {sectionTitle}{" "}
+              <span className="text-gradient">{sectionTitleHighlight}</span>
             </motion.h2>
             <motion.div
               initial={{ opacity: 0, scaleX: 0 }}
@@ -74,12 +88,7 @@ export default function About() {
               className="space-y-6 sm:space-y-7 md:space-y-8 text-base sm:text-lg md:text-xl text-text-secondary leading-relaxed"
             >
               <p className="text-lg sm:text-xl md:text-2xl font-semibold">
-                {parseTranslation(
-                  typeof t.about.intro === "object" &&
-                    t.about.intro?.description
-                    ? t.about.intro.description
-                    : String(t.about.intro),
-                )}
+                {parseTranslation(introDescription)}
               </p>
               <p>{parseTranslation(t.about.expertise)}</p>
               <p>{parseTranslation(t.about.experience)}</p>

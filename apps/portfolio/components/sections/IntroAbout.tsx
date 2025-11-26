@@ -6,11 +6,20 @@ import Link from "next/link";
 import { useLayout } from "@/contexts/LayoutContext";
 import { useTranslation } from "@/hooks/useTranslation";
 import { useLocalizedPath } from "@/lib/localization";
+import type { SanityAboutSection } from "@/lib/sanity-content";
 
-export default function IntroAbout() {
+interface IntroAboutProps {
+  data?: SanityAboutSection | null;
+}
+
+export default function IntroAbout({ data }: IntroAboutProps) {
   const t = useTranslation();
   const getLocalizedPath = useLocalizedPath();
   const { containerClass } = useLayout();
+
+  // Use Sanity data with static translation fallbacks
+  const title = data?.title || t.about.intro.title;
+  const description = data?.description || t.about.intro.description;
 
   return (
     <section className="section relative bg-gradient-to-b from-primary-bg to-secondary-bg overflow-hidden">
@@ -41,7 +50,7 @@ export default function IntroAbout() {
             viewport={{ once: true }}
             className="font-display font-black text-4xl md:text-5xl mb-6"
           >
-            {t.about.intro.title}
+            {title}
           </motion.h2>
 
           {/* Description */}
@@ -52,7 +61,7 @@ export default function IntroAbout() {
             viewport={{ once: true }}
             className="text-xl text-text-secondary leading-relaxed mb-10 max-w-3xl mx-auto"
           >
-            {t.about.intro.description}
+            {description}
           </motion.p>
 
           {/* CTA Button */}

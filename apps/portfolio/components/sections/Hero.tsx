@@ -6,11 +6,21 @@ import Link from "next/link";
 import { useLayout } from "@/contexts/LayoutContext";
 import { useTranslation } from "@/hooks/useTranslation";
 import { useLocalizedPath } from "@/lib/localization";
+import type { SanityHeroSection } from "@/lib/sanity-content";
 
-export default function Hero() {
+interface HeroProps {
+  data?: SanityHeroSection | null;
+}
+
+export default function Hero({ data }: HeroProps) {
   const t = useTranslation();
   const getLocalizedPath = useLocalizedPath();
   const { layoutMode, heroContainerClass, heroMaxWidthClass } = useLayout();
+
+  // Use Sanity data with static translation fallbacks
+  const title = data?.title || t.hero.title;
+  const subtitle = data?.subtitle || t.hero.subtitle;
+  const tagline = data?.tagline || t.hero.tagline;
 
   // Scale text sizes based on layout mode
   const titleSizes =
@@ -69,12 +79,12 @@ export default function Hero() {
                 <span
                   className={`block ${titleSizes} text-gradient mb-3 sm:mb-4 md:mb-6 drop-shadow-2xl`}
                 >
-                  {t.hero.title}
+                  {title}
                 </span>
                 <span
                   className={`block ${subtitleSizes} text-accent-secondary font-bold drop-shadow-lg`}
                 >
-                  {t.hero.subtitle}
+                  {subtitle}
                 </span>
               </h2>
             </motion.div>
@@ -85,7 +95,7 @@ export default function Hero() {
               transition={{ duration: 0.8, delay: 0.4 }}
               className={`${taglineSizes} text-text-secondary leading-relaxed max-w-2xl mx-auto lg:mx-0`}
             >
-              {t.hero.tagline}
+              {tagline}
             </motion.p>
           </div>
 

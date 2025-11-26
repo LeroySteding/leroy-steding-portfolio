@@ -14,25 +14,38 @@ import { useMemo, useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useLayout } from "@/contexts/LayoutContext";
 import { useTranslation } from "@/hooks/useTranslation";
+import type { SanityBlogSection, SanityPost } from "@/lib/sanity-content";
 import { getBlogPosts } from "@/utils/getLocalizedData";
 
 type CategoryFilter = "all" | "article" | "tutorial" | "research";
 
-const categoryIcons = {
+const categoryIcons: Record<string, typeof BookOpen> = {
   article: BookOpen,
   tutorial: Code,
   research: FlaskConical,
 };
 
-export default function Blog() {
+interface BlogProps {
+  data?: SanityPost[] | null;
+  sectionData?: SanityBlogSection | null;
+}
+
+export default function Blog({ data, sectionData }: BlogProps) {
   const { language } = useLanguage();
   const t = useTranslation();
   const { containerClass, gridClass } = useLayout();
   const [selectedCategory, setSelectedCategory] =
     useState<CategoryFilter>("all");
 
-  const allPosts = getBlogPosts(language);
+  // Use Sanity data if available, otherwise fall back to static data
+  const staticPosts = getBlogPosts(language);
+  const allPosts = data && data.length > 0 ? data : staticPosts;
   const featuredPosts = allPosts.filter((p) => p.featured).slice(0, 6);
+
+  // Section title from Sanity or static translations
+  const sectionTitle = sectionData?.title || t.blog.section.title;
+  const sectionTitleHighlight =
+    sectionData?.titleHighlight || t.blog.section.titleHighlight;
 
   const filteredPosts = useMemo(() => {
     const posts = featuredPosts;
@@ -58,10 +71,8 @@ export default function Blog() {
             viewport={{ once: true }}
             className="font-display font-black mb-6"
           >
-            {t.blog.section.title}{" "}
-            <span className="text-gradient">
-              {t.blog.section.titleHighlight}
-            </span>
+            {sectionTitle}{" "}
+            <span className="text-gradient">{sectionTitleHighlight}</span>
           </motion.h2>
           <motion.div
             initial={{ opacity: 0, scaleX: 0 }}
@@ -109,10 +120,16 @@ export default function Blog() {
             className={`${gridClass} mb-12 sm:mb-14 md:mb-16`}
           >
             {filteredPosts.map((post, index) => {
-              const CategoryIcon = categoryIcons[post.category];
+              const CategoryIcon = categoryIcons[post.category] || BookOpen;
+              const postId = "id" in post ? post.id : post._id;
+              // Handle both Sanity slug object and plain string
+              const postSlug =
+                typeof post.slug === "object" && post.slug !== null
+                  ? post.slug.current
+                  : post.slug;
               return (
                 <motion.div
-                  key={post.id}
+                  key={postId}
                   initial={{ opacity: 0, y: 30, scale: 0.95 }}
                   whileInView={{ opacity: 1, y: 0, scale: 1 }}
                   whileHover={{ y: -8, scale: 1.02 }}
@@ -156,8 +173,8 @@ export default function Blog() {
                     <Link
                       href={
                         language === "nl"
-                          ? `/nl/blog/${post.slug}`
-                          : `/blog/${post.slug}`
+                          ? `/nl/blog/${postSlug}`
+                          : `/blog/${postSlug}`
                       }
                       className="flex-1 flex flex-col"
                     >

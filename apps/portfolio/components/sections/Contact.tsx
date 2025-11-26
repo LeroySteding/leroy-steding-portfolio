@@ -5,17 +5,28 @@ import { Github, Linkedin, Mail, MapPin, Send, Twitter } from "lucide-react";
 import { useState } from "react";
 import { useLayout } from "@/contexts/LayoutContext";
 import { useTranslation } from "@/hooks/useTranslation";
+import type { SanityContactSection } from "@/lib/sanity-content";
 
-export default function Contact() {
+interface ContactProps {
+  data?: SanityContactSection | null;
+}
+
+export default function Contact({ data }: ContactProps) {
   const t = useTranslation();
   const { containerClass } = useLayout();
+
+  // Use Sanity data with static translation fallbacks
+  const sectionTitle = data?.title || t.contact.title;
+  const sectionTitleHighlight = data?.subtitle || t.contact.titleHighlight;
+  const sectionSubtitle = data?.description || t.contact.subtitle;
+  const contactEmail = data?.email || "leroy@steding.digital";
 
   const contactInfo = [
     {
       icon: Mail,
       label: t.contact.info.email,
-      value: "leroy@steding.digital",
-      href: "mailto:leroy@steding.digital",
+      value: contactEmail,
+      href: `mailto:${contactEmail}`,
     },
     {
       icon: MapPin,
@@ -100,8 +111,8 @@ export default function Contact() {
             viewport={{ once: true }}
             className="font-display font-black mb-6"
           >
-            {t.contact.title}{" "}
-            <span className="text-gradient">{t.contact.titleHighlight}</span>
+            {sectionTitle}{" "}
+            <span className="text-gradient">{sectionTitleHighlight}</span>
           </motion.h2>
           <motion.div
             initial={{ opacity: 0, scaleX: 0 }}
@@ -117,7 +128,7 @@ export default function Contact() {
             viewport={{ once: true }}
             className="text-xl text-text-secondary max-w-3xl"
           >
-            {t.contact.subtitle}
+            {sectionSubtitle}
           </motion.p>
         </div>
 

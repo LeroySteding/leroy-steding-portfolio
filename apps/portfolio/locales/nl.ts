@@ -165,6 +165,9 @@ export const nl: Translations = {
       text: "Geïnteresseerd in meer van mijn werk?",
       button: "Bekijk Alles op GitHub",
     },
+    filter: {
+      all: "Alle Projecten",
+    },
     categories: {
       product: "Product",
       client: "Klant",
