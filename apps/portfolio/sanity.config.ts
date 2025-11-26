@@ -10,6 +10,11 @@ import { structure } from "./sanity/structure";
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!;
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET!;
 
+// Determine if we're on the studio subdomain
+const isStudioSubdomain =
+  typeof window !== "undefined" &&
+  window.location.hostname === "studio.leroysteding.nl";
+
 const config: Config = defineConfig({
   name: "default",
   title: "Leroy Steding Portfolio",
@@ -17,7 +22,8 @@ const config: Config = defineConfig({
   projectId,
   dataset,
 
-  basePath: "/studio",
+  // Use root path on studio subdomain, /studio path on main domain
+  basePath: isStudioSubdomain ? "/" : "/studio",
 
   plugins: [
     structureTool({ structure }),
