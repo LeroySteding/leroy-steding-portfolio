@@ -69,8 +69,17 @@ export default function Contact({ data }: ContactProps) {
     setIsSubmitting(true);
 
     try {
-      // TODO: Integrate with Formspree or Supabase Edge Function
-      await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulated delay
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to send message");
+      }
 
       setSubmitStatus("success");
       setFormData({ name: "", email: "", subject: "", message: "" });
