@@ -1,6 +1,21 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "globalDependencies": ["**/.env.*local"],
+  "globalEnv": [
+    "NEXT_PUBLIC_SANITY_PROJECT_ID",
+    "NEXT_PUBLIC_SANITY_DATASET",
+    "NEXT_PUBLIC_SITE_URL",
+    "NEXT_PUBLIC_CALENDAR_PROVIDER",
+    "NEXT_PUBLIC_CALCOM_USERNAME",
+    "NEXT_PUBLIC_CALCOM_URL",
+    "NEXT_PUBLIC_CALCOM_QUICK_CHAT",
+    "NEXT_PUBLIC_CALCOM_DEEP_DIVE",
+    "SANITY_API_TOKEN",
+    "SANITY_PREVIEW_SECRET",
+    "OPENAI_API_KEY",
+    "RESEND_API_KEY",
+    "CONTACT_EMAIL"
+  ],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
