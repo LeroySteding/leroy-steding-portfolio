@@ -7,8 +7,9 @@ import { markdownSchema } from "sanity-plugin-markdown";
 import { schemaTypes } from "./sanity/schemas";
 import { structure } from "./sanity/structure";
 
-const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!;
-const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET!;
+// Fallback values ensure Studio works even if env vars aren't loaded at build time
+const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "p6hg7krm";
+const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || "production";
 
 // Determine if we're on the studio subdomain
 const isStudioSubdomain =
