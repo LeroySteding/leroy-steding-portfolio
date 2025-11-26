@@ -7,6 +7,7 @@ import { projectsNL } from "@/data/projects-nl";
 
 type Language = "en" | "nl";
 
+// Static data getters (used as fallback and for client-side rendering)
 export function getProjects(language: Language) {
   return language === "nl" ? projectsNL : projectsEN;
 }
