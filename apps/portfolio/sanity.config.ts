@@ -21,13 +21,13 @@ const getPreviewUrl = () => {
   if (typeof window !== "undefined") {
     // In browser, check if we're on the studio subdomain
     if (window.location.hostname === "studio.leroysteding.nl") {
-      return "https://leroysteding.nl";
+      return "https://www.leroysteding.nl";
     }
     if (window.location.hostname === "localhost") {
       return "http://localhost:3000";
     }
   }
-  return process.env.NEXT_PUBLIC_SITE_URL || "https://leroysteding.nl";
+  return process.env.NEXT_PUBLIC_SITE_URL || "https://www.leroysteding.nl";
 };
 
 const config: Config = defineConfig({
@@ -49,7 +49,7 @@ const config: Config = defineConfig({
           enable: "/api/draft",
         },
       },
-      // Define how documents map to URLs for live preview
+      // Allow both www and non-www origins
       resolve: {
         mainDocuments: [
           {

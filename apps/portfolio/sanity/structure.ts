@@ -16,6 +16,7 @@ export const structure: StructureResolver = (S) =>
                 .child(
                   S.documentTypeList("post")
                     .title("Blog Posts")
+                    .apiVersion("2024-01-01")
                     .filter('_type == "post"')
                     .child((documentId) =>
                       S.document().documentId(documentId).schemaType("post"),
