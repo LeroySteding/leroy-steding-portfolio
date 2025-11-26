@@ -43,7 +43,7 @@ export default function Testimonials() {
     >
       {/* Background decoration */}
       <div className="absolute inset-0 opacity-5">
-        <div className="absolute top-20 right-10 w-96 h-96 bg-accent-primary rounded-full blur-3xl" />
+        <div className="absolute top-20 right-10 w-96 h-96 bg-accent-primary/5 rounded-full blur-3xl" />
         <div className="absolute bottom-20 left-10 w-72 h-72 bg-accent-secondary rounded-full blur-3xl" />
       </div>
 

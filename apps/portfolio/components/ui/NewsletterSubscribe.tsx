@@ -162,6 +162,13 @@ export default function NewsletterSubscribe({
             type="submit"
             disabled={status === "loading" || status === "success"}
             className="btn-primary disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0"
+            aria-label={
+              status === "loading"
+                ? t.newsletter.buttons.subscribing
+                : status === "success"
+                  ? t.newsletter.buttons.subscribed
+                  : t.newsletter.subscribe
+            }
           >
             {status === "loading" ? (
               <div className="w-5 h-5 border-2 border-primary-bg border-t-transparent rounded-full animate-spin" />
