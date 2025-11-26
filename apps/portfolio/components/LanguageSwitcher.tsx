@@ -31,6 +31,15 @@ export default function LanguageSwitcher() {
       }
     }
 
+    // For blog detail pages, redirect to the blog index instead of trying to find equivalent post
+    // This is because blog posts have different slugs in different languages
+    if (
+      pathWithoutLocale.startsWith("/blog/") &&
+      pathWithoutLocale !== "/blog"
+    ) {
+      pathWithoutLocale = "/blog";
+    }
+
     // Build new path with target locale
     // Default locale (nl) doesn't need prefix, other locales do
     const newPath =

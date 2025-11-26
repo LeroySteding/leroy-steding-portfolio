@@ -186,7 +186,7 @@ export default function BlogPostClient({
 
         <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-accent-primary to-transparent" />
 
-        <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 pb-16 pt-32">
+        <div className="relative z-10 w-full px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20 pb-16 pt-32">
           <Link
             href={language === "nl" ? "/nl/blog" : "/blog"}
             className="inline-flex items-center gap-2 text-text-secondary hover:text-accent-primary transition-colors mb-8 group font-bold backdrop-blur-sm bg-primary-bg/50 px-4 py-2 rounded-xl"
@@ -250,8 +250,8 @@ export default function BlogPostClient({
       </div>
 
       {/* Main Content Area */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 py-20">
-        <div className="grid lg:grid-cols-[1fr_300px] gap-12">
+      <div className="relative z-10 w-full px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20 py-20">
+        <div className="grid lg:grid-cols-[1fr_350px] gap-12 max-w-[1600px] mx-auto">
           {/* Article Content */}
           <article className="min-w-0">
             <div className="prose prose-invert prose-lg max-w-none mb-16 overflow-hidden">
