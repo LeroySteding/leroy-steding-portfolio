@@ -1,9 +1,11 @@
+import { Briefcase } from "lucide-react";
 import { defineField, defineType } from "sanity";
 
 export default defineType({
   name: "project",
   title: "Project",
   type: "document",
+  icon: Briefcase,
   fields: [
     defineField({
       name: "title",
@@ -48,12 +50,19 @@ export default defineType({
     }),
     defineField({
       name: "image",
-      title: "Cover Image",
+      title: "Cover Image (Upload)",
       type: "image",
+      description: "Upload an image directly to Sanity",
       options: {
         hotspot: true,
       },
-      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "imageUrl",
+      title: "Cover Image URL (External)",
+      type: "url",
+      description:
+        "Or provide an external image URL (e.g., Unsplash). Used if no uploaded image.",
     }),
     defineField({
       name: "technologies",
@@ -142,7 +151,24 @@ export default defineType({
     select: {
       title: "title",
       media: "image",
-      subtitle: "category",
+      category: "category",
+      featured: "featured",
+    },
+    prepare(selection) {
+      const { title, media, category, featured } = selection;
+
+      // Check if media is a valid Sanity image object
+      const isValidSanityImage =
+        media &&
+        typeof media === "object" &&
+        media._type === "image" &&
+        media.asset;
+
+      return {
+        title: title || "Untitled Project",
+        subtitle: `${category || ""} ${featured ? "⭐ Featured" : ""}`.trim(),
+        media: isValidSanityImage ? media : Briefcase,
+      };
     },
   },
 });

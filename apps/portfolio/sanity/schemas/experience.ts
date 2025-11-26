@@ -1,9 +1,11 @@
+import { Building2 } from "lucide-react";
 import { defineField, defineType } from "sanity";
 
 export default defineType({
   name: "experience",
   title: "Experience",
   type: "document",
+  icon: Building2,
   fields: [
     defineField({
       name: "title",
@@ -41,11 +43,19 @@ export default defineType({
     }),
     defineField({
       name: "companyLogo",
-      title: "Company Logo",
+      title: "Company Logo (Upload)",
       type: "image",
+      description: "Upload a logo image directly to Sanity",
       options: {
         hotspot: true,
       },
+    }),
+    defineField({
+      name: "companyLogoUrl",
+      title: "Company Logo URL (External)",
+      type: "url",
+      description:
+        "Or provide an external logo URL. Used if no uploaded image.",
     }),
     defineField({
       name: "companyUrl",
@@ -129,8 +139,24 @@ export default defineType({
   preview: {
     select: {
       title: "title",
-      subtitle: "company",
+      company: "company",
       media: "companyLogo",
+    },
+    prepare(selection) {
+      const { title, company, media } = selection;
+
+      // Check if media is a valid Sanity image object
+      const isValidSanityImage =
+        media &&
+        typeof media === "object" &&
+        media._type === "image" &&
+        media.asset;
+
+      return {
+        title: title || "Untitled Experience",
+        subtitle: company || "",
+        media: isValidSanityImage ? media : Building2,
+      };
     },
   },
 });
