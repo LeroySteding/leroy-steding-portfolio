@@ -37,9 +37,9 @@ export const nl: Translations = {
         "Ik ben een Nederlandse full-stack developer en ondernemer met een passie voor het bouwen van geavanceerde webplatforms die de kracht van AI-automatisering benutten. Als oprichter van Hifive, specialiseer ik me in het creëren van schaalbare, intelligente oplossingen die transformeren hoe bedrijven opereren.",
     },
     expertise:
-      "Mijn expertise omvat de moderne web development stack, inclusief <highlight>Next.js</highlight>, <highlight>React</highlight>, <highlight>TypeScript</highlight>, en <highlight>Supabase</highlight> op de frontend, gecombineerd met <highlight>Python</highlight>, <highlight>FastAPI</highlight>, en <highlight>PostgreSQL</highlight> op de backend. Ik ben vooral gefocust op AI-automatisering, het bouwen van intelligente agents, en het creëren van naadloze workflows met tools zoals <strong>n8n</strong>.",
+      "Mijn expertise omvat de moderne web development stack, inclusief <strong>Next.js</strong>, <strong>React</strong>, <strong>TypeScript</strong>, en <strong>Supabase</strong> op de frontend, gecombineerd met <strong>Python</strong>, <strong>FastAPI</strong>, en <strong>PostgreSQL</strong> op de backend. Ik ben vooral gefocust op AI-automatisering, het bouwen van intelligente agents, en het creëren van naadloze workflows met tools zoals <strong>n8n</strong>.",
     experience:
-      "Van het architecteren van <highlight>monorepo SaaS-platforms</highlight> zoals het SURF Whitelabel Platform (Edusources & MBOdata) tot het bouwen van <highlight>AI-aangedreven offertes pipelines</highlight> voor industriële klanten, ik floreer bij het oplossen van complexe technische uitdagingen en het leveren van productie-klare oplossingen die schalen.",
+      "Van het architecteren van <strong>monorepo SaaS-platforms</strong> zoals het SURF Whitelabel Platform (Edusources & MBOdata) tot het bouwen van <strong>AI-aangedreven offertes pipelines</strong> voor industriële klanten, ik floreer bij het oplossen van complexe technische uitdagingen en het leveren van productie-klare oplossingen die schalen.",
     highlights: {
       fullstack: {
         title: "Full-Stack Expertise",
