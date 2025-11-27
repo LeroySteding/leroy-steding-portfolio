@@ -40,6 +40,7 @@
     "@steding/timeline-scroll": "workspace:*",
     "@steding/ui": "workspace:*",
     "@steding/utils": "workspace:*",
+    "@supabase/supabase-js": "^2.86.0",
     "@tabler/icons-react": "^3.35.0",
     "@types/react-syntax-highlighter": "^15.5.13",
     "@vercel/analytics": "^1.5.0",

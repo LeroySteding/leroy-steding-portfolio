@@ -1,6 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import { getClientIp, rateLimit } from "@/lib/rate-limit";
+import { upsertLead } from "@/lib/supabase";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -10,8 +11,12 @@ const RATE_LIMIT = { limit: 5, windowSeconds: 60 };
 interface ContactFormData {
   name: string;
   email: string;
+  company?: string;
+  phone?: string;
   subject: string;
   message: string;
+  subscribeToNewsletter?: boolean;
+  locale?: string;
   // Honeypot field - should be empty for legitimate submissions
   website?: string;
 }
@@ -40,7 +45,17 @@ export async function POST(request: NextRequest) {
     }
 
     const body: ContactFormData = await request.json();
-    const { name, email, subject, message, website } = body;
+    const {
+      name,
+      email,
+      company,
+      phone,
+      subject,
+      message,
+      subscribeToNewsletter,
+      locale,
+      website,
+    } = body;
 
     // Honeypot check - if the hidden field is filled, it's likely a bot
     if (website) {
@@ -69,6 +84,54 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Extract tracking info from request
+    const userAgent = request.headers.get("user-agent") || undefined;
+    const referrer = request.headers.get("referer") || undefined;
+
+    // Parse UTM parameters from referrer if present
+    let utmSource: string | undefined;
+    let utmMedium: string | undefined;
+    let utmCampaign: string | undefined;
+
+    if (referrer) {
+      try {
+        const url = new URL(referrer);
+        utmSource = url.searchParams.get("utm_source") || undefined;
+        utmMedium = url.searchParams.get("utm_medium") || undefined;
+        utmCampaign = url.searchParams.get("utm_campaign") || undefined;
+      } catch {
+        // Invalid URL, skip UTM parsing
+      }
+    }
+
+    // Store lead in Supabase
+    const leadResult = await upsertLead({
+      email,
+      name: name || undefined,
+      company: company || undefined,
+      phone: phone || undefined,
+      source: "contact_form",
+      subject: subject || undefined,
+      message,
+      subscribed_to_newsletter: subscribeToNewsletter || false,
+      ip_address: clientIp,
+      user_agent: userAgent,
+      referrer,
+      utm_source: utmSource,
+      utm_medium: utmMedium,
+      utm_campaign: utmCampaign,
+      locale: locale || "en",
+      metadata: {
+        contact_timestamp: new Date().toISOString(),
+        form_subject: subject,
+      },
+    });
+
+    if (!leadResult.success) {
+      console.error("Failed to store contact lead:", leadResult.error);
+      // Continue anyway - we don't want to fail the contact if DB fails
+    }
+
     // Send email via Resend
     const emailSubject = subject
       ? `[Portfolio Contact] ${subject}`
@@ -86,14 +149,21 @@ export async function POST(request: NextRequest) {
           
           ${name ? `<p><strong>From:</strong> ${name}</p>` : ""}
           <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
+          ${company ? `<p><strong>Company:</strong> ${company}</p>` : ""}
+          ${phone ? `<p><strong>Phone:</strong> <a href="tel:${phone}">${phone}</a></p>` : ""}
           ${subject ? `<p><strong>Subject:</strong> ${subject}</p>` : ""}
+          <p><strong>Locale:</strong> ${locale || "en"}</p>
           
           <h3 style="color: #374151;">Message:</h3>
           <div style="background-color: #f9fafb; padding: 16px; border-radius: 8px; white-space: pre-wrap;">${message}</div>
           
+          ${subscribeToNewsletter ? `<p style="color: #059669; margin-top: 16px;">✅ Opted in to newsletter</p>` : ""}
+          
           <hr style="border: 1px solid #e5e7eb; margin-top: 24px;" />
           <p style="color: #6b7280; font-size: 12px;">
             This message was sent from your portfolio contact form.
+            ${leadResult.id && leadResult.id !== "not-configured" ? `<br/>Lead ID: ${leadResult.id}` : ""}
+            ${leadResult.isNew === false ? `<br/>Note: Returning visitor (existing lead updated)` : ""}
           </p>
         </div>
       `,
@@ -108,7 +178,11 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json(
-      { success: true, messageId: data?.id },
+      {
+        success: true,
+        messageId: data?.id,
+        isNewLead: leadResult.isNew !== false,
+      },
       { status: 200 },
     );
   } catch (error) {

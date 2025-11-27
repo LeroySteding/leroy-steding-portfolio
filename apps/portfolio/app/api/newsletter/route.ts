@@ -1,6 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import { getClientIp, rateLimit } from "@/lib/rate-limit";
+import { upsertLead } from "@/lib/supabase";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -9,6 +10,7 @@ const RATE_LIMIT = { limit: 3, windowSeconds: 60 };
 
 interface NewsletterData {
   email: string;
+  locale?: string;
 }
 
 export async function POST(request: NextRequest) {
@@ -35,7 +37,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body: NewsletterData = await request.json();
-    const { email } = body;
+    const { email, locale } = body;
 
     // Validate email
     if (!email) {
@@ -49,6 +51,48 @@ export async function POST(request: NextRequest) {
         { error: "Invalid email format" },
         { status: 400 },
       );
+    }
+
+    // Extract tracking info from request
+    const userAgent = request.headers.get("user-agent") || undefined;
+    const referrer = request.headers.get("referer") || undefined;
+
+    // Parse UTM parameters from referrer if present
+    let utmSource: string | undefined;
+    let utmMedium: string | undefined;
+    let utmCampaign: string | undefined;
+
+    if (referrer) {
+      try {
+        const url = new URL(referrer);
+        utmSource = url.searchParams.get("utm_source") || undefined;
+        utmMedium = url.searchParams.get("utm_medium") || undefined;
+        utmCampaign = url.searchParams.get("utm_campaign") || undefined;
+      } catch {
+        // Invalid URL, skip UTM parsing
+      }
+    }
+
+    // Store lead in Supabase
+    const leadResult = await upsertLead({
+      email,
+      source: "newsletter",
+      subscribed_to_newsletter: true,
+      ip_address: clientIp,
+      user_agent: userAgent,
+      referrer,
+      utm_source: utmSource,
+      utm_medium: utmMedium,
+      utm_campaign: utmCampaign,
+      locale: locale || "en",
+      metadata: {
+        subscription_timestamp: new Date().toISOString(),
+      },
+    });
+
+    if (!leadResult.success) {
+      console.error("Failed to store newsletter lead:", leadResult.error);
+      // Continue anyway - we don't want to fail the subscription if DB fails
     }
 
     // Send confirmation email to subscriber
@@ -99,7 +143,7 @@ export async function POST(request: NextRequest) {
       // Continue anyway - subscriber email is nice-to-have
     }
 
-    // Send notification to admin
+    // Send notification to admin (include lead ID for reference)
     const { error: adminError } = await resend.emails.send({
       from: "Newsletter <onboarding@resend.dev>",
       to: process.env.CONTACT_EMAIL || "leroy@steding.digital",
@@ -111,6 +155,9 @@ export async function POST(request: NextRequest) {
           
           <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
           <p><strong>Subscribed at:</strong> ${new Date().toISOString()}</p>
+          <p><strong>Locale:</strong> ${locale || "en"}</p>
+          ${leadResult.id && leadResult.id !== "not-configured" ? `<p><strong>Lead ID:</strong> ${leadResult.id}</p>` : ""}
+          ${leadResult.isNew === false ? `<p><strong>Note:</strong> Returning visitor (existing lead updated)</p>` : ""}
           
           <hr style="border: 1px solid #e5e7eb; margin-top: 24px;" />
           <p style="color: #6b7280; font-size: 12px;">
@@ -125,7 +172,11 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json(
-      { success: true, message: "Successfully subscribed to newsletter" },
+      {
+        success: true,
+        message: "Successfully subscribed to newsletter",
+        isNewSubscriber: leadResult.isNew !== false,
+      },
       { status: 200 },
     );
   } catch (error) {

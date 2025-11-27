@@ -32,8 +32,11 @@ export default function ContactPage() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    company: "",
+    phone: "",
     subject: "",
     message: "",
+    subscribeToNewsletter: false,
     // Honeypot field - should remain empty
     website: "",
   });
@@ -119,7 +122,10 @@ export default function ContactPage() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          locale: language,
+        }),
       });
 
       if (!response.ok) {
@@ -139,14 +145,25 @@ export default function ContactPage() {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
+    const { name, value, type } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [e.target.name]: e.target.value,
+      [name]:
+        type === "checkbox" ? (e.target as HTMLInputElement).checked : value,
     }));
   };
 
   const resetForm = () => {
-    setFormData({ name: "", email: "", subject: "", message: "", website: "" });
+    setFormData({
+      name: "",
+      email: "",
+      company: "",
+      phone: "",
+      subject: "",
+      message: "",
+      subscribeToNewsletter: false,
+      website: "",
+    });
     setSubmitStatus("idle");
     setShowOptionalFields(false);
   };
@@ -386,6 +403,44 @@ export default function ContactPage() {
 
                                 <div>
                                   <label
+                                    htmlFor="company"
+                                    className="block text-sm font-semibold mb-2 text-text-primary"
+                                  >
+                                    Company
+                                  </label>
+                                  <input
+                                    type="text"
+                                    id="company"
+                                    name="company"
+                                    value={formData.company}
+                                    onChange={handleChange}
+                                    autoComplete="organization"
+                                    className="w-full px-6 py-4 text-base rounded-xl bg-surface border-2 border-surface-light text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent-primary transition-colors duration-300 min-h-[56px]"
+                                    placeholder="Acme Inc."
+                                  />
+                                </div>
+
+                                <div>
+                                  <label
+                                    htmlFor="phone"
+                                    className="block text-sm font-semibold mb-2 text-text-primary"
+                                  >
+                                    Phone
+                                  </label>
+                                  <input
+                                    type="tel"
+                                    id="phone"
+                                    name="phone"
+                                    value={formData.phone}
+                                    onChange={handleChange}
+                                    autoComplete="tel"
+                                    className="w-full px-6 py-4 text-base rounded-xl bg-surface border-2 border-surface-light text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent-primary transition-colors duration-300 min-h-[56px]"
+                                    placeholder="+31 6 12345678"
+                                  />
+                                </div>
+
+                                <div>
+                                  <label
                                     htmlFor="subject"
                                     className="block text-sm font-semibold mb-2 text-text-primary"
                                   >
@@ -401,6 +456,24 @@ export default function ContactPage() {
                                     placeholder="Project inquiry"
                                   />
                                 </div>
+                              </div>
+
+                              {/* Newsletter Opt-in */}
+                              <div className="mt-4">
+                                <label className="flex items-start gap-3 cursor-pointer group">
+                                  <input
+                                    type="checkbox"
+                                    name="subscribeToNewsletter"
+                                    checked={formData.subscribeToNewsletter}
+                                    onChange={handleChange}
+                                    className="mt-1 w-5 h-5 rounded border-2 border-surface-light bg-surface text-accent-primary focus:ring-accent-primary focus:ring-offset-0 cursor-pointer"
+                                  />
+                                  <span className="text-sm text-text-secondary group-hover:text-text-primary transition-colors">
+                                    Keep me updated with occasional insights on
+                                    web development, AI, and tech trends. No
+                                    spam, unsubscribe anytime.
+                                  </span>
+                                </label>
                               </div>
                             </motion.div>
                           )}

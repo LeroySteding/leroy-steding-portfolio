@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { AlertCircle, Check, Mail, Send } from "lucide-react";
 import { useState } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { useTranslation } from "@/hooks/useTranslation";
 
 interface NewsletterSubscribeProps {
@@ -21,6 +22,7 @@ export default function NewsletterSubscribe({
   className = "",
 }: NewsletterSubscribeProps) {
   const t = useTranslation();
+  const { language } = useLanguage();
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<
     "idle" | "loading" | "success" | "error"
@@ -43,7 +45,7 @@ export default function NewsletterSubscribe({
       const response = await fetch("/api/newsletter", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, locale: language }),
       });
 
       if (!response.ok) {
