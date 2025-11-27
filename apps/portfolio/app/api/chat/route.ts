@@ -1,6 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { cvData } from "@/data/cv";
 import { projects } from "@/data/projects";
+import { createLead, getLeadByEmail } from "@/lib/supabase";
 
 // Create a comprehensive context about Leroy for the AI
 function getPortfolioContext(): string {
@@ -86,9 +87,121 @@ Leroy is passionate about building accessible, performant, and user-centered app
   return context;
 }
 
+// Analyze conversation for lead intent signals
+interface IntentAnalysis {
+  hasProjectIntent: boolean;
+  hasHiringIntent: boolean;
+  hasCollaborationIntent: boolean;
+  hasPricingIntent: boolean;
+  hasUrgentNeed: boolean;
+  intentScore: number; // 0-100
+  detectedTopics: string[];
+}
+
+function analyzeConversationIntent(
+  messages: Array<{ role: string; content: string }>,
+): IntentAnalysis {
+  const userMessages = messages
+    .filter((m) => m.role === "user")
+    .map((m) => m.content.toLowerCase())
+    .join(" ");
+
+  // Intent detection patterns
+  const projectPatterns = [
+    /\b(project|build|create|develop|website|app|application|platform|system)\b/,
+    /\b(need|want|looking for|interested in)\b.*\b(developer|help|someone)\b/,
+    /\b(can you|could you|would you)\b.*\b(build|create|help)\b/,
+  ];
+
+  const hiringPatterns = [
+    /\b(hire|hiring|contract|freelance|consultant|available|availability)\b/,
+    /\b(rate|rates|pricing|cost|budget|quote)\b/,
+    /\b(full[- ]?time|part[- ]?time|remote|on[- ]?site)\b/,
+  ];
+
+  const collaborationPatterns = [
+    /\b(collaborate|partnership|together|team up|joint)\b/,
+    /\b(startup|venture|co-found|agency)\b/,
+  ];
+
+  const pricingPatterns = [
+    /\b(price|pricing|cost|rate|rates|budget|quote|estimate|how much)\b/,
+    /\b(affordable|expensive|cheap)\b/,
+  ];
+
+  const urgentPatterns = [
+    /\b(urgent|asap|quickly|soon|deadline|rush|immediately)\b/,
+    /\b(this week|next week|by monday|by friday)\b/,
+  ];
+
+  // Topic detection
+  const topicPatterns: Record<string, RegExp> = {
+    "web-development":
+      /\b(website|web app|frontend|backend|full[- ]?stack|react|next\.?js|node)\b/,
+    "ai-automation":
+      /\b(ai|artificial intelligence|machine learning|automation|chatbot|gpt|openai)\b/,
+    "e-commerce":
+      /\b(e-?commerce|shop|store|shopify|medusa|payment|checkout)\b/,
+    mobile: /\b(mobile|app|ios|android|react native|flutter)\b/,
+    accessibility: /\b(accessibility|wcag|a11y|screen reader|ada compliance)\b/,
+    consulting: /\b(consult|advice|strategy|audit|review)\b/,
+  };
+
+  const hasProjectIntent = projectPatterns.some((p) => p.test(userMessages));
+  const hasHiringIntent = hiringPatterns.some((p) => p.test(userMessages));
+  const hasCollaborationIntent = collaborationPatterns.some((p) =>
+    p.test(userMessages),
+  );
+  const hasPricingIntent = pricingPatterns.some((p) => p.test(userMessages));
+  const hasUrgentNeed = urgentPatterns.some((p) => p.test(userMessages));
+
+  const detectedTopics = Object.entries(topicPatterns)
+    .filter(([, pattern]) => pattern.test(userMessages))
+    .map(([topic]) => topic);
+
+  // Calculate intent score (0-100)
+  let intentScore = 0;
+  if (hasProjectIntent) intentScore += 30;
+  if (hasHiringIntent) intentScore += 25;
+  if (hasCollaborationIntent) intentScore += 20;
+  if (hasPricingIntent) intentScore += 15;
+  if (hasUrgentNeed) intentScore += 10;
+  intentScore += Math.min(detectedTopics.length * 5, 20); // Up to 20 points for topics
+
+  // Boost score based on conversation length (more engaged = higher intent)
+  const messageCount = messages.filter((m) => m.role === "user").length;
+  if (messageCount >= 3) intentScore += 10;
+  if (messageCount >= 5) intentScore += 10;
+
+  return {
+    hasProjectIntent,
+    hasHiringIntent,
+    hasCollaborationIntent,
+    hasPricingIntent,
+    hasUrgentNeed,
+    intentScore: Math.min(intentScore, 100),
+    detectedTopics,
+  };
+}
+
+// Extract email from conversation if mentioned
+function extractEmailFromConversation(
+  messages: Array<{ role: string; content: string }>,
+): string | null {
+  const emailRegex = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/;
+
+  for (const message of messages) {
+    if (message.role === "user") {
+      const match = message.content.match(emailRegex);
+      if (match) return match[0];
+    }
+  }
+  return null;
+}
+
 export async function POST(request: NextRequest) {
   try {
-    const { messages, locale = "en" } = await request.json();
+    const { messages, locale = "en", sessionId } = await request.json();
 
     if (!messages || !Array.isArray(messages)) {
       return NextResponse.json(
@@ -109,6 +222,10 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Analyze conversation intent
+    const intentAnalysis = analyzeConversationIntent(messages);
+    const extractedEmail = extractEmailFromConversation(messages);
+
     // Build messages array with system context
     const systemMessage = {
       role: "system",
@@ -122,6 +239,11 @@ export async function POST(request: NextRequest) {
 - For project details, focus on 1-2 key highlights rather than exhaustive lists
 - End with a clear call-to-action when relevant (contact page, scheduling a call)
 - Be helpful but brief - visitors can always ask follow-up questions
+
+# Lead Capture Guidelines
+- If a visitor expresses interest in working together, gently ask for their email to follow up
+- If they mention a project or hiring need, encourage them to schedule a call or use the contact form
+- Never be pushy, but naturally guide high-intent conversations toward action
 
 # Language
 - Respond in ${locale === "nl" ? "Dutch (Nederlands)" : "English"}
@@ -164,9 +286,50 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // If we have an extracted email and high intent, create/update lead
+    if (extractedEmail && intentAnalysis.intentScore >= 30) {
+      const existingLead = await getLeadByEmail(extractedEmail);
+
+      if (!existingLead) {
+        // Create new lead from chat
+        await createLead({
+          email: extractedEmail,
+          source: "chat",
+          locale,
+          metadata: {
+            chat_session_id: sessionId,
+            intent_score: intentAnalysis.intentScore,
+            detected_intents: {
+              project: intentAnalysis.hasProjectIntent,
+              hiring: intentAnalysis.hasHiringIntent,
+              collaboration: intentAnalysis.hasCollaborationIntent,
+              pricing: intentAnalysis.hasPricingIntent,
+              urgent: intentAnalysis.hasUrgentNeed,
+            },
+            detected_topics: intentAnalysis.detectedTopics,
+            message_count: messages.filter(
+              (m: { role: string }) => m.role === "user",
+            ).length,
+            conversation_summary: messages
+              .filter((m: { role: string }) => m.role === "user")
+              .slice(-3)
+              .map((m: { content: string }) => m.content.substring(0, 100))
+              .join(" | "),
+            captured_at: new Date().toISOString(),
+          },
+        });
+      }
+    }
+
     return NextResponse.json({
       message: assistantMessage,
       usage: data.usage,
+      // Include intent analysis for frontend (optional: can be used to show CTAs)
+      intent: {
+        score: intentAnalysis.intentScore,
+        topics: intentAnalysis.detectedTopics,
+        showContactCTA: intentAnalysis.intentScore >= 50,
+      },
     });
   } catch (error) {
     console.error("Error in chat API:", error);

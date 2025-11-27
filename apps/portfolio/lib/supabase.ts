@@ -50,9 +50,166 @@ export interface PortfolioLead {
   utm_medium?: string;
   utm_campaign?: string;
   locale?: string;
+  lead_score?: number;
   metadata?: Record<string, unknown>;
   created_at?: string;
   updated_at?: string;
+}
+
+// Lead scoring configuration
+interface LeadScoringFactors {
+  // Source scoring (0-25 points)
+  sourceScores: Record<LeadSource, number>;
+  // Engagement indicators (0-25 points)
+  hasName: number;
+  hasCompany: number;
+  hasPhone: number;
+  hasMessage: number;
+  subscribedToNewsletter: number;
+  // Content quality (0-25 points)
+  messageLength: { short: number; medium: number; long: number };
+  mentionsProject: number;
+  mentionsBudget: number;
+  mentionsTimeline: number;
+  mentionsUrgent: number;
+  // Context signals (0-25 points)
+  hasUtmSource: number;
+  linkedinReferrer: number;
+  directVisit: number;
+  returnVisitor: number;
+}
+
+const SCORING_CONFIG: LeadScoringFactors = {
+  sourceScores: {
+    booking: 25, // Highest intent - scheduling a call
+    contact_form: 20, // High intent - filled out form
+    chat: 15, // Medium intent - engaged with AI
+    newsletter: 10, // Low intent - just wants updates
+  },
+  hasName: 5,
+  hasCompany: 8,
+  hasPhone: 7,
+  hasMessage: 5,
+  subscribedToNewsletter: 3,
+  messageLength: {
+    short: 2, // < 50 chars
+    medium: 5, // 50-200 chars
+    long: 10, // > 200 chars
+  },
+  mentionsProject: 8,
+  mentionsBudget: 10,
+  mentionsTimeline: 7,
+  mentionsUrgent: 5,
+  hasUtmSource: 3,
+  linkedinReferrer: 5,
+  directVisit: 2,
+  returnVisitor: 10,
+};
+
+// Calculate lead score based on available data
+export function calculateLeadScore(lead: Partial<PortfolioLead>): number {
+  let score = 0;
+
+  // Source scoring
+  if (lead.source) {
+    score += SCORING_CONFIG.sourceScores[lead.source] || 0;
+  }
+
+  // Engagement indicators
+  if (lead.name && lead.name.trim().length > 0) score += SCORING_CONFIG.hasName;
+  if (lead.company && lead.company.trim().length > 0)
+    score += SCORING_CONFIG.hasCompany;
+  if (lead.phone && lead.phone.trim().length > 0)
+    score += SCORING_CONFIG.hasPhone;
+  if (lead.message && lead.message.trim().length > 0)
+    score += SCORING_CONFIG.hasMessage;
+  if (lead.subscribed_to_newsletter)
+    score += SCORING_CONFIG.subscribedToNewsletter;
+
+  // Content quality (analyze message)
+  if (lead.message) {
+    const messageLength = lead.message.length;
+    if (messageLength > 200) {
+      score += SCORING_CONFIG.messageLength.long;
+    } else if (messageLength > 50) {
+      score += SCORING_CONFIG.messageLength.medium;
+    } else {
+      score += SCORING_CONFIG.messageLength.short;
+    }
+
+    const messageLower = lead.message.toLowerCase();
+    // Project intent signals
+    if (
+      /\b(project|website|app|platform|build|develop|create)\b/.test(
+        messageLower,
+      )
+    ) {
+      score += SCORING_CONFIG.mentionsProject;
+    }
+    // Budget signals
+    if (/\b(budget|cost|price|rate|invest|spend)\b/.test(messageLower)) {
+      score += SCORING_CONFIG.mentionsBudget;
+    }
+    // Timeline signals
+    if (
+      /\b(deadline|timeline|when|asap|urgent|soon|month|week)\b/.test(
+        messageLower,
+      )
+    ) {
+      score += SCORING_CONFIG.mentionsTimeline;
+    }
+    // Urgency signals
+    if (/\b(urgent|asap|immediately|rush|critical)\b/.test(messageLower)) {
+      score += SCORING_CONFIG.mentionsUrgent;
+    }
+  }
+
+  // Subject analysis (for contact forms)
+  if (lead.subject) {
+    const subjectLower = lead.subject.toLowerCase();
+    if (/\b(project|hire|collaborate|opportunity)\b/.test(subjectLower)) {
+      score += 5;
+    }
+  }
+
+  // Context signals
+  if (lead.utm_source) score += SCORING_CONFIG.hasUtmSource;
+  if (lead.referrer?.includes("linkedin"))
+    score += SCORING_CONFIG.linkedinReferrer;
+  if (!lead.referrer || lead.referrer === "")
+    score += SCORING_CONFIG.directVisit;
+
+  // Metadata-based scoring (for return visitors, chat engagement, etc.)
+  if (lead.metadata) {
+    const metadata = lead.metadata as Record<string, unknown>;
+    if (
+      metadata.previous_interactions &&
+      Array.isArray(metadata.previous_interactions)
+    ) {
+      score += SCORING_CONFIG.returnVisitor;
+    }
+    // Chat-specific scoring
+    if (metadata.intent_score && typeof metadata.intent_score === "number") {
+      // Add up to 15 points based on chat intent score (0-100 mapped to 0-15)
+      score += Math.round((metadata.intent_score / 100) * 15);
+    }
+    if (metadata.message_count && typeof metadata.message_count === "number") {
+      // Engaged chat users (5+ messages) get bonus
+      if (metadata.message_count >= 5) score += 5;
+      else if (metadata.message_count >= 3) score += 3;
+    }
+  }
+
+  // Cap at 100
+  return Math.min(score, 100);
+}
+
+// Get lead quality tier based on score
+export function getLeadTier(score: number): "hot" | "warm" | "cool" | "cold" {
+  if (score >= 70) return "hot";
+  if (score >= 50) return "warm";
+  if (score >= 30) return "cool";
+  return "cold";
 }
 
 // Helper function to check if Supabase is configured
@@ -63,16 +220,26 @@ export function isSupabaseConfigured(): boolean {
 // Lead operations
 export async function createLead(
   lead: Omit<PortfolioLead, "id" | "created_at" | "updated_at">,
-): Promise<{ success: boolean; id?: string; error?: string }> {
+): Promise<{
+  success: boolean;
+  id?: string;
+  error?: string;
+  score?: number;
+  tier?: string;
+}> {
   if (!isSupabaseConfigured()) {
     console.warn("Supabase not configured, skipping lead creation");
     return { success: true, id: "not-configured" };
   }
 
   try {
+    // Calculate lead score
+    const leadScore = calculateLeadScore(lead);
+    const leadWithScore = { ...lead, lead_score: leadScore };
+
     const { data, error } = await supabase
       .from("portfolio_leads")
-      .insert(lead)
+      .insert(leadWithScore)
       .select("id")
       .single();
 
@@ -81,7 +248,12 @@ export async function createLead(
       return { success: false, error: error.message };
     }
 
-    return { success: true, id: data.id };
+    return {
+      success: true,
+      id: data.id,
+      score: leadScore,
+      tier: getLeadTier(leadScore),
+    };
   } catch (err) {
     console.error("Error creating lead:", err);
     return { success: false, error: "Failed to create lead" };
@@ -146,7 +318,14 @@ export async function getLeadByEmail(
 // Upsert lead - create or update if exists
 export async function upsertLead(
   lead: Omit<PortfolioLead, "id" | "created_at" | "updated_at">,
-): Promise<{ success: boolean; id?: string; error?: string; isNew?: boolean }> {
+): Promise<{
+  success: boolean;
+  id?: string;
+  error?: string;
+  isNew?: boolean;
+  score?: number;
+  tier?: string;
+}> {
   if (!isSupabaseConfigured()) {
     return { success: true, id: "not-configured", isNew: true };
   }
@@ -180,6 +359,11 @@ export async function upsertLead(
         updates.subscribed_to_newsletter = true;
       }
 
+      // Recalculate lead score with merged data
+      const mergedLead = { ...existingLead, ...updates };
+      const newScore = calculateLeadScore(mergedLead);
+      updates.lead_score = newScore;
+
       const { error } = await supabase
         .from("portfolio_leads")
         .update(updates)
@@ -189,11 +373,18 @@ export async function upsertLead(
         return { success: false, error: error.message };
       }
 
-      return { success: true, id: existingLead.id, isNew: false };
+      return {
+        success: true,
+        id: existingLead.id,
+        isNew: false,
+        score: newScore,
+        tier: getLeadTier(newScore),
+      };
     }
 
-    // Create new lead
-    return createLead(lead);
+    // Create new lead (createLead already calculates score)
+    const result = await createLead(lead);
+    return { ...result, isNew: true };
   } catch (err) {
     console.error("Error upserting lead:", err);
     return { success: false, error: "Failed to upsert lead" };
