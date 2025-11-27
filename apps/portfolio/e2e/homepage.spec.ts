@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import AxeBuilder from "axe-playwright";
+import { checkA11y, injectAxe } from "axe-playwright";
 
 test.describe("Homepage", () => {
   test.beforeEach(async ({ page }) => {
@@ -35,11 +35,16 @@ test.describe("Homepage", () => {
   });
 
   test("should not have accessibility violations", async ({ page }) => {
-    const accessibilityScanResults = await new AxeBuilder({ page })
-      .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
-      .analyze();
-
-    expect(accessibilityScanResults.violations).toEqual([]);
+    await injectAxe(page);
+    await checkA11y(page, undefined, {
+      axeOptions: {
+        runOnly: {
+          type: "tag",
+          values: ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"],
+        },
+      },
+      detailedReport: true,
+    });
   });
 
   test("should have proper meta tags for SEO", async ({ page }) => {

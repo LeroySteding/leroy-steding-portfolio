@@ -6,7 +6,7 @@ test.describe("Performance Budgets", () => {
     await page.goto("/", { waitUntil: "networkidle" });
 
     // Get Web Vitals using client-side metrics
-    const webVitals = await page.evaluate(() => {
+    const webVitals = await page.evaluate<Record<string, number>>(() => {
       return new Promise((resolve) => {
         const metrics: Record<string, number> = {};
 

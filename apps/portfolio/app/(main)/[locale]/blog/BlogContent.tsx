@@ -86,7 +86,13 @@ export default function BlogContent({
   // Get all unique tags
   const allTags = useMemo(() => {
     const tags = new Set<string>();
-    posts.forEach((post) => post.tags?.forEach((tag) => tags.add(tag)));
+    for (const post of posts) {
+      if (post.tags) {
+        for (const tag of post.tags) {
+          tags.add(tag);
+        }
+      }
+    }
     return Array.from(tags).sort();
   }, [posts]);
 
