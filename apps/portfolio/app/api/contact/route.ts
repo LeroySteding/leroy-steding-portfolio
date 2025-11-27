@@ -1,7 +1,11 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
+import { getClientIp, rateLimit } from "@/lib/rate-limit";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
+
+// Rate limit: 5 requests per minute per IP
+const RATE_LIMIT = { limit: 5, windowSeconds: 60 };
 
 interface ContactFormData {
   name: string;
@@ -12,6 +16,27 @@ interface ContactFormData {
 
 export async function POST(request: NextRequest) {
   try {
+    // Check rate limit
+    const clientIp = getClientIp(request);
+    const rateLimitResult = rateLimit(clientIp, RATE_LIMIT);
+
+    if (!rateLimitResult.success) {
+      return NextResponse.json(
+        { error: "Too many requests. Please try again later." },
+        {
+          status: 429,
+          headers: {
+            "X-RateLimit-Limit": rateLimitResult.limit.toString(),
+            "X-RateLimit-Remaining": rateLimitResult.remaining.toString(),
+            "X-RateLimit-Reset": rateLimitResult.reset.toString(),
+            "Retry-After": Math.ceil(
+              (rateLimitResult.reset - Date.now()) / 1000,
+            ).toString(),
+          },
+        },
+      );
+    }
+
     const body: ContactFormData = await request.json();
     const { name, email, subject, message } = body;
 
