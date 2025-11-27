@@ -1,12 +1,9 @@
+import dynamic from "next/dynamic";
 import { getLocale } from "next-intl/server";
 import JsonLd from "@/components/JsonLd";
-import Blog from "@/components/sections/Blog";
-import Contact from "@/components/sections/Contact";
+// Above-fold sections - loaded immediately
 import Hero from "@/components/sections/Hero";
 import IntroAbout from "@/components/sections/IntroAbout";
-import Projects from "@/components/sections/Projects";
-import Services from "@/components/sections/Services";
-import Testimonials from "@/components/sections/Testimonials";
 import {
   getAboutSection,
   getBlogSection,
@@ -21,6 +18,15 @@ import {
   getPersonSchema,
   getWebsiteSchema,
 } from "@/lib/structured-data";
+
+// Below-fold sections - lazy loaded for better initial performance
+const Services = dynamic(() => import("@/components/sections/Services"));
+const Projects = dynamic(() => import("@/components/sections/Projects"));
+const Blog = dynamic(() => import("@/components/sections/Blog"));
+const Testimonials = dynamic(
+  () => import("@/components/sections/Testimonials"),
+);
+const Contact = dynamic(() => import("@/components/sections/Contact"));
 
 export default async function Home() {
   const locale = await getLocale();

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import dynamic from "next/dynamic";
 import { Inter, Space_Grotesk } from "next/font/google";
 import { draftMode } from "next/headers";
 import "../globals.css";
@@ -8,10 +9,12 @@ import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
 import ClientLayout from "@/components/layout/ClientLayout";
 import { VisualEditing } from "@/components/sanity/VisualEditing";
-import ChatWidget from "@/components/ui/ChatWidget";
 import CookieConsent from "@/components/ui/CookieConsent";
 import LayoutSwitcher from "@/components/ui/LayoutSwitcher";
 import { LayoutProvider } from "@/contexts/LayoutContext";
+
+// Dynamic import for ChatWidget - loaded after initial render (~35KB savings)
+const ChatWidget = dynamic(() => import("@/components/ui/ChatWidget"));
 
 const inter = Inter({
   variable: "--font-inter",
