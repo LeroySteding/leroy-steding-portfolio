@@ -119,14 +119,14 @@ export default function Header({ onSearchClick }: HeaderProps) {
               </span>
             </Link>
 
-            {/* Desktop Navigation - Unified Sizing */}
-            <div className="hidden lg:flex items-center gap-1">
+            {/* Desktop Navigation - Show from tablet (md) breakpoint */}
+            <div className="hidden md:flex items-center gap-1">
               {navigation.map((item) => (
                 <Link
                   key={item.name}
                   href={item.href}
                   prefetch={false}
-                  className="px-3 py-2 text-text-secondary hover:text-accent-primary hover:bg-surface/50 rounded-md transition-all duration-200 font-medium text-sm relative group"
+                  className="px-2 lg:px-3 py-2 text-text-secondary hover:text-accent-primary hover:bg-surface/50 rounded-md transition-all duration-200 font-medium text-xs lg:text-sm relative group whitespace-nowrap"
                 >
                   {item.name}
                 </Link>
@@ -134,24 +134,24 @@ export default function Header({ onSearchClick }: HeaderProps) {
             </div>
 
             {/* Right Side Actions - Unified Sizing */}
-            <div className="flex items-center gap-2">
-              {/* Book a Call CTA - Same Height as Other Buttons */}
+            <div className="flex items-center gap-1 sm:gap-2">
+              {/* Book a Call CTA - Show from tablet (md) */}
               <Link
                 href={getLocalizedPath("/book")}
                 prefetch={false}
-                className="hidden lg:flex items-center gap-2 px-3 py-2 bg-accent-primary hover:bg-accent-primary/90 text-white font-medium text-sm rounded-md transition-all duration-200 hover:scale-105"
+                className="hidden md:flex items-center gap-1.5 lg:gap-2 px-2 lg:px-3 py-2 bg-accent-primary hover:bg-accent-primary/90 text-white font-medium text-xs lg:text-sm rounded-md transition-all duration-200 hover:scale-105 whitespace-nowrap"
               >
-                <Calendar className="w-4 h-4" />
+                <Calendar className="w-3.5 h-3.5 lg:w-4 lg:h-4" />
                 <span>Book Call</span>
               </Link>
 
-              {/* Utility Actions - Same Sizing */}
-              <div className="hidden lg:flex items-center gap-1">
+              {/* Utility Actions - Show from tablet (md) */}
+              <div className="hidden md:flex items-center gap-0.5 lg:gap-1">
                 {/* Search Button */}
                 <button
                   type="button"
                   onClick={onSearchClick}
-                  className="p-2 rounded-md text-text-muted hover:text-accent-primary hover:bg-surface/50 transition-all duration-200"
+                  className="p-1.5 lg:p-2 rounded-md text-text-muted hover:text-accent-primary hover:bg-surface/50 transition-all duration-200"
                   aria-label="Search"
                   title="Search (⌘K)"
                 >
@@ -165,7 +165,7 @@ export default function Header({ onSearchClick }: HeaderProps) {
                 <button
                   type="button"
                   onClick={toggleTheme}
-                  className="p-2 rounded-md text-text-muted hover:text-accent-primary hover:bg-surface/50 transition-all duration-200"
+                  className="p-1.5 lg:p-2 rounded-md text-text-muted hover:text-accent-primary hover:bg-surface/50 transition-all duration-200"
                   aria-label={t.nav.toggleTheme}
                   title={theme === "dark" ? "Light mode" : "Dark mode"}
                 >
@@ -177,11 +177,11 @@ export default function Header({ onSearchClick }: HeaderProps) {
                 </button>
               </div>
 
-              {/* Mobile menu button */}
+              {/* Mobile menu button - only show on small screens */}
               <button
                 type="button"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="lg:hidden p-2.5 rounded-lg bg-surface hover:bg-accent-primary transition-all duration-200 border border-surface hover:border-accent-primary group"
+                className="md:hidden p-2.5 rounded-lg bg-surface hover:bg-accent-primary transition-all duration-200 border border-surface hover:border-accent-primary group"
                 aria-label={t.nav.toggleMenu}
               >
                 {isMobileMenuOpen ? (
@@ -193,14 +193,14 @@ export default function Header({ onSearchClick }: HeaderProps) {
             </div>
           </div>
 
-          {/* Mobile Navigation - Cleaner */}
+          {/* Mobile Navigation - Only show on small screens */}
           {isMobileMenuOpen && (
             <motion.div
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.2 }}
-              className="lg:hidden border-t border-surface"
+              className="md:hidden border-t border-surface"
             >
               <div className="py-6 space-y-2">
                 {/* Book a Call CTA - Featured */}

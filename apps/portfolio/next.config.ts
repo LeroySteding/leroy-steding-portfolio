@@ -57,13 +57,27 @@ const nextConfig: NextConfig = {
     ],
   },
 
-  // Performance budgets
+  // Performance optimizations - tree-shaking for heavy packages
   experimental: {
     optimizePackageImports: [
+      // Icon libraries
       "lucide-react",
+      "@tabler/icons-react",
+      // UI primitives
       "@radix-ui/react-dialog",
       "@radix-ui/react-dropdown-menu",
+      "@radix-ui/react-separator",
+      "@radix-ui/react-slot",
+      "@radix-ui/react-tooltip",
+      // Animation
       "framer-motion",
+      // CMS & content
+      "@sanity/client",
+      "@portabletext/react",
+      "react-markdown",
+      // Utilities
+      "date-fns",
+      "lodash",
     ],
   },
 

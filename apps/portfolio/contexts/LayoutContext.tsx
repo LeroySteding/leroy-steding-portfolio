@@ -52,23 +52,23 @@ export function LayoutProvider({ children }: { children: ReactNode }) {
   }, []);
 
   // Container classes based on layout mode
-  // Using max-w-[1600px] for contained mode (wider than 7xl which is 1280px)
+  // Reduced mobile padding (px-4) for smaller screens, gradually increasing
   const containerClass =
     layoutMode === "full-width"
-      ? "w-full px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20"
-      : "container mx-auto px-6 sm:px-8 lg:px-16 max-w-[1600px]";
+      ? "w-full px-4 sm:px-6 md:px-10 lg:px-16 xl:px-20"
+      : "container mx-auto px-4 sm:px-6 md:px-10 lg:px-16 max-w-[1600px]";
 
-  // Grid classes - 4 columns on xl for full-width, 3 for contained
+  // Grid classes - single column on mobile, 2 on sm/md, 3 on lg, 4 on xl for full-width
   const gridClass =
     layoutMode === "full-width"
-      ? "grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8"
-      : "grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8";
+      ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5 lg:gap-6 xl:gap-8"
+      : "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6 xl:gap-8";
 
   // Hero-specific classes for larger text and wider container
   const heroContainerClass =
     layoutMode === "full-width"
-      ? "w-full px-6 sm:px-8 md:px-12 lg:px-16 xl:px-24"
-      : "container mx-auto px-6 sm:px-8 md:px-12 lg:px-16 max-w-[1600px]";
+      ? "w-full px-4 sm:px-6 md:px-10 lg:px-16 xl:px-24"
+      : "container mx-auto px-4 sm:px-6 md:px-10 lg:px-16 max-w-[1600px]";
 
   // For full-width, use w-full to spread content; for contained, constrain with max-w
   const heroMaxWidthClass =
@@ -82,10 +82,10 @@ export function LayoutProvider({ children }: { children: ReactNode }) {
           layoutMode: "full-width",
           setLayoutMode,
           toggleLayoutMode,
-          containerClass: "w-full px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20",
+          containerClass: "w-full px-4 sm:px-6 md:px-10 lg:px-16 xl:px-20",
           gridClass:
-            "grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8",
-          heroContainerClass: "w-full px-6 sm:px-8 md:px-12 lg:px-16 xl:px-24",
+            "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5 lg:gap-6 xl:gap-8",
+          heroContainerClass: "w-full px-4 sm:px-6 md:px-10 lg:px-16 xl:px-24",
           heroMaxWidthClass: "w-full",
         }}
       >

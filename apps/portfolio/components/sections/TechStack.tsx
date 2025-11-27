@@ -75,14 +75,14 @@ export default function TechStack({ sectionData }: TechStackProps) {
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-accent-secondary to-transparent" />
 
       <div className={`relative z-10 ${containerClass}`}>
-        {/* Section header */}
-        <div className="mb-20">
+        {/* Section header - responsive */}
+        <div className="mb-10 sm:mb-14 lg:mb-20">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="font-display font-black mb-6"
+            className="font-display font-black mb-4 sm:mb-6"
           >
             {sectionTitle}{" "}
             <span className="text-gradient">{sectionTitleHighlight}</span>
@@ -92,14 +92,14 @@ export default function TechStack({ sectionData }: TechStackProps) {
             whileInView={{ opacity: 1, scaleX: 1 }}
             transition={{ duration: 0.6, delay: 0.1 }}
             viewport={{ once: true }}
-            className="w-32 h-2 bg-accent-secondary rounded-full mb-8"
+            className="w-20 sm:w-24 lg:w-32 h-1.5 sm:h-2 bg-accent-secondary rounded-full mb-6 sm:mb-8"
           />
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
-            className="text-xl text-text-secondary max-w-3xl mb-8"
+            className="text-base sm:text-lg lg:text-xl text-text-secondary max-w-3xl mb-6 sm:mb-8"
           >
             {t.techStack.description}
           </motion.p>
@@ -110,21 +110,21 @@ export default function TechStack({ sectionData }: TechStackProps) {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
             viewport={{ once: true }}
-            className="relative max-w-md"
+            className="relative max-w-full sm:max-w-md"
           >
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted" />
+            <Search className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-text-muted" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search technologies..."
-              className="w-full pl-12 pr-12 py-4 rounded-xl bg-surface border-2 border-surface focus:border-accent-secondary text-text-primary placeholder:text-text-muted transition-all duration-300 font-semibold"
+              className="w-full pl-10 sm:pl-12 pr-10 sm:pr-12 py-3 sm:py-4 rounded-lg sm:rounded-xl bg-surface border-2 border-surface focus:border-accent-secondary text-text-primary placeholder:text-text-muted transition-all duration-300 font-semibold text-sm sm:text-base"
             />
             {searchQuery && (
               <button
                 type="button"
                 onClick={() => setSearchQuery("")}
-                className="absolute right-4 top-1/2 -translate-y-1/2 p-1 hover:bg-surface-light rounded-full transition-colors"
+                className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 p-1 hover:bg-surface-light rounded-full transition-colors"
               >
                 <X className="w-4 h-4 text-text-muted" />
               </button>
@@ -132,30 +132,30 @@ export default function TechStack({ sectionData }: TechStackProps) {
           </motion.div>
         </div>
 
-        {/* Category filters - Multi-select */}
+        {/* Category filters - Multi-select with horizontal scroll on mobile */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="mb-12"
+          className="mb-8 sm:mb-10 lg:mb-12"
         >
-          <div className="flex items-center gap-4 mb-6">
-            <h3 className="text-lg font-bold text-text-primary">
+          <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
+            <h3 className="text-sm sm:text-base lg:text-lg font-bold text-text-primary whitespace-nowrap">
               Filter by Category:
             </h3>
             {selectedCategories.length > 0 && (
               <button
                 type="button"
                 onClick={() => setSelectedCategories([])}
-                className="text-sm font-semibold text-accent-primary hover:text-accent-secondary transition-colors flex items-center gap-2"
+                className="text-xs sm:text-sm font-semibold text-accent-primary hover:text-accent-secondary transition-colors flex items-center gap-1.5 sm:gap-2"
               >
-                <X className="w-4 h-4" />
+                <X className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 Clear All
               </button>
             )}
           </div>
-          <div className="flex flex-wrap gap-3">
+          <div className="flex gap-2 sm:gap-3 overflow-x-auto scrollbar-hide pb-2 sm:flex-wrap sm:overflow-x-visible">
             {techStack.map((category) => {
               const isSelected = selectedCategories.includes(category.name);
               return (
@@ -163,13 +163,15 @@ export default function TechStack({ sectionData }: TechStackProps) {
                   type="button"
                   key={category.name}
                   onClick={() => toggleCategory(category.name)}
-                  className={`px-6 py-3 rounded-xl font-bold text-base transition-all duration-300 flex items-center gap-3 ${
+                  className={`px-3 sm:px-4 lg:px-6 py-2 sm:py-2.5 lg:py-3 rounded-lg sm:rounded-xl font-bold text-xs sm:text-sm lg:text-base transition-all duration-300 flex items-center gap-2 sm:gap-3 whitespace-nowrap flex-shrink-0 ${
                     isSelected
                       ? "bg-accent-secondary text-primary-bg shadow-lg scale-105"
                       : "bg-surface text-text-secondary hover:bg-surface-light hover:text-accent-secondary border-2 border-transparent hover:border-accent-secondary/30"
                   }`}
                 >
-                  <span className="text-2xl">{category.icon}</span>
+                  <span className="text-lg sm:text-xl lg:text-2xl">
+                    {category.icon}
+                  </span>
                   <span>
                     {language === "nl" ? category.nameNL : category.name}
                   </span>
@@ -177,7 +179,7 @@ export default function TechStack({ sectionData }: TechStackProps) {
                     <motion.span
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
-                      className="w-2 h-2 rounded-full bg-primary-bg"
+                      className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-primary-bg"
                     />
                   )}
                 </button>
@@ -232,7 +234,7 @@ export default function TechStack({ sectionData }: TechStackProps) {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6 mb-16"
+              className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4 lg:gap-6 mb-10 sm:mb-12 lg:mb-16"
             >
               {displayTechnologies.map((tech, index) => (
                 <motion.div
@@ -250,45 +252,45 @@ export default function TechStack({ sectionData }: TechStackProps) {
                   className="relative group"
                 >
                   {/* Glow effect */}
-                  <div className="absolute -inset-1 bg-gradient-to-r from-accent-secondary/20 to-accent-primary/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="absolute -inset-1 bg-gradient-to-r from-accent-secondary/20 to-accent-primary/20 rounded-xl sm:rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                   {/* Card content */}
-                  <div className="relative card p-6 flex flex-col items-center justify-center gap-3 cursor-pointer h-full min-h-[200px]">
+                  <div className="relative card p-3 sm:p-4 lg:p-6 flex flex-col items-center justify-center gap-2 sm:gap-3 cursor-pointer h-full min-h-[140px] sm:min-h-[160px] lg:min-h-[200px]">
                     {/* Tech icon */}
-                    <div className="relative w-16 h-16 flex items-center justify-center">
+                    <div className="relative w-10 h-10 sm:w-12 sm:h-12 lg:w-16 lg:h-16 flex items-center justify-center">
                       {tech.icon.startsWith("http") ? (
                         <Image
                           src={tech.icon}
                           alt={tech.name}
                           width={64}
                           height={64}
-                          className="object-contain group-hover:scale-110 transition-transform duration-300"
+                          className="object-contain group-hover:scale-110 transition-transform duration-300 w-10 h-10 sm:w-12 sm:h-12 lg:w-16 lg:h-16"
                         />
                       ) : (
-                        <span className="text-5xl group-hover:scale-110 transition-transform duration-300">
+                        <span className="text-3xl sm:text-4xl lg:text-5xl group-hover:scale-110 transition-transform duration-300">
                           {tech.icon}
                         </span>
                       )}
                     </div>
 
                     {/* Tech name */}
-                    <h3 className="text-base font-bold text-text-primary text-center group-hover:text-accent-secondary transition-colors min-h-[48px] flex items-center">
+                    <h3 className="text-xs sm:text-sm lg:text-base font-bold text-text-primary text-center group-hover:text-accent-secondary transition-colors min-h-[32px] sm:min-h-[40px] lg:min-h-[48px] flex items-center">
                       {tech.name}
                     </h3>
 
                     {/* Proficiency bar */}
                     <div className="w-full">
-                      <div className="flex items-center justify-between mb-1.5">
+                      <div className="flex items-center justify-between mb-1 sm:mb-1.5">
                         <span
-                          className={`text-xs font-bold ${getProficiencyLevel(tech.proficiency).color}`}
+                          className={`text-[10px] sm:text-xs font-bold ${getProficiencyLevel(tech.proficiency).color}`}
                         >
                           {getProficiencyLevel(tech.proficiency).label}
                         </span>
-                        <span className="text-xs font-bold text-accent-secondary">
+                        <span className="text-[10px] sm:text-xs font-bold text-accent-secondary">
                           {tech.proficiency}%
                         </span>
                       </div>
-                      <div className="w-full bg-surface rounded-full h-2 overflow-hidden">
+                      <div className="w-full bg-surface rounded-full h-1.5 sm:h-2 overflow-hidden">
                         <motion.div
                           initial={{ width: 0 }}
                           animate={{ width: `${tech.proficiency}%` }}
@@ -316,37 +318,37 @@ export default function TechStack({ sectionData }: TechStackProps) {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
           viewport={{ once: true }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-6"
+          className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 lg:gap-6"
         >
-          <div className="card p-8 text-center">
-            <div className="text-5xl font-black text-accent-primary mb-3">
+          <div className="card p-4 sm:p-6 lg:p-8 text-center">
+            <div className="text-2xl sm:text-3xl lg:text-5xl font-black text-accent-primary mb-1.5 sm:mb-2 lg:mb-3">
               {techStack.flatMap((cat) => cat.technologies).length}+
             </div>
-            <div className="text-text-muted text-base font-semibold uppercase tracking-wide">
+            <div className="text-text-muted text-xs sm:text-sm lg:text-base font-semibold uppercase tracking-wide">
               Technologies
             </div>
           </div>
-          <div className="card p-8 text-center">
-            <div className="text-5xl font-black text-accent-secondary mb-3">
+          <div className="card p-4 sm:p-6 lg:p-8 text-center">
+            <div className="text-2xl sm:text-3xl lg:text-5xl font-black text-accent-secondary mb-1.5 sm:mb-2 lg:mb-3">
               {techStack.length}
             </div>
-            <div className="text-text-muted text-base font-semibold uppercase tracking-wide">
+            <div className="text-text-muted text-xs sm:text-sm lg:text-base font-semibold uppercase tracking-wide">
               Categories
             </div>
           </div>
-          <div className="card p-8 text-center">
-            <div className="text-5xl font-black text-accent-primary mb-3">
+          <div className="card p-4 sm:p-6 lg:p-8 text-center">
+            <div className="text-2xl sm:text-3xl lg:text-5xl font-black text-accent-primary mb-1.5 sm:mb-2 lg:mb-3">
               12+
             </div>
-            <div className="text-text-muted text-base font-semibold uppercase tracking-wide">
+            <div className="text-text-muted text-xs sm:text-sm lg:text-base font-semibold uppercase tracking-wide">
               {t.techStack.stats.experience}
             </div>
           </div>
-          <div className="card p-8 text-center">
-            <div className="text-5xl font-black text-accent-secondary mb-3">
+          <div className="card p-4 sm:p-6 lg:p-8 text-center">
+            <div className="text-2xl sm:text-3xl lg:text-5xl font-black text-accent-secondary mb-1.5 sm:mb-2 lg:mb-3">
               100+
             </div>
-            <div className="text-text-muted text-base font-semibold uppercase tracking-wide">
+            <div className="text-text-muted text-xs sm:text-sm lg:text-base font-semibold uppercase tracking-wide">
               {t.techStack.stats.projects}
             </div>
           </div>

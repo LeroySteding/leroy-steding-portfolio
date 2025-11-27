@@ -111,14 +111,14 @@ export default function Contact({ data }: ContactProps) {
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-accent-secondary to-transparent" />
 
       <div className={`relative z-10 ${containerClass}`}>
-        {/* Section header */}
-        <div className="mb-20">
+        {/* Section header - responsive margin */}
+        <div className="mb-10 sm:mb-14 lg:mb-20">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="font-display font-black mb-6"
+            className="font-display font-black mb-4 sm:mb-6"
           >
             {sectionTitle}{" "}
             <span className="text-gradient">{sectionTitleHighlight}</span>
@@ -128,46 +128,46 @@ export default function Contact({ data }: ContactProps) {
             whileInView={{ opacity: 1, scaleX: 1 }}
             transition={{ duration: 0.6, delay: 0.1 }}
             viewport={{ once: true }}
-            className="w-32 h-2 bg-accent-secondary rounded-full mb-8"
+            className="w-20 sm:w-24 lg:w-32 h-1.5 sm:h-2 bg-accent-secondary rounded-full mb-6 sm:mb-8"
           />
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
-            className="text-xl text-text-secondary max-w-3xl"
+            className="text-base sm:text-lg lg:text-xl text-text-secondary max-w-3xl"
           >
             {sectionSubtitle}
           </motion.p>
         </div>
 
-        <div className="grid lg:grid-cols-5 gap-16">
+        <div className="grid lg:grid-cols-5 gap-8 sm:gap-12 lg:gap-16">
           {/* Contact Info */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
-            className="lg:col-span-2 space-y-12"
+            className="lg:col-span-2 space-y-8 sm:space-y-10 lg:space-y-12"
           >
             <div>
-              <h3 className="text-3xl font-display font-bold mb-8 text-accent-primary">
+              <h3 className="text-xl sm:text-2xl lg:text-3xl font-display font-bold mb-5 sm:mb-6 lg:mb-8 text-accent-primary">
                 {t.contact.info.title}
               </h3>
 
-              <div className="space-y-6">
+              <div className="space-y-4 sm:space-y-5 lg:space-y-6">
                 {contactInfo.map((item) => {
                   const Icon = item.icon;
                   const content = (
-                    <div className="card p-6 flex items-start gap-6">
-                      <div className="p-4 rounded-xl bg-accent-primary/10">
-                        <Icon className="w-7 h-7 text-accent-primary" />
+                    <div className="card p-4 sm:p-5 lg:p-6 flex items-start gap-4 sm:gap-5 lg:gap-6">
+                      <div className="p-3 sm:p-3.5 lg:p-4 rounded-lg sm:rounded-xl bg-accent-primary/10">
+                        <Icon className="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 text-accent-primary" />
                       </div>
                       <div>
-                        <div className="text-sm text-text-muted mb-2 font-semibold uppercase tracking-wide">
+                        <div className="text-xs sm:text-sm text-text-muted mb-1.5 sm:mb-2 font-semibold uppercase tracking-wide">
                           {item.label}
                         </div>
-                        <div className="text-text-primary font-bold text-lg">
+                        <div className="text-text-primary font-bold text-base sm:text-lg break-all sm:break-normal">
                           {item.value}
                         </div>
                       </div>
@@ -190,11 +190,11 @@ export default function Contact({ data }: ContactProps) {
             </div>
 
             <div>
-              <h3 className="text-3xl font-display font-bold mb-8 text-accent-secondary">
+              <h3 className="text-xl sm:text-2xl lg:text-3xl font-display font-bold mb-5 sm:mb-6 lg:mb-8 text-accent-secondary">
                 Social Links
               </h3>
 
-              <div className="flex gap-4">
+              <div className="flex gap-3 sm:gap-4">
                 {socialLinks.map((social) => {
                   const Icon = social.icon;
                   return (
@@ -203,10 +203,10 @@ export default function Contact({ data }: ContactProps) {
                       href={social.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="card p-5 hover:scale-110 transition-all duration-300 group"
+                      className="card p-3.5 sm:p-4 lg:p-5 hover:scale-110 transition-all duration-300 group"
                       aria-label={social.label}
                     >
-                      <Icon className="w-8 h-8 text-text-secondary group-hover:text-accent-secondary transition-colors duration-300" />
+                      <Icon className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 text-text-secondary group-hover:text-accent-secondary transition-colors duration-300" />
                     </a>
                   );
                 })}
@@ -222,12 +222,15 @@ export default function Contact({ data }: ContactProps) {
             viewport={{ once: true }}
             className="lg:col-span-3"
           >
-            <form onSubmit={handleSubmit} className="space-y-8">
-              <div className="grid sm:grid-cols-2 gap-6">
+            <form
+              onSubmit={handleSubmit}
+              className="space-y-5 sm:space-y-6 lg:space-y-8"
+            >
+              <div className="grid sm:grid-cols-2 gap-4 sm:gap-5 lg:gap-6">
                 <div>
                   <label
                     htmlFor="name"
-                    className="block text-base font-bold mb-3 text-text-primary"
+                    className="block text-sm sm:text-base font-bold mb-2 sm:mb-3 text-text-primary"
                   >
                     Your Name
                   </label>
@@ -238,7 +241,7 @@ export default function Contact({ data }: ContactProps) {
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className="w-full px-6 py-4 text-lg rounded-lg bg-tertiary-bg border-2 border-surface text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent-primary transition-colors duration-300"
+                    className="w-full px-4 sm:px-5 lg:px-6 py-3 sm:py-3.5 lg:py-4 text-base sm:text-lg rounded-lg bg-tertiary-bg border-2 border-surface text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent-primary transition-colors duration-300"
                     placeholder={t.contact.form.namePlaceholder}
                   />
                 </div>
@@ -246,7 +249,7 @@ export default function Contact({ data }: ContactProps) {
                 <div>
                   <label
                     htmlFor="email"
-                    className="block text-base font-bold mb-3 text-text-primary"
+                    className="block text-sm sm:text-base font-bold mb-2 sm:mb-3 text-text-primary"
                   >
                     Your Email
                   </label>
@@ -257,7 +260,7 @@ export default function Contact({ data }: ContactProps) {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="w-full px-6 py-4 text-lg rounded-lg bg-tertiary-bg border-2 border-surface text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent-primary transition-colors duration-300"
+                    className="w-full px-4 sm:px-5 lg:px-6 py-3 sm:py-3.5 lg:py-4 text-base sm:text-lg rounded-lg bg-tertiary-bg border-2 border-surface text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent-primary transition-colors duration-300"
                     placeholder={t.contact.form.emailPlaceholder}
                   />
                 </div>
@@ -266,7 +269,7 @@ export default function Contact({ data }: ContactProps) {
               <div>
                 <label
                   htmlFor="subject"
-                  className="block text-base font-bold mb-3 text-text-primary"
+                  className="block text-sm sm:text-base font-bold mb-2 sm:mb-3 text-text-primary"
                 >
                   Subject
                 </label>
@@ -277,7 +280,7 @@ export default function Contact({ data }: ContactProps) {
                   value={formData.subject}
                   onChange={handleChange}
                   required
-                  className="w-full px-6 py-4 text-lg rounded-lg bg-tertiary-bg border-2 border-surface text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent-primary transition-colors duration-300"
+                  className="w-full px-4 sm:px-5 lg:px-6 py-3 sm:py-3.5 lg:py-4 text-base sm:text-lg rounded-lg bg-tertiary-bg border-2 border-surface text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent-primary transition-colors duration-300"
                   placeholder={t.contact.form.subjectPlaceholder}
                 />
               </div>
@@ -285,7 +288,7 @@ export default function Contact({ data }: ContactProps) {
               <div>
                 <label
                   htmlFor="message"
-                  className="block text-base font-bold mb-3 text-text-primary"
+                  className="block text-sm sm:text-base font-bold mb-2 sm:mb-3 text-text-primary"
                 >
                   Message
                 </label>
@@ -295,8 +298,8 @@ export default function Contact({ data }: ContactProps) {
                   value={formData.message}
                   onChange={handleChange}
                   required
-                  rows={6}
-                  className="w-full px-6 py-4 text-lg rounded-lg bg-tertiary-bg border-2 border-surface text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent-primary transition-colors duration-300 resize-none"
+                  rows={5}
+                  className="w-full px-4 sm:px-5 lg:px-6 py-3 sm:py-3.5 lg:py-4 text-base sm:text-lg rounded-lg bg-tertiary-bg border-2 border-surface text-text-primary placeholder:text-text-muted focus:outline-none focus:border-accent-primary transition-colors duration-300 resize-none sm:rows-6"
                   placeholder={t.contact.form.messagePlaceholder}
                 />
               </div>
@@ -304,30 +307,30 @@ export default function Contact({ data }: ContactProps) {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="btn-primary w-full sm:w-auto disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center gap-3"
+                className="btn-primary w-full sm:w-auto disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center gap-2 sm:gap-3"
               >
                 {isSubmitting ? (
                   <>
-                    <div className="w-6 h-6 border-3 border-primary-bg border-t-transparent rounded-full animate-spin" />
+                    <div className="w-5 h-5 sm:w-6 sm:h-6 border-3 border-primary-bg border-t-transparent rounded-full animate-spin" />
                     Sending...
                   </>
                 ) : (
                   <>
                     Send Message
-                    <Send className="w-6 h-6" />
+                    <Send className="w-5 h-5 sm:w-6 sm:h-6" />
                   </>
                 )}
               </button>
 
               {/* Status messages */}
               {submitStatus === "success" && (
-                <div className="p-6 rounded-lg bg-green-500/10 border-2 border-green-500/50 text-green-500 font-bold text-lg">
+                <div className="p-4 sm:p-5 lg:p-6 rounded-lg bg-green-500/10 border-2 border-green-500/50 text-green-500 font-bold text-sm sm:text-base lg:text-lg">
                   {t.contact.form.success}
                 </div>
               )}
 
               {submitStatus === "error" && (
-                <div className="p-6 rounded-lg bg-red-500/10 border-2 border-red-500/50 text-red-500 font-bold text-lg">
+                <div className="p-4 sm:p-5 lg:p-6 rounded-lg bg-red-500/10 border-2 border-red-500/50 text-red-500 font-bold text-sm sm:text-base lg:text-lg">
                   {t.contact.form.error}
                 </div>
               )}

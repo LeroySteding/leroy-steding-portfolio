@@ -22,21 +22,21 @@ export default function Hero({ data }: HeroProps) {
   const subtitle = data?.subtitle || t.hero.subtitle;
   const tagline = data?.tagline || t.hero.tagline;
 
-  // Scale text sizes based on layout mode
+  // Scale text sizes based on layout mode - mobile-first with gradual scaling
   const titleSizes =
     layoutMode === "full-width"
-      ? "text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl"
-      : "text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl";
+      ? "text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl"
+      : "text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl";
 
   const subtitleSizes =
     layoutMode === "full-width"
-      ? "text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl"
-      : "text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl";
+      ? "text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl"
+      : "text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl";
 
   const taglineSizes =
     layoutMode === "full-width"
-      ? "text-lg sm:text-xl md:text-2xl lg:text-3xl"
-      : "text-base sm:text-lg md:text-xl lg:text-2xl";
+      ? "text-base sm:text-lg md:text-xl lg:text-2xl"
+      : "text-sm sm:text-base md:text-lg lg:text-xl";
 
   // Content layout - spread in full-width, centered in contained
   const contentLayoutClass =
@@ -49,11 +49,11 @@ export default function Hero({ data }: HeroProps) {
       {/* Enhanced gradient background with animated elements */}
       <div className="absolute inset-0 bg-linear-to-br from-primary-bg via-secondary-bg to-primary-bg" />
 
-      {/* Animated background pattern */}
+      {/* Animated background pattern - responsive sizes */}
       <div className="absolute inset-0 opacity-30">
-        <div className="absolute top-20 left-20 w-96 h-96 bg-accent-primary/10 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute top-10 left-5 sm:top-20 sm:left-20 w-48 h-48 sm:w-72 sm:h-72 lg:w-96 lg:h-96 bg-accent-primary/10 rounded-full blur-3xl animate-pulse" />
         <div
-          className="absolute bottom-20 right-20 w-96 h-96 bg-accent-secondary/10 rounded-full blur-3xl animate-pulse"
+          className="absolute bottom-10 right-5 sm:bottom-20 sm:right-20 w-48 h-48 sm:w-72 sm:h-72 lg:w-96 lg:h-96 bg-accent-secondary/10 rounded-full blur-3xl animate-pulse"
           style={{ animationDelay: "1s" }}
         />
       </div>

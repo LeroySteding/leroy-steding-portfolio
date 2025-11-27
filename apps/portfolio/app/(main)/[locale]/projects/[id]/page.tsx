@@ -23,27 +23,42 @@ export default function ProjectDetailPage() {
   const pageDescription = project?.description || "";
   const pageUrl = `https://leroysteding.nl/projects/${params.id}`;
 
-  // Generate JSON-LD structured data for SEO
+  // Generate JSON-LD structured data for SEO using CreativeWork schema
   const jsonLd = project
     ? {
         "@context": "https://schema.org",
-        "@type": "Article",
-        headline: project.title,
+        "@type": "CreativeWork",
+        name: project.title,
         description: project.description,
         url: pageUrl,
-        image: project.image || "https://leroysteding.nl/images/og-default.jpg",
+        image:
+          project.image || "https://www.leroysteding.nl/images/og-default.jpg",
+        creator: {
+          "@type": "Person",
+          name: "Leroy Steding",
+          url: "https://www.leroysteding.nl",
+        },
         author: {
           "@type": "Person",
           name: "Leroy Steding",
-          url: "https://leroysteding.nl",
+          url: "https://www.leroysteding.nl",
         },
-        publisher: {
-          "@type": "Organization",
-          name: "STEDING.",
-          url: "https://leroysteding.nl",
-        },
+        dateCreated: project.year ? `${project.year}-01-01` : undefined,
         keywords: project.technologies.join(", "),
         inLanguage: language === "nl" ? "nl-NL" : "en-US",
+        programmingLanguage: project.technologies.filter((t: string) =>
+          [
+            "TypeScript",
+            "JavaScript",
+            "Python",
+            "Go",
+            "Rust",
+            "Java",
+            "PHP",
+          ].includes(t),
+        ),
+        ...(project.liveUrl && { mainEntityOfPage: project.liveUrl }),
+        ...(project.githubUrl && { codeRepository: project.githubUrl }),
       }
     : undefined;
 

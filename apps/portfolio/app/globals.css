@@ -46,8 +46,20 @@
     font-feature-settings:
       "rlig" 1,
       "calt" 1;
-    font-size: 18px;
+    font-size: 16px;
     line-height: 1.7;
+  }
+
+  @media (min-width: 640px) {
+    body {
+      font-size: 17px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    body {
+      font-size: 18px;
+    }
   }
 
   /* Consistent container widths - increased for bold layouts */
@@ -182,32 +194,32 @@
   }
 
   h1 {
-    @apply text-7xl md:text-8xl lg:text-9xl;
+    @apply text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl;
     font-weight: 800;
   }
 
   h2 {
-    @apply text-5xl md:text-6xl lg:text-7xl;
+    @apply text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl;
     font-weight: 800;
   }
 
   h3 {
-    @apply text-4xl md:text-5xl;
+    @apply text-xl sm:text-2xl md:text-3xl lg:text-4xl;
     font-weight: 700;
   }
 
   h4 {
-    @apply text-3xl md:text-4xl;
+    @apply text-lg sm:text-xl md:text-2xl lg:text-3xl;
     font-weight: 700;
   }
 
   h5 {
-    @apply text-2xl md:text-3xl;
+    @apply text-base sm:text-lg md:text-xl lg:text-2xl;
     font-weight: 600;
   }
 
   h6 {
-    @apply text-xl md:text-2xl;
+    @apply text-sm sm:text-base md:text-lg lg:text-xl;
     font-weight: 600;
   }
   .text-outline {
@@ -278,10 +290,24 @@
   background: var(--color-accent-primary);
   color: var(--color-primary-bg);
   font-weight: 700;
-  padding: 1rem 2.5rem;
+  padding: 0.75rem 1.5rem;
   border-radius: var(--radius-md);
   transition: all 0.3s ease;
-  font-size: 1.125rem;
+  font-size: 0.9375rem;
+}
+
+@media (min-width: 640px) {
+  .btn-primary {
+    padding: 0.875rem 2rem;
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .btn-primary {
+    padding: 1rem 2.5rem;
+    font-size: 1.125rem;
+  }
 }
 
 .btn-primary:hover {
@@ -294,10 +320,24 @@
   color: var(--color-accent-primary);
   border: 2px solid var(--color-accent-primary);
   font-weight: 700;
-  padding: 1rem 2.5rem;
+  padding: 0.75rem 1.5rem;
   border-radius: var(--radius-md);
   transition: all 0.3s ease;
-  font-size: 1.125rem;
+  font-size: 0.9375rem;
+}
+
+@media (min-width: 640px) {
+  .btn-secondary {
+    padding: 0.875rem 2rem;
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .btn-secondary {
+    padding: 1rem 2.5rem;
+    font-size: 1.125rem;
+  }
 }
 
 .btn-secondary:hover {
@@ -328,13 +368,43 @@
   color: #ffffff;
 }
 
-/* Section spacing - generous white space */
+/* Section spacing - responsive generous white space */
 .section {
-  padding: var(--spacing-section) 0;
+  padding: 4rem 0;
+}
+
+@media (min-width: 640px) {
+  .section {
+    padding: 6rem 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section {
+    padding: 8rem 0;
+  }
+}
+
+@media (min-width: 1280px) {
+  .section {
+    padding: var(--spacing-section) 0;
+  }
 }
 
 .section-sm {
-  padding: var(--spacing-section-sm) 0;
+  padding: 3rem 0;
+}
+
+@media (min-width: 640px) {
+  .section-sm {
+    padding: 4rem 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-sm {
+    padding: var(--spacing-section-sm) 0;
+  }
 }
 
 /* Accent border - clean and bold */
