@@ -19,7 +19,7 @@ interface BookingSuccessClientProps {
 }
 
 export default function BookingSuccessClient({
-  language = "en",
+  language: _language = "en",
 }: BookingSuccessClientProps = {}) {
   useEffect(() => {
     // Track conversion
@@ -217,7 +217,7 @@ export default function BookingSuccessClient({
               <ul className="space-y-3">
                 {preparationTips.map((tip, index) => (
                   <motion.li
-                    key={index}
+                    key={tip.slice(0, 20).replace(/\s+/g, "-").toLowerCase()}
                     initial={{ opacity: 0, x: -20 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.3, delay: index * 0.05 }}

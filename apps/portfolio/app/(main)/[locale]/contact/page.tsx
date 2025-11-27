@@ -34,6 +34,8 @@ export default function ContactPage() {
     email: "",
     subject: "",
     message: "",
+    // Honeypot field - should remain empty
+    website: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<
@@ -144,7 +146,7 @@ export default function ContactPage() {
   };
 
   const resetForm = () => {
-    setFormData({ name: "", email: "", subject: "", message: "" });
+    setFormData({ name: "", email: "", subject: "", message: "", website: "" });
     setSubmitStatus("idle");
     setShowOptionalFields(false);
   };
@@ -403,6 +405,29 @@ export default function ContactPage() {
                             </motion.div>
                           )}
                         </AnimatePresence>
+                      </div>
+
+                      {/* Honeypot field - hidden from humans, catches bots */}
+                      <div
+                        aria-hidden="true"
+                        style={{
+                          position: "absolute",
+                          left: "-9999px",
+                          top: "-9999px",
+                        }}
+                      >
+                        <label htmlFor="website">
+                          Website (leave empty)
+                          <input
+                            type="text"
+                            id="website"
+                            name="website"
+                            value={formData.website}
+                            onChange={handleChange}
+                            tabIndex={-1}
+                            autoComplete="off"
+                          />
+                        </label>
                       </div>
 
                       {/* Submit Button */}

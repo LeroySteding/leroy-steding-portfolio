@@ -6,7 +6,16 @@ import { getTranslations } from "@/lib/translations";
 import { client } from "@/sanity/lib/client";
 import { projectsQuery, projectsSectionQuery } from "@/sanity/lib/queries";
 
-export async function generateMetadata(): Promise<Metadata> {
+interface PageProps {
+  params: Promise<{ locale: string }>;
+}
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { locale } = await params;
+  const isNL = locale === "nl";
+
   const ogImageUrl = new URL("/api/og", "https://www.leroysteding.nl");
   ogImageUrl.searchParams.set("title", "Featured Projects");
   ogImageUrl.searchParams.set(
@@ -16,13 +25,28 @@ export async function generateMetadata(): Promise<Metadata> {
   ogImageUrl.searchParams.set("type", "project");
 
   return {
-    title: "Projects | Leroy Steding",
-    description:
-      "Explore my portfolio of web applications, AI automation solutions, and client projects",
+    title: isNL ? "Projecten | Leroy Steding" : "Projects | Leroy Steding",
+    description: isNL
+      ? "Ontdek mijn portfolio van webapplicaties, AI-automatiseringsoplossingen en klantprojecten"
+      : "Explore my portfolio of web applications, AI automation solutions, and client projects",
+    alternates: {
+      canonical: isNL
+        ? "https://leroysteding.nl/projects"
+        : "https://leroysteding.nl/en/projects",
+      languages: {
+        nl: "https://leroysteding.nl/projects",
+        en: "https://leroysteding.nl/en/projects",
+        "x-default": "https://leroysteding.nl/projects",
+      },
+    },
     openGraph: {
-      title: "Featured Projects | Leroy Steding",
-      description:
-        "Explore my portfolio of web applications, AI automation solutions, and client projects",
+      title: isNL
+        ? "Uitgelichte Projecten | Leroy Steding"
+        : "Featured Projects | Leroy Steding",
+      description: isNL
+        ? "Ontdek mijn portfolio van webapplicaties, AI-automatiseringsoplossingen en klantprojecten"
+        : "Explore my portfolio of web applications, AI automation solutions, and client projects",
+      locale: isNL ? "nl_NL" : "en_US",
       images: [
         {
           url: ogImageUrl.toString(),
@@ -34,9 +58,12 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     twitter: {
       card: "summary_large_image",
-      title: "Featured Projects | Leroy Steding",
-      description:
-        "Explore my portfolio of web applications, AI automation solutions, and client projects",
+      title: isNL
+        ? "Uitgelichte Projecten | Leroy Steding"
+        : "Featured Projects | Leroy Steding",
+      description: isNL
+        ? "Ontdek mijn portfolio van webapplicaties, AI-automatiseringsoplossingen en klantprojecten"
+        : "Explore my portfolio of web applications, AI automation solutions, and client projects",
       images: [ogImageUrl.toString()],
     },
   };

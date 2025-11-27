@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { getLocale } from "next-intl/server";
 import LayoutContainer from "@/components/ui/LayoutContainer";
 import { getTranslations } from "@/lib/translations";
@@ -5,6 +6,41 @@ import { client } from "@/sanity/lib/client";
 import { postsQuery } from "@/sanity/lib/queries";
 import BlogContent from "./BlogContent";
 import BlogHero from "./BlogHero";
+
+interface PageProps {
+  params: Promise<{ locale: string }>;
+}
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { locale } = await params;
+  const isNL = locale === "nl";
+
+  return {
+    title: isNL ? "Blog | Leroy Steding" : "Blog | Leroy Steding",
+    description: isNL
+      ? "Artikelen over webontwikkeling, React, Next.js en best practices voor software engineering."
+      : "Articles about web development, React, Next.js, and software engineering best practices.",
+    alternates: {
+      canonical: isNL
+        ? "https://leroysteding.nl/blog"
+        : "https://leroysteding.nl/en/blog",
+      languages: {
+        nl: "https://leroysteding.nl/blog",
+        en: "https://leroysteding.nl/en/blog",
+        "x-default": "https://leroysteding.nl/blog",
+      },
+    },
+    openGraph: {
+      title: isNL ? "Blog | Leroy Steding" : "Blog | Leroy Steding",
+      description: isNL
+        ? "Artikelen over webontwikkeling, React, Next.js en best practices voor software engineering."
+        : "Articles about web development, React, Next.js, and software engineering best practices.",
+      locale: isNL ? "nl_NL" : "en_US",
+    },
+  };
+}
 
 export interface SanityBlogPost {
   _id: string;

@@ -58,10 +58,11 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: "https://steding.digital/book",
+    canonical: "https://leroysteding.nl/book",
     languages: {
-      "en-US": "https://steding.digital/en/book",
-      "nl-NL": "https://steding.digital/nl/book",
+      nl: "https://leroysteding.nl/book",
+      en: "https://leroysteding.nl/en/book",
+      "x-default": "https://leroysteding.nl/book",
     },
   },
 };
@@ -129,6 +130,7 @@ export default function BookingPage() {
     <>
       <script
         type="application/ld+json"
+        // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD requires innerHTML, data is static and server-generated
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
       <BookingPageClient />

@@ -3,6 +3,7 @@ import { Inter, Space_Grotesk } from "next/font/google";
 import { draftMode } from "next/headers";
 import "../globals.css";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
 import ClientLayout from "@/components/layout/ClientLayout";
@@ -44,6 +45,11 @@ export const metadata: Metadata = {
   authors: [{ name: "Leroy Steding" }],
   creator: "Leroy Steding",
   metadataBase: new URL("https://leroysteding.nl"),
+  alternates: {
+    types: {
+      "application/rss+xml": "/feed.xml",
+    },
+  },
   openGraph: {
     type: "website",
     url: "https://leroysteding.nl",
@@ -101,6 +107,7 @@ export default async function MainLayout({
             <ClientLayout>
               {children}
               <Analytics />
+              <SpeedInsights />
               <CookieConsent />
               <ChatWidget />
               <LayoutSwitcher />

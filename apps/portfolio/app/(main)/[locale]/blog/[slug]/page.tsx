@@ -80,6 +80,10 @@ export async function generateMetadata({ params }: PageProps) {
     };
   }
 
+  const slugValue =
+    typeof post.slug === "string" ? post.slug : post.slug?.current || "";
+  const isNL = locale === "nl";
+
   const ogImageUrl = new URL("/api/og", "https://www.leroysteding.nl");
   ogImageUrl.searchParams.set("title", post.title);
   ogImageUrl.searchParams.set("description", post.excerpt || "");
@@ -88,10 +92,21 @@ export async function generateMetadata({ params }: PageProps) {
   return {
     title: `${post.title} | Leroy Steding`,
     description: post.excerpt,
+    alternates: {
+      canonical: isNL
+        ? `https://leroysteding.nl/blog/${slugValue}`
+        : `https://leroysteding.nl/en/blog/${slugValue}`,
+      languages: {
+        nl: `https://leroysteding.nl/blog/${slugValue}`,
+        en: `https://leroysteding.nl/en/blog/${slugValue}`,
+        "x-default": `https://leroysteding.nl/blog/${slugValue}`,
+      },
+    },
     openGraph: {
       title: post.title,
       description: post.excerpt,
       type: "article",
+      locale: isNL ? "nl_NL" : "en_US",
       images: [
         {
           url: ogImageUrl.toString(),

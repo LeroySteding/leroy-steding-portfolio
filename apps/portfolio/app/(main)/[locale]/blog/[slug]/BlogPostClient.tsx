@@ -257,7 +257,7 @@ export default function BlogPostClient({
             <div className="prose prose-invert prose-lg max-w-none mb-16 overflow-hidden">
               <ReactMarkdown
                 components={{
-                  code({ node, className, children }) {
+                  code({ className, children }) {
                     const match = /language-(\w+)/.exec(className || "");
                     return match ? (
                       <div className="my-8 rounded-xl overflow-x-auto">

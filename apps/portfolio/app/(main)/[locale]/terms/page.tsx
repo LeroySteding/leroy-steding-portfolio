@@ -7,8 +7,9 @@ export const metadata = {
   alternates: {
     canonical: "https://leroysteding.nl/terms",
     languages: {
-      en: "https://leroysteding.nl/terms",
-      nl: "https://leroysteding.nl/nl/terms",
+      nl: "https://leroysteding.nl/terms",
+      en: "https://leroysteding.nl/en/terms",
+      "x-default": "https://leroysteding.nl/terms",
     },
   },
   openGraph: {

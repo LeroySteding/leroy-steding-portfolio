@@ -12,6 +12,8 @@ interface ContactFormData {
   email: string;
   subject: string;
   message: string;
+  // Honeypot field - should be empty for legitimate submissions
+  website?: string;
 }
 
 export async function POST(request: NextRequest) {
@@ -38,12 +40,22 @@ export async function POST(request: NextRequest) {
     }
 
     const body: ContactFormData = await request.json();
-    const { name, email, subject, message } = body;
+    const { name, email, subject, message, website } = body;
+
+    // Honeypot check - if the hidden field is filled, it's likely a bot
+    if (website) {
+      // Return success to not alert the bot, but don't actually send
+      console.log("Honeypot triggered - bot detected from IP:", clientIp);
+      return NextResponse.json(
+        { success: true, messageId: "blocked" },
+        { status: 200 },
+      );
+    }
 
     // Validate required fields
-    if (!name || !email || !subject || !message) {
+    if (!email || !message) {
       return NextResponse.json(
-        { error: "All fields are required" },
+        { error: "Email and message are required" },
         { status: 400 },
       );
     }
@@ -58,19 +70,23 @@ export async function POST(request: NextRequest) {
     }
 
     // Send email via Resend
+    const emailSubject = subject
+      ? `[Portfolio Contact] ${subject}`
+      : "[Portfolio Contact] New Message";
+
     const { data, error } = await resend.emails.send({
       from: "Portfolio Contact <onboarding@resend.dev>",
       to: process.env.CONTACT_EMAIL || "leroy@steding.digital",
       replyTo: email,
-      subject: `[Portfolio Contact] ${subject}`,
+      subject: emailSubject,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #6366f1;">New Contact Form Submission</h2>
           <hr style="border: 1px solid #e5e7eb;" />
           
-          <p><strong>From:</strong> ${name}</p>
+          ${name ? `<p><strong>From:</strong> ${name}</p>` : ""}
           <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
-          <p><strong>Subject:</strong> ${subject}</p>
+          ${subject ? `<p><strong>Subject:</strong> ${subject}</p>` : ""}
           
           <h3 style="color: #374151;">Message:</h3>
           <div style="background-color: #f9fafb; padding: 16px; border-radius: 8px; white-space: pre-wrap;">${message}</div>

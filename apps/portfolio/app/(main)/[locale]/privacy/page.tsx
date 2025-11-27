@@ -7,8 +7,9 @@ export const metadata = {
   alternates: {
     canonical: "https://leroysteding.nl/privacy",
     languages: {
-      en: "https://leroysteding.nl/privacy",
-      nl: "https://leroysteding.nl/nl/privacy",
+      nl: "https://leroysteding.nl/privacy",
+      en: "https://leroysteding.nl/en/privacy",
+      "x-default": "https://leroysteding.nl/privacy",
     },
   },
   openGraph: {
