@@ -44,7 +44,7 @@ export default defineType({
           type: "object",
           fields: [
             { name: "name", title: "Category Name", type: "string" },
-            { name: "icon", title: "Icon", type: "string" },
+            { name: "icon", title: "Icon (emoji)", type: "string" },
             {
               name: "technologies",
               title: "Technologies",
@@ -54,7 +54,25 @@ export default defineType({
                   type: "object",
                   fields: [
                     { name: "name", title: "Name", type: "string" },
-                    { name: "icon", title: "Icon", type: "string" },
+                    {
+                      name: "icon",
+                      title: "Icon URL or emoji",
+                      type: "string",
+                      description: "URL to icon image or emoji character",
+                    },
+                    {
+                      name: "color",
+                      title: "Brand Color",
+                      type: "string",
+                      description: "Hex color code (e.g., #61DAFB)",
+                    },
+                    {
+                      name: "proficiency",
+                      title: "Proficiency",
+                      type: "number",
+                      description: "Skill level 1-100",
+                      validation: (Rule) => Rule.min(1).max(100),
+                    },
                   ],
                 },
               ],

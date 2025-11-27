@@ -23,6 +23,8 @@ import {
   // Content queries
   projectsQuery,
   projectsSectionQuery,
+  serviceBySlugQuery,
+  servicesQuery,
   skillsSectionQuery,
   techStackSectionQuery,
 } from "@/sanity/lib/queries";
@@ -175,6 +177,31 @@ export interface SanityPost {
   language: string;
 }
 
+export interface SanityService {
+  _id: string;
+  title: string;
+  slug: string;
+  id: string;
+  description: string;
+  longDescription?: string;
+  icon: string;
+  gradient: string;
+  features?: string[];
+  technologies?: string[];
+  processSteps?: { title: string; description: string }[];
+  benefits?: string[];
+  faqs?: { question: string; answer: string }[];
+  stats?: { value: string; label: string; icon: string }[];
+  caseStudies?: {
+    title: string;
+    description: string;
+    results: string[];
+    image?: string;
+  }[];
+  order: number;
+  language: string;
+}
+
 // ==================== SECTION FETCHERS ====================
 
 export async function getHeroSection(
@@ -299,6 +326,22 @@ export async function getPostBySlug(
 
 export async function getFeaturedPosts(locale: string): Promise<SanityPost[]> {
   return client.fetch<SanityPost[]>(featuredPostsQuery, { language: locale });
+}
+
+// ==================== SERVICE FETCHERS ====================
+
+export async function getServices(locale: string): Promise<SanityService[]> {
+  return client.fetch<SanityService[]>(servicesQuery, { language: locale });
+}
+
+export async function getServiceBySlug(
+  slug: string,
+  locale: string,
+): Promise<SanityService | null> {
+  return client.fetch<SanityService | null>(serviceBySlugQuery, {
+    slug,
+    language: locale,
+  });
 }
 
 // ==================== UTILITY FUNCTIONS ====================

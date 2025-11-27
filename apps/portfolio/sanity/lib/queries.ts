@@ -354,7 +354,94 @@ export const techStackSectionQuery = groq`
     title,
     titleHighlight,
     subtitle,
+    categories[] {
+      name,
+      icon,
+      technologies[] {
+        name,
+        icon,
+        color,
+        proficiency
+      }
+    },
+    language
+  }
+`;
+
+// ==================== SERVICE QUERIES ====================
+
+// Get all services with language filter
+export const servicesQuery = groq`
+  *[_type == "service" && ${languageFilter}] | order(order asc) {
+    _id,
+    title,
+    "slug": slug.current,
+    "id": slug.current,
+    description,
+    longDescription,
+    icon,
+    gradient,
+    features,
     technologies,
+    processSteps[] {
+      title,
+      description
+    },
+    benefits,
+    faqs[] {
+      question,
+      answer
+    },
+    stats[] {
+      value,
+      label,
+      icon
+    },
+    caseStudies[] {
+      title,
+      description,
+      results,
+      image
+    },
+    order,
+    language
+  }
+`;
+
+// Get a single service by slug and language
+export const serviceBySlugQuery = groq`
+  *[_type == "service" && slug.current == $slug && ${languageFilter}][0] {
+    _id,
+    title,
+    "slug": slug.current,
+    "id": slug.current,
+    description,
+    longDescription,
+    icon,
+    gradient,
+    features,
+    technologies,
+    processSteps[] {
+      title,
+      description
+    },
+    benefits,
+    faqs[] {
+      question,
+      answer
+    },
+    stats[] {
+      value,
+      label,
+      icon
+    },
+    caseStudies[] {
+      title,
+      description,
+      results,
+      image
+    },
+    order,
     language
   }
 `;
