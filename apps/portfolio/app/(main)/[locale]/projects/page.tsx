@@ -1,9 +1,47 @@
+import type { Metadata } from "next";
 import { getLocale } from "next-intl/server";
 import LayoutContainer from "@/components/ui/LayoutContainer";
 import PageHero from "@/components/ui/PageHero";
 import { getTranslations } from "@/lib/translations";
 import { client } from "@/sanity/lib/client";
 import { projectsQuery, projectsSectionQuery } from "@/sanity/lib/queries";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const ogImageUrl = new URL("/api/og", "https://www.leroysteding.nl");
+  ogImageUrl.searchParams.set("title", "Featured Projects");
+  ogImageUrl.searchParams.set(
+    "description",
+    "Explore my portfolio of web applications, AI automation solutions, and client projects",
+  );
+  ogImageUrl.searchParams.set("type", "project");
+
+  return {
+    title: "Projects | Leroy Steding",
+    description:
+      "Explore my portfolio of web applications, AI automation solutions, and client projects",
+    openGraph: {
+      title: "Featured Projects | Leroy Steding",
+      description:
+        "Explore my portfolio of web applications, AI automation solutions, and client projects",
+      images: [
+        {
+          url: ogImageUrl.toString(),
+          width: 1200,
+          height: 630,
+          alt: "Leroy Steding Projects",
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "Featured Projects | Leroy Steding",
+      description:
+        "Explore my portfolio of web applications, AI automation solutions, and client projects",
+      images: [ogImageUrl.toString()],
+    },
+  };
+}
+
 import ProjectsGrid from "./ProjectsGrid";
 
 export interface SanityProject {

@@ -80,9 +80,33 @@ export async function generateMetadata({ params }: PageProps) {
     };
   }
 
+  const ogImageUrl = new URL("/api/og", "https://www.leroysteding.nl");
+  ogImageUrl.searchParams.set("title", post.title);
+  ogImageUrl.searchParams.set("description", post.excerpt || "");
+  ogImageUrl.searchParams.set("type", "blog");
+
   return {
     title: `${post.title} | Leroy Steding`,
     description: post.excerpt,
+    openGraph: {
+      title: post.title,
+      description: post.excerpt,
+      type: "article",
+      images: [
+        {
+          url: ogImageUrl.toString(),
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.excerpt,
+      images: [ogImageUrl.toString()],
+    },
   };
 }
 
