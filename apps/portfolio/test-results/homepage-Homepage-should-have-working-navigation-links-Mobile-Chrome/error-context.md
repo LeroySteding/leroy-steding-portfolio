@@ -303,13 +303,13 @@
             - generic [ref=e419]:
               - heading "Contact Information" [level=3] [ref=e420]
               - generic [ref=e421]:
-                - link "Email leroy@steding.digital" [ref=e422] [cursor=pointer]:
-                  - /url: mailto:leroy@steding.digital
+                - link "Email leroy@steding.me" [ref=e422] [cursor=pointer]:
+                  - /url: mailto:leroy@steding.me
                   - generic [ref=e423]:
                     - img [ref=e425]
                     - generic [ref=e428]:
                       - generic [ref=e429]: Email
-                      - generic [ref=e430]: leroy@steding.digital
+                      - generic [ref=e430]: leroy@steding.me
                 - generic [ref=e432]:
                   - img [ref=e434]
                   - generic [ref=e437]:
@@ -382,10 +382,10 @@
           - heading "Contact" [level=4] [ref=e518]
           - list [ref=e519]:
             - listitem [ref=e520]:
-              - link "leroy@steding.digital" [ref=e521] [cursor=pointer]:
-                - /url: mailto:leroy@steding.digital
+              - link "leroy@steding.me" [ref=e521] [cursor=pointer]:
+                - /url: mailto:leroy@steding.me
                 - img [ref=e522]
-                - generic [ref=e525]: leroy@steding.digital
+                - generic [ref=e525]: leroy@steding.me
             - listitem [ref=e526]:
               - link "+31 6 12345678" [ref=e527] [cursor=pointer]:
                 - /url: tel:+31612345678

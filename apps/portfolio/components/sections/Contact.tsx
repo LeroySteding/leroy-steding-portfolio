@@ -19,7 +19,7 @@ export default function Contact({ data }: ContactProps) {
   const sectionTitle = data?.title || t.contact.title;
   const sectionTitleHighlight = data?.subtitle || t.contact.titleHighlight;
   const sectionSubtitle = data?.description || t.contact.subtitle;
-  const contactEmail = data?.email || "leroy@steding.digital";
+  const contactEmail = data?.email || "leroy@steding.me";
 
   const contactInfo = [
     {

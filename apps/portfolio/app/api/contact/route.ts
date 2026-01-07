@@ -139,7 +139,7 @@ export async function POST(request: NextRequest) {
 
     const { data, error } = await resend.emails.send({
       from: "Portfolio Contact <onboarding@resend.dev>",
-      to: process.env.CONTACT_EMAIL || "leroy@steding.digital",
+      to: process.env.CONTACT_EMAIL || "leroy@steding.me",
       replyTo: email,
       subject: emailSubject,
       html: `

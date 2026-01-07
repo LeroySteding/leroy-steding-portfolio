@@ -43,8 +43,8 @@ export default function Footer() {
     {
       icon: Mail,
       label: "Email",
-      value: "leroy@steding.digital",
-      href: "mailto:leroy@steding.digital",
+      value: "leroy@steding.me",
+      href: "mailto:leroy@steding.me",
     },
     {
       icon: Phone,

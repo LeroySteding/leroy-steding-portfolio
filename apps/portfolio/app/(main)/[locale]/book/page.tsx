@@ -18,14 +18,14 @@ export const metadata: Metadata = {
     "architecture review",
     "free consultation",
   ],
-  authors: [{ name: "Leroy Steding", url: "https://steding.digital" }],
+  authors: [{ name: "Leroy Steding", url: "https://leroysteding.nl/" }],
   creator: "Leroy Steding",
   publisher: "Leroy Steding",
   openGraph: {
     title: "Book a Free Consultation with Leroy Steding",
     description:
       "Expert technical consultation for web development, AI automation, and SaaS architecture. Choose from quick chats, project consultations, or technical deep dives.",
-    url: "https://steding.digital/book",
+    url: "https://leroysteding.nl/book",
     siteName: "Leroy Steding - Full-Stack Developer",
     locale: "en_US",
     type: "website",
@@ -87,7 +87,7 @@ const structuredData = {
   areaServed: "Worldwide",
   availableChannel: {
     "@type": "ServiceChannel",
-    serviceUrl: "https://steding.digital/book",
+    serviceUrl: "https://leroysteding.nl/book",
     servicePhone: "",
     serviceLocation: {
       "@type": "Place",

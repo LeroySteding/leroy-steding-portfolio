@@ -146,7 +146,7 @@ export async function POST(request: NextRequest) {
     // Send notification to admin (include lead ID for reference)
     const { error: adminError } = await resend.emails.send({
       from: "Newsletter <onboarding@resend.dev>",
-      to: process.env.CONTACT_EMAIL || "leroy@steding.digital",
+      to: process.env.CONTACT_EMAIL || "leroy@steding.me",
       subject: "New Newsletter Subscriber",
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">

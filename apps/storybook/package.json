@@ -13,13 +13,13 @@
   "dependencies": {
     "@steding/timeline-scroll": "workspace:*",
     "@steding/ui": "workspace:*",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.2.0",
+    "@biomejs/biome": "2.3.11",
     "@steding/tsconfig": "workspace:*",
-    "@storybook/react-vite": "^10.0.7",
+    "@storybook/react-vite": "^10.1.11",
     "@tailwindcss/postcss": "^4",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",
@@ -27,15 +27,15 @@
     "autoprefixer": "^10.4.20",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "framer-motion": "^12.23.24",
-    "lucide-react": "^0.546.0",
-    "next": "14",
+    "framer-motion": "^12.24.7",
+    "lucide-react": "^0.562.0",
+    "next": "16.1.1",
     "postcss": "^8.4.49",
-    "storybook": "^10.0.7",
+    "storybook": "^10.1.11",
     "storybook-addon-next": "^1.8.0",
     "tailwind-merge": "^3.3.1",
-    "tailwindcss": "^4",
-    "typescript": "^5",
+    "tailwindcss": "^4.1.18",
+    "typescript": "^5.9.3",
     "vite": "^6.0.1"
   }
 }

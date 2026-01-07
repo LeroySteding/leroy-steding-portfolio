@@ -304,7 +304,7 @@ This project is open source and available under the [MIT License](LICENSE).
 - Website: [leroysteding.nl](https://leroysteding.nl)
 - GitHub: [@leroysteding](https://github.com/leroysteding)
 - LinkedIn: [leroysteding](https://linkedin.com/in/leroysteding)
-- Email: leroy@steding.digital
+- Email: leroy@steding.me
 
 ## 🙏 Acknowledgments
 

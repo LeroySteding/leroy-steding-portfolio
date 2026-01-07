@@ -50,8 +50,8 @@ export default function ContactPage() {
     {
       icon: Mail,
       label: t.contact.info.email,
-      value: "leroy@steding.digital",
-      href: "mailto:leroy@steding.digital",
+      value: "leroy@steding.me",
+      href: "mailto:leroy@steding.me",
     },
     {
       icon: Phone,
@@ -562,10 +562,10 @@ export default function ContactPage() {
                               <p className="text-sm text-text-secondary">
                                 Please try again or email me directly at{" "}
                                 <a
-                                  href="mailto:leroy@steding.digital"
+                                  href="mailto:leroy@steding.me"
                                   className="underline hover:no-underline"
                                 >
-                                  leroy@steding.digital
+                                  leroy@steding.me
                                 </a>
                               </p>
                             </div>

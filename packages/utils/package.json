@@ -21,8 +21,8 @@
   "devDependencies": {
     "@steding/tsconfig": "workspace:*",
     "@types/node": "^20",
-    "tsup": "^8.0.1",
-    "typescript": "^5"
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3"
   },
   "publishConfig": {
     "access": "public"

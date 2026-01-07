@@ -193,7 +193,7 @@ export default function BookingPageClient() {
     {
       icon: Mail,
       title: t.booking.cta.email || "Send an Email",
-      href: "mailto:leroy@steding.digital",
+      href: "mailto:leroy@steding.me",
       description: "Prefer email? Reach out directly",
     },
     {
@@ -661,7 +661,7 @@ export default function BookingPageClient() {
               </p>
               <div className="flex flex-wrap gap-4 justify-center">
                 <Link
-                  href="mailto:leroy@steding.digital"
+                  href="mailto:leroy@steding.me"
                   className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-accent-primary hover:bg-accent-primary/90 text-white font-semibold transition-all hover:scale-105"
                 >
                   <Mail className="w-5 h-5" />
