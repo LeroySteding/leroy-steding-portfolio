@@ -26,6 +26,24 @@ export const push = mutation({
     checkedAt: v.optional(v.number()),
   },
   handler: async (ctx, args) => {
+    // Dedup: update existing if same keyword+domain
+    if (args.keyword) {
+      const existing = await ctx.db.query("seo_tracking")
+        .withIndex("by_domain", (q) => q.eq("domain", args.domain))
+        .collect();
+      const match = existing.find((i) => i.keyword === args.keyword && i.url === args.url);
+      if (match) {
+        await ctx.db.patch(match._id, {
+          position: args.position ?? match.position,
+          impressions: args.impressions ?? match.impressions,
+          clicks: args.clicks ?? match.clicks,
+          ctr: args.ctr ?? match.ctr,
+          checkedAt: Date.now(),
+          notes: args.notes ?? match.notes,
+        });
+        return match._id;
+      }
+    }
     return await ctx.db.insert("seo_tracking", { ...args, checkedAt: args.checkedAt ?? Date.now(), createdAt: Date.now() });
   },
 });

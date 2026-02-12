@@ -27,6 +27,17 @@ export const create = mutation({
     platform: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
+    // Dedup: skip if same project+url already exists
+    if (args.url) {
+      const existing = await ctx.db.query("deployments")
+        .withIndex("by_project", (q) => q.eq("project", args.project))
+        .collect();
+      const match = existing.find((i) => i.url === args.url);
+      if (match) {
+        await ctx.db.patch(match._id, { status: args.status ?? match.status, commitMessage: args.commitMessage ?? match.commitMessage });
+        return match._id;
+      }
+    }
     return await ctx.db.insert("deployments", {
       ...args, status: args.status ?? "building", platform: args.platform ?? "vercel", createdAt: Date.now(),
     });

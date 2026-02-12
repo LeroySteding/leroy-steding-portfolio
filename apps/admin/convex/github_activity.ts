@@ -25,6 +25,15 @@ export const create = mutation({
     labels: v.optional(v.array(v.string())),
   },
   handler: async (ctx, args) => {
+    // Dedup: update existing entry if same repo+type+number
+    const existing = await ctx.db.query("github_activity")
+      .withIndex("by_repo", (q) => q.eq("repo", args.repo))
+      .collect();
+    const match = existing.find((i) => i.type === args.type && i.number === args.number);
+    if (match) {
+      await ctx.db.patch(match._id, { title: args.title, status: args.status, url: args.url, author: args.author, labels: args.labels, updatedAt: Date.now() });
+      return match._id;
+    }
     return await ctx.db.insert("github_activity", { ...args, createdAt: Date.now() });
   },
 });

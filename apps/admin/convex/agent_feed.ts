@@ -21,6 +21,17 @@ export const push = mutation({
     metadata: v.optional(v.any()),
   },
   handler: async (ctx, args) => {
+    // Dedup: skip if same title+source exists within last 24h
+    const dayAgo = Date.now() - 86400000;
+    const recent = await ctx.db.query("agent_feed")
+      .withIndex("by_created_at", (q) => q.gte("createdAt", dayAgo))
+      .collect();
+    const match = recent.find((i) => i.title === args.title && i.source === args.source);
+    if (match) {
+      // Update existing instead of creating duplicate
+      await ctx.db.patch(match._id, { content: args.content, priority: args.priority ?? match.priority });
+      return match._id;
+    }
     return await ctx.db.insert("agent_feed", {
       type: args.type,
       title: args.title,
