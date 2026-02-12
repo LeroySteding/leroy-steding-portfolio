@@ -3,7 +3,9 @@ import { Resend } from "resend";
 import { getClientIp, rateLimit } from "@/lib/rate-limit";
 import { upsertLead } from "@/lib/supabase";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = process.env.RESEND_API_KEY
+  ? new Resend(process.env.RESEND_API_KEY)
+  : null;
 
 // Rate limit: 3 requests per minute per IP
 const RATE_LIMIT = { limit: 3, windowSeconds: 60 };
@@ -93,6 +95,14 @@ export async function POST(request: NextRequest) {
     if (!leadResult.success) {
       console.error("Failed to store newsletter lead:", leadResult.error);
       // Continue anyway - we don't want to fail the subscription if DB fails
+    }
+
+    if (!resend) {
+      console.warn("RESEND_API_KEY not configured — skipping emails");
+      return NextResponse.json(
+        { success: true, message: "Subscribed (emails not configured)" },
+        { status: 200 },
+      );
     }
 
     // Send confirmation email to subscriber

@@ -3,7 +3,9 @@ import { Resend } from "resend";
 import { getClientIp, rateLimit } from "@/lib/rate-limit";
 import { upsertLead } from "@/lib/supabase";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = process.env.RESEND_API_KEY
+  ? new Resend(process.env.RESEND_API_KEY)
+  : null;
 
 // Rate limit: 5 requests per minute per IP
 const RATE_LIMIT = { limit: 5, windowSeconds: 60 };
@@ -133,6 +135,14 @@ export async function POST(request: NextRequest) {
     }
 
     // Send email via Resend
+    if (!resend) {
+      console.warn("RESEND_API_KEY not configured — skipping email send");
+      return NextResponse.json(
+        { success: true, messageId: "not-configured" },
+        { status: 200 },
+      );
+    }
+
     const emailSubject = subject
       ? `[Portfolio Contact] ${subject}`
       : "[Portfolio Contact] New Message";
