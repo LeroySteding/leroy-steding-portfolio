@@ -1,14 +1,8 @@
 {
-  "buildCommand": "pnpm build",
+  "buildCommand": "cd ../.. && pnpm install && cd apps/admin && pnpm build",
   "devCommand": "pnpm dev",
   "installCommand": "pnpm install",
   "framework": "nextjs",
   "outputDirectory": ".next",
-  "regions": ["ams1"],
-  "env": {
-    "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY": "@clerk-publishable-key",
-    "CLERK_SECRET_KEY": "@clerk-secret-key",
-    "NEXT_PUBLIC_CONVEX_URL": "@convex-url",
-    "CONVEX_DEPLOYMENT": "@convex-deployment"
-  }
+  "ignoreCommand": "git diff --quiet HEAD^ HEAD ./"
 }
