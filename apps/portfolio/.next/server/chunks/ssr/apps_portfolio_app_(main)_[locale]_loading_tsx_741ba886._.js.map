@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "debugId": "f754abd5-40e7-8e09-1fe5-d49debf4b091",
-  "sections": [
-    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["../../../../../../apps/portfolio/app/%28main%29/%5Blocale%5D/loading.tsx"],"sourcesContent":["export default function Loading() {\n  return (\n    <div className=\"min-h-screen bg-primary-bg flex items-center justify-center\">\n      <div className=\"text-center\">\n        {/* Animated logo/spinner */}\n        <div className=\"relative w-16 h-16 mx-auto mb-6\">\n          <div className=\"absolute inset-0 rounded-full border-4 border-surface animate-pulse\" />\n          <div className=\"absolute inset-0 rounded-full border-4 border-transparent border-t-accent-primary animate-spin\" />\n        </div>\n\n        {/* Loading text */}\n        <p className=\"text-text-muted text-sm font-medium animate-pulse\">\n          Loading...\n        </p>\n      </div>\n    </div>\n  );\n}\n"],"names":[],"mappings":"0DAAe,SAAS,IACtB,MACE,CAAA,EAAA,EAAA,GAAA,EAAC,MAAA,CAAI,UAAU,uEACb,CAAA,EAAA,EAAA,IAAA,EAAC,MAAA,CAAI,UAAU,wBAEb,CAAA,EAAA,EAAA,IAAA,EAAC,MAAA,CAAI,UAAU,4CACb,CAAA,EAAA,EAAA,GAAA,EAAC,MAAA,CAAI,UAAU,wEACf,CAAA,EAAA,EAAA,GAAA,EAAC,MAAA,CAAI,UAAU,sGAIjB,CAAA,EAAA,EAAA,GAAA,EAAC,IAAA,CAAE,UAAU,6DAAoD,mBAMzE"}}]
-}

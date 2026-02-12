@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "debugId": "a089dbbd-13d5-b210-16d2-787c1ddf5cc5",
-  "sections": [
-    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["../../../../../../apps/portfolio/app/favicon.ico.mjs%20%28structured%20image%20object%29"],"sourcesContent":["import src from \"IMAGE\";\nexport default { src, width: 256, height: 256 }\n"],"names":[],"mappings":"0GACe,CAAE,IADjB,AACiB,EADjB,CAAA,CAAA,QACiB,OAAG,CAAE,MAAO,IAAK,OAAQ,GAAI"}}]
-}

@@ -1,5 +1,0 @@
-;!function(){try { var e="undefined"!=typeof globalThis?globalThis:"undefined"!=typeof global?global:"undefined"!=typeof window?window:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&((e._debugIds|| (e._debugIds={}))[n]="dcc8b284-9dc1-aa4f-57af-419ab27ff52b")}catch(e){}}();
-module.exports=[863219,a=>{"use strict";var b=a.i(93573),c=a.i(330407),d=(0,c.memo)(a=>{let d,e,f,g,h=(0,b.c)(8),{comlink:i,perspective:j}=a;return h[0]!==i||h[1]!==j?(d=()=>i.on("visual-editing/fetch-perspective",()=>({perspective:j})),e=[i,j],h[0]=i,h[1]=j,h[2]=d,h[3]=e):(d=h[2],e=h[3]),(0,c.useEffect)(d,e),h[4]!==i||h[5]!==j?(f=()=>{i.post("presentation/perspective",{perspective:j})},g=[i,j],h[4]=i,h[5]=j,h[6]=f,h[7]=g):(f=h[6],g=h[7]),(0,c.useEffect)(f,g),null});a.s(["default",()=>d])}];
-
-//# debugId=dcc8b284-9dc1-aa4f-57af-419ab27ff52b
-//# sourceMappingURL=8e1c9_sanity_lib__chunks-es_PostMessagePerspective_mjs_194d8a79._.js.map

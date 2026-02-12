@@ -1,5 +1,0 @@
-;!function(){try { var e="undefined"!=typeof globalThis?globalThis:"undefined"!=typeof global?global:"undefined"!=typeof window?window:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&((e._debugIds|| (e._debugIds={}))[n]="63fc2c50-2e31-a3f7-7eb0-feafaef28c90")}catch(e){}}();
-(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["object"==typeof document?document.currentScript:void 0,312770,e=>{"use strict";var t=e.i(266033),i=e.i(243460),a=e.i(373001);function r(e){let r,n,c,l,o=(0,i.c)(13),{language:s,value:u}=e,d="string"==typeof s?s:void 0;o[0]!==d?(r=!!d&&(0,a.hasLanguage)(d),o[0]=d,o[1]=r):r=o[1];let g=r;return o[2]!==d||o[3]!==g||o[4]!==u?(n=!(d&&g)&&(0,t.jsx)("code",{children:u}),o[2]=d,o[3]=g,o[4]=u,o[5]=n):n=o[5],o[6]!==d||o[7]!==g||o[8]!==u?(c=d&&g&&(0,t.jsx)(a.Refractor,{inline:!0,language:d,value:String(u)}),o[6]=d,o[7]=g,o[8]=u,o[9]=c):c=o[9],o[10]!==n||o[11]!==c?(l=(0,t.jsxs)(t.Fragment,{children:[n,c]}),o[10]=n,o[11]=c,o[12]=l):l=o[12],l}r.displayName="LazyRefractor",e.s(["default",()=>r])}]);
-
-//# debugId=63fc2c50-2e31-a3f7-7eb0-feafaef28c90
-//# sourceMappingURL=1f94265efca7dbe8.js.map

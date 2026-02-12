@@ -1,5 +1,0 @@
-;!function(){try { var e="undefined"!=typeof globalThis?globalThis:"undefined"!=typeof global?global:"undefined"!=typeof window?window:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&((e._debugIds|| (e._debugIds={}))[n]="8fd3f724-e785-3d2b-f336-7f4f019d978e")}catch(e){}}();
-(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["object"==typeof document?document.currentScript:void 0,584191,e=>{"use strict";var t=e.i(261199),i=e.i(382196),s=(0,i.memo)(e=>{let s,c,o,u,r=(0,t.c)(8),{comlink:l,perspective:n}=e;return r[0]!==l||r[1]!==n?(s=()=>l.on("visual-editing/fetch-perspective",()=>({perspective:n})),c=[l,n],r[0]=l,r[1]=n,r[2]=s,r[3]=c):(s=r[2],c=r[3]),(0,i.useEffect)(s,c),r[4]!==l||r[5]!==n?(o=()=>{l.post("presentation/perspective",{perspective:n})},u=[l,n],r[4]=l,r[5]=n,r[6]=o,r[7]=u):(o=r[6],u=r[7]),(0,i.useEffect)(o,u),null});e.s(["default",()=>s])}]);
-
-//# debugId=8fd3f724-e785-3d2b-f336-7f4f019d978e
-//# sourceMappingURL=d4e0e3ac0bebde8f.js.map

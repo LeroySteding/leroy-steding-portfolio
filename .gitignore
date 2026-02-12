@@ -49,3 +49,9 @@ next-env.d.ts
 # OS
 .DS_Store
 Thumbs.db
+
+# Build outputs
+.next/
+.turbo/
+dist/
+*.turbo/
