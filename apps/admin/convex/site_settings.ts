@@ -52,6 +52,26 @@ export const getById = query({
   },
 });
 
+// Public push mutation for agents (no auth required, upsert)
+export const push = mutation({
+  args: {
+    key: v.string(), value: v.any(),
+    locale: v.optional(v.union(v.literal("en"), v.literal("nl"))),
+    description: v.optional(v.string()),
+  },
+  handler: async (ctx, args) => {
+    const existing = await ctx.db.query("site_settings")
+      .withIndex("by_key", (q) => q.eq("key", args.key))
+      .collect();
+    const match = args.locale ? existing.find((s) => s.locale === args.locale) : existing[0];
+    if (match) {
+      await ctx.db.patch(match._id, { value: args.value, description: args.description });
+      return match._id;
+    }
+    return await ctx.db.insert("site_settings", { ...args, updatedBy: "agent" });
+  },
+});
+
 // Create or update a setting (upsert)
 export const upsert = mutation({
   args: {
