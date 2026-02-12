@@ -50,6 +50,20 @@ export const getByName = query({
   },
 });
 
+// Public push mutation for agents (no auth required)
+export const push = mutation({
+  args: {
+    name: v.string(), category: v.string(), proficiency: v.number(),
+    icon: v.optional(v.string()), iconUrl: v.optional(v.string()), color: v.optional(v.string()),
+    yearsOfExperience: v.optional(v.number()), order: v.optional(v.number()),
+    locale: v.optional(v.union(v.literal("en"), v.literal("nl"))), published: v.optional(v.boolean()),
+  },
+  handler: async (ctx, args) => {
+    if (args.proficiency < 1 || args.proficiency > 100) throw new Error("Proficiency must be between 1 and 100");
+    return await ctx.db.insert("skills", args);
+  },
+});
+
 // Create a new skill
 export const create = mutation({
   args: {

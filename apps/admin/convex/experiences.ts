@@ -38,6 +38,23 @@ export const getById = query({
   },
 });
 
+// Public push mutation for agents (no auth required)
+export const push = mutation({
+  args: {
+    title: v.string(), company: v.string(), position: v.optional(v.string()),
+    description: v.optional(v.string()), content: v.optional(v.any()),
+    location: v.optional(v.string()), logoUrl: v.optional(v.string()),
+    startDate: v.string(), endDate: v.optional(v.string()), isCurrent: v.optional(v.boolean()),
+    locale: v.union(v.literal("en"), v.literal("nl")),
+    type: v.union(v.literal("work"), v.literal("education")),
+    technologies: v.optional(v.array(v.string())), achievements: v.optional(v.array(v.string())),
+    order: v.optional(v.number()), published: v.optional(v.boolean()),
+  },
+  handler: async (ctx, args) => {
+    return await ctx.db.insert("experiences", args);
+  },
+});
+
 // Create a new experience
 export const create = mutation({
   args: {

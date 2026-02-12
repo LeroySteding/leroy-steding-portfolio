@@ -26,6 +26,20 @@ export const activeCount = query({
   },
 });
 
+// Public push mutation for agents (no auth required)
+export const push = mutation({
+  args: {
+    company: v.string(), position: v.string(), url: v.optional(v.string()),
+    status: v.optional(status), salary: v.optional(v.string()), location: v.optional(v.string()),
+    remote: v.optional(v.boolean()), notes: v.optional(v.string()),
+    contacts: v.optional(v.array(v.object({ name: v.string(), role: v.optional(v.string()), linkedin: v.optional(v.string()) }))),
+    tags: v.optional(v.array(v.string())), nextAction: v.optional(v.string()), nextActionDate: v.optional(v.number()),
+  },
+  handler: async (ctx, args) => {
+    return await ctx.db.insert("job_applications", { ...args, status: args.status ?? "discovered", tags: args.tags ?? [], createdAt: Date.now() });
+  },
+});
+
 export const create = mutation({
   args: {
     company: v.string(),

@@ -28,6 +28,19 @@ export const upcomingCount = query({
   },
 });
 
+// Public push mutation for agents (no auth required)
+export const push = mutation({
+  args: {
+    title: v.string(), type: contentType, status: v.optional(contentStatus),
+    platform: v.optional(v.string()), targetDate: v.optional(v.number()),
+    notes: v.optional(v.string()), seoKeywords: v.optional(v.array(v.string())),
+    relatedBlogPostId: v.optional(v.string()),
+  },
+  handler: async (ctx, args) => {
+    return await ctx.db.insert("content_calendar", { ...args, status: args.status ?? "idea", createdAt: Date.now() });
+  },
+});
+
 export const create = mutation({
   args: {
     title: v.string(), type: contentType, status: v.optional(contentStatus),

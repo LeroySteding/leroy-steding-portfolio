@@ -17,6 +17,19 @@ export const get = query({
   handler: async (ctx, args) => ctx.db.get(args.id),
 });
 
+// Public push mutation for agents (no auth required)
+export const push = mutation({
+  args: {
+    url: v.string(), keyword: v.optional(v.string()), position: v.optional(v.number()),
+    impressions: v.optional(v.number()), clicks: v.optional(v.number()), ctr: v.optional(v.number()),
+    domain: v.string(), pageTitle: v.optional(v.string()), notes: v.optional(v.string()),
+    checkedAt: v.optional(v.number()),
+  },
+  handler: async (ctx, args) => {
+    return await ctx.db.insert("seo_tracking", { ...args, checkedAt: args.checkedAt ?? Date.now(), createdAt: Date.now() });
+  },
+});
+
 export const create = mutation({
   args: {
     url: v.string(), keyword: v.optional(v.string()), position: v.optional(v.number()),

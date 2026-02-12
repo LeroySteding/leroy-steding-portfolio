@@ -60,6 +60,25 @@ export const getBySlug = query({
   },
 });
 
+// Public push mutation for agents (no auth required)
+export const push = mutation({
+  args: {
+    title: v.string(), slug: v.string(), description: v.string(), content: v.any(),
+    coverImage: v.optional(v.string()), galleryImages: v.optional(v.array(v.string())),
+    technologies: v.array(v.string()), liveUrl: v.optional(v.string()),
+    githubUrl: v.optional(v.string()), caseStudyUrl: v.optional(v.string()),
+    locale: v.union(v.literal("en"), v.literal("nl")),
+    featured: v.optional(v.boolean()), featuredOrder: v.optional(v.number()),
+    year: v.optional(v.number()), duration: v.optional(v.string()),
+    role: v.optional(v.string()), client: v.optional(v.string()),
+    order: v.optional(v.number()), published: v.optional(v.boolean()),
+    seoTitle: v.optional(v.string()), seoDescription: v.optional(v.string()),
+  },
+  handler: async (ctx, args) => {
+    return await ctx.db.insert("projects", args);
+  },
+});
+
 // Create a new project
 export const create = mutation({
   args: {

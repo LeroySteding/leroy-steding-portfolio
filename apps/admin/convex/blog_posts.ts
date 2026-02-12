@@ -57,6 +57,28 @@ export const getBySlug = query({
   },
 });
 
+// Public push mutation for agents (no auth required)
+export const push = mutation({
+  args: {
+    title: v.string(), slug: v.string(), content: v.any(),
+    excerpt: v.optional(v.string()), coverImage: v.optional(v.string()),
+    locale: v.union(v.literal("en"), v.literal("nl")),
+    status: v.union(v.literal("draft"), v.literal("published")),
+    tags: v.optional(v.array(v.string())), seoTitle: v.optional(v.string()),
+    seoDescription: v.optional(v.string()), featured: v.optional(v.boolean()),
+    author: v.optional(v.string()), authorName: v.optional(v.string()),
+    readingTime: v.optional(v.number()), publishedAt: v.optional(v.number()),
+  },
+  handler: async (ctx, args) => {
+    return await ctx.db.insert("blog_posts", {
+      ...args,
+      author: args.author ?? "agent",
+      authorName: args.authorName ?? "AI Agent",
+      publishedAt: args.status === "published" ? (args.publishedAt ?? Date.now()) : undefined,
+    });
+  },
+});
+
 // Create a new blog post
 export const create = mutation({
   args: {
