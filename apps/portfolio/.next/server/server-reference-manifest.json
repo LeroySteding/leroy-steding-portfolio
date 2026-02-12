@@ -1,0 +1,133 @@
+{
+  "node": {
+    "00a8de352d66dc3c00d86d83d11279969ecebc6b0d": {
+      "workers": {
+        "app/(main)/[locale]/about/page": {
+          "moduleId": 512098,
+          "async": false,
+          "exportedName": "revalidateRootLayout",
+          "filename": "node_modules/.pnpm/next-sanity@11.6.5_@emotion+is-prop-valid@1.2.2_@sanity+client@7.14.0_@sanity+icons@3.7.4_rea_zzfo5d6fvtbyvaeqgyoqtafsqi/node_modules/next-sanity/dist/visual-editing/server-actions/index.js"
+        },
+        "app/(main)/[locale]/blog/[slug]/page": {
+          "moduleId": 285614,
+          "async": false,
+          "exportedName": "revalidateRootLayout",
+          "filename": "node_modules/.pnpm/next-sanity@11.6.5_@emotion+is-prop-valid@1.2.2_@sanity+client@7.14.0_@sanity+icons@3.7.4_rea_zzfo5d6fvtbyvaeqgyoqtafsqi/node_modules/next-sanity/dist/visual-editing/server-actions/index.js"
+        },
+        "app/(main)/[locale]/blog/page": {
+          "moduleId": 280380,
+          "async": false,
+          "exportedName": "revalidateRootLayout",
+          "filename": "node_modules/.pnpm/next-sanity@11.6.5_@emotion+is-prop-valid@1.2.2_@sanity+client@7.14.0_@sanity+icons@3.7.4_rea_zzfo5d6fvtbyvaeqgyoqtafsqi/node_modules/next-sanity/dist/visual-editing/server-actions/index.js"
+        },
+        "app/(main)/[locale]/book/page": {
+          "moduleId": 787950,
+          "async": false,
+          "exportedName": "revalidateRootLayout",
+          "filename": "node_modules/.pnpm/next-sanity@11.6.5_@emotion+is-prop-valid@1.2.2_@sanity+client@7.14.0_@sanity+icons@3.7.4_rea_zzfo5d6fvtbyvaeqgyoqtafsqi/node_modules/next-sanity/dist/visual-editing/server-actions/index.js"
+        },
+        "app/(main)/[locale]/book/success/page": {
+          "moduleId": 612821,
+          "async": false,
+          "exportedName": "revalidateRootLayout",
+          "filename": "node_modules/.pnpm/next-sanity@11.6.5_@emotion+is-prop-valid@1.2.2_@sanity+client@7.14.0_@sanity+icons@3.7.4_rea_zzfo5d6fvtbyvaeqgyoqtafsqi/node_modules/next-sanity/dist/visual-editing/server-actions/index.js"
+        },
+        "app/(main)/[locale]/contact/page": {
+          "moduleId": 857182,
+          "async": false,
+          "exportedName": "revalidateRootLayout",
+          "filename": "node_modules/.pnpm/next-sanity@11.6.5_@emotion+is-prop-valid@1.2.2_@sanity+client@7.14.0_@sanity+icons@3.7.4_rea_zzfo5d6fvtbyvaeqgyoqtafsqi/node_modules/next-sanity/dist/visual-editing/server-actions/index.js"
+        },
+        "app/(main)/[locale]/cv/builder/page": {
+          "moduleId": 447671,
+          "async": false,
+          "exportedName": "revalidateRootLayout",
+          "filename": "node_modules/.pnpm/next-sanity@11.6.5_@emotion+is-prop-valid@1.2.2_@sanity+client@7.14.0_@sanity+icons@3.7.4_rea_zzfo5d6fvtbyvaeqgyoqtafsqi/node_modules/next-sanity/dist/visual-editing/server-actions/index.js"
+        },
+        "app/(main)/[locale]/cv/page": {
+          "moduleId": 919739,
+          "async": false,
+          "exportedName": "revalidateRootLayout",
+          "filename": "node_modules/.pnpm/next-sanity@11.6.5_@emotion+is-prop-valid@1.2.2_@sanity+client@7.14.0_@sanity+icons@3.7.4_rea_zzfo5d6fvtbyvaeqgyoqtafsqi/node_modules/next-sanity/dist/visual-editing/server-actions/index.js"
+        },
+        "app/(main)/[locale]/experience/[id]/page": {
+          "moduleId": 294549,
+          "async": false,
+          "exportedName": "revalidateRootLayout",
+          "filename": "node_modules/.pnpm/next-sanity@11.6.5_@emotion+is-prop-valid@1.2.2_@sanity+client@7.14.0_@sanity+icons@3.7.4_rea_zzfo5d6fvtbyvaeqgyoqtafsqi/node_modules/next-sanity/dist/visual-editing/server-actions/index.js"
+        },
+        "app/(main)/[locale]/page": {
+          "moduleId": 905064,
+          "async": false,
+          "exportedName": "revalidateRootLayout",
+          "filename": "node_modules/.pnpm/next-sanity@11.6.5_@emotion+is-prop-valid@1.2.2_@sanity+client@7.14.0_@sanity+icons@3.7.4_rea_zzfo5d6fvtbyvaeqgyoqtafsqi/node_modules/next-sanity/dist/visual-editing/server-actions/index.js"
+        },
+        "app/(main)/[locale]/privacy/page": {
+          "moduleId": 610612,
+          "async": false,
+          "exportedName": "revalidateRootLayout",
+          "filename": "node_modules/.pnpm/next-sanity@11.6.5_@emotion+is-prop-valid@1.2.2_@sanity+client@7.14.0_@sanity+icons@3.7.4_rea_zzfo5d6fvtbyvaeqgyoqtafsqi/node_modules/next-sanity/dist/visual-editing/server-actions/index.js"
+        },
+        "app/(main)/[locale]/projects/[id]/page": {
+          "moduleId": 710183,
+          "async": false,
+          "exportedName": "revalidateRootLayout",
+          "filename": "node_modules/.pnpm/next-sanity@11.6.5_@emotion+is-prop-valid@1.2.2_@sanity+client@7.14.0_@sanity+icons@3.7.4_rea_zzfo5d6fvtbyvaeqgyoqtafsqi/node_modules/next-sanity/dist/visual-editing/server-actions/index.js"
+        },
+        "app/(main)/[locale]/projects/page": {
+          "moduleId": 290117,
+          "async": false,
+          "exportedName": "revalidateRootLayout",
+          "filename": "node_modules/.pnpm/next-sanity@11.6.5_@emotion+is-prop-valid@1.2.2_@sanity+client@7.14.0_@sanity+icons@3.7.4_rea_zzfo5d6fvtbyvaeqgyoqtafsqi/node_modules/next-sanity/dist/visual-editing/server-actions/index.js"
+        },
+        "app/(main)/[locale]/services/[slug]/page": {
+          "moduleId": 190884,
+          "async": false,
+          "exportedName": "revalidateRootLayout",
+          "filename": "node_modules/.pnpm/next-sanity@11.6.5_@emotion+is-prop-valid@1.2.2_@sanity+client@7.14.0_@sanity+icons@3.7.4_rea_zzfo5d6fvtbyvaeqgyoqtafsqi/node_modules/next-sanity/dist/visual-editing/server-actions/index.js"
+        },
+        "app/(main)/[locale]/services/page": {
+          "moduleId": 63686,
+          "async": false,
+          "exportedName": "revalidateRootLayout",
+          "filename": "node_modules/.pnpm/next-sanity@11.6.5_@emotion+is-prop-valid@1.2.2_@sanity+client@7.14.0_@sanity+icons@3.7.4_rea_zzfo5d6fvtbyvaeqgyoqtafsqi/node_modules/next-sanity/dist/visual-editing/server-actions/index.js"
+        },
+        "app/(main)/[locale]/terms/page": {
+          "moduleId": 46134,
+          "async": false,
+          "exportedName": "revalidateRootLayout",
+          "filename": "node_modules/.pnpm/next-sanity@11.6.5_@emotion+is-prop-valid@1.2.2_@sanity+client@7.14.0_@sanity+icons@3.7.4_rea_zzfo5d6fvtbyvaeqgyoqtafsqi/node_modules/next-sanity/dist/visual-editing/server-actions/index.js"
+        },
+        "app/(main)/[locale]/testimonials/page": {
+          "moduleId": 809089,
+          "async": false,
+          "exportedName": "revalidateRootLayout",
+          "filename": "node_modules/.pnpm/next-sanity@11.6.5_@emotion+is-prop-valid@1.2.2_@sanity+client@7.14.0_@sanity+icons@3.7.4_rea_zzfo5d6fvtbyvaeqgyoqtafsqi/node_modules/next-sanity/dist/visual-editing/server-actions/index.js"
+        }
+      },
+      "layer": {
+        "app/(main)/[locale]/about/page": "action-browser",
+        "app/(main)/[locale]/blog/[slug]/page": "action-browser",
+        "app/(main)/[locale]/blog/page": "action-browser",
+        "app/(main)/[locale]/book/page": "action-browser",
+        "app/(main)/[locale]/book/success/page": "action-browser",
+        "app/(main)/[locale]/contact/page": "action-browser",
+        "app/(main)/[locale]/cv/builder/page": "action-browser",
+        "app/(main)/[locale]/cv/page": "action-browser",
+        "app/(main)/[locale]/experience/[id]/page": "action-browser",
+        "app/(main)/[locale]/page": "action-browser",
+        "app/(main)/[locale]/privacy/page": "action-browser",
+        "app/(main)/[locale]/projects/[id]/page": "action-browser",
+        "app/(main)/[locale]/projects/page": "action-browser",
+        "app/(main)/[locale]/services/[slug]/page": "action-browser",
+        "app/(main)/[locale]/services/page": "action-browser",
+        "app/(main)/[locale]/terms/page": "action-browser",
+        "app/(main)/[locale]/testimonials/page": "action-browser"
+      },
+      "filename": "node_modules/.pnpm/next-sanity@11.6.5_@emotion+is-prop-valid@1.2.2_@sanity+client@7.14.0_@sanity+icons@3.7.4_rea_zzfo5d6fvtbyvaeqgyoqtafsqi/node_modules/next-sanity/dist/visual-editing/server-actions/index.js",
+      "exportedName": "revalidateRootLayout"
+    }
+  },
+  "edge": {},
+  "encryptionKey": "zuE+Uym8Tl2XQnlQBSh0RRBUPu+kplMgaGS7mPEiTl4="
+}

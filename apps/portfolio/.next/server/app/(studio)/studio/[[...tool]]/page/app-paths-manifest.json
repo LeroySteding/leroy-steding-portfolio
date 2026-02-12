@@ -1,0 +1,3 @@
+{
+  "/(studio)/studio/[[...tool]]/page": "app/(studio)/studio/[[...tool]]/page.js"
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "debugId": "e2b904e5-8c1d-db48-3b4d-13cd074cb2de",
+  "sections": [
+    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["../../../../../../apps/portfolio/.next-internal/server/app/%28main%29/%5Blocale%5D/terms/page/actions.js%20%28server%20actions%20loader%29"],"sourcesContent":["export {revalidateRootLayout as '00a8de352d66dc3c00d86d83d11279969ecebc6b0d'} from 'ACTIONS_MODULE0'\n"],"names":[],"mappings":"uCAAA,IAAA,EAAA,EAAA,CAAA,CAAA"}}]
+}

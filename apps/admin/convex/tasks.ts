@@ -38,6 +38,36 @@ export const countByStatus = query({
   },
 });
 
+// Public push mutation for agents (no auth required)
+export const push = mutation({
+  args: {
+    title: v.string(),
+    description: v.optional(v.string()),
+    status: v.optional(status),
+    priority: v.optional(priority),
+    category: v.optional(category),
+    assignee: v.optional(v.string()),
+    dueDate: v.optional(v.number()),
+    tags: v.optional(v.array(v.string())),
+    relatedUrl: v.optional(v.string()),
+  },
+  handler: async (ctx, args) => {
+    return await ctx.db.insert("tasks", {
+      title: args.title,
+      description: args.description,
+      status: args.status ?? "backlog",
+      priority: args.priority ?? "medium",
+      category: args.category ?? "development",
+      assignee: args.assignee,
+      dueDate: args.dueDate,
+      tags: args.tags ?? [],
+      relatedUrl: args.relatedUrl,
+      completedAt: undefined,
+      createdAt: Date.now(),
+    });
+  },
+});
+
 export const create = mutation({
   args: {
     title: v.string(),

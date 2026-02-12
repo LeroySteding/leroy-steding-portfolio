@@ -1,0 +1,5 @@
+;!function(){try { var e="undefined"!=typeof globalThis?globalThis:"undefined"!=typeof global?global:"undefined"!=typeof window?window:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&((e._debugIds|| (e._debugIds={}))[n]="58807de2-79e8-89e5-a7a9-c70de7d83be4")}catch(e){}}();
+module.exports=[855623,a=>{"use strict";var b=a.i(93573),c=a.i(180649),d=a.i(330407),e=(0,d.memo)(a=>{let e,f,g=(0,b.c)(4),{comlink:h}=a,i=(0,c.useTelemetry)();return g[0]!==h||g[1]!==i?(e=()=>h.on("visual-editing/telemetry-log",a=>{let{event:b,data:c}=a;c?i.log(b,c):i.log(b)}),f=[h,i],g[0]=h,g[1]=i,g[2]=e,g[3]=f):(e=g[2],f=g[3]),(0,d.useEffect)(e,f),null});a.s(["default",()=>e])}];
+
+//# debugId=58807de2-79e8-89e5-a7a9-c70de7d83be4
+//# sourceMappingURL=8e1c9_sanity_lib__chunks-es_PostMessageTelemetry_mjs_6c778904._.js.map

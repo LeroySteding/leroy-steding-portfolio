@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "debugId": "1498b268-dffe-5587-e81d-b5d1d46996dc",
+  "sections": [
+    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["../../../../../../node_modules/.pnpm/%40sanity%2Bdocument-internationalization%404.1.0_%40emotion%2Bis-prop-valid%401.2.2_%40types%2Breact%4019.2.2__ddxoge7rwpvuuvv4kjv52oqrtq/node_modules/%40sanity/document-internationalization/src/i18n/resources.ts"],"sourcesContent":["export default {\n  'action.duplicate.label': 'Duplicate with translations',\n  'action.duplicate.disabled.missing-metadata':\n    'The document cannot be duplicated because the metadata document is missing',\n  'action.duplicate.disabled.multiple-metadata':\n    'The document cannot be duplicated because there are multiple metadata documents',\n}\n"],"names":[],"mappings":"wCAAA,IAAe,EAAA,CACb,yBAA0B,8BAC1B,6CACE,6EACF,8CACE,iFACJ"}}]
+}

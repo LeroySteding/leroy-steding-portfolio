@@ -1,0 +1,5 @@
+;!function(){try { var e="undefined"!=typeof globalThis?globalThis:"undefined"!=typeof global?global:"undefined"!=typeof window?window:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&((e._debugIds|| (e._debugIds={}))[n]="1498b268-dffe-5587-e81d-b5d1d46996dc")}catch(e){}}();
+module.exports=[174482,a=>{"use strict";var b={"action.duplicate.label":"Duplicate with translations","action.duplicate.disabled.missing-metadata":"The document cannot be duplicated because the metadata document is missing","action.duplicate.disabled.multiple-metadata":"The document cannot be duplicated because there are multiple metadata documents"};a.s(["default",()=>b])}];
+
+//# debugId=1498b268-dffe-5587-e81d-b5d1d46996dc
+//# sourceMappingURL=0174f_%40sanity_document-internationalization_dist__chunks-es_resources_mjs_34bc6ee1._.js.map

@@ -1,0 +1,5 @@
+;!function(){try { var e="undefined"!=typeof globalThis?globalThis:"undefined"!=typeof global?global:"undefined"!=typeof window?window:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&((e._debugIds|| (e._debugIds={}))[n]="f754abd5-40e7-8e09-1fe5-d49debf4b091")}catch(e){}}();
+module.exports=[286481,a=>{"use strict";var b=a.i(296379);function c(){return(0,b.jsx)("div",{className:"min-h-screen bg-primary-bg flex items-center justify-center",children:(0,b.jsxs)("div",{className:"text-center",children:[(0,b.jsxs)("div",{className:"relative w-16 h-16 mx-auto mb-6",children:[(0,b.jsx)("div",{className:"absolute inset-0 rounded-full border-4 border-surface animate-pulse"}),(0,b.jsx)("div",{className:"absolute inset-0 rounded-full border-4 border-transparent border-t-accent-primary animate-spin"})]}),(0,b.jsx)("p",{className:"text-text-muted text-sm font-medium animate-pulse",children:"Loading..."})]})})}a.s(["default",()=>c])}];
+
+//# debugId=f754abd5-40e7-8e09-1fe5-d49debf4b091
+//# sourceMappingURL=apps_portfolio_app_%28main%29_%5Blocale%5D_loading_tsx_741ba886._.js.map

@@ -1,0 +1,54 @@
+{
+  "sorted_middleware": [
+    "/api/og/route"
+  ],
+  "middleware": {},
+  "instrumentation": null,
+  "functions": {
+    "/api/og/route": {
+      "files": [
+        "server/middleware-build-manifest.js",
+        "server/interception-route-rewrite-manifest.js",
+        "required-server-files.js",
+        "server/server-reference-manifest.js",
+        "server/app/api/og/route_client-reference-manifest.js",
+        "server/edge/chunks/apps_portfolio__next-internal_server_app_api_og_route_actions_b50edf81.js",
+        "server/edge/chunks/[root-of-the-server]__4ad146c1._.js",
+        "server/edge/chunks/node_modules__pnpm_27db651c._.js",
+        "server/edge/chunks/83f50_next_dist_compiled_@vercel_og_88ddb4c4._.js",
+        "server/edge/chunks/deeab_next_dist_esm_build_templates_edge-wrapper_08916d55.js"
+      ],
+      "name": "app/api/og/route",
+      "page": "/api/og/route",
+      "matchers": [
+        {
+          "regexp": "^/api/og(?:/)?$",
+          "originalSource": "/api/og"
+        }
+      ],
+      "wasm": [
+        {
+          "name": "wasm_fdb56e4cc5936d29",
+          "filePath": "server/edge/chunks/83f50_next_dist_compiled_@vercel_og_resvg_23ace1ce.wasm"
+        },
+        {
+          "name": "wasm_1ccdc983b1fd9f87",
+          "filePath": "server/edge/chunks/83f50_next_dist_compiled_@vercel_og_yoga_23ace1ce.wasm"
+        }
+      ],
+      "assets": [
+        {
+          "name": "server/edge/assets/noto-sans-v27-latin-regular.bdfa676c.ttf",
+          "filePath": "server/edge/assets/noto-sans-v27-latin-regular.bdfa676c.ttf"
+        }
+      ],
+      "env": {
+        "__NEXT_BUILD_ID": "build-1770910110002",
+        "NEXT_SERVER_ACTIONS_ENCRYPTION_KEY": "zuE+Uym8Tl2XQnlQBSh0RRBUPu+kplMgaGS7mPEiTl4=",
+        "__NEXT_PREVIEW_MODE_ID": "a6c6b27742c84538e92e2ea57c32dad6",
+        "__NEXT_PREVIEW_MODE_ENCRYPTION_KEY": "bd1820568755db6d0113eff7b65f2ae35a10bd0ea7d75dde1e3d71c82bd302da",
+        "__NEXT_PREVIEW_MODE_SIGNING_KEY": "80285bfef8eb5e7111a996eea459b075a66c790b9e5752423cc8b6beb6c0a26e"
+      }
+    }
+  }
+}

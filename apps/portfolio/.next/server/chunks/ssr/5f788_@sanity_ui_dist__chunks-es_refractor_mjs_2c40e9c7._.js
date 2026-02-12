@@ -1,0 +1,5 @@
+;!function(){try { var e="undefined"!=typeof globalThis?globalThis:"undefined"!=typeof global?global:"undefined"!=typeof window?window:"undefined"!=typeof self?self:{},n=(new e.Error).stack;n&&((e._debugIds|| (e._debugIds={}))[n]="44f3ae44-49ce-864e-14f3-028392cbd500")}catch(e){}}();
+module.exports=[663827,a=>{"use strict";var b=a.i(974513),c=a.i(162601),d=a.i(627344);function e(a){let e,f,g,h,i=(0,c.c)(13),{language:j,value:k}=a,l="string"==typeof j?j:void 0;i[0]!==l?(e=!!l&&(0,d.hasLanguage)(l),i[0]=l,i[1]=e):e=i[1];let m=e;return i[2]!==l||i[3]!==m||i[4]!==k?(f=!(l&&m)&&(0,b.jsx)("code",{children:k}),i[2]=l,i[3]=m,i[4]=k,i[5]=f):f=i[5],i[6]!==l||i[7]!==m||i[8]!==k?(g=l&&m&&(0,b.jsx)(d.Refractor,{inline:!0,language:l,value:String(k)}),i[6]=l,i[7]=m,i[8]=k,i[9]=g):g=i[9],i[10]!==f||i[11]!==g?(h=(0,b.jsxs)(b.Fragment,{children:[f,g]}),i[10]=f,i[11]=g,i[12]=h):h=i[12],h}e.displayName="LazyRefractor",a.s(["default",()=>e])}];
+
+//# debugId=44f3ae44-49ce-864e-14f3-028392cbd500
+//# sourceMappingURL=5f788_%40sanity_ui_dist__chunks-es_refractor_mjs_2c40e9c7._.js.map
