@@ -14,12 +14,24 @@ import {
   Settings,
   Moon,
   Sun,
+  Rss,
+  CheckSquare,
+  Building2,
+  Calendar,
+  BarChart3,
+  Search,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+  { name: "Agent Feed", href: "/feed", icon: Rss },
+  { name: "Tasks", href: "/tasks", icon: CheckSquare },
+  { name: "Jobs", href: "/jobs", icon: Building2 },
+  { name: "Content", href: "/content", icon: Calendar },
+  { name: "Analytics", href: "/analytics", icon: BarChart3 },
+  { name: "SEO", href: "/seo", icon: Search },
   { name: "Blog Posts", href: "/blog", icon: FileText },
   { name: "Projects", href: "/projects", icon: Briefcase },
   { name: "Experience", href: "/experience", icon: Award },

@@ -9,13 +9,21 @@
  */
 
 import type * as _helpers from "../_helpers.js";
+import type * as agent_feed from "../agent_feed.js";
+import type * as analytics_log from "../analytics_log.js";
 import type * as blog_posts from "../blog_posts.js";
+import type * as content_calendar from "../content_calendar.js";
+import type * as deployments from "../deployments.js";
 import type * as experiences from "../experiences.js";
+import type * as github_activity from "../github_activity.js";
+import type * as job_applications from "../job_applications.js";
 import type * as media from "../media.js";
 import type * as portfolio from "../portfolio.js";
 import type * as projects from "../projects.js";
+import type * as seo_tracking from "../seo_tracking.js";
 import type * as site_settings from "../site_settings.js";
 import type * as skills from "../skills.js";
+import type * as tasks from "../tasks.js";
 
 import type {
   ApiFromModules,
@@ -25,13 +33,21 @@ import type {
 
 declare const fullApi: ApiFromModules<{
   _helpers: typeof _helpers;
+  agent_feed: typeof agent_feed;
+  analytics_log: typeof analytics_log;
   blog_posts: typeof blog_posts;
+  content_calendar: typeof content_calendar;
+  deployments: typeof deployments;
   experiences: typeof experiences;
+  github_activity: typeof github_activity;
+  job_applications: typeof job_applications;
   media: typeof media;
   portfolio: typeof portfolio;
   projects: typeof projects;
+  seo_tracking: typeof seo_tracking;
   site_settings: typeof site_settings;
   skills: typeof skills;
+  tasks: typeof tasks;
 }>;
 
 /**

@@ -106,6 +106,223 @@ export default defineSchema({
     .index("by_mime_type", ["mimeType"])
     .index("by_uploaded_by", ["uploadedBy"]),
 
+  agent_feed: defineTable({
+    type: v.union(
+      v.literal("news"),
+      v.literal("trend"),
+      v.literal("alert"),
+      v.literal("task_update"),
+      v.literal("deploy"),
+      v.literal("pr"),
+      v.literal("briefing"),
+      v.literal("insight")
+    ),
+    title: v.string(),
+    content: v.string(),
+    source: v.optional(v.string()),
+    tags: v.array(v.string()),
+    priority: v.union(
+      v.literal("low"),
+      v.literal("medium"),
+      v.literal("high"),
+      v.literal("critical")
+    ),
+    read: v.boolean(),
+    metadata: v.optional(v.any()),
+    createdAt: v.number(),
+  })
+    .index("by_type", ["type"])
+    .index("by_priority", ["priority"])
+    .index("by_created_at", ["createdAt"])
+    .index("by_read", ["read"]),
+
+  tasks: defineTable({
+    title: v.string(),
+    description: v.optional(v.string()),
+    status: v.union(
+      v.literal("backlog"),
+      v.literal("todo"),
+      v.literal("in_progress"),
+      v.literal("review"),
+      v.literal("done"),
+      v.literal("cancelled")
+    ),
+    priority: v.union(
+      v.literal("low"),
+      v.literal("medium"),
+      v.literal("high"),
+      v.literal("critical")
+    ),
+    category: v.union(
+      v.literal("development"),
+      v.literal("devops"),
+      v.literal("content"),
+      v.literal("seo"),
+      v.literal("design"),
+      v.literal("marketing"),
+      v.literal("job_hunting"),
+      v.literal("other")
+    ),
+    assignee: v.optional(v.string()),
+    dueDate: v.optional(v.number()),
+    completedAt: v.optional(v.number()),
+    tags: v.array(v.string()),
+    relatedUrl: v.optional(v.string()),
+    createdAt: v.number(),
+  })
+    .index("by_status", ["status"])
+    .index("by_priority", ["priority"])
+    .index("by_category", ["category"])
+    .index("by_assignee", ["assignee"])
+    .index("by_due_date", ["dueDate"]),
+
+  job_applications: defineTable({
+    company: v.string(),
+    position: v.string(),
+    url: v.optional(v.string()),
+    status: v.union(
+      v.literal("discovered"),
+      v.literal("researching"),
+      v.literal("applying"),
+      v.literal("applied"),
+      v.literal("interviewing"),
+      v.literal("offer"),
+      v.literal("rejected"),
+      v.literal("withdrawn")
+    ),
+    salary: v.optional(v.string()),
+    location: v.optional(v.string()),
+    remote: v.optional(v.boolean()),
+    notes: v.optional(v.string()),
+    contacts: v.optional(
+      v.array(
+        v.object({
+          name: v.string(),
+          role: v.optional(v.string()),
+          linkedin: v.optional(v.string()),
+        })
+      )
+    ),
+    appliedAt: v.optional(v.number()),
+    nextAction: v.optional(v.string()),
+    nextActionDate: v.optional(v.number()),
+    tags: v.array(v.string()),
+    createdAt: v.number(),
+  })
+    .index("by_status", ["status"])
+    .index("by_company", ["company"])
+    .index("by_created_at", ["createdAt"]),
+
+  seo_tracking: defineTable({
+    url: v.string(),
+    keyword: v.optional(v.string()),
+    position: v.optional(v.number()),
+    impressions: v.optional(v.number()),
+    clicks: v.optional(v.number()),
+    ctr: v.optional(v.number()),
+    domain: v.string(),
+    pageTitle: v.optional(v.string()),
+    notes: v.optional(v.string()),
+    checkedAt: v.number(),
+    createdAt: v.number(),
+  })
+    .index("by_domain", ["domain"])
+    .index("by_keyword", ["keyword"])
+    .index("by_checked_at", ["checkedAt"]),
+
+  content_calendar: defineTable({
+    title: v.string(),
+    type: v.union(
+      v.literal("blog_post"),
+      v.literal("social_post"),
+      v.literal("newsletter"),
+      v.literal("video"),
+      v.literal("podcast"),
+      v.literal("case_study")
+    ),
+    status: v.union(
+      v.literal("idea"),
+      v.literal("outline"),
+      v.literal("drafting"),
+      v.literal("review"),
+      v.literal("scheduled"),
+      v.literal("published")
+    ),
+    platform: v.optional(v.string()),
+    targetDate: v.optional(v.number()),
+    publishedAt: v.optional(v.number()),
+    notes: v.optional(v.string()),
+    seoKeywords: v.optional(v.array(v.string())),
+    relatedBlogPostId: v.optional(v.string()),
+    createdAt: v.number(),
+  })
+    .index("by_type", ["type"])
+    .index("by_status", ["status"])
+    .index("by_target_date", ["targetDate"]),
+
+  analytics_log: defineTable({
+    event: v.string(),
+    agent: v.optional(v.string()),
+    model: v.optional(v.string()),
+    tokensIn: v.optional(v.number()),
+    tokensOut: v.optional(v.number()),
+    cost: v.optional(v.number()),
+    durationMs: v.optional(v.number()),
+    metadata: v.optional(v.any()),
+    createdAt: v.number(),
+  })
+    .index("by_event", ["event"])
+    .index("by_agent", ["agent"])
+    .index("by_created_at", ["createdAt"])
+    .index("by_model", ["model"]),
+
+  deployments: defineTable({
+    project: v.string(),
+    environment: v.union(
+      v.literal("production"),
+      v.literal("preview"),
+      v.literal("development")
+    ),
+    status: v.union(
+      v.literal("building"),
+      v.literal("ready"),
+      v.literal("error"),
+      v.literal("cancelled")
+    ),
+    url: v.optional(v.string()),
+    commitSha: v.optional(v.string()),
+    commitMessage: v.optional(v.string()),
+    buildDuration: v.optional(v.number()),
+    platform: v.string(),
+    createdAt: v.number(),
+  })
+    .index("by_project", ["project"])
+    .index("by_status", ["status"])
+    .index("by_created_at", ["createdAt"]),
+
+  github_activity: defineTable({
+    repo: v.string(),
+    type: v.union(
+      v.literal("pr"),
+      v.literal("issue"),
+      v.literal("review"),
+      v.literal("merge"),
+      v.literal("release")
+    ),
+    number: v.number(),
+    title: v.string(),
+    status: v.string(),
+    url: v.string(),
+    author: v.optional(v.string()),
+    labels: v.optional(v.array(v.string())),
+    createdAt: v.number(),
+    updatedAt: v.optional(v.number()),
+  })
+    .index("by_repo", ["repo"])
+    .index("by_type", ["type"])
+    .index("by_status", ["status"])
+    .index("by_created_at", ["createdAt"]),
+
   site_settings: defineTable({
     key: v.string(),
     value: v.any(),
