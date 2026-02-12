@@ -37,6 +37,14 @@ export const push = mutation({
     relatedBlogPostId: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
+    // Dedup: check if same title+targetDate already exists
+    const existing = await ctx.db.query("content_calendar")
+      .withIndex("by_title_targetDate", (q) => q.eq("title", args.title).eq("targetDate", args.targetDate))
+      .first();
+    if (existing) {
+      await ctx.db.patch(existing._id, { ...args, status: args.status ?? existing.status });
+      return existing._id;
+    }
     return await ctx.db.insert("content_calendar", { ...args, status: args.status ?? "idea", createdAt: Date.now() });
   },
 });

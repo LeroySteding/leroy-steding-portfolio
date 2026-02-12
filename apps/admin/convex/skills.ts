@@ -60,6 +60,14 @@ export const push = mutation({
   },
   handler: async (ctx, args) => {
     if (args.proficiency < 1 || args.proficiency > 100) throw new Error("Proficiency must be between 1 and 100");
+    // Dedup: check if same name already exists
+    const existing = await ctx.db.query("skills")
+      .withIndex("by_name", (q) => q.eq("name", args.name))
+      .first();
+    if (existing) {
+      await ctx.db.patch(existing._id, args);
+      return existing._id;
+    }
     return await ctx.db.insert("skills", args);
   },
 });

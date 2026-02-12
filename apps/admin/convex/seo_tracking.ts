@@ -26,12 +26,11 @@ export const push = mutation({
     checkedAt: v.optional(v.number()),
   },
   handler: async (ctx, args) => {
-    // Dedup: update existing if same keyword+domain
+    // Dedup: update existing if same keyword+url
     if (args.keyword) {
-      const existing = await ctx.db.query("seo_tracking")
-        .withIndex("by_domain", (q) => q.eq("domain", args.domain))
-        .collect();
-      const match = existing.find((i) => i.keyword === args.keyword && i.url === args.url);
+      const match = await ctx.db.query("seo_tracking")
+        .withIndex("by_keyword_url", (q) => q.eq("keyword", args.keyword).eq("url", args.url))
+        .first();
       if (match) {
         await ctx.db.patch(match._id, {
           position: args.position ?? match.position,

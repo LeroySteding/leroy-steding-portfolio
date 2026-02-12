@@ -36,6 +36,14 @@ export const push = mutation({
     tags: v.optional(v.array(v.string())), nextAction: v.optional(v.string()), nextActionDate: v.optional(v.number()),
   },
   handler: async (ctx, args) => {
+    // Dedup: check if same company+position already exists
+    const existing = await ctx.db.query("job_applications")
+      .withIndex("by_company_position", (q) => q.eq("company", args.company).eq("position", args.position))
+      .first();
+    if (existing) {
+      await ctx.db.patch(existing._id, { ...args, status: args.status ?? existing.status, tags: args.tags ?? existing.tags });
+      return existing._id;
+    }
     return await ctx.db.insert("job_applications", { ...args, status: args.status ?? "discovered", tags: args.tags ?? [], createdAt: Date.now() });
   },
 });

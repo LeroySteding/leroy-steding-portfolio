@@ -74,7 +74,8 @@ export default defineSchema({
     .index("by_locale", ["locale"])
     .index("by_type", ["type"])
     .index("by_start_date", ["startDate"])
-    .index("by_order", ["order"]),
+    .index("by_order", ["order"])
+    .index("by_company", ["company"]),
 
   skills: defineTable({
     name: v.string(),
@@ -134,7 +135,8 @@ export default defineSchema({
     .index("by_type", ["type"])
     .index("by_priority", ["priority"])
     .index("by_created_at", ["createdAt"])
-    .index("by_read", ["read"]),
+    .index("by_read", ["read"])
+    .index("by_title_source", ["title", "source"]),
 
   tasks: defineTable({
     title: v.string(),
@@ -174,7 +176,8 @@ export default defineSchema({
     .index("by_priority", ["priority"])
     .index("by_category", ["category"])
     .index("by_assignee", ["assignee"])
-    .index("by_due_date", ["dueDate"]),
+    .index("by_due_date", ["dueDate"])
+    .index("by_title", ["title"]),
 
   job_applications: defineTable({
     company: v.string(),
@@ -211,6 +214,7 @@ export default defineSchema({
   })
     .index("by_status", ["status"])
     .index("by_company", ["company"])
+    .index("by_company_position", ["company", "position"])
     .index("by_created_at", ["createdAt"]),
 
   seo_tracking: defineTable({
@@ -228,6 +232,7 @@ export default defineSchema({
   })
     .index("by_domain", ["domain"])
     .index("by_keyword", ["keyword"])
+    .index("by_keyword_url", ["keyword", "url"])
     .index("by_checked_at", ["checkedAt"]),
 
   content_calendar: defineTable({
@@ -258,7 +263,8 @@ export default defineSchema({
   })
     .index("by_type", ["type"])
     .index("by_status", ["status"])
-    .index("by_target_date", ["targetDate"]),
+    .index("by_target_date", ["targetDate"])
+    .index("by_title_targetDate", ["title", "targetDate"]),
 
   analytics_log: defineTable({
     event: v.string(),
@@ -298,6 +304,7 @@ export default defineSchema({
   })
     .index("by_project", ["project"])
     .index("by_status", ["status"])
+    .index("by_url", ["url"])
     .index("by_created_at", ["createdAt"]),
 
   github_activity: defineTable({
@@ -321,6 +328,7 @@ export default defineSchema({
     .index("by_repo", ["repo"])
     .index("by_type", ["type"])
     .index("by_status", ["status"])
+    .index("by_url", ["url"])
     .index("by_created_at", ["createdAt"]),
 
   site_settings: defineTable({

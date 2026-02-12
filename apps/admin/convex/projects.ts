@@ -75,6 +75,14 @@ export const push = mutation({
     seoTitle: v.optional(v.string()), seoDescription: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
+    // Dedup: check if same slug already exists
+    const existing = await ctx.db.query("projects")
+      .withIndex("by_slug", (q) => q.eq("slug", args.slug))
+      .first();
+    if (existing) {
+      await ctx.db.patch(existing._id, args);
+      return existing._id;
+    }
     return await ctx.db.insert("projects", args);
   },
 });

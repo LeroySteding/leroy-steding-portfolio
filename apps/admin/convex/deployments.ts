@@ -19,6 +19,31 @@ export const get = query({
   handler: async (ctx, args) => ctx.db.get(args.id),
 });
 
+// Public push mutation for agents (no auth required)
+export const push = mutation({
+  args: {
+    project: v.string(), environment, status: v.optional(status),
+    url: v.optional(v.string()), commitSha: v.optional(v.string()),
+    commitMessage: v.optional(v.string()), buildDuration: v.optional(v.number()),
+    platform: v.optional(v.string()),
+  },
+  handler: async (ctx, args) => {
+    // Dedup: check if same url already exists
+    if (args.url) {
+      const existing = await ctx.db.query("deployments")
+        .withIndex("by_url", (q) => q.eq("url", args.url))
+        .first();
+      if (existing) {
+        await ctx.db.patch(existing._id, { status: args.status ?? existing.status, commitSha: args.commitSha ?? existing.commitSha, commitMessage: args.commitMessage ?? existing.commitMessage, buildDuration: args.buildDuration ?? existing.buildDuration });
+        return existing._id;
+      }
+    }
+    return await ctx.db.insert("deployments", {
+      ...args, status: args.status ?? "building", platform: args.platform ?? "vercel", createdAt: Date.now(),
+    });
+  },
+});
+
 export const create = mutation({
   args: {
     project: v.string(), environment, status: v.optional(status),

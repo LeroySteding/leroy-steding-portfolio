@@ -70,6 +70,15 @@ export const push = mutation({
     readingTime: v.optional(v.number()), publishedAt: v.optional(v.number()),
   },
   handler: async (ctx, args) => {
+    // Dedup: check if same slug already exists
+    const existing = await ctx.db.query("blog_posts")
+      .withIndex("by_slug", (q) => q.eq("slug", args.slug))
+      .first();
+    if (existing) {
+      const { slug, ...updates } = args;
+      await ctx.db.patch(existing._id, { ...updates, author: args.author ?? existing.author, authorName: args.authorName ?? existing.authorName });
+      return existing._id;
+    }
     return await ctx.db.insert("blog_posts", {
       ...args,
       author: args.author ?? "agent",

@@ -18,6 +18,26 @@ export const get = query({
   handler: async (ctx, args) => ctx.db.get(args.id),
 });
 
+// Public push mutation for agents (no auth required)
+export const push = mutation({
+  args: {
+    repo: v.string(), type: ghType, number: v.number(), title: v.string(),
+    status: v.string(), url: v.string(), author: v.optional(v.string()),
+    labels: v.optional(v.array(v.string())),
+  },
+  handler: async (ctx, args) => {
+    // Dedup: check if same url already exists
+    const existing = await ctx.db.query("github_activity")
+      .withIndex("by_url", (q) => q.eq("url", args.url))
+      .first();
+    if (existing) {
+      await ctx.db.patch(existing._id, { title: args.title, status: args.status, author: args.author, labels: args.labels, updatedAt: Date.now() });
+      return existing._id;
+    }
+    return await ctx.db.insert("github_activity", { ...args, createdAt: Date.now() });
+  },
+});
+
 export const create = mutation({
   args: {
     repo: v.string(), type: ghType, number: v.number(), title: v.string(),

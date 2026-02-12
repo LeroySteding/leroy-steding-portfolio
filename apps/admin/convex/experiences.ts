@@ -51,6 +51,15 @@ export const push = mutation({
     order: v.optional(v.number()), published: v.optional(v.boolean()),
   },
   handler: async (ctx, args) => {
+    // Dedup: check if same company+title already exists
+    const existing = await ctx.db.query("experiences")
+      .withIndex("by_company", (q) => q.eq("company", args.company))
+      .collect();
+    const match = existing.find((i) => i.title === args.title);
+    if (match) {
+      await ctx.db.patch(match._id, args);
+      return match._id;
+    }
     return await ctx.db.insert("experiences", args);
   },
 });

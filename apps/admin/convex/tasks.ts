@@ -52,6 +52,23 @@ export const push = mutation({
     relatedUrl: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
+    // Dedup: check if same title already exists
+    const existing = await ctx.db.query("tasks")
+      .withIndex("by_title", (q) => q.eq("title", args.title))
+      .first();
+    if (existing) {
+      await ctx.db.patch(existing._id, {
+        description: args.description ?? existing.description,
+        status: args.status ?? existing.status,
+        priority: args.priority ?? existing.priority,
+        category: args.category ?? existing.category,
+        assignee: args.assignee ?? existing.assignee,
+        dueDate: args.dueDate ?? existing.dueDate,
+        tags: args.tags ?? existing.tags,
+        relatedUrl: args.relatedUrl ?? existing.relatedUrl,
+      });
+      return existing._id;
+    }
     return await ctx.db.insert("tasks", {
       title: args.title,
       description: args.description,
