@@ -1,0 +1,14 @@
+
+> @steding/admin@0.1.0 typecheck /Users/leroysteding-mini/Projects/personal/leroy-steding-portfolio/apps/admin
+> tsc --noEmit
+
+convex/media.ts(15,63): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+next.config.ts(8,5): error TS2353: Object literal may only specify known properties, and 'turbo' does not exist in type 'ExperimentalConfig'.
+src/app/(admin)/dashboard/page.tsx(16,18): error TS2554: Expected 2 arguments, but got 1.
+src/app/(admin)/media/page.tsx(48,9): error TS2353: Object literal may only specify known properties, and 'uploadedBy' does not exist in type '{ height?: number | undefined; width?: number | undefined; alt?: string | undefined; caption?: string | undefined; fileSize?: number | undefined; storageId: Id<"_storage">; filename: string; mimeType: string; }'.
+src/app/(admin)/settings/page.tsx(31,55): error TS2339: Property 'set' does not exist on type '{ list: FunctionReference<"query", "public", { locale?: "en" | "nl" | undefined; }, { _id: Id<"site_settings">; _creationTime: number; locale?: "en" | "nl" | undefined; description?: string | undefined; updatedBy?: string | undefined; key: string; value: any; }[], string | undefined>; getByKey: FunctionReference<......'.
+src/app/(admin)/skills/page.tsx(35,18): error TS2554: Expected 2 arguments, but got 1.
+src/app/(admin)/skills/page.tsx(264,36): error TS7031: Binding element 'value' implicitly has an 'any' type.
+src/components/ui/slider.tsx(2,34): error TS2307: Cannot find module '@radix-ui/react-slider' or its corresponding type declarations.
+ ELIFECYCLE  Command failed with exit code 2.
