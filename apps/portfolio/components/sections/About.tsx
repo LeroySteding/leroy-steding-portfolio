@@ -5,7 +5,7 @@ import { Code2, Rocket, Sparkles } from "lucide-react";
 import Image from "next/image";
 import { useLayout } from "@/contexts/LayoutContext";
 import { useTranslation } from "@/hooks/useTranslation";
-import type { SanityAboutSection } from "@/lib/sanity-content";
+import type { SanityAboutSection } from "@/lib/convex-content";
 import { parseTranslation } from "@/utils/parseTranslation";
 
 interface AboutProps {

@@ -5,8 +5,7 @@
  * Accessible at /feed.xml
  */
 
-import { client } from "@/sanity/lib/client";
-import { postsQuery } from "@/sanity/lib/queries";
+import { getPosts as getConvexPosts } from "@/lib/convex-content";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://www.leroysteding.nl";
@@ -92,10 +91,19 @@ function generateRssFeed(posts: SanityPost[]): string {
 
 export async function GET() {
   try {
-    // Fetch posts from Sanity (English only for RSS feed)
-    const posts: SanityPost[] = await client.fetch(postsQuery, {
-      language: "en",
-    });
+    // Fetch posts from Convex (English only for RSS feed)
+    const convexPosts = await getConvexPosts("en");
+    const posts: SanityPost[] = convexPosts.map((p) => ({
+      _id: p._id,
+      title: p.title,
+      slug: p.slug,
+      excerpt: p.excerpt,
+      category: p.category,
+      tags: p.tags,
+      author: p.author,
+      publishedAt: p.publishedAt,
+      coverImage: p.coverImage,
+    }));
 
     // Sort by date descending and take latest 20
     const sortedPosts = posts

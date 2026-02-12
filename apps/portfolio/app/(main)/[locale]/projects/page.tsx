@@ -2,9 +2,11 @@ import type { Metadata } from "next";
 import { getLocale } from "next-intl/server";
 import LayoutContainer from "@/components/ui/LayoutContainer";
 import PageHero from "@/components/ui/PageHero";
+import {
+  getProjects as getConvexProjects,
+  getProjectsSection,
+} from "@/lib/convex-content";
 import { getTranslations } from "@/lib/translations";
-import { client } from "@/sanity/lib/client";
-import { projectsQuery, projectsSectionQuery } from "@/sanity/lib/queries";
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -108,12 +110,11 @@ export default async function ProjectsPage() {
   const locale = await getLocale();
   const t = getTranslations(locale);
 
-  // Fetch projects and section data from Sanity
-  const [projects, section]: [SanityProject[], ProjectsSection | null] =
-    await Promise.all([
-      client.fetch(projectsQuery, { language: locale }),
-      client.fetch(projectsSectionQuery, { language: locale }),
-    ]);
+  // Fetch projects and section data from Convex
+  const [projects, section] = (await Promise.all([
+    getConvexProjects(locale),
+    getProjectsSection(locale),
+  ])) as [SanityProject[], ProjectsSection | null];
 
   // Filter featured projects
   const featuredProjects = projects.filter((p) => p.featured);

@@ -8,7 +8,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { useLayout } from "@/contexts/LayoutContext";
 import { techStack } from "@/data/techStack";
 import { useTranslation } from "@/hooks/useTranslation";
-import type { SanityTechStackSection } from "@/lib/sanity-content";
+import type { SanityTechStackSection } from "@/lib/convex-content";
 
 // Helper function to get proficiency level
 const getProficiencyLevel = (

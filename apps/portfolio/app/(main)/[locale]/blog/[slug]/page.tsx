@@ -1,9 +1,11 @@
 import { notFound } from "next/navigation";
 import JsonLd from "@/components/JsonLd";
 import { locales } from "@/i18n/config";
+import {
+  getPostBySlug as getConvexPostBySlug,
+  getPosts as getConvexPosts,
+} from "@/lib/convex-content";
 import { getBlogPostSchema, getBreadcrumbSchema } from "@/lib/structured-data";
-import { client } from "@/sanity/lib/client";
-import { postBySlugQuery, postsQuery } from "@/sanity/lib/queries";
 import BlogPostClient from "./BlogPostClient";
 
 interface SanityPost {
@@ -52,9 +54,8 @@ export async function generateStaticParams() {
 
   // Generate params for all locales
   for (const locale of locales) {
-    const posts: SanityPost[] = await client.fetch(postsQuery, {
-      language: locale,
-    });
+    const convexPosts = await getConvexPosts(locale);
+    const posts: SanityPost[] = convexPosts as unknown as SanityPost[];
     for (const post of posts) {
       const slugValue =
         typeof post.slug === "string" ? post.slug : post.slug?.current || "";
@@ -69,10 +70,8 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps) {
   const { slug, locale } = await params;
-  const post: SanityPost | null = await client.fetch(postBySlugQuery, {
-    slug,
-    language: locale,
-  });
+  const convexPost = await getConvexPostBySlug(slug, locale);
+  const post: SanityPost | null = convexPost as unknown as SanityPost | null;
 
   if (!post) {
     return {
@@ -127,10 +126,10 @@ export async function generateMetadata({ params }: PageProps) {
 
 export default async function BlogPostPage({ params }: PageProps) {
   const { slug, locale } = await params;
-  const sanityPost: SanityPost | null = await client.fetch(postBySlugQuery, {
+  const sanityPost: SanityPost | null = (await getConvexPostBySlug(
     slug,
-    language: locale,
-  });
+    locale,
+  )) as unknown as SanityPost | null;
 
   if (!sanityPost) {
     notFound();

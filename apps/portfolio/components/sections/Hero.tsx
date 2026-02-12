@@ -5,8 +5,8 @@ import { ArrowRight, Calendar, Download } from "lucide-react";
 import Link from "next/link";
 import { useLayout } from "@/contexts/LayoutContext";
 import { useTranslation } from "@/hooks/useTranslation";
+import type { SanityHeroSection } from "@/lib/convex-content";
 import { useLocalizedPath } from "@/lib/localization";
-import type { SanityHeroSection } from "@/lib/sanity-content";
 
 interface HeroProps {
   data?: SanityHeroSection | null;

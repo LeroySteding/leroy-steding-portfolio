@@ -5,7 +5,7 @@ import { Github, Linkedin, Mail, MapPin, Send, Twitter } from "lucide-react";
 import { useState } from "react";
 import { useLayout } from "@/contexts/LayoutContext";
 import { useTranslation } from "@/hooks/useTranslation";
-import type { SanityContactSection } from "@/lib/sanity-content";
+import type { SanityContactSection } from "@/lib/convex-content";
 
 interface ContactProps {
   data?: SanityContactSection | null;

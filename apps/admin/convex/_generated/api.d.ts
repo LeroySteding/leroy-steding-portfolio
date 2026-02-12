@@ -12,6 +12,7 @@ import type * as _helpers from "../_helpers.js";
 import type * as blog_posts from "../blog_posts.js";
 import type * as experiences from "../experiences.js";
 import type * as media from "../media.js";
+import type * as portfolio from "../portfolio.js";
 import type * as projects from "../projects.js";
 import type * as site_settings from "../site_settings.js";
 import type * as skills from "../skills.js";
@@ -27,6 +28,7 @@ declare const fullApi: ApiFromModules<{
   blog_posts: typeof blog_posts;
   experiences: typeof experiences;
   media: typeof media;
+  portfolio: typeof portfolio;
   projects: typeof projects;
   site_settings: typeof site_settings;
   skills: typeof skills;

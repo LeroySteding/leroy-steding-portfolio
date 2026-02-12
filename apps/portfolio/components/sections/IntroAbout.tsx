@@ -5,8 +5,8 @@ import { ArrowRight, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { useLayout } from "@/contexts/LayoutContext";
 import { useTranslation } from "@/hooks/useTranslation";
+import type { SanityAboutSection } from "@/lib/convex-content";
 import { useLocalizedPath } from "@/lib/localization";
-import type { SanityAboutSection } from "@/lib/sanity-content";
 
 interface IntroAboutProps {
   data?: SanityAboutSection | null;

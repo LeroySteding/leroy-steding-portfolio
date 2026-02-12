@@ -8,7 +8,7 @@ import {
   getExperienceSection,
   getExperiences,
   getTechStackSection,
-} from "@/lib/sanity-content";
+} from "@/lib/convex-content";
 import AboutPageHero from "./AboutPageHero";
 
 interface PageProps {

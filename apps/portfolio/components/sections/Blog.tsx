@@ -15,7 +15,7 @@ import { useMemo, useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useLayout } from "@/contexts/LayoutContext";
 import { useTranslation } from "@/hooks/useTranslation";
-import type { SanityBlogSection, SanityPost } from "@/lib/sanity-content";
+import type { SanityBlogSection, SanityPost } from "@/lib/convex-content";
 import { getBlogPosts } from "@/utils/getLocalizedData";
 
 type CategoryFilter = "all" | "article" | "tutorial" | "research";

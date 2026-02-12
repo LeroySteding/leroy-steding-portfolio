@@ -12,7 +12,7 @@ import {
   getHeroSection,
   getProjectsSection,
   getProjects as getSanityProjects,
-} from "@/lib/sanity-content";
+} from "@/lib/convex-content";
 import {
   getOrganizationSchema,
   getPersonSchema,

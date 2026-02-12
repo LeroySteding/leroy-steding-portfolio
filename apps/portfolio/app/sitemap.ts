@@ -1,46 +1,24 @@
 import type { MetadataRoute } from "next";
-import { groq } from "next-sanity";
-import { client } from "@/sanity/lib/client";
+import { getExperiences, getPosts, getProjects } from "@/lib/convex-content";
 
 const baseUrl = "https://www.leroysteding.nl";
 
-// Queries for sitemap data
-const postsForSitemapQuery = groq`
-  *[_type == "post"] {
-    "slug": slug.current,
-    _updatedAt,
-    language
-  }
-`;
-
-const projectsForSitemapQuery = groq`
-  *[_type == "project"] {
-    "slug": slug.current,
-    _updatedAt,
-    language
-  }
-`;
-
-const experiencesForSitemapQuery = groq`
-  *[_type == "experience"] {
-    "slug": slug.current,
-    _updatedAt,
-    language
-  }
-`;
-
-type SanityDocument = {
-  slug: string;
-  _updatedAt: string;
-  language?: string;
-};
-
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  // Fetch all content from Sanity
-  const [posts, projects, experiences] = await Promise.all([
-    client.fetch<SanityDocument[]>(postsForSitemapQuery),
-    client.fetch<SanityDocument[]>(projectsForSitemapQuery),
-    client.fetch<SanityDocument[]>(experiencesForSitemapQuery),
+  // Fetch all content from Convex for both locales
+  const [
+    postsEn,
+    postsNl,
+    projectsEn,
+    projectsNl,
+    experiencesEn,
+    experiencesNl,
+  ] = await Promise.all([
+    getPosts("en"),
+    getPosts("nl"),
+    getProjects("en"),
+    getProjects("nl"),
+    getExperiences("en"),
+    getExperiences("nl"),
   ]);
 
   // Static pages for both languages
@@ -57,37 +35,46 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   );
 
   // Blog posts
-  const postUrls: MetadataRoute.Sitemap = posts.map((post) => {
-    const locale = post.language || "en";
+  const allPosts = [
+    ...postsEn.map((p) => ({ ...p, lang: "en" })),
+    ...postsNl.map((p) => ({ ...p, lang: "nl" })),
+  ];
+  const postUrls: MetadataRoute.Sitemap = allPosts.map((post) => {
+    const slug =
+      typeof post.slug === "string"
+        ? post.slug
+        : ((post.slug as any)?.current ?? "");
     return {
-      url: `${baseUrl}/${locale}/blog/${post.slug}`,
-      lastModified: new Date(post._updatedAt),
+      url: `${baseUrl}/${post.lang}/blog/${slug}`,
+      lastModified: new Date(post.publishedAt),
       changeFrequency: "monthly",
       priority: 0.7,
     };
   });
 
   // Projects
-  const projectUrls: MetadataRoute.Sitemap = projects.map((project) => {
-    const locale = project.language || "en";
-    return {
-      url: `${baseUrl}/${locale}/projects/${project.slug}`,
-      lastModified: new Date(project._updatedAt),
-      changeFrequency: "monthly",
-      priority: 0.7,
-    };
-  });
+  const allProjects = [
+    ...projectsEn.map((p) => ({ ...p, lang: "en" })),
+    ...projectsNl.map((p) => ({ ...p, lang: "nl" })),
+  ];
+  const projectUrls: MetadataRoute.Sitemap = allProjects.map((project) => ({
+    url: `${baseUrl}/${project.lang}/projects/${project.slug}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly",
+    priority: 0.7,
+  }));
 
   // Experiences
-  const experienceUrls: MetadataRoute.Sitemap = experiences.map((exp) => {
-    const locale = exp.language || "en";
-    return {
-      url: `${baseUrl}/${locale}/experience/${exp.slug}`,
-      lastModified: new Date(exp._updatedAt),
-      changeFrequency: "monthly",
-      priority: 0.6,
-    };
-  });
+  const allExperiences = [
+    ...experiencesEn.map((e) => ({ ...e, lang: "en" })),
+    ...experiencesNl.map((e) => ({ ...e, lang: "nl" })),
+  ];
+  const experienceUrls: MetadataRoute.Sitemap = allExperiences.map((exp) => ({
+    url: `${baseUrl}/${exp.lang}/experience/${exp.slug}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly",
+    priority: 0.6,
+  }));
 
   return [...staticUrls, ...postUrls, ...projectUrls, ...experienceUrls];
 }

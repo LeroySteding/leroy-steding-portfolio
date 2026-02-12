@@ -10,7 +10,7 @@ import { experiences as staticExperiences } from "@/data/experiences";
 import type {
   SanityExperience,
   SanityExperienceSection,
-} from "@/lib/sanity-content";
+} from "@/lib/convex-content";
 
 // Type for experience card colors
 type ExperienceColor =

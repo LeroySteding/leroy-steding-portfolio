@@ -14,11 +14,11 @@ import { useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useLayout } from "@/contexts/LayoutContext";
 import { useTranslation } from "@/hooks/useTranslation";
-import { useLocalizedPath } from "@/lib/localization";
 import type {
   SanityProject,
   SanityProjectsSection,
-} from "@/lib/sanity-content";
+} from "@/lib/convex-content";
+import { useLocalizedPath } from "@/lib/localization";
 import { getProjects as getStaticProjects } from "@/utils/getLocalizedData";
 
 type CategoryFilter = "all" | "product" | "client" | "internal";

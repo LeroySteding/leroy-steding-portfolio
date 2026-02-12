@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import { getLocale } from "next-intl/server";
 import LayoutContainer from "@/components/ui/LayoutContainer";
+import { getPosts as getConvexPosts } from "@/lib/convex-content";
 import { getTranslations } from "@/lib/translations";
-import { client } from "@/sanity/lib/client";
-import { postsQuery } from "@/sanity/lib/queries";
 import BlogContent from "./BlogContent";
 import BlogHero from "./BlogHero";
 
@@ -84,10 +83,23 @@ export default async function BlogPage() {
   const locale = await getLocale();
   const t = getTranslations(locale);
 
-  // Fetch posts from Sanity
-  const sanityPosts: SanityBlogPost[] = await client.fetch(postsQuery, {
-    language: locale,
-  });
+  // Fetch posts from Convex
+  const convexPosts = await getConvexPosts(locale);
+  const sanityPosts: SanityBlogPost[] = convexPosts.map((p) => ({
+    _id: p._id,
+    title: p.title,
+    slug: typeof p.slug === "string" ? { current: p.slug } : p.slug,
+    excerpt: p.excerpt,
+    content: p.content as string,
+    category: p.category,
+    tags: p.tags,
+    author: p.author,
+    publishedAt: p.publishedAt,
+    readingTime: String(p.readingTime),
+    coverImage: p.coverImage,
+    featured: p.featured,
+    language: p.language,
+  }));
 
   // Transform posts to the expected format
   const posts = sanityPosts.map(transformPost);
