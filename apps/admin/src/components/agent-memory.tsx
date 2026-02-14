@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Badge } from "./ui/badge";
 import { Brain } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
+import { type Id } from "../../convex/_generated/dataModel";
 
 const categoryEmojis: Record<string, string> = {
   decision: "⚖️", learning: "📚", context: "🔗", reference: "📎", insight: "💡",
@@ -15,6 +16,16 @@ const agentEmojis: Record<string, string> = {
   orchestrator: "🎯", architect: "🏗️", coder: "⚡", researcher: "🔍",
   business: "💼", "data-scraper": "🕷️", "qa-critic": "🛡️",
 };
+
+interface AgentMemory {
+  _id: Id<"agent_memory">;
+  agentName: string;
+  category: "decision" | "learning" | "context" | "reference" | "insight";
+  content: string;
+  tags: string[];
+  sharedWith: "all" | "team" | "private";
+  createdAt: number;
+}
 
 export function AgentMemory() {
   const memories = useQuery(api.agentCoordination.getAgentMemories, { limit: 30 });
@@ -33,7 +44,7 @@ export function AgentMemory() {
         {memories.length === 0 && (
           <p className="text-muted-foreground text-center py-4">No memories stored yet</p>
         )}
-        {memories.map((mem: { _id: string; agentName: string; category: string; content: string; tags: string[]; sharedWith: string; createdAt: number }) => (
+        {memories.map((mem: AgentMemory) => (
           <div key={mem._id} className="p-2 rounded-lg hover:bg-muted/50 transition-colors">
             <div className="flex items-center gap-2 flex-wrap">
               <span>{categoryEmojis[mem.category] || "📝"}</span>
@@ -45,7 +56,7 @@ export function AgentMemory() {
             </div>
             <p className="text-sm mt-1 line-clamp-3">{mem.content}</p>
             <div className="flex items-center gap-2 mt-1">
-              {mem.tags.map((tag: string) => (
+              {mem.tags.map((tag) => (
                 <span key={tag} className="text-xs text-muted-foreground">#{tag}</span>
               ))}
               <span className="text-xs text-muted-foreground ml-auto">
