@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { CheckSquare, Plus, ArrowRight, Trash2 } from "lucide-react";
+import { CheckSquare, Plus, ArrowRight, Trash2, Users } from "lucide-react";
 import Link from "next/link";
 import { format } from "date-fns";
 import { useState } from "react";
@@ -20,12 +20,22 @@ const priorities = ["low", "medium", "high", "critical"] as const;
 const categories = ["development", "devops", "content", "seo", "design", "marketing", "job_hunting", "other"] as const;
 
 const statusLabels: Record<string, string> = {
-  backlog: "📋 Backlog", todo: "📝 Todo", in_progress: "🔨 In Progress",
-  review: "👀 Review", done: "✅ Done", cancelled: "❌ Cancelled",
+  backlog: "📋 Backlog", 
+  todo: "📝 Todo", 
+  in_progress: "🔨 In Progress",
+  review: "👀 Review", 
+  done: "✅ Done", 
+  cancelled: "❌ Cancelled",
+  pending: "⏳ Pending",
+  blocked: "🚫 Blocked",
+  completed: "✅ Completed",
 };
 
-const priorityColors: Record<string, string> = {
-  low: "secondary", medium: "default", high: "destructive", critical: "destructive",
+const priorityColors: Record<string, "default" | "secondary" | "destructive" | "outline"> = {
+  low: "secondary", 
+  medium: "outline", 
+  high: "default", 
+  critical: "destructive",
 };
 
 export default function TasksPage() {
@@ -35,12 +45,16 @@ export default function TasksPage() {
   const [newTitle, setNewTitle] = useState("");
   const [newPriority, setNewPriority] = useState<string>("medium");
   const [newCategory, setNewCategory] = useState<string>("development");
+  const [activeTab, setActiveTab] = useState<"all" | "personal" | "agent">("all");
 
-  const tasks = useQuery(api.tasks.list, {
+  // Get both types of tasks
+  const personalTasks = useQuery(api.tasks.list, {
     ...(categoryFilter !== "all" ? { category: categoryFilter as any } : {}),
     ...(priorityFilter !== "all" ? { priority: priorityFilter as any } : {}),
   });
+  
   const agentTasks = useQuery(api.agentCoordination.getAgentTasks, {});
+
   const createTask = useMutation(api.tasks.create);
   const updateTask = useMutation(api.tasks.update);
   const removeTask = useMutation(api.tasks.remove);
@@ -56,42 +70,103 @@ export default function TasksPage() {
     updateTask({ id, status: newStatus as any });
   };
 
-  const activeStatuses = statuses.filter((s) => s !== "done" && s !== "cancelled");
+  // Combine and transform tasks for unified display
+  const allTasks = [
+    ...(personalTasks || []).map(t => ({
+      ...t,
+      type: 'personal' as const,
+      assignees: t.assignee ? [t.assignee] : [],
+    })),
+    ...(agentTasks || []).map(t => ({
+      ...t,
+      type: 'agent' as const,
+      assignees: t.assignedTo,
+      priority: t.priority,
+      status: t.status,
+      category: 'development' as const,
+    })),
+  ];
+
+  const filteredTasks = allTasks.filter(t => {
+    if (activeTab === "personal" && t.type !== "personal") return false;
+    if (activeTab === "agent" && t.type !== "agent") return false;
+    if (priorityFilter !== "all" && t.priority !== priorityFilter) return false;
+    return true;
+  });
+
+  const activeStatuses = ["backlog", "todo", "in_progress", "review", "pending"];
+  const groupedByStatus = activeStatuses.reduce((acc, status) => {
+    acc[status] = filteredTasks.filter((t) => t.status === status);
+    return acc;
+  }, {} as Record<string, typeof filteredTasks>);
+
+  const completedTasks = filteredTasks.filter((t) => t.status === "done" || t.status === "completed");
+  const cancelledTasks = filteredTasks.filter((t) => t.status === "cancelled");
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold flex items-center gap-2"><CheckSquare className="h-8 w-8" /> Tasks</h1>
-        <Dialog open={showAddDialog} onOpenChange={setShowAddDialog}>
-          <DialogTrigger asChild><Button><Plus className="mr-2 h-4 w-4" />Add Task</Button></DialogTrigger>
-          <DialogContent>
-            <DialogHeader><DialogTitle>New Task</DialogTitle></DialogHeader>
-            <div className="space-y-4">
-              <Input placeholder="Task title" value={newTitle} onChange={(e) => setNewTitle(e.target.value)} onKeyDown={(e) => e.key === "Enter" && handleCreate()} />
-              <div className="flex gap-2">
-                <Select value={newPriority} onValueChange={setNewPriority}>
-                  <SelectTrigger><SelectValue /></SelectTrigger>
-                  <SelectContent>{priorities.map((p) => <SelectItem key={p} value={p}>{p}</SelectItem>)}</SelectContent>
-                </Select>
-                <Select value={newCategory} onValueChange={setNewCategory}>
-                  <SelectTrigger><SelectValue /></SelectTrigger>
-                  <SelectContent>{categories.map((c) => <SelectItem key={c} value={c}>{c.replace("_", " ")}</SelectItem>)}</SelectContent>
-                </Select>
+        <div>
+          <h1 className="text-3xl font-bold flex items-center gap-2">
+            <CheckSquare className="h-8 w-8" /> Tasks
+          </h1>
+          <p className="text-muted-foreground mt-1">
+            {filteredTasks.length} total • {completedTasks.length} completed
+          </p>
+        </div>
+        <div className="flex gap-2">
+          <Button variant="outline" asChild>
+            <Link href="/agents">
+              <Users className="mr-2 h-4 w-4" />
+              Agent Dashboard
+            </Link>
+          </Button>
+          <Dialog open={showAddDialog} onOpenChange={setShowAddDialog}>
+            <DialogTrigger asChild>
+              <Button>
+                <Plus className="mr-2 h-4 w-4" />
+                Add Task
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader><DialogTitle>New Task</DialogTitle></DialogHeader>
+              <div className="space-y-4">
+                <Input 
+                  placeholder="Task title" 
+                  value={newTitle} 
+                  onChange={(e) => setNewTitle(e.target.value)} 
+                  onKeyDown={(e) => e.key === "Enter" && handleCreate()} 
+                />
+                <div className="flex gap-2">
+                  <Select value={newPriority} onValueChange={setNewPriority}>
+                    <SelectTrigger><SelectValue /></SelectTrigger>
+                    <SelectContent>
+                      {priorities.map((p) => <SelectItem key={p} value={p}>{p}</SelectItem>)}
+                    </SelectContent>
+                  </Select>
+                  <Select value={newCategory} onValueChange={setNewCategory}>
+                    <SelectTrigger><SelectValue /></SelectTrigger>
+                    <SelectContent>
+                      {categories.map((c) => <SelectItem key={c} value={c}>{c.replace("_", " ")}</SelectItem>)}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <Button onClick={handleCreate} className="w-full">Create Task</Button>
               </div>
-              <Button onClick={handleCreate} className="w-full">Create Task</Button>
-            </div>
-          </DialogContent>
-        </Dialog>
+            </DialogContent>
+          </Dialog>
+        </div>
       </div>
 
       <div className="flex gap-4">
-        <Select value={categoryFilter} onValueChange={setCategoryFilter}>
-          <SelectTrigger className="w-48"><SelectValue placeholder="Category" /></SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All Categories</SelectItem>
-            {categories.map((c) => <SelectItem key={c} value={c}>{c.replace("_", " ")}</SelectItem>)}
-          </SelectContent>
-        </Select>
+        <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as any)} className="flex-1">
+          <TabsList>
+            <TabsTrigger value="all">All Tasks ({allTasks.length})</TabsTrigger>
+            <TabsTrigger value="personal">Personal ({personalTasks?.length || 0})</TabsTrigger>
+            <TabsTrigger value="agent">Agent Tasks ({agentTasks?.length || 0})</TabsTrigger>
+          </TabsList>
+        </Tabs>
+
         <Select value={priorityFilter} onValueChange={setPriorityFilter}>
           <SelectTrigger className="w-48"><SelectValue placeholder="Priority" /></SelectTrigger>
           <SelectContent>
@@ -99,133 +174,163 @@ export default function TasksPage() {
             {priorities.map((p) => <SelectItem key={p} value={p}>{p}</SelectItem>)}
           </SelectContent>
         </Select>
+
+        {activeTab === "personal" && (
+          <Select value={categoryFilter} onValueChange={setCategoryFilter}>
+            <SelectTrigger className="w-48"><SelectValue placeholder="Category" /></SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Categories</SelectItem>
+              {categories.map((c) => <SelectItem key={c} value={c}>{c.replace("_", " ")}</SelectItem>)}
+            </SelectContent>
+          </Select>
+        )}
       </div>
 
-      <Tabs defaultValue="board">
+      <Tabs defaultValue="board" className="w-full">
         <TabsList>
-          <TabsTrigger value="board">Board</TabsTrigger>
-          <TabsTrigger value="list">List</TabsTrigger>
-          <TabsTrigger value="agent-tasks">Agent Tasks ({agentTasks?.length ?? 0})</TabsTrigger>
+          <TabsTrigger value="board">Board View</TabsTrigger>
+          <TabsTrigger value="list">List View</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="board">
-          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <TabsContent value="board" className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {activeStatuses.map((status) => {
-              const statusTasks = tasks?.filter((t) => t.status === status) ?? [];
+              const tasksInStatus = groupedByStatus[status] || [];
               return (
                 <Card key={status}>
-                  <CardHeader className="py-3">
-                    <CardTitle className="text-sm">{statusLabels[status]} <Badge variant="outline" className="ml-1">{statusTasks.length}</Badge></CardTitle>
+                  <CardHeader className="pb-3">
+                    <CardTitle className="text-sm font-medium flex items-center justify-between">
+                      {statusLabels[status]}
+                      <Badge variant="outline">{tasksInStatus.length}</Badge>
+                    </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-2">
-                    {statusTasks.map((task) => (
-                      <div key={task._id} className="p-3 rounded-lg bg-muted/50 space-y-2">
-                        <div className="flex items-start justify-between">
-                          <Link href={`/tasks/${task._id}`} className="text-sm font-medium hover:underline">{task.title}</Link>
-                          <Badge variant={priorityColors[task.priority] as any} className="text-xs ml-1">{task.priority}</Badge>
-                        </div>
-                        <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                          <Badge variant="outline" className="text-xs">{task.category.replace("_", " ")}</Badge>
-                          {task.assignee && <span>• {task.assignee}</span>}
-                        </div>
-                        <div className="flex gap-1">
-                          {status !== "review" && (
-                            <Button size="sm" variant="ghost" className="h-6 text-xs" onClick={() => moveTask(task._id, statuses[statuses.indexOf(status) + 1])}>
-                              <ArrowRight className="h-3 w-3" />
-                            </Button>
-                          )}
-                          {status === "review" && (
-                            <Button size="sm" variant="ghost" className="h-6 text-xs" onClick={() => moveTask(task._id, "done")}>✅ Done</Button>
-                          )}
-                          <Button size="sm" variant="ghost" className="h-6 text-xs" onClick={() => removeTask({ id: task._id })}>
-                            <Trash2 className="h-3 w-3" />
-                          </Button>
-                        </div>
-                      </div>
+                    {tasksInStatus.map((task) => (
+                      <Link 
+                        key={task._id} 
+                        href={task.type === 'personal' ? `/tasks/${task._id}` : `/agents`}
+                        className="block"
+                      >
+                        <Card className="p-3 hover:bg-muted/50 transition-colors cursor-pointer">
+                          <div className="flex items-start justify-between mb-2">
+                            <p className="text-sm font-medium line-clamp-2">{task.title}</p>
+                            {task.type === 'agent' && (
+                              <Badge variant="outline" className="text-xs ml-2">
+                                <Users className="h-3 w-3 mr-1" />
+                                Agent
+                              </Badge>
+                            )}
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Badge variant={priorityColors[task.priority]} className="text-xs">
+                              {task.priority}
+                            </Badge>
+                            {task.assignees && task.assignees.length > 0 && (
+                              <span className="text-xs text-muted-foreground truncate">
+                                {task.assignees.join(", ")}
+                              </span>
+                            )}
+                          </div>
+                        </Card>
+                      </Link>
                     ))}
                   </CardContent>
                 </Card>
               );
             })}
           </div>
-        </TabsContent>
 
-        <TabsContent value="list">
-          <Card>
-            <CardContent className="py-4">
-              <div className="space-y-2">
-                {tasks?.map((task) => (
-                  <div key={task._id} className="flex items-center justify-between p-3 rounded-lg hover:bg-muted/50">
-                    <div className="flex items-center gap-3">
-                      <Badge variant="outline">{statusLabels[task.status]}</Badge>
-                      <Link href={`/tasks/${task._id}`} className="font-medium hover:underline">{task.title}</Link>
-                      <Badge variant={priorityColors[task.priority] as any} className="text-xs">{task.priority}</Badge>
-                      <Badge variant="outline" className="text-xs">{task.category.replace("_", " ")}</Badge>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      {task.dueDate && <span className="text-xs text-muted-foreground">{format(new Date(task.dueDate), "MMM d")}</span>}
-                      <Button size="sm" variant="ghost" onClick={() => removeTask({ id: task._id })}><Trash2 className="h-4 w-4" /></Button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="agent-tasks">
-          <Card>
-            <CardHeader>
-              <CardTitle>Agent Tasks</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                {!agentTasks?.length ? (
-                  <div className="text-center py-8 text-muted-foreground">
-                    No agent tasks yet
-                  </div>
-                ) : (
-                  agentTasks.map((task) => (
-                    <div key={task._id} className="p-4 rounded-lg border hover:bg-muted/50">
-                      <div className="flex items-start justify-between mb-2">
-                        <div className="flex-1">
-                          <h3 className="font-medium">{task.title}</h3>
-                          {task.description && (
-                            <p className="text-sm text-muted-foreground mt-1">{task.description}</p>
+          {(completedTasks.length > 0 || cancelledTasks.length > 0) && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {completedTasks.length > 0 && (
+                <Card>
+                  <CardHeader className="pb-3">
+                    <CardTitle className="text-sm font-medium flex items-center justify-between">
+                      ✅ Completed
+                      <Badge variant="outline">{completedTasks.length}</Badge>
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-2 max-h-64 overflow-y-auto">
+                      {completedTasks.map((task) => (
+                        <div key={task._id} className="text-sm p-2 bg-muted/30 rounded flex items-center justify-between">
+                          <span className="line-through opacity-60 flex-1">{task.title}</span>
+                          {task.type === 'agent' && (
+                            <Badge variant="outline" className="text-xs">Agent</Badge>
                           )}
                         </div>
-                        <Badge variant={priorityColors[task.priority] as any}>
-                          {task.priority}
-                        </Badge>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+
+              {cancelledTasks.length > 0 && (
+                <Card>
+                  <CardHeader className="pb-3">
+                    <CardTitle className="text-sm font-medium flex items-center justify-between">
+                      ❌ Cancelled
+                      <Badge variant="outline">{cancelledTasks.length}</Badge>
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-2 max-h-64 overflow-y-auto">
+                      {cancelledTasks.map((task) => (
+                        <div key={task._id} className="text-sm p-2 bg-muted/30 rounded opacity-60">
+                          {task.title}
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+            </div>
+          )}
+        </TabsContent>
+
+        <TabsContent value="list" className="space-y-2">
+          {filteredTasks.length === 0 ? (
+            <Card>
+              <CardContent className="py-12 text-center text-muted-foreground">
+                <CheckSquare className="h-12 w-12 mx-auto mb-3 opacity-20" />
+                <p>No tasks found</p>
+              </CardContent>
+            </Card>
+          ) : (
+            filteredTasks.map((task) => (
+              <Card key={task._id} className="hover:bg-muted/50 transition-colors">
+                <CardContent className="p-4">
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-2">
+                        <Link 
+                          href={task.type === 'personal' ? `/tasks/${task._id}` : `/agents`}
+                          className="font-medium hover:underline"
+                        >
+                          {task.title}
+                        </Link>
+                        {task.type === 'agent' && (
+                          <Badge variant="outline" className="text-xs">
+                            <Users className="h-3 w-3 mr-1" />
+                            Agent Task
+                          </Badge>
+                        )}
                       </div>
-                      <div className="flex items-center gap-3 text-sm text-muted-foreground">
-                        <Badge variant={
-                          task.status === "completed" ? "default" : 
-                          task.status === "in_progress" ? "secondary" : 
-                          task.status === "blocked" ? "destructive" : "outline"
-                        }>
-                          {task.status.replace("_", " ")}
-                        </Badge>
-                        {task.assignedTo && task.assignedTo.length > 0 && (
-                          <span className="flex items-center gap-1">
-                            👤 {task.assignedTo.join(", ")}
+                      <div className="flex items-center gap-2 text-sm">
+                        <Badge variant="outline">{statusLabels[task.status]}</Badge>
+                        <Badge variant={priorityColors[task.priority]}>{task.priority}</Badge>
+                        {task.assignees && task.assignees.length > 0 && (
+                          <span className="text-muted-foreground">
+                            {task.assignees.join(", ")}
                           </span>
                         )}
-                        {task.createdBy && (
-                          <span className="text-xs">by {task.createdBy}</span>
-                        )}
                       </div>
-                      {task.context && (
-                        <div className="mt-2 text-xs text-muted-foreground bg-muted/30 p-2 rounded">
-                          📝 {task.context}
-                        </div>
-                      )}
                     </div>
-                  ))
-                )}
-              </div>
-            </CardContent>
-          </Card>
+                  </div>
+                </CardContent>
+              </Card>
+            ))
+          )}
         </TabsContent>
       </Tabs>
     </div>
