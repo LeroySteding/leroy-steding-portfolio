@@ -473,3 +473,45 @@ export const getAgentSessions = query({
     return sessions.sort((a, b) => b.lastActivity - a.lastActivity);
   },
 });
+
+// ============================================================================
+// AGENT FEED
+// ============================================================================
+
+export const getAgentFeed = query({
+  args: {
+    type: v.optional(
+      v.union(
+        v.literal("news"),
+        v.literal("trend"),
+        v.literal("alert"),
+        v.literal("task_update"),
+        v.literal("deploy"),
+        v.literal("pr"),
+        v.literal("briefing"),
+        v.literal("insight")
+      )
+    ),
+    limit: v.optional(v.number()),
+    read: v.optional(v.boolean()),
+  },
+  handler: async (ctx, args) => {
+    let feed = await ctx.db.query("agent_feed").collect();
+
+    if (args.type) {
+      feed = feed.filter((f) => f.type === args.type);
+    }
+
+    if (args.read !== undefined) {
+      feed = feed.filter((f) => f.read === args.read);
+    }
+
+    feed = feed.sort((a, b) => b.createdAt - a.createdAt);
+
+    if (args.limit) {
+      feed = feed.slice(0, args.limit);
+    }
+
+    return feed;
+  },
+});

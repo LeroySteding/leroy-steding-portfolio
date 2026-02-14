@@ -1,4 +1,7 @@
 import { AgentStatus } from "@/components/agent-status";
+import { ActiveTasks } from "@/components/active-tasks";
+import { CaseFiles } from "@/components/case-files";
+import { AgentMemory } from "@/components/agent-memory";
 
 export default function AgentsPage() {
   return (
@@ -11,12 +14,17 @@ export default function AgentsPage() {
       </div>
 
       <div className="grid gap-6">
+        {/* Real-time Agent Status */}
         <AgentStatus />
 
-        {/* Add more components here */}
-        {/* <ActiveTasks /> */}
-        {/* <CaseFiles /> */}
-        {/* <AgentMemory /> */}
+        {/* Task Kanban Board */}
+        <ActiveTasks />
+
+        {/* Project Case Files */}
+        <CaseFiles />
+
+        {/* Shared Knowledge Base */}
+        <AgentMemory />
       </div>
     </div>
   );
