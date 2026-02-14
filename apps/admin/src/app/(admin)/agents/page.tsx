@@ -1,5 +1,5 @@
 import { AgentStatus } from "@/components/agent-status";
-import { ActiveTasks } from "@/components/active-tasks";
+import { ActiveTasksSimple } from "@/components/active-tasks-simple";
 import { CaseFiles } from "@/components/case-files";
 import { AgentFeed } from "@/components/agent-feed";
 import { AgentMemory } from "@/components/agent-memory";
@@ -33,7 +33,7 @@ export default function AgentsPage() {
           </TabsList>
 
           <TabsContent value="tasks" className="space-y-6">
-            <ActiveTasks />
+            <ActiveTasksSimple />
           </TabsContent>
 
           <TabsContent value="cases" className="space-y-6">

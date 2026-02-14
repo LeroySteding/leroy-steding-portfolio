@@ -27,7 +27,6 @@ import type * as linearWebhook from "../linearWebhook.js";
 import type * as media from "../media.js";
 import type * as portfolio from "../portfolio.js";
 import type * as projects from "../projects.js";
-import type * as seedAgents from "../seedAgents.js";
 import type * as seo_tracking from "../seo_tracking.js";
 import type * as site_settings from "../site_settings.js";
 import type * as skills from "../skills.js";
@@ -59,7 +58,6 @@ declare const fullApi: ApiFromModules<{
   media: typeof media;
   portfolio: typeof portfolio;
   projects: typeof projects;
-  seedAgents: typeof seedAgents;
   seo_tracking: typeof seo_tracking;
   site_settings: typeof site_settings;
   skills: typeof skills;
