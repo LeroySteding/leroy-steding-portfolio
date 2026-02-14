@@ -7,6 +7,7 @@ import { useLayout } from "@/contexts/LayoutContext";
 import { useTranslation } from "@/hooks/useTranslation";
 import type { SanityHeroSection } from "@/lib/convex-content";
 import { useLocalizedPath } from "@/lib/localization";
+import LiveStats from "../LiveStats";
 
 interface HeroProps {
   data?: SanityHeroSection | null;
@@ -66,72 +67,77 @@ export default function Hero({ data }: HeroProps) {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className={`${contentLayoutClass} ${heroMaxWidthClass}`}
+          className={`w-full ${heroMaxWidthClass}`}
         >
-          {/* Left side - Text content */}
-          <div className="space-y-4 sm:space-y-6 md:space-y-8 text-center lg:text-left">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-            >
-              <h2 className="font-display font-black leading-[0.9]">
-                <span
-                  className={`block ${titleSizes} text-gradient mb-3 sm:mb-4 md:mb-6 drop-shadow-2xl`}
-                >
-                  {title}
-                </span>
-                <span
-                  className={`block ${subtitleSizes} text-accent-secondary font-bold drop-shadow-lg`}
-                >
-                  {subtitle}
-                </span>
-              </h2>
-            </motion.div>
+          <div className={contentLayoutClass}>
+            {/* Left side - Text content */}
+            <div className="space-y-4 sm:space-y-6 md:space-y-8 text-center lg:text-left">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+              >
+                <h2 className="font-display font-black leading-[0.9]">
+                  <span
+                    className={`block ${titleSizes} text-gradient mb-3 sm:mb-4 md:mb-6 drop-shadow-2xl`}
+                  >
+                    {title}
+                  </span>
+                  <span
+                    className={`block ${subtitleSizes} text-accent-secondary font-bold drop-shadow-lg`}
+                  >
+                    {subtitle}
+                  </span>
+                </h2>
+              </motion.div>
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+                className={`${taglineSizes} text-text-secondary leading-relaxed max-w-2xl mx-auto lg:mx-0`}
+              >
+                {tagline}
+              </motion.p>
+            </div>
+
+            {/* Right side - CTA Buttons (flex-col) */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className={`${taglineSizes} text-text-secondary leading-relaxed max-w-2xl mx-auto lg:mx-0`}
+              transition={{ duration: 0.8, delay: 0.8 }}
+              className="flex flex-col gap-3 sm:gap-4 md:gap-5 w-full max-w-xs sm:max-w-sm"
             >
-              {tagline}
-            </motion.p>
+              <Link
+                href="#projects"
+                className="group relative overflow-hidden bg-accent-primary hover:bg-accent-primary/90 text-primary-bg font-bold text-sm sm:text-base md:text-lg px-6 sm:px-8 md:px-10 py-3.5 sm:py-4 md:py-5 rounded-xl transition-all duration-300 inline-flex items-center justify-center gap-2 sm:gap-3 shadow-2xl hover:shadow-accent-primary/50 hover:scale-105 min-h-[48px]"
+              >
+                <span className="relative z-10">{t.hero.cta.projects}</span>
+                <ArrowRight className="relative z-10 w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-2 transition-transform duration-300" />
+                <div className="absolute inset-0 bg-linear-to-r from-accent-primary to-accent-secondary opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              </Link>
+
+              <Link
+                href={getLocalizedPath("/cv")}
+                target="_blank"
+                className="group relative overflow-hidden bg-surface hover:bg-surface-light border-2 border-accent-primary/30 hover:border-accent-primary text-text-primary font-bold text-sm sm:text-base md:text-lg px-6 sm:px-8 md:px-10 py-3.5 sm:py-4 md:py-5 rounded-xl transition-all duration-300 inline-flex items-center justify-center gap-2 sm:gap-3 shadow-xl hover:scale-105 min-h-[48px]"
+              >
+                <Download className="relative z-10 w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-y-1 transition-transform duration-300" />
+                <span className="relative z-10">{t.hero.cta.cv}</span>
+              </Link>
+
+              <Link
+                href={getLocalizedPath("/book")}
+                className="group relative overflow-hidden bg-surface hover:bg-surface-light border-2 border-accent-secondary/30 hover:border-accent-secondary text-text-primary font-bold text-sm sm:text-base md:text-lg px-6 sm:px-8 md:px-10 py-3.5 sm:py-4 md:py-5 rounded-xl transition-all duration-300 inline-flex items-center justify-center gap-2 sm:gap-3 shadow-xl hover:scale-105 min-h-[48px]"
+              >
+                <Calendar className="relative z-10 w-4 h-4 sm:w-5 sm:h-5 group-hover:scale-110 transition-transform duration-300" />
+                <span className="relative z-10">Schedule a Call</span>
+              </Link>
+            </motion.div>
           </div>
 
-          {/* Right side - CTA Buttons (flex-col) */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
-            className="flex flex-col gap-3 sm:gap-4 md:gap-5 w-full max-w-xs sm:max-w-sm"
-          >
-            <Link
-              href="#projects"
-              className="group relative overflow-hidden bg-accent-primary hover:bg-accent-primary/90 text-primary-bg font-bold text-sm sm:text-base md:text-lg px-6 sm:px-8 md:px-10 py-3.5 sm:py-4 md:py-5 rounded-xl transition-all duration-300 inline-flex items-center justify-center gap-2 sm:gap-3 shadow-2xl hover:shadow-accent-primary/50 hover:scale-105 min-h-[48px]"
-            >
-              <span className="relative z-10">{t.hero.cta.projects}</span>
-              <ArrowRight className="relative z-10 w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-2 transition-transform duration-300" />
-              <div className="absolute inset-0 bg-linear-to-r from-accent-primary to-accent-secondary opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            </Link>
-
-            <Link
-              href={getLocalizedPath("/cv")}
-              target="_blank"
-              className="group relative overflow-hidden bg-surface hover:bg-surface-light border-2 border-accent-primary/30 hover:border-accent-primary text-text-primary font-bold text-sm sm:text-base md:text-lg px-6 sm:px-8 md:px-10 py-3.5 sm:py-4 md:py-5 rounded-xl transition-all duration-300 inline-flex items-center justify-center gap-2 sm:gap-3 shadow-xl hover:scale-105 min-h-[48px]"
-            >
-              <Download className="relative z-10 w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-y-1 transition-transform duration-300" />
-              <span className="relative z-10">{t.hero.cta.cv}</span>
-            </Link>
-
-            <Link
-              href={getLocalizedPath("/book")}
-              className="group relative overflow-hidden bg-surface hover:bg-surface-light border-2 border-accent-secondary/30 hover:border-accent-secondary text-text-primary font-bold text-sm sm:text-base md:text-lg px-6 sm:px-8 md:px-10 py-3.5 sm:py-4 md:py-5 rounded-xl transition-all duration-300 inline-flex items-center justify-center gap-2 sm:gap-3 shadow-xl hover:scale-105 min-h-[48px]"
-            >
-              <Calendar className="relative z-10 w-4 h-4 sm:w-5 sm:h-5 group-hover:scale-110 transition-transform duration-300" />
-              <span className="relative z-10">Schedule a Call</span>
-            </Link>
-          </motion.div>
+          {/* Live Stats */}
+          <LiveStats />
         </motion.div>
       </div>
 

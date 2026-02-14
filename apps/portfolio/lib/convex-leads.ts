@@ -1,5 +1,5 @@
 import { ConvexHttpClient } from "convex/browser";
-import { api } from "../../convex/_generated/api";
+import { api } from "../../../convex/_generated/api";
 
 // Initialize Convex client for server-side usage
 const convexUrl = process.env.NEXT_PUBLIC_CONVEX_URL;
@@ -45,7 +45,7 @@ export async function upsertLead(data: {
     // Map contact_form to contact for Convex schema
     const source = data.source === "contact_form" ? "contact" : data.source;
 
-    const leadId = await convex.mutation(api.leads.upsertLead, {
+    const result = await convex.mutation(api.portfolioLeads.upsertLead, {
       email: data.email,
       name: data.name,
       source,
@@ -66,7 +66,7 @@ export async function upsertLead(data: {
       },
     });
 
-    return { success: true, id: leadId };
+    return { success: true, id: result.id, isNew: result.isNew };
   } catch (error) {
     console.error("Failed to upsert lead in Convex:", error);
     return { success: false, error: String(error) };
@@ -81,7 +81,7 @@ export async function getLeadByEmail(email: string) {
   }
 
   try {
-    return await convex.query(api.leads.getLeadByEmail, { email });
+    return await convex.query(api.portfolioLeads.getLeadByEmail, { email });
   } catch (error) {
     console.error("Failed to get lead by email:", error);
     return null;
@@ -106,7 +106,7 @@ export async function updateLeadByEmail(
   }
 
   try {
-    const leadId = await convex.mutation(api.leads.updateLeadByEmail, {
+    const leadId = await convex.mutation(api.portfolioLeads.updateLeadByEmail, {
       email,
       ...updates,
     });
