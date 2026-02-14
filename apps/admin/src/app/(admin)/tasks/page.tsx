@@ -45,7 +45,7 @@ export default function TasksPage() {
   const [newTitle, setNewTitle] = useState("");
   const [newPriority, setNewPriority] = useState<string>("medium");
   const [newCategory, setNewCategory] = useState<string>("development");
-  const [activeTab, setActiveTab] = useState<"all" | "personal" | "agent">("all");
+  const [activeTab, setActiveTab] = useState<"all" | "personal" | "agent">("agent");
 
   // Get both types of tasks
   const personalTasks = useQuery(api.tasks.list, {
