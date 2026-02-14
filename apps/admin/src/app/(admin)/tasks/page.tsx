@@ -40,6 +40,7 @@ export default function TasksPage() {
     ...(categoryFilter !== "all" ? { category: categoryFilter as any } : {}),
     ...(priorityFilter !== "all" ? { priority: priorityFilter as any } : {}),
   });
+  const agentTasks = useQuery(api.agentCoordination.getAgentTasks, {});
   const createTask = useMutation(api.tasks.create);
   const updateTask = useMutation(api.tasks.update);
   const removeTask = useMutation(api.tasks.remove);
@@ -104,6 +105,7 @@ export default function TasksPage() {
         <TabsList>
           <TabsTrigger value="board">Board</TabsTrigger>
           <TabsTrigger value="list">List</TabsTrigger>
+          <TabsTrigger value="agent-tasks">Agent Tasks ({agentTasks?.length ?? 0})</TabsTrigger>
         </TabsList>
 
         <TabsContent value="board">
@@ -166,6 +168,61 @@ export default function TasksPage() {
                     </div>
                   </div>
                 ))}
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="agent-tasks">
+          <Card>
+            <CardHeader>
+              <CardTitle>Agent Tasks</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-3">
+                {!agentTasks?.length ? (
+                  <div className="text-center py-8 text-muted-foreground">
+                    No agent tasks yet
+                  </div>
+                ) : (
+                  agentTasks.map((task) => (
+                    <div key={task._id} className="p-4 rounded-lg border hover:bg-muted/50">
+                      <div className="flex items-start justify-between mb-2">
+                        <div className="flex-1">
+                          <h3 className="font-medium">{task.title}</h3>
+                          {task.description && (
+                            <p className="text-sm text-muted-foreground mt-1">{task.description}</p>
+                          )}
+                        </div>
+                        <Badge variant={priorityColors[task.priority] as any}>
+                          {task.priority}
+                        </Badge>
+                      </div>
+                      <div className="flex items-center gap-3 text-sm text-muted-foreground">
+                        <Badge variant={
+                          task.status === "completed" ? "default" : 
+                          task.status === "in_progress" ? "secondary" : 
+                          task.status === "blocked" ? "destructive" : "outline"
+                        }>
+                          {task.status.replace("_", " ")}
+                        </Badge>
+                        {task.assignedTo && task.assignedTo.length > 0 && (
+                          <span className="flex items-center gap-1">
+                            👤 {task.assignedTo.join(", ")}
+                          </span>
+                        )}
+                        {task.createdBy && (
+                          <span className="text-xs">by {task.createdBy}</span>
+                        )}
+                      </div>
+                      {task.context && (
+                        <div className="mt-2 text-xs text-muted-foreground bg-muted/30 p-2 rounded">
+                          📝 {task.context}
+                        </div>
+                      )}
+                    </div>
+                  ))
+                )}
               </div>
             </CardContent>
           </Card>
