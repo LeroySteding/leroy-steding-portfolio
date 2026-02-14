@@ -1,5 +1,6 @@
 "use client";
 
+import { use } from "react";
 import { useQuery, useMutation } from "convex/react";
 import { api } from "../../../../../convex/_generated/api";
 import { Button } from "@/components/ui/button";
@@ -22,9 +23,10 @@ import { toast } from "@/components/ui/use-toast";
 export default function ProjectViewPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const project = useQuery(api.projects.get, { id: params.id as any });
+  const { id } = use(params);
+  const project = useQuery(api.projects.get, { id: id as any });
   const updateProject = useMutation(api.projects.update);
 
   if (!project) {
@@ -67,7 +69,7 @@ export default function ProjectViewPage({
             {project.published ? "Unpublish" : "Publish"}
           </Button>
           <Button asChild>
-            <Link href={`/projects/${params.id}/edit`}>
+            <Link href={`/projects/${id}/edit`}>
               <Edit className="h-4 w-4 mr-2" />
               Edit
             </Link>

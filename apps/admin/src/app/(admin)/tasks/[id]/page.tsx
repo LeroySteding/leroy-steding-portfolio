@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { use, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useQuery, useMutation } from "convex/react";
 import { api } from "../../../../../convex/_generated/api";
@@ -40,9 +40,10 @@ const statusFlow: Record<string, string[]> = {
   cancelled: [],
 };
 
-export default function TaskDetailPage({ params }: { params: { id: string } }) {
+export default function TaskDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params);
   const router = useRouter();
-  const task = useQuery(api.tasks.get, { id: params.id as Id<"tasks"> });
+  const task = useQuery(api.tasks.get, { id: id as Id<"tasks"> });
   const updateTask = useMutation(api.tasks.update);
 
   const [editing, setEditing] = useState(false);
@@ -70,7 +71,7 @@ export default function TaskDetailPage({ params }: { params: { id: string } }) {
   const handleSave = async () => {
     try {
       await updateTask({
-        id: params.id as Id<"tasks">,
+        id: id as Id<"tasks">,
         title: form.title,
         description: form.description || undefined,
         status: form.status as any,
@@ -89,7 +90,7 @@ export default function TaskDetailPage({ params }: { params: { id: string } }) {
   };
 
   const handleStatusChange = async (newStatus: string) => {
-    await updateTask({ id: params.id as Id<"tasks">, status: newStatus as any });
+    await updateTask({ id: id as Id<"tasks">, status: newStatus as any });
     toast({ title: "Status updated", description: `Moved to ${statusLabels[newStatus]}` });
   };
 

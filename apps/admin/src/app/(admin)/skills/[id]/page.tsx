@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { use, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useQuery, useMutation } from "convex/react";
 import { api } from "../../../../../convex/_generated/api";
@@ -25,10 +25,11 @@ import { toast } from "@/components/ui/use-toast";
 export default function SkillDetailPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
+  const { id } = use(params);
   const router = useRouter();
-  const skill = useQuery(api.skills.get, { id: params.id as any });
+  const skill = useQuery(api.skills.get, { id: id as any });
   const updateSkill = useMutation(api.skills.update);
   const deleteSkill = useMutation(api.skills.remove);
 
@@ -65,7 +66,7 @@ export default function SkillDetailPage({
     setIsSubmitting(true);
     try {
       await updateSkill({
-        id: params.id as any,
+        id: id as any,
         name,
         category,
         proficiency,
@@ -87,7 +88,7 @@ export default function SkillDetailPage({
 
   const handleDelete = async () => {
     try {
-      await deleteSkill({ id: params.id as any });
+      await deleteSkill({ id: id as any });
       toast({ title: "Success", description: "Skill deleted successfully" });
       router.push("/skills");
     } catch (error) {

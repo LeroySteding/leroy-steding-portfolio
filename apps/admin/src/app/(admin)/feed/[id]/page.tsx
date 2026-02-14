@@ -1,5 +1,6 @@
 "use client";
 
+import { use, useState } from "react";
 import { useQuery, useMutation } from "convex/react";
 import { api } from "../../../../../convex/_generated/api";
 import { Button } from "@/components/ui/button";
@@ -18,7 +19,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { format } from "date-fns";
 import { useToast } from "@/components/ui/use-toast";
-import { useState } from "react";
 
 const typeEmojis: Record<string, string> = {
   news: "📰",
@@ -41,11 +41,12 @@ const priorityColors: Record<string, "default" | "secondary" | "destructive" | "
 export default function FeedItemViewPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
+  const { id } = use(params);
   const router = useRouter();
   const { toast } = useToast();
-  const item = useQuery(api.agent_feed.get, { id: params.id as any });
+  const item = useQuery(api.agent_feed.get, { id: id as any });
   const markRead = useMutation(api.agent_feed.markRead);
   const removeItem = useMutation(api.agent_feed.remove);
   const [showDelete, setShowDelete] = useState(false);

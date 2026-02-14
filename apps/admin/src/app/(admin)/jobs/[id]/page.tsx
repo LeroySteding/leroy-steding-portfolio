@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { use, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useQuery, useMutation } from "convex/react";
 import { api } from "../../../../../convex/_generated/api";
@@ -27,9 +27,10 @@ const statusEmoji: Record<string, string> = {
 
 type Contact = { name: string; role?: string; linkedin?: string };
 
-export default function JobDetailPage({ params }: { params: { id: string } }) {
+export default function JobDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params);
   const router = useRouter();
-  const job = useQuery(api.job_applications.get, { id: params.id as Id<"job_applications"> });
+  const job = useQuery(api.job_applications.get, { id: id as Id<"job_applications"> });
   const updateJob = useMutation(api.job_applications.update);
 
   const [editing, setEditing] = useState(false);
@@ -55,7 +56,7 @@ export default function JobDetailPage({ params }: { params: { id: string } }) {
   const handleSave = async () => {
     try {
       await updateJob({
-        id: params.id as Id<"job_applications">,
+        id: id as Id<"job_applications">,
         company: form.company, position: form.position,
         url: form.url || undefined, status: form.status as any,
         salary: form.salary || undefined, location: form.location || undefined,
@@ -72,7 +73,7 @@ export default function JobDetailPage({ params }: { params: { id: string } }) {
   };
 
   const handleStatusChange = async (newStatus: string) => {
-    await updateJob({ id: params.id as Id<"job_applications">, status: newStatus as any });
+    await updateJob({ id: id as Id<"job_applications">, status: newStatus as any });
     toast({ title: "Status updated" });
   };
 

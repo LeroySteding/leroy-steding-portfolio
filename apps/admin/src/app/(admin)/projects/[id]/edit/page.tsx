@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { use, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useQuery, useMutation } from "convex/react";
 import { api } from "../../../../../../convex/_generated/api";
@@ -21,10 +21,11 @@ import { toast } from "@/components/ui/use-toast";
 export default function EditProjectPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
+  const { id } = use(params);
   const router = useRouter();
-  const project = useQuery(api.projects.get, { id: params.id as any });
+  const project = useQuery(api.projects.get, { id: id as any });
   const updateProject = useMutation(api.projects.update);
 
   const [title, setTitle] = useState("");
@@ -66,7 +67,7 @@ export default function EditProjectPage({
     setIsSubmitting(true);
     try {
       await updateProject({
-        id: params.id as any,
+        id: id as any,
         title,
         slug,
         description,
