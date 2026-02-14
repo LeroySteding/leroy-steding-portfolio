@@ -1,5 +1,9 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { createLead, getLeadByEmail, updateLeadByEmail } from "@/lib/supabase";
+import {
+  createLead,
+  getLeadByEmail,
+  updateLeadByEmail,
+} from "@/lib/convex-leads";
 
 // Cal.com webhook payload type
 interface CalcomBookingPayload {

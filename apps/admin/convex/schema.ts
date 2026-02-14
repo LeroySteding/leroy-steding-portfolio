@@ -469,4 +469,100 @@ export default defineSchema({
     .index("by_status", ["status"])
     .index("by_session_id", ["sessionId"])
     .index("by_last_activity", ["lastActivity"]),
+
+  // Templates marketplace
+  templates: defineTable({
+    name: v.string(),
+    slug: v.string(),
+    tagline: v.string(),
+    description: v.string(),
+    longDescription: v.optional(v.string()),
+    price: v.number(),
+    originalPrice: v.optional(v.number()),
+    category: v.string(), // "saas", "ai", "fintech", "automation"
+    stack: v.array(v.string()), // ["Next.js", "Convex", "Clerk"]
+    features: v.array(v.string()),
+    image: v.string(),
+    previewImages: v.optional(v.array(v.string())),
+    demoUrl: v.string(),
+    githubUrl: v.optional(v.string()),
+    published: v.boolean(),
+    badge: v.optional(v.string()), // "New", "Bestseller", "Popular"
+    rating: v.number(),
+    reviewCount: v.number(),
+    salesCount: v.number(),
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  })
+    .index("by_slug", ["slug"])
+    .index("by_category", ["category"])
+    .index("by_published", ["published"])
+    .index("by_sales", ["salesCount"]),
+
+  template_purchases: defineTable({
+    templateId: v.id("templates"),
+    buyerEmail: v.string(),
+    buyerName: v.optional(v.string()),
+    licenseType: v.union(
+      v.literal("standard"),
+      v.literal("pro"),
+      v.literal("enterprise")
+    ),
+    price: v.number(),
+    stripeSessionId: v.string(),
+    stripeCustomerId: v.optional(v.string()),
+    githubRepoUrl: v.optional(v.string()),
+    purchasedAt: v.number(),
+  })
+    .index("by_email", ["buyerEmail"])
+    .index("by_template", ["templateId"])
+    .index("by_stripe_session", ["stripeSessionId"]),
+
+  // Portfolio leads (migrated from Supabase)
+  portfolio_leads: defineTable({
+    email: v.string(),
+    name: v.optional(v.string()),
+    company: v.optional(v.string()),
+    phone: v.optional(v.string()),
+    source: v.union(
+      v.literal("contact_form"),
+      v.literal("newsletter"),
+      v.literal("booking"),
+      v.literal("chat")
+    ),
+    status: v.optional(v.union(
+      v.literal("new"),
+      v.literal("contacted"),
+      v.literal("qualified"),
+      v.literal("converted"),
+      v.literal("archived")
+    )),
+    subject: v.optional(v.string()),
+    message: v.optional(v.string()),
+    subscribedToNewsletter: v.optional(v.boolean()),
+    newsletterConfirmed: v.optional(v.boolean()),
+    ipAddress: v.optional(v.string()),
+    userAgent: v.optional(v.string()),
+    referrer: v.optional(v.string()),
+    utmSource: v.optional(v.string()),
+    utmMedium: v.optional(v.string()),
+    utmCampaign: v.optional(v.string()),
+    locale: v.optional(v.string()),
+    leadScore: v.optional(v.number()),
+    tier: v.optional(v.union(
+      v.literal("hot"),
+      v.literal("warm"),
+      v.literal("cool"),
+      v.literal("cold")
+    )),
+    metadata: v.optional(v.any()),
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  })
+    .index("by_email", ["email"])
+    .index("by_source", ["source"])
+    .index("by_status", ["status"])
+    .index("by_lead_score", ["leadScore"])
+    .index("by_tier", ["tier"])
+    .index("by_created_at", ["createdAt"]),
 });

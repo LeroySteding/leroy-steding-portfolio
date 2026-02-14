@@ -1,7 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { cvData } from "@/data/cv";
 import { projects } from "@/data/projects";
-import { createLead, getLeadByEmail } from "@/lib/supabase";
+import { createLead, getLeadByEmail } from "@/lib/convex-leads";
 
 // Create a comprehensive context about Leroy for the AI
 function getPortfolioContext(): string {

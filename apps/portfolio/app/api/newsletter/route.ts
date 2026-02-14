@@ -1,7 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
+import { upsertLead } from "@/lib/convex-leads";
 import { getClientIp, rateLimit } from "@/lib/rate-limit";
-import { upsertLead } from "@/lib/supabase";
 
 const resend = process.env.RESEND_API_KEY
   ? new Resend(process.env.RESEND_API_KEY)
@@ -75,17 +75,17 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // Store lead in Supabase
+    // Store lead in Convex
     const leadResult = await upsertLead({
       email,
       source: "newsletter",
-      subscribed_to_newsletter: true,
-      ip_address: clientIp,
-      user_agent: userAgent,
+      subscribedToNewsletter: true,
+      ipAddress: clientIp,
+      userAgent,
       referrer,
-      utm_source: utmSource,
-      utm_medium: utmMedium,
-      utm_campaign: utmCampaign,
+      utmSource,
+      utmMedium,
+      utmCampaign,
       locale: locale || "en",
       metadata: {
         subscription_timestamp: new Date().toISOString(),
