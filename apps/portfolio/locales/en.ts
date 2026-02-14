@@ -87,6 +87,36 @@ export const en = {
         "Scalable cloud solutions with modern DevOps practices, CI/CD pipelines, and infrastructure as code.",
     },
   },
+  zzpTools: {
+    title: "ZZP",
+    titleHighlight: "Tools",
+    subtitle:
+      "SaaS products I've built to help Dutch freelancers (ZZP'ers) work more efficiently",
+    tryNow: "Try Now",
+    comingSoon: "Coming Soon",
+    tools: {
+      belastingbot: {
+        title: "Belastingbot",
+        description:
+          "BTW aangifte in 3 klikken — File your VAT return in seconds with automated calculations",
+      },
+      factuurApp: {
+        title: "Factuur App",
+        description:
+          "Professionele facturen in 30 seconden — Generate professional invoices instantly",
+      },
+      klantportaal: {
+        title: "Klantportaal",
+        description:
+          "Client portal for seamless project management and communication",
+      },
+    },
+    features: {
+      fast: "Lightning Fast",
+      simple: "Dead Simple",
+      zzp: "Built for ZZP",
+    },
+  },
   testimonials: {
     client1Name: "John Smith",
     client1Role: "CEO",

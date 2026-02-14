@@ -89,6 +89,35 @@ export const nl: Translations = {
         "Schaalbare cloud oplossingen met moderne DevOps praktijken, CI/CD pipelines en infrastructuur als code.",
     },
   },
+  zzpTools: {
+    title: "ZZP",
+    titleHighlight: "Tools",
+    subtitle:
+      "SaaS-producten die ik heb gebouwd om Nederlandse zzp'ers efficiënter te laten werken",
+    tryNow: "Probeer Nu",
+    comingSoon: "Binnenkort",
+    tools: {
+      belastingbot: {
+        title: "Belastingbot",
+        description:
+          "BTW aangifte in 3 klikken — Doe je BTW-aangifte in seconden met automatische berekeningen",
+      },
+      factuurApp: {
+        title: "Factuur App",
+        description:
+          "Professionele facturen in 30 seconden — Genereer direct professionele facturen",
+      },
+      klantportaal: {
+        title: "Klantportaal",
+        description: "Klantportaal voor naadloos projectbeheer en communicatie",
+      },
+    },
+    features: {
+      fast: "Razendsnel",
+      simple: "Supersimpel",
+      zzp: "Voor ZZP'ers",
+    },
+  },
   testimonials: {
     client1Name: "Jan Bakker",
     client1Role: "CEO",

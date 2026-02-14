@@ -22,6 +22,7 @@ import {
 // Below-fold sections - lazy loaded for better initial performance
 const Services = dynamic(() => import("@/components/sections/Services"));
 const Projects = dynamic(() => import("@/components/sections/Projects"));
+const ZZPTools = dynamic(() => import("@/components/sections/ZZPTools"));
 const Blog = dynamic(() => import("@/components/sections/Blog"));
 const Testimonials = dynamic(
   () => import("@/components/sections/Testimonials"),
@@ -65,6 +66,7 @@ export default async function Home() {
         <IntroAbout data={aboutData} />
         <Services />
         <Projects data={projects} sectionData={projectsSection} />
+        <ZZPTools />
         <Blog data={featuredPosts} sectionData={blogSection} />
         <Testimonials />
         <Contact data={contactData} />

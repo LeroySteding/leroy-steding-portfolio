@@ -21,6 +21,19 @@ export async function generateMetadata({
   const { locale } = await params;
   const isNL = locale === "nl";
 
+  const ogImageUrl = new URL("/api/og", "https://www.leroysteding.nl");
+  ogImageUrl.searchParams.set(
+    "title",
+    isNL ? "Over Leroy Steding" : "About Leroy Steding",
+  );
+  ogImageUrl.searchParams.set(
+    "description",
+    isNL
+      ? "Full-Stack Developer & AI Automation Architect"
+      : "Full-Stack Developer & AI Automation Architect",
+  );
+  ogImageUrl.searchParams.set("type", "profile");
+
   return {
     title: isNL
       ? "Over mij | Leroy Steding - Full-Stack Developer & AI Automation Architect"
@@ -41,6 +54,14 @@ export async function generateMetadata({
       siteName: "Leroy Steding Portfolio",
       locale: isNL ? "nl_NL" : "en_US",
       type: "profile",
+      images: [
+        {
+          url: ogImageUrl.toString(),
+          width: 1200,
+          height: 630,
+          alt: isNL ? "Over Leroy Steding" : "About Leroy Steding",
+        },
+      ],
     },
     alternates: {
       canonical: isNL
