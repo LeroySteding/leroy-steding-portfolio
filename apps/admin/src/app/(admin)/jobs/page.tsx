@@ -11,6 +11,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Textarea } from "@/components/ui/textarea";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Building2, Plus, ExternalLink, Trash2 } from "lucide-react";
+import Link from "next/link";
 import { format } from "date-fns";
 import { useState } from "react";
 
@@ -113,10 +114,10 @@ export default function JobsPage() {
               {jobs?.map((job) => (
                 <TableRow key={job._id}>
                   <TableCell className="font-medium">
-                    {job.company}
+                    <Link href={`/jobs/${job._id}`} className="hover:underline">{job.company}</Link>
                     {job.url && <a href={job.url} target="_blank" rel="noopener" className="ml-1 inline-block"><ExternalLink className="h-3 w-3" /></a>}
                   </TableCell>
-                  <TableCell>{job.position}</TableCell>
+                  <TableCell><Link href={`/jobs/${job._id}`} className="hover:underline">{job.position}</Link></TableCell>
                   <TableCell>
                     <Select value={job.status} onValueChange={(v) => updateJob({ id: job._id, status: v as any })}>
                       <SelectTrigger className="w-36 h-8"><SelectValue /></SelectTrigger>

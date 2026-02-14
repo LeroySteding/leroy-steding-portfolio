@@ -10,6 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { Calendar, Plus, Trash2 } from "lucide-react";
+import Link from "next/link";
 import { format } from "date-fns";
 import { useState } from "react";
 
@@ -95,7 +96,7 @@ export default function ContentPage() {
                   <div key={item._id} className="p-3 rounded-lg bg-muted/50 space-y-2">
                     <div className="flex items-center gap-1">
                       <span>{typeIcons[item.type]}</span>
-                      <span className="text-sm font-medium truncate">{item.title}</span>
+                      <Link href={`/content/${item._id}`} className="text-sm font-medium truncate hover:underline">{item.title}</Link>
                     </div>
                     {item.targetDate && <div className="text-xs text-muted-foreground">{format(new Date(item.targetDate), "MMM d")}</div>}
                     {item.notes && <p className="text-xs text-muted-foreground line-clamp-2">{item.notes}</p>}

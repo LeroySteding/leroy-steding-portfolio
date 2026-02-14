@@ -103,7 +103,7 @@ export default function ExperienceListPage() {
                 <CardContent className="p-6">
                   <div className="flex items-start justify-between mb-3">
                     <div>
-                      <h3 className="text-xl font-semibold">{exp.title}</h3>
+                      <Link href={`/experience/${exp._id}`} className="text-xl font-semibold hover:underline">{exp.title}</Link>
                       <p className="text-lg text-muted-foreground">{exp.company}</p>
                     </div>
                     <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">

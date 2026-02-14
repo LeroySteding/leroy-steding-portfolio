@@ -16,6 +16,7 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { Plus, Edit, Trash2, Lightbulb } from "lucide-react";
+import Link from "next/link";
 import { ConfirmDialog } from "@/components/confirm-dialog";
 import { EmptyState } from "@/components/empty-state";
 import { toast } from "@/components/ui/use-toast";
@@ -184,7 +185,7 @@ export default function SkillsPage() {
                   >
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-2">
-                        <span className="font-medium">{skill.name}</span>
+                        <Link href={`/skills/${skill._id}`} className="font-medium hover:underline">{skill.name}</Link>
                       </div>
                       <div className="flex items-center gap-2">
                         <div className="flex-1 h-2 bg-secondary rounded-full overflow-hidden">

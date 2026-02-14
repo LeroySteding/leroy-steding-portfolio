@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Rss, Check, CheckCheck, Trash2 } from "lucide-react";
+import Link from "next/link";
 import { format } from "date-fns";
 import { useState } from "react";
 
@@ -61,7 +62,7 @@ export default function FeedPage() {
                 <span className="text-2xl">{feedTypeIcons[item.type] ?? "📌"}</span>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="font-semibold">{item.title}</span>
+                    <Link href={`/feed/${item._id}`} className="font-semibold hover:underline">{item.title}</Link>
                     <Badge variant="outline" className="text-xs">{item.type.replace("_", " ")}</Badge>
                     <Badge variant={item.priority === "critical" || item.priority === "high" ? "destructive" : "secondary"} className="text-xs">{item.priority}</Badge>
                   </div>

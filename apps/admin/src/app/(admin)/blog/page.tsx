@@ -101,7 +101,7 @@ export default function BlogListPage() {
           <TableBody>
             {blogPosts.map((post) => (
               <TableRow key={post._id}>
-                <TableCell className="font-medium">{post.title}</TableCell>
+                <TableCell className="font-medium"><Link href={`/blog/${post._id}`} className="hover:underline">{post.title}</Link></TableCell>
                 <TableCell>
                   <Badge
                     variant={post.status === "published" ? "default" : "secondary"}

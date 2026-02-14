@@ -338,4 +338,135 @@ export default defineSchema({
     description: v.optional(v.string()),
     updatedBy: v.optional(v.string()),
   }).index("by_key", ["key"]),
+
+  // Multi-Agent Coordination Tables
+  agent_tasks: defineTable({
+    title: v.string(),
+    description: v.optional(v.string()),
+    assignedTo: v.array(v.string()), // agent names
+    status: v.union(
+      v.literal("pending"),
+      v.literal("in_progress"),
+      v.literal("blocked"),
+      v.literal("completed"),
+      v.literal("cancelled")
+    ),
+    priority: v.union(
+      v.literal("low"),
+      v.literal("medium"),
+      v.literal("high"),
+      v.literal("critical")
+    ),
+    context: v.optional(v.string()),
+    dependencies: v.array(v.string()), // other task IDs
+    createdBy: v.string(), // agent name
+    linearIssueId: v.optional(v.string()), // link to Linear
+    telegramMessageId: v.optional(v.string()),
+    caseFileId: v.optional(v.id("case_files")),
+    metadata: v.optional(v.any()),
+    createdAt: v.number(),
+    updatedAt: v.number(),
+    completedAt: v.optional(v.number()),
+  })
+    .index("by_status", ["status"])
+    .index("by_assigned_to", ["assignedTo"])
+    .index("by_priority", ["priority"])
+    .index("by_case_file", ["caseFileId"])
+    .index("by_linear_issue", ["linearIssueId"])
+    .index("by_created_at", ["createdAt"]),
+
+  agent_memory: defineTable({
+    agentName: v.string(),
+    category: v.union(
+      v.literal("decision"),
+      v.literal("learning"),
+      v.literal("context"),
+      v.literal("reference"),
+      v.literal("insight")
+    ),
+    content: v.string(),
+    tags: v.array(v.string()),
+    sharedWith: v.union(v.literal("all"), v.literal("team"), v.literal("private")),
+    relatedTaskId: v.optional(v.id("agent_tasks")),
+    relatedCaseId: v.optional(v.id("case_files")),
+    metadata: v.optional(v.any()),
+    createdAt: v.number(),
+  })
+    .index("by_agent", ["agentName"])
+    .index("by_category", ["category"])
+    .index("by_shared_with", ["sharedWith"])
+    .index("by_tags", ["tags"])
+    .index("by_created_at", ["createdAt"])
+    .searchIndex("search_content", {
+      searchField: "content",
+      filterFields: ["agentName", "category", "sharedWith"],
+    }),
+
+  case_files: defineTable({
+    projectName: v.string(),
+    status: v.union(
+      v.literal("active"),
+      v.literal("paused"),
+      v.literal("completed"),
+      v.literal("archived")
+    ),
+    participants: v.array(v.string()), // agent names
+    summary: v.string(),
+    decisions: v.array(
+      v.object({
+        decision: v.string(),
+        madeBy: v.string(),
+        timestamp: v.number(),
+        rationale: v.optional(v.string()),
+      })
+    ),
+    resources: v.array(
+      v.object({
+        type: v.union(
+          v.literal("link"),
+          v.literal("file"),
+          v.literal("code"),
+          v.literal("note"),
+          v.literal("reference")
+        ),
+        title: v.string(),
+        content: v.string(),
+        url: v.optional(v.string()),
+        addedBy: v.string(),
+        timestamp: v.number(),
+      })
+    ),
+    tags: v.array(v.string()),
+    linearProjectId: v.optional(v.string()),
+    telegramGroupId: v.optional(v.string()),
+    metadata: v.optional(v.any()),
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  })
+    .index("by_status", ["status"])
+    .index("by_project_name", ["projectName"])
+    .index("by_participants", ["participants"])
+    .index("by_created_at", ["createdAt"])
+    .searchIndex("search_summary", {
+      searchField: "summary",
+      filterFields: ["status", "participants"],
+    }),
+
+  agent_sessions: defineTable({
+    agentName: v.string(),
+    sessionId: v.string(),
+    status: v.union(
+      v.literal("active"),
+      v.literal("idle"),
+      v.literal("offline")
+    ),
+    currentTask: v.optional(v.id("agent_tasks")),
+    lastActivity: v.number(),
+    metadata: v.optional(v.any()),
+    createdAt: v.number(),
+  })
+    .index("by_agent", ["agentName"])
+    .index("by_status", ["status"])
+    .index("by_session_id", ["sessionId"])
+    .index("by_last_activity", ["lastActivity"]),
 });

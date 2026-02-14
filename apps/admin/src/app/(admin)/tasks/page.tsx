@@ -10,6 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CheckSquare, Plus, ArrowRight, Trash2 } from "lucide-react";
+import Link from "next/link";
 import { format } from "date-fns";
 import { useState } from "react";
 import type { Id } from "../../../../convex/_generated/dataModel";
@@ -118,7 +119,7 @@ export default function TasksPage() {
                     {statusTasks.map((task) => (
                       <div key={task._id} className="p-3 rounded-lg bg-muted/50 space-y-2">
                         <div className="flex items-start justify-between">
-                          <span className="text-sm font-medium">{task.title}</span>
+                          <Link href={`/tasks/${task._id}`} className="text-sm font-medium hover:underline">{task.title}</Link>
                           <Badge variant={priorityColors[task.priority] as any} className="text-xs ml-1">{task.priority}</Badge>
                         </div>
                         <div className="flex items-center gap-1 text-xs text-muted-foreground">
@@ -155,7 +156,7 @@ export default function TasksPage() {
                   <div key={task._id} className="flex items-center justify-between p-3 rounded-lg hover:bg-muted/50">
                     <div className="flex items-center gap-3">
                       <Badge variant="outline">{statusLabels[task.status]}</Badge>
-                      <span className="font-medium">{task.title}</span>
+                      <Link href={`/tasks/${task._id}`} className="font-medium hover:underline">{task.title}</Link>
                       <Badge variant={priorityColors[task.priority] as any} className="text-xs">{task.priority}</Badge>
                       <Badge variant="outline" className="text-xs">{task.category.replace("_", " ")}</Badge>
                     </div>

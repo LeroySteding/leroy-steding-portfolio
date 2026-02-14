@@ -115,7 +115,7 @@ export default function ProjectsListPage() {
             </div>
             <CardContent className="p-4">
               <div className="flex items-start justify-between mb-2">
-                <h3 className="font-semibold text-lg">{project.title}</h3>
+                <Link href={`/projects/${project._id}`} className="font-semibold text-lg hover:underline">{project.title}</Link>
                 {project.featured && (
                   <Star className="h-4 w-4 text-yellow-500 fill-yellow-500" />
                 )}
