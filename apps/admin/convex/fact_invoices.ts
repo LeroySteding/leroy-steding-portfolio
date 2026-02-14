@@ -105,6 +105,7 @@ export const getInvoiceStats = query({
       verzonden: 0,
       betaald: 0,
       achterstallig: 0,
+      geannuleerd: 0,
       totalAmount: 0,
       paidAmount: 0,
       outstandingAmount: 0,
@@ -388,10 +389,9 @@ export const duplicateInvoice = mutation({
     const invoiceNumber = `${settings.invoice_prefix}-${args.invoice_date.toString().slice(0, 4)}-${String(settings.invoice_number).padStart(3, '0')}`;
     
     const now = Date.now();
+    const { _id, _creationTime, ...invoiceData } = original;
     const newInvoiceId = await ctx.db.insert("fact_invoices", {
-      ...original,
-      _id: undefined as any,
-      _creationTime: undefined as any,
+      ...invoiceData,
       nummer: invoiceNumber,
       invoice_date: args.invoice_date,
       due_date: args.invoice_date + (14 * 24 * 60 * 60 * 1000), // 14 days default

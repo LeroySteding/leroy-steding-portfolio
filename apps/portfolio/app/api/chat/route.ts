@@ -292,7 +292,7 @@ export async function POST(request: NextRequest) {
 
       if (!existingLead) {
         // Create new lead from chat
-        await createLead({
+        await upsertLead({
           email: extractedEmail,
           source: "chat",
           locale,

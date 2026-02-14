@@ -19,7 +19,7 @@ export const getCurrentUser = query({
     if (args.email) {
       return await ctx.db
         .query("zzp_users")
-        .withIndex("by_email", (q) => q.eq("email", args.email))
+        .withIndex("by_email", (q) => q.eq("email", args.email!))
         .first();
     }
     return null;

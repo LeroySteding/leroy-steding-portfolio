@@ -1,8 +1,8 @@
 import { type NextRequest, NextResponse } from "next/server";
 import {
-  createLead,
   getLeadByEmail,
   updateLeadByEmail,
+  upsertLead,
 } from "@/lib/convex-leads";
 
 // Cal.com webhook payload type
@@ -142,7 +142,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Create new lead from booking
-    const result = await createLead({
+    const result = await upsertLead({
       email: attendee.email,
       name: attendee.name,
       company: company,
