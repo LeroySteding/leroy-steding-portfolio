@@ -17,7 +17,7 @@ import {
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { format } from "date-fns";
-import { toast } from "@/components/ui/use-toast";
+import { useToast } from "@/components/ui/use-toast";
 import { useState } from "react";
 
 const typeEmojis: Record<string, string> = {
@@ -44,13 +44,34 @@ export default function FeedItemViewPage({
   params: { id: string };
 }) {
   const router = useRouter();
+  const { toast } = useToast();
   const item = useQuery(api.agent_feed.get, { id: params.id as any });
   const markRead = useMutation(api.agent_feed.markRead);
   const removeItem = useMutation(api.agent_feed.remove);
   const [showDelete, setShowDelete] = useState(false);
 
-  if (!item) {
+  if (item === undefined) {
     return <div>Loading...</div>;
+  }
+
+  if (item === null) {
+    return (
+      <div className="space-y-6 max-w-4xl">
+        <div className="flex items-center gap-4">
+          <Button variant="ghost" size="sm" asChild>
+            <Link href="/feed">
+              <ArrowLeft className="h-4 w-4" />
+            </Link>
+          </Button>
+          <h1 className="text-3xl font-bold">Feed Item Not Found</h1>
+        </div>
+        <Card>
+          <CardContent className="py-8 text-center text-muted-foreground">
+            This feed item does not exist or has been deleted.
+          </CardContent>
+        </Card>
+      </div>
+    );
   }
 
   const handleMarkRead = async () => {
