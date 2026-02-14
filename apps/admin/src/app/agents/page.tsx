@@ -1,7 +1,9 @@
 import { AgentStatus } from "@/components/agent-status";
 import { ActiveTasks } from "@/components/active-tasks";
 import { CaseFiles } from "@/components/case-files";
+import { AgentFeed } from "@/components/agent-feed";
 import { AgentMemory } from "@/components/agent-memory";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function AgentsPage() {
   return (
@@ -14,17 +16,34 @@ export default function AgentsPage() {
       </div>
 
       <div className="grid gap-6">
-        {/* Real-time Agent Status */}
+        {/* Agent Status Overview */}
         <AgentStatus />
 
-        {/* Task Kanban Board */}
-        <ActiveTasks />
+        {/* Main Dashboard Content */}
+        <Tabs defaultValue="tasks" className="space-y-6">
+          <TabsList className="grid w-full grid-cols-4 lg:w-auto lg:inline-grid">
+            <TabsTrigger value="tasks">Tasks</TabsTrigger>
+            <TabsTrigger value="cases">Case Files</TabsTrigger>
+            <TabsTrigger value="feed">Activity Feed</TabsTrigger>
+            <TabsTrigger value="memory">Memory</TabsTrigger>
+          </TabsList>
 
-        {/* Project Case Files */}
-        <CaseFiles />
+          <TabsContent value="tasks" className="space-y-6">
+            <ActiveTasks />
+          </TabsContent>
 
-        {/* Shared Knowledge Base */}
-        <AgentMemory />
+          <TabsContent value="cases" className="space-y-6">
+            <CaseFiles />
+          </TabsContent>
+
+          <TabsContent value="feed" className="space-y-6">
+            <AgentFeed />
+          </TabsContent>
+
+          <TabsContent value="memory" className="space-y-6">
+            <AgentMemory />
+          </TabsContent>
+        </Tabs>
       </div>
     </div>
   );

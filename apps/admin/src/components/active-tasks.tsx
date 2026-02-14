@@ -1,266 +1,249 @@
 "use client";
 
+import { useState } from "react";
 import { useQuery, useMutation } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "./ui/select";
-import { CheckSquare, Clock, AlertCircle, Ban, CheckCircle2 } from "lucide-react";
+import { Input } from "./ui/input";
+import { Label } from "./ui/label";
+import { Textarea } from "./ui/textarea";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
+import { CheckCircle2, Circle, AlertCircle, Ban, Plus, Clock } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
-import { useState } from "react";
-import { Id } from "../../convex/_generated/dataModel";
-
-const statusIcons = {
-  pending: Clock,
-  in_progress: CheckSquare,
-  blocked: Ban,
-  completed: CheckCircle2,
-  cancelled: AlertCircle,
-};
-
-const statusColors = {
-  pending: "bg-gray-100 text-gray-800",
-  in_progress: "bg-blue-100 text-blue-800",
-  blocked: "bg-red-100 text-red-800",
-  completed: "bg-green-100 text-green-800",
-  cancelled: "bg-gray-100 text-gray-600",
-};
-
-const priorityColors = {
-  low: "bg-gray-100 text-gray-800",
-  medium: "bg-yellow-100 text-yellow-800",
-  high: "bg-orange-100 text-orange-800",
-  critical: "bg-red-100 text-red-800",
-};
 
 const agentIcons: Record<string, string> = {
   orchestrator: "🎯",
   architect: "🏗️",
-  coder: "⚡",
+  coder: "💻",
   researcher: "🔍",
-  business: "💼",
+  business: "📈",
   "data-handler": "🕷️",
-  critic: "🛡️",
-  compliance: "⚖️",
+  critic: "⚠️",
 };
 
+const statusIcons = {
+  pending: <Circle className="h-4 w-4" />,
+  in_progress: <Clock className="h-4 w-4" />,
+  blocked: <AlertCircle className="h-4 w-4" />,
+  completed: <CheckCircle2 className="h-4 w-4" />,
+  cancelled: <Ban className="h-4 w-4" />,
+};
+
+const statusColors = {
+  pending: "bg-gray-100 text-gray-700 border-gray-300",
+  in_progress: "bg-blue-100 text-blue-700 border-blue-300",
+  blocked: "bg-red-100 text-red-700 border-red-300",
+  completed: "bg-green-100 text-green-700 border-green-300",
+  cancelled: "bg-gray-100 text-gray-500 border-gray-300",
+};
+
+const priorityColors = {
+  low: "bg-gray-50 text-gray-600 border-gray-200",
+  medium: "bg-yellow-50 text-yellow-700 border-yellow-200",
+  high: "bg-orange-50 text-orange-700 border-orange-200",
+  critical: "bg-red-50 text-red-700 border-red-200",
+};
+
+const agentsList = [
+  "orchestrator",
+  "architect",
+  "coder",
+  "researcher",
+  "business",
+  "data-handler",
+  "critic",
+];
+
 export function ActiveTasks() {
-  const [filterAgent, setFilterAgent] = useState<string>("all");
-  const [filterStatus, setFilterStatus] = useState<string>("active");
-  
-  const tasks = useQuery(
-    api.agentCoordination.getAgentTasks,
-    filterAgent !== "all" ? { agentName: filterAgent } : {}
-  );
-  
-  const updateTask = useMutation(api.agentCoordination.updateAgentTask);
-
-  if (!tasks) {
-    return (
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <CheckSquare className="h-5 w-5" />
-            Active Tasks
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="text-sm text-muted-foreground">Loading tasks...</div>
-        </CardContent>
-      </Card>
-    );
-  }
-
-  // Filter by status
-  const filteredTasks = tasks.filter((task) => {
-    if (filterStatus === "active") {
-      return ["pending", "in_progress", "blocked"].includes(task.status);
-    }
-    if (filterStatus === "completed") {
-      return task.status === "completed";
-    }
-    return true;
+  const tasks = useQuery(api.agentCoordination.getAgentTasks, {});
+  const createTask = useMutation(api.agentCoordination.createAgentTask);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [formData, setFormData] = useState({
+    title: "",
+    description: "",
+    assignedTo: [] as string[],
+    priority: "medium" as "low" | "medium" | "high" | "critical",
   });
 
-  // Group by agent
-  const tasksByAgent: Record<string, typeof tasks> = {};
-  filteredTasks.forEach((task) => {
-    task.assignedTo.forEach((agent) => {
-      if (!tasksByAgent[agent]) {
-        tasksByAgent[agent] = [];
-      }
-      tasksByAgent[agent].push(task);
+  const handleCreateTask = async () => {
+    if (!formData.title || formData.assignedTo.length === 0) return;
+
+    await createTask({
+      title: formData.title,
+      description: formData.description || undefined,
+      assignedTo: formData.assignedTo,
+      priority: formData.priority,
+      createdBy: "orchestrator",
     });
-  });
 
-  const uniqueAgents = Array.from(new Set(tasks.flatMap((t) => t.assignedTo)));
-
-  const handleStatusChange = async (
-    taskId: Id<"agent_tasks">,
-    newStatus: "pending" | "in_progress" | "blocked" | "completed" | "cancelled"
-  ) => {
-    await updateTask({ taskId, status: newStatus });
+    setFormData({
+      title: "",
+      description: "",
+      assignedTo: [],
+      priority: "medium",
+    });
+    setIsDialogOpen(false);
   };
+
+  const activeTasks = tasks?.filter((t) => 
+    t.status !== "completed" && t.status !== "cancelled"
+  );
 
   return (
     <Card>
-      <CardHeader>
-        <div className="flex items-center justify-between">
-          <CardTitle className="flex items-center gap-2">
-            <CheckSquare className="h-5 w-5" />
-            Active Tasks
-          </CardTitle>
-          <div className="flex gap-2">
-            <Select value={filterStatus} onValueChange={setFilterStatus}>
-              <SelectTrigger className="w-[140px]">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="active">Active</SelectItem>
-                <SelectItem value="completed">Completed</SelectItem>
-                <SelectItem value="all">All</SelectItem>
-              </SelectContent>
-            </Select>
-            <Select value={filterAgent} onValueChange={setFilterAgent}>
-              <SelectTrigger className="w-[140px]">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Agents</SelectItem>
-                {uniqueAgents.map((agent) => (
-                  <SelectItem key={agent} value={agent}>
-                    {agentIcons[agent] || "🤖"} {agent}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
+        <CardTitle className="text-xl font-semibold">Active Tasks</CardTitle>
+        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+          <DialogTrigger asChild>
+            <Button size="sm">
+              <Plus className="h-4 w-4 mr-2" />
+              New Task
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="max-w-2xl">
+            <DialogHeader>
+              <DialogTitle>Create New Task</DialogTitle>
+            </DialogHeader>
+            <div className="space-y-4 py-4">
+              <div className="space-y-2">
+                <Label htmlFor="title">Title</Label>
+                <Input
+                  id="title"
+                  value={formData.title}
+                  onChange={(e) =>
+                    setFormData({ ...formData, title: e.target.value })
+                  }
+                  placeholder="Task title..."
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="description">Description</Label>
+                <Textarea
+                  id="description"
+                  value={formData.description}
+                  onChange={(e) =>
+                    setFormData({ ...formData, description: e.target.value })
+                  }
+                  placeholder="Task description..."
+                  rows={4}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="priority">Priority</Label>
+                <Select
+                  value={formData.priority}
+                  onValueChange={(value: any) =>
+                    setFormData({ ...formData, priority: value })
+                  }
+                >
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="low">Low</SelectItem>
+                    <SelectItem value="medium">Medium</SelectItem>
+                    <SelectItem value="high">High</SelectItem>
+                    <SelectItem value="critical">Critical</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label>Assign to Agents</Label>
+                <div className="flex flex-wrap gap-2">
+                  {agentsList.map((agent) => (
+                    <Button
+                      key={agent}
+                      type="button"
+                      variant={
+                        formData.assignedTo.includes(agent) ? "default" : "outline"
+                      }
+                      size="sm"
+                      onClick={() => {
+                        if (formData.assignedTo.includes(agent)) {
+                          setFormData({
+                            ...formData,
+                            assignedTo: formData.assignedTo.filter((a) => a !== agent),
+                          });
+                        } else {
+                          setFormData({
+                            ...formData,
+                            assignedTo: [...formData.assignedTo, agent],
+                          });
+                        }
+                      }}
+                    >
+                      {agentIcons[agent]} {agent}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+              <div className="flex justify-end gap-2 pt-4">
+                <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
+                  Cancel
+                </Button>
+                <Button onClick={handleCreateTask}>Create Task</Button>
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
       </CardHeader>
       <CardContent>
-        {filteredTasks.length === 0 ? (
-          <div className="text-center py-8 text-sm text-muted-foreground">
-            No tasks found
-          </div>
-        ) : filterAgent !== "all" ? (
-          // List view for single agent
-          <div className="space-y-2">
-            {filteredTasks.map((task) => {
-              const StatusIcon = statusIcons[task.status];
-              return (
-                <div
-                  key={task._id}
-                  className="flex items-start gap-3 p-3 border rounded-lg hover:bg-muted/50 transition-colors"
-                >
-                  <StatusIcon className="h-5 w-5 mt-0.5 text-muted-foreground" />
+        {!tasks ? (
+          <div className="text-sm text-muted-foreground">Loading...</div>
+        ) : activeTasks && activeTasks.length > 0 ? (
+          <div className="space-y-3">
+            {activeTasks.map((task) => (
+              <div
+                key={task._id}
+                className="border rounded-lg p-4 hover:bg-muted/50 transition-colors"
+              >
+                <div className="flex items-start justify-between gap-4">
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <h3 className="font-medium text-sm">{task.title}</h3>
-                      <Badge className={priorityColors[task.priority]}>
-                        {task.priority}
+                    <div className="flex items-center gap-2 mb-2">
+                      <h4 className="font-medium truncate">{task.title}</h4>
+                      <Badge
+                        variant="outline"
+                        className={`${statusColors[task.status]} flex items-center gap-1`}
+                      >
+                        {statusIcons[task.status]}
+                        {task.status.replace("_", " ")}
                       </Badge>
-                      <Badge className={statusColors[task.status]}>
-                        {task.status}
+                      <Badge
+                        variant="outline"
+                        className={priorityColors[task.priority]}
+                      >
+                        {task.priority}
                       </Badge>
                     </div>
                     {task.description && (
-                      <p className="text-xs text-muted-foreground mt-1 line-clamp-2">
+                      <p className="text-sm text-muted-foreground mb-2">
                         {task.description}
                       </p>
                     )}
-                    <div className="flex items-center gap-2 mt-2 flex-wrap">
+                    <div className="flex items-center gap-2 flex-wrap">
                       <span className="text-xs text-muted-foreground">
-                        {formatDistanceToNow(task.createdAt, { addSuffix: true })}
+                        Assigned to:
                       </span>
-                      {task.assignedTo.length > 1 && (
-                        <span className="text-xs text-muted-foreground">
-                          • {task.assignedTo.map((a) => agentIcons[a] || a).join(" ")}
-                        </span>
-                      )}
+                      {task.assignedTo.map((agent) => (
+                        <Badge key={agent} variant="secondary" className="text-xs">
+                          {agentIcons[agent]} {agent}
+                        </Badge>
+                      ))}
                     </div>
                   </div>
-                  <Select
-                    value={task.status}
-                    onValueChange={(value) =>
-                      handleStatusChange(
-                        task._id,
-                        value as typeof task.status
-                      )
-                    }
-                  >
-                    <SelectTrigger className="w-[130px]">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="pending">Pending</SelectItem>
-                      <SelectItem value="in_progress">In Progress</SelectItem>
-                      <SelectItem value="blocked">Blocked</SelectItem>
-                      <SelectItem value="completed">Completed</SelectItem>
-                      <SelectItem value="cancelled">Cancelled</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              );
-            })}
-          </div>
-        ) : (
-          // Kanban view for all agents
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-            {Object.entries(tasksByAgent).map(([agent, agentTasks]) => (
-              <div key={agent} className="space-y-2">
-                <h3 className="font-medium text-sm flex items-center gap-2 px-2">
-                  <span className="text-lg">{agentIcons[agent] || "🤖"}</span>
-                  {agent}
-                  <Badge variant="outline" className="ml-auto">
-                    {agentTasks.length}
-                  </Badge>
-                </h3>
-                <div className="space-y-2">
-                  {agentTasks.map((task) => {
-                    const StatusIcon = statusIcons[task.status];
-                    return (
-                      <div
-                        key={task._id}
-                        className="p-3 border rounded-lg bg-card hover:bg-muted/50 transition-colors space-y-2"
-                      >
-                        <div className="flex items-start gap-2">
-                          <StatusIcon className="h-4 w-4 mt-0.5 text-muted-foreground flex-shrink-0" />
-                          <div className="flex-1 min-w-0">
-                            <h4 className="text-xs font-medium line-clamp-2">
-                              {task.title}
-                            </h4>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-1 flex-wrap">
-                          <Badge
-                            className={`${priorityColors[task.priority]} text-xs`}
-                          >
-                            {task.priority}
-                          </Badge>
-                          <Badge
-                            className={`${statusColors[task.status]} text-xs`}
-                          >
-                            {task.status}
-                          </Badge>
-                        </div>
-                        <span className="text-xs text-muted-foreground block">
-                          {formatDistanceToNow(task.createdAt, {
-                            addSuffix: true,
-                          })}
-                        </span>
-                      </div>
-                    );
-                  })}
+                  <div className="text-xs text-muted-foreground whitespace-nowrap">
+                    {formatDistanceToNow(task.createdAt, { addSuffix: true })}
+                  </div>
                 </div>
               </div>
             ))}
+          </div>
+        ) : (
+          <div className="text-center py-8 text-sm text-muted-foreground">
+            No active tasks
           </div>
         )}
       </CardContent>
