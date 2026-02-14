@@ -14,8 +14,8 @@ const agentIcons: Record<string, string> = {
   coder: "⚡",
   researcher: "🔍",
   business: "💼",
-  "data-scraper": "🕷️",
-  "qa-critic": "🛡️",
+  "data-handler": "🕷️",
+  critic: "🛡️",
   compliance: "⚖️",
   main: "🤖",
 };
@@ -26,8 +26,8 @@ const agentColors: Record<string, string> = {
   coder: "bg-yellow-500",
   researcher: "bg-green-500",
   business: "bg-pink-500",
-  "data-scraper": "bg-orange-500",
-  "qa-critic": "bg-red-500",
+  "data-handler": "bg-orange-500",
+  critic: "bg-red-500",
   compliance: "bg-indigo-500",
   main: "bg-gray-500",
 };

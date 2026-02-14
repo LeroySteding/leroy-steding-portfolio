@@ -3,6 +3,7 @@ import { ActiveTasks } from "@/components/active-tasks";
 import { CaseFiles } from "@/components/case-files";
 import { AgentFeed } from "@/components/agent-feed";
 import { AgentMemory } from "@/components/agent-memory";
+import { AgentSetup } from "@/components/agent-setup";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function AgentsPage() {
@@ -14,6 +15,9 @@ export default function AgentsPage() {
           Monitor your multi-agent system in real-time
         </p>
       </div>
+
+      {/* Setup helper - shows if no agents connected */}
+      <AgentSetup />
 
       <div className="grid gap-6">
         {/* Agent Status Overview */}

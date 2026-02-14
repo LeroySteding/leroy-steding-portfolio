@@ -10,6 +10,7 @@
 
 import type * as _helpers from "../_helpers.js";
 import type * as agentCoordination from "../agentCoordination.js";
+import type * as agentHeartbeat from "../agentHeartbeat.js";
 import type * as agent_feed from "../agent_feed.js";
 import type * as analytics_log from "../analytics_log.js";
 import type * as blog_posts from "../blog_posts.js";
@@ -26,6 +27,7 @@ import type * as linearWebhook from "../linearWebhook.js";
 import type * as media from "../media.js";
 import type * as portfolio from "../portfolio.js";
 import type * as projects from "../projects.js";
+import type * as seedAgents from "../seedAgents.js";
 import type * as seo_tracking from "../seo_tracking.js";
 import type * as site_settings from "../site_settings.js";
 import type * as skills from "../skills.js";
@@ -40,6 +42,7 @@ import type {
 declare const fullApi: ApiFromModules<{
   _helpers: typeof _helpers;
   agentCoordination: typeof agentCoordination;
+  agentHeartbeat: typeof agentHeartbeat;
   agent_feed: typeof agent_feed;
   analytics_log: typeof analytics_log;
   blog_posts: typeof blog_posts;
@@ -56,6 +59,7 @@ declare const fullApi: ApiFromModules<{
   media: typeof media;
   portfolio: typeof portfolio;
   projects: typeof projects;
+  seedAgents: typeof seedAgents;
   seo_tracking: typeof seo_tracking;
   site_settings: typeof site_settings;
   skills: typeof skills;

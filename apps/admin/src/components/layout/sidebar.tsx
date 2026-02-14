@@ -20,12 +20,14 @@ import {
   Calendar,
   BarChart3,
   Search,
+  Bot,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+  { name: "Agents", href: "/agents", icon: Bot },
   { name: "Agent Feed", href: "/feed", icon: Rss },
   { name: "Tasks", href: "/tasks", icon: CheckSquare },
   { name: "Jobs", href: "/jobs", icon: Building2 },
