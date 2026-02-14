@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { NotificationBell } from "@/components/notification-bell";
 
 export function Header() {
   const pathname = usePathname();
@@ -20,7 +21,7 @@ export function Header() {
         <Menu className="h-5 w-5" />
       </Button>
 
-      <div className="flex items-center gap-2 text-sm">
+      <div className="flex items-center gap-2 text-sm flex-1">
         {breadcrumbs.map((crumb, index) => (
           <div key={crumb.href} className="flex items-center gap-2">
             {index > 0 && <span className="text-muted-foreground">/</span>}
@@ -36,6 +37,8 @@ export function Header() {
           </div>
         ))}
       </div>
+
+      <NotificationBell />
     </header>
   );
 }

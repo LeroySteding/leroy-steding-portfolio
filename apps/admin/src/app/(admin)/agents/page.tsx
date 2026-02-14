@@ -4,6 +4,7 @@ import { CaseFiles } from "@/components/case-files";
 import { AgentFeed } from "@/components/agent-feed";
 import { AgentMemory } from "@/components/agent-memory";
 import { AgentSetup } from "@/components/agent-setup";
+import { AgentPerformance } from "@/components/agent-performance";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function AgentsPage() {
@@ -25,8 +26,9 @@ export default function AgentsPage() {
 
         {/* Main Dashboard Content */}
         <Tabs defaultValue="tasks" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4 lg:w-auto lg:inline-grid">
+          <TabsList className="grid w-full grid-cols-5 lg:w-auto lg:inline-grid">
             <TabsTrigger value="tasks">Tasks</TabsTrigger>
+            <TabsTrigger value="performance">Performance</TabsTrigger>
             <TabsTrigger value="cases">Case Files</TabsTrigger>
             <TabsTrigger value="feed">Activity Feed</TabsTrigger>
             <TabsTrigger value="memory">Memory</TabsTrigger>
@@ -34,6 +36,10 @@ export default function AgentsPage() {
 
           <TabsContent value="tasks" className="space-y-6">
             <ActiveTasksSimple />
+          </TabsContent>
+
+          <TabsContent value="performance" className="space-y-6">
+            <AgentPerformance />
           </TabsContent>
 
           <TabsContent value="cases" className="space-y-6">

@@ -9,11 +9,12 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { CheckSquare, Plus, ArrowRight, Trash2, Users } from "lucide-react";
+import { CheckSquare, Plus, Users } from "lucide-react";
 import Link from "next/link";
-import { format } from "date-fns";
 import { useState } from "react";
 import type { Id } from "../../../../convex/_generated/dataModel";
+import { DragDropContext, Droppable, Draggable, DropResult } from "@hello-pangea/dnd";
+import { QuickDelegate } from "@/components/quick-delegate";
 
 const statuses = ["backlog", "todo", "in_progress", "review", "done", "cancelled"] as const;
 const priorities = ["low", "medium", "high", "critical"] as const;
@@ -38,6 +39,15 @@ const priorityColors: Record<string, "default" | "secondary" | "destructive" | "
   critical: "destructive",
 };
 
+// Map agent task statuses to board columns
+const statusMapping: Record<string, string> = {
+  pending: "backlog",
+  blocked: "backlog",
+  in_progress: "in_progress",
+  review: "review",
+  completed: "done",
+};
+
 export default function TasksPage() {
   const [categoryFilter, setCategoryFilter] = useState<string>("all");
   const [priorityFilter, setPriorityFilter] = useState<string>("all");
@@ -57,17 +67,13 @@ export default function TasksPage() {
 
   const createTask = useMutation(api.tasks.create);
   const updateTask = useMutation(api.tasks.update);
-  const removeTask = useMutation(api.tasks.remove);
+  const updateAgentTask = useMutation(api.agentCoordination.updateAgentTask);
 
   const handleCreate = async () => {
     if (!newTitle.trim()) return;
     await createTask({ title: newTitle, priority: newPriority as any, category: newCategory as any });
     setNewTitle("");
     setShowAddDialog(false);
-  };
-
-  const moveTask = (id: Id<"tasks">, newStatus: string) => {
-    updateTask({ id, status: newStatus as any });
   };
 
   // Combine and transform tasks for unified display
@@ -82,7 +88,7 @@ export default function TasksPage() {
       type: 'agent' as const,
       assignees: t.assignedTo,
       priority: t.priority,
-      status: t.status,
+      status: statusMapping[t.status] || t.status,
       category: 'development' as const,
     })),
   ];
@@ -94,7 +100,7 @@ export default function TasksPage() {
     return true;
   });
 
-  const activeStatuses = ["backlog", "todo", "in_progress", "review", "pending"];
+  const activeStatuses = ["backlog", "todo", "in_progress", "review"];
   const groupedByStatus = activeStatuses.reduce((acc, status) => {
     acc[status] = filteredTasks.filter((t) => t.status === status);
     return acc;
@@ -102,6 +108,36 @@ export default function TasksPage() {
 
   const completedTasks = filteredTasks.filter((t) => t.status === "done" || t.status === "completed");
   const cancelledTasks = filteredTasks.filter((t) => t.status === "cancelled");
+
+  const handleDragEnd = async (result: DropResult) => {
+    const { destination, source, draggableId } = result;
+
+    if (!destination) return;
+    if (destination.droppableId === source.droppableId && destination.index === source.index) return;
+
+    const newStatus = destination.droppableId;
+    const task = allTasks.find(t => t._id === draggableId);
+    
+    if (!task) return;
+
+    try {
+      if (task.type === "personal") {
+        await updateTask({ id: task._id as Id<"tasks">, status: newStatus as any });
+      } else {
+        // Map board status back to agent task status
+        const agentStatus = newStatus === "backlog" ? "pending" : 
+                           newStatus === "in_progress" ? "in_progress" :
+                           newStatus === "review" ? "review" :
+                           newStatus === "done" ? "completed" : "pending";
+        await updateAgentTask({ 
+          taskId: task._id as Id<"agent_tasks">, 
+          status: agentStatus as any 
+        });
+      }
+    } catch (error) {
+      console.error("Failed to update task status:", error);
+    }
+  };
 
   return (
     <div className="space-y-6">
@@ -193,52 +229,94 @@ export default function TasksPage() {
         </TabsList>
 
         <TabsContent value="board" className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {activeStatuses.map((status) => {
-              const tasksInStatus = groupedByStatus[status] || [];
-              return (
-                <Card key={status}>
-                  <CardHeader className="pb-3">
-                    <CardTitle className="text-sm font-medium flex items-center justify-between">
-                      {statusLabels[status]}
-                      <Badge variant="outline">{tasksInStatus.length}</Badge>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-2">
-                    {tasksInStatus.map((task) => (
-                      <Link 
-                        key={task._id} 
-                        href={task.type === 'personal' ? `/tasks/${task._id}` : `/agents`}
-                        className="block"
-                      >
-                        <Card className="p-3 hover:bg-muted/50 transition-colors cursor-pointer">
-                          <div className="flex items-start justify-between mb-2">
-                            <p className="text-sm font-medium line-clamp-2">{task.title}</p>
-                            {task.type === 'agent' && (
-                              <Badge variant="outline" className="text-xs ml-2">
-                                <Users className="h-3 w-3 mr-1" />
-                                Agent
-                              </Badge>
-                            )}
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <Badge variant={priorityColors[task.priority]} className="text-xs">
-                              {task.priority}
-                            </Badge>
-                            {task.assignees && task.assignees.length > 0 && (
-                              <span className="text-xs text-muted-foreground truncate">
-                                {task.assignees.join(", ")}
-                              </span>
-                            )}
-                          </div>
-                        </Card>
-                      </Link>
-                    ))}
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </div>
+          <DragDropContext onDragEnd={handleDragEnd}>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              {activeStatuses.map((status) => {
+                const tasksInStatus = groupedByStatus[status] || [];
+                return (
+                  <Card key={status} className="flex flex-col h-full">
+                    <CardHeader className="pb-3">
+                      <CardTitle className="text-sm font-medium flex items-center justify-between">
+                        {statusLabels[status]}
+                        <Badge variant="outline">{tasksInStatus.length}</Badge>
+                      </CardTitle>
+                    </CardHeader>
+                    <Droppable droppableId={status}>
+                      {(provided, snapshot) => (
+                        <CardContent 
+                          ref={provided.innerRef}
+                          {...provided.droppableProps}
+                          className={`space-y-2 flex-1 transition-colors ${
+                            snapshot.isDraggingOver ? 'bg-muted/50' : ''
+                          }`}
+                          style={{ minHeight: '200px' }}
+                        >
+                          {tasksInStatus.map((task, index) => (
+                            <Draggable key={task._id} draggableId={task._id} index={index}>
+                              {(provided, snapshot) => (
+                                <Card
+                                  ref={provided.innerRef}
+                                  {...provided.draggableProps}
+                                  {...provided.dragHandleProps}
+                                  className={`p-3 transition-all cursor-grab active:cursor-grabbing ${
+                                    snapshot.isDragging 
+                                      ? 'shadow-lg ring-2 ring-primary rotate-2' 
+                                      : 'hover:shadow-md hover:-translate-y-0.5'
+                                  }`}
+                                  style={{
+                                    ...provided.draggableProps.style,
+                                  }}
+                                >
+                                  <Link 
+                                    href={task.type === 'personal' ? `/tasks/${task._id}` : `/agents`}
+                                    className="block mb-2"
+                                    onClick={(e) => {
+                                      if (snapshot.isDragging) e.preventDefault();
+                                    }}
+                                  >
+                                    <div className="flex items-start justify-between mb-2">
+                                      <p className="text-sm font-medium line-clamp-2 flex-1">{task.title}</p>
+                                      {task.type === 'agent' && (
+                                        <Badge variant="outline" className="text-xs ml-2 shrink-0">
+                                          <Users className="h-3 w-3 mr-1" />
+                                          Agent
+                                        </Badge>
+                                      )}
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                      <Badge variant={priorityColors[task.priority]} className="text-xs">
+                                        {task.priority}
+                                      </Badge>
+                                      {task.assignees && task.assignees.length > 0 && (
+                                        <span className="text-xs text-muted-foreground truncate">
+                                          {task.assignees.slice(0, 2).join(", ")}
+                                          {task.assignees.length > 2 && ` +${task.assignees.length - 2}`}
+                                        </span>
+                                      )}
+                                    </div>
+                                  </Link>
+                                  <div className="mt-2 flex justify-end" onClick={(e) => e.stopPropagation()}>
+                                    <QuickDelegate
+                                      taskId={task._id}
+                                      taskType={task.type}
+                                      currentAssignees={task.assignees}
+                                      size="sm"
+                                      variant="ghost"
+                                    />
+                                  </div>
+                                </Card>
+                              )}
+                            </Draggable>
+                          ))}
+                          {provided.placeholder}
+                        </CardContent>
+                      )}
+                    </Droppable>
+                  </Card>
+                );
+              })}
+            </div>
+          </DragDropContext>
 
           {(completedTasks.length > 0 || cancelledTasks.length > 0) && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -326,6 +404,11 @@ export default function TasksPage() {
                         )}
                       </div>
                     </div>
+                    <QuickDelegate
+                      taskId={task._id}
+                      taskType={task.type}
+                      currentAssignees={task.assignees}
+                    />
                   </div>
                 </CardContent>
               </Card>
