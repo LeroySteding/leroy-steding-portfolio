@@ -136,7 +136,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({
         success: true,
         message: "Lead updated with booking",
-        leadId: existingLead.id,
+        leadId: existingLead._id,
         isNew: false,
       });
     }
@@ -148,7 +148,6 @@ export async function POST(request: NextRequest) {
       company: company,
       phone: phone,
       source: "booking",
-      status: "qualified", // Booking = qualified lead
       message: notes,
       locale: "en", // Default, could be extracted from metadata
       metadata: {
@@ -159,6 +158,7 @@ export async function POST(request: NextRequest) {
           timezone: attendee.timeZone,
           notes: notes,
           booked_at: new Date().toISOString(),
+          status: "qualified", // Booking = qualified lead
         },
         conversion_path: ["booking"],
       },
@@ -170,16 +170,14 @@ export async function POST(request: NextRequest) {
     }
 
     console.log(
-      `Created new lead from booking: ${attendee.email}, score: ${result.score}, tier: ${result.tier}`,
+      `Created new lead from booking: ${attendee.email}, id: ${result.id}, isNew: ${result.isNew}`,
     );
 
     return NextResponse.json({
       success: true,
       message: "Lead created from booking",
       leadId: result.id,
-      score: result.score,
-      tier: result.tier,
-      isNew: true,
+      isNew: result.isNew,
     });
   } catch (error) {
     console.error("Booking webhook error:", error);

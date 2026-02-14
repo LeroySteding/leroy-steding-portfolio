@@ -11,6 +11,9 @@ importers:
 
   .:
     dependencies:
+      '@linear/sdk':
+        specifier: ^75.0.0
+        version: 75.0.0(graphql@16.12.0)
       '@sanity/document-internationalization':
         specifier: ^4.1.0
         version: 4.1.0(@emotion/is-prop-valid@1.2.2)(@types/react@19.2.2)(react-dom@19.2.3(react@19.2.3))(react-is@19.2.0)(react@19.2.3)(rxjs@7.8.2)(sanity@4.14.2(@emotion/is-prop-valid@1.2.2)(@portabletext/sanity-bridge@1.2.2(@sanity/schema@4.14.2(@types/react@19.2.2))(@sanity/types@4.14.2(@types/react@19.2.2)))(@types/node@22.19.1)(@types/react@19.2.2)(immer@11.1.4)(jiti@2.6.1)(lightningcss@1.30.2)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(styled-components@6.1.19(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(terser@5.44.1)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.8.1))(styled-components@6.1.19(react-dom@19.2.3(react@19.2.3))(react@19.2.3))

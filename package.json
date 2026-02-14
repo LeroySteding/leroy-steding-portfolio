@@ -29,6 +29,7 @@
     "pnpm": ">=9"
   },
   "dependencies": {
+    "@linear/sdk": "^75.0.0",
     "@sanity/document-internationalization": "^4.1.0",
     "@swc/helpers": "^0.5.18",
     "convex": "^1.18.3",

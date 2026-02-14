@@ -26,11 +26,13 @@ import type * as linearSync from "../linearSync.js";
 import type * as linearWebhook from "../linearWebhook.js";
 import type * as media from "../media.js";
 import type * as portfolio from "../portfolio.js";
+import type * as portfolioLeads from "../portfolioLeads.js";
 import type * as projects from "../projects.js";
 import type * as seo_tracking from "../seo_tracking.js";
 import type * as site_settings from "../site_settings.js";
 import type * as skills from "../skills.js";
 import type * as tasks from "../tasks.js";
+import type * as templates from "../templates.js";
 
 import type {
   ApiFromModules,
@@ -57,11 +59,13 @@ declare const fullApi: ApiFromModules<{
   linearWebhook: typeof linearWebhook;
   media: typeof media;
   portfolio: typeof portfolio;
+  portfolioLeads: typeof portfolioLeads;
   projects: typeof projects;
   seo_tracking: typeof seo_tracking;
   site_settings: typeof site_settings;
   skills: typeof skills;
   tasks: typeof tasks;
+  templates: typeof templates;
 }>;
 
 /**

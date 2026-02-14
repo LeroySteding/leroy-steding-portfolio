@@ -69,8 +69,7 @@ export default async function Home() {
         <IntroAbout data={aboutData} />
         <Services />
         <ProjectShowcase />
-        {/* Old Projects section hidden until Convex data is populated */}
-        {/* <Projects data={projects} sectionData={projectsSection} /> */}
+        <Projects data={projects} sectionData={projectsSection} />
         <ZZPTools />
         <Blog data={featuredPosts} sectionData={blogSection} />
         <TestimonialsReal />

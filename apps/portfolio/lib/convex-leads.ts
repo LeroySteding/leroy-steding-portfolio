@@ -42,28 +42,23 @@ export async function upsertLead(data: {
   }
 
   try {
-    // Map contact_form to contact for Convex schema
-    const source = data.source === "contact_form" ? "contact" : data.source;
-
-    const result = await convex.mutation(api.portfolioLeads.upsertLead, {
+    const result = await convex.mutation(api.portfolioLeads.upsert, {
       email: data.email,
       name: data.name,
-      source,
+      source: data.source,
       message: data.message,
       subject: data.subject,
       phone: data.phone,
       company: data.company,
-      metadata: {
-        ...data.metadata,
-        subscribedToNewsletter: data.subscribedToNewsletter,
-        ipAddress: data.ipAddress,
-        userAgent: data.userAgent,
-        referrer: data.referrer,
-        utmSource: data.utmSource,
-        utmMedium: data.utmMedium,
-        utmCampaign: data.utmCampaign,
-        locale: data.locale,
-      },
+      subscribedToNewsletter: data.subscribedToNewsletter,
+      ipAddress: data.ipAddress,
+      userAgent: data.userAgent,
+      referrer: data.referrer,
+      utmSource: data.utmSource,
+      utmMedium: data.utmMedium,
+      utmCampaign: data.utmCampaign,
+      locale: data.locale,
+      metadata: data.metadata,
     });
 
     return { success: true, id: result.id, isNew: result.isNew };
@@ -81,7 +76,7 @@ export async function getLeadByEmail(email: string) {
   }
 
   try {
-    return await convex.query(api.portfolioLeads.getLeadByEmail, { email });
+    return await convex.query(api.portfolioLeads.getByEmail, { email });
   } catch (error) {
     console.error("Failed to get lead by email:", error);
     return null;
@@ -106,9 +101,11 @@ export async function updateLeadByEmail(
   }
 
   try {
-    const leadId = await convex.mutation(api.portfolioLeads.updateLeadByEmail, {
+    const { phone, company, bookingUrl, ...rest } = updates;
+    const leadId = await convex.mutation(api.portfolioLeads.updateByEmail, {
       email,
-      ...updates,
+      ...rest,
+      metadata: { ...rest.metadata, phone, company, bookingUrl },
     });
 
     return { success: true, id: leadId };
@@ -133,11 +130,14 @@ export async function createContactSubmission(data: {
   }
 
   try {
-    const result = await convex.mutation(
-      api.leads.createContactSubmission,
-      data,
-    );
-    return { success: true, ...result };
+    const result = await convex.mutation(api.portfolioLeads.upsert, {
+      email: data.email,
+      name: data.name,
+      source: "contact_form" as const,
+      message: data.message,
+      subject: data.subject,
+    });
+    return result;
   } catch (error) {
     console.error("Failed to create contact submission:", error);
     return { success: false, error: String(error) };
