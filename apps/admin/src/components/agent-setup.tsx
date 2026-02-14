@@ -25,8 +25,10 @@ export function AgentSetup() {
       await registerDemo({});
       toast({
         title: "Success!",
-        description: "Demo agents registered successfully. Refresh to see them.",
+        description: "Demo agents registered successfully!",
       });
+      // Auto-reload page to show new agents
+      setTimeout(() => window.location.reload(), 1000);
     } catch (error) {
       toast({
         title: "Error",
