@@ -1,5 +1,6 @@
 "use client";
 
+import { use } from "react";
 import { useQuery } from "convex/react";
 import { api } from "../../../../../convex/_generated/api";
 import { Button } from "@/components/ui/button";
@@ -12,9 +13,10 @@ import { format, parseISO } from "date-fns";
 export default function ExperienceDetailPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const experience = useQuery(api.experiences.get, { id: params.id as any });
+  const { id } = use(params);
+  const experience = useQuery(api.experiences.get, { id: id as any });
 
   if (experience === undefined) return <div>Loading...</div>;
   if (experience === null) return <div>Experience not found</div>;
@@ -32,7 +34,7 @@ export default function ExperienceDetailPage({
           <h1 className="text-3xl font-bold">{experience.title}</h1>
         </div>
         <Button asChild>
-          <Link href={`/experience/${params.id}/edit`}>
+          <Link href={`/experience/${id}/edit`}>
             <Edit className="h-4 w-4 mr-1" />Edit
           </Link>
         </Button>

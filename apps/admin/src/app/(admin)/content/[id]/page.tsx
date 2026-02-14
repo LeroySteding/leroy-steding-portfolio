@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { use, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useQuery, useMutation } from "convex/react";
 import { api } from "../../../../../convex/_generated/api";
@@ -38,9 +38,10 @@ const statusFlow: Record<string, string[]> = {
   published: [],
 };
 
-export default function ContentDetailPage({ params }: { params: { id: string } }) {
+export default function ContentDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params);
   const router = useRouter();
-  const item = useQuery(api.content_calendar.get, { id: params.id as Id<"content_calendar"> });
+  const item = useQuery(api.content_calendar.get, { id: id as Id<"content_calendar"> });
   const updateItem = useMutation(api.content_calendar.update);
 
   const [editing, setEditing] = useState(false);
@@ -67,7 +68,7 @@ export default function ContentDetailPage({ params }: { params: { id: string } }
   const handleSave = async () => {
     try {
       await updateItem({
-        id: params.id as Id<"content_calendar">,
+        id: id as Id<"content_calendar">,
         title: form.title, type: form.type as any, status: form.status as any,
         platform: form.platform || undefined,
         targetDate: form.targetDate ? new Date(form.targetDate).getTime() : undefined,
@@ -83,7 +84,7 @@ export default function ContentDetailPage({ params }: { params: { id: string } }
   };
 
   const handleStatusChange = async (newStatus: string) => {
-    await updateItem({ id: params.id as Id<"content_calendar">, status: newStatus as any });
+    await updateItem({ id: id as Id<"content_calendar">, status: newStatus as any });
     toast({ title: "Status updated", description: `Moved to ${statusEmoji[newStatus]} ${newStatus}` });
   };
 

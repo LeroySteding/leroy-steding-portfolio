@@ -83,9 +83,9 @@ export function AgentMessages() {
     );
   }
 
-  // Get unique agents
-  const uniqueAgents = Array.from(
-    new Set(feedItems.map((item) => item.source))
+  // Get unique agents (filter out undefined)
+  const uniqueAgents: string[] = Array.from(
+    new Set(feedItems.map((item) => item.source).filter((s): s is string => !!s))
   );
 
   // Group by day
@@ -184,10 +184,10 @@ export function AgentMessages() {
                           <div className="flex-shrink-0">
                             <div
                               className={`w-8 h-8 rounded-full flex items-center justify-center text-lg ${
-                                agentColors[message.source] || "bg-gray-100"
+                                message.source ? (agentColors[message.source] || "bg-gray-100") : "bg-gray-100"
                               }`}
                             >
-                              {agentIcons[message.source] || "🤖"}
+                              {message.source ? (agentIcons[message.source] || "🤖") : "🤖"}
                             </div>
                           </div>
 
@@ -195,7 +195,7 @@ export function AgentMessages() {
                           <div className="flex-1 min-w-0 space-y-1">
                             <div className="flex items-center gap-2 flex-wrap">
                               <span className="text-xs font-medium">
-                                {message.source}
+                                {message.source || "system"}
                               </span>
                               {isInterAgent && (
                                 <>

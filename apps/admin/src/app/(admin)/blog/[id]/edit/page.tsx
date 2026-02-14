@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { use, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useQuery, useMutation } from "convex/react";
 import { api } from "../../../../../../convex/_generated/api";
@@ -22,10 +22,11 @@ import { toast } from "@/components/ui/use-toast";
 export default function EditBlogPostPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
+  const { id } = use(params);
   const router = useRouter();
-  const post = useQuery(api.blog_posts.get, { id: params.id as any });
+  const post = useQuery(api.blog_posts.get, { id: id as any });
   const updateBlogPost = useMutation(api.blog_posts.update);
 
   const [title, setTitle] = useState("");
@@ -61,7 +62,7 @@ export default function EditBlogPostPage({
     setIsSubmitting(true);
     try {
       await updateBlogPost({
-        id: params.id as any,
+        id: id as any,
         title,
         slug,
         content,

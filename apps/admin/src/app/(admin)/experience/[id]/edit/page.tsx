@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { use, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useQuery, useMutation } from "convex/react";
 import { api } from "../../../../../../convex/_generated/api";
@@ -26,10 +26,11 @@ import { format } from "date-fns";
 export default function EditExperiencePage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
+  const { id } = use(params);
   const router = useRouter();
-  const experience = useQuery(api.experiences.get, { id: params.id as any });
+  const experience = useQuery(api.experiences.get, { id: id as any });
   const updateExperience = useMutation(api.experiences.update);
 
   const [title, setTitle] = useState("");
@@ -61,7 +62,7 @@ export default function EditExperiencePage({
     setIsSubmitting(true);
     try {
       await updateExperience({
-        id: params.id as any,
+        id: id as any,
         title,
         company,
         description: description || undefined,

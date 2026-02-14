@@ -1,5 +1,6 @@
 "use client";
 
+import { use } from "react";
 import { useQuery, useMutation } from "convex/react";
 import { api } from "../../../../../convex/_generated/api";
 import { Button } from "@/components/ui/button";
@@ -24,9 +25,10 @@ import StarterKit from "@tiptap/starter-kit";
 export default function BlogPostViewPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const post = useQuery(api.blog_posts.get, { id: params.id as any });
+  const { id } = use(params);
+  const post = useQuery(api.blog_posts.get, { id: id as any });
   const updatePost = useMutation(api.blog_posts.update);
 
   const editor = useEditor({
@@ -78,7 +80,7 @@ export default function BlogPostViewPage({
             {post.status === "published" ? "Unpublish" : "Publish"}
           </Button>
           <Button asChild>
-            <Link href={`/blog/${params.id}/edit`}>
+            <Link href={`/blog/${id}/edit`}>
               <Edit className="h-4 w-4 mr-2" />
               Edit
             </Link>
