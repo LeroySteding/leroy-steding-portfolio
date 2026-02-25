@@ -25,6 +25,7 @@ import type * as fact_clients from "../fact_clients.js";
 import type * as fact_invoices from "../fact_invoices.js";
 import type * as fact_settings from "../fact_settings.js";
 import type * as github_activity from "../github_activity.js";
+import type * as intelligence from "../intelligence.js";
 import type * as job_applications from "../job_applications.js";
 import type * as klant_portal from "../klant_portal.js";
 import type * as klant_projects from "../klant_projects.js";
@@ -68,6 +69,7 @@ declare const fullApi: ApiFromModules<{
   fact_invoices: typeof fact_invoices;
   fact_settings: typeof fact_settings;
   github_activity: typeof github_activity;
+  intelligence: typeof intelligence;
   job_applications: typeof job_applications;
   klant_portal: typeof klant_portal;
   klant_projects: typeof klant_projects;
