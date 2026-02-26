@@ -1,5 +1,6 @@
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
+import { internal } from "./_generated/api";
 import { requireAuth } from "./_helpers";
 
 const contentType = v.union(v.literal("blog_post"), v.literal("social_post"), v.literal("newsletter"), v.literal("video"), v.literal("podcast"), v.literal("case_study"));
@@ -73,10 +74,35 @@ export const update = mutation({
   handler: async (ctx, args) => {
     await requireAuth(ctx);
     const { id, ...fields } = args;
+    
+    // Get current content to capture old status
+    const currentContent = await ctx.db.get(id);
+    if (!currentContent) throw new Error("Content not found");
+    
+    const oldStatus = currentContent.status;
+    const newStatus = args.status || oldStatus;
+    
     const update: Record<string, any> = {};
     for (const [k, val] of Object.entries(fields)) { if (val !== undefined) update[k] = val; }
     if (args.status === "published" && !args.publishedAt) update.publishedAt = Date.now();
+    
     await ctx.db.patch(id, update);
+    
+    // Trigger workflow if status changed
+    if (oldStatus !== newStatus) {
+      await ctx.scheduler.runAfter(0, internal.workflows.dispatchContentWorkflow, {
+        contentId: id,
+        oldStatus,
+        newStatus,
+        contentData: {
+          title: args.title || currentContent.title,
+          type: args.type || currentContent.type,
+          platform: args.platform || currentContent.platform,
+          seoKeywords: args.seoKeywords || currentContent.seoKeywords,
+          notes: args.notes || currentContent.notes,
+        },
+      });
+    }
   },
 });
 

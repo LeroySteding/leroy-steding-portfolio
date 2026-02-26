@@ -1,5 +1,6 @@
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
+import { internal } from "./_generated/api";
 import { requireAuth } from "./_helpers";
 
 const status = v.union(v.literal("discovered"), v.literal("researching"), v.literal("applying"), v.literal("applied"), v.literal("interviewing"), v.literal("offer"), v.literal("rejected"), v.literal("withdrawn"));
@@ -94,12 +95,36 @@ export const update = mutation({
   handler: async (ctx, args) => {
     await requireAuth(ctx);
     const { id, ...fields } = args;
+    
+    // Get current job to capture old status
+    const currentJob = await ctx.db.get(id);
+    if (!currentJob) throw new Error("Job not found");
+    
+    const oldStatus = currentJob.status;
+    const newStatus = args.status || oldStatus;
+    
     const update: Record<string, any> = {};
     for (const [k, val] of Object.entries(fields)) {
       if (val !== undefined) update[k] = val;
     }
     if (args.status === "applied" && !args.appliedAt) update.appliedAt = Date.now();
+    
     await ctx.db.patch(id, update);
+    
+    // Trigger workflow if status changed
+    if (oldStatus !== newStatus) {
+      await ctx.scheduler.runAfter(0, internal.workflows.dispatchJobWorkflow, {
+        jobId: id,
+        oldStatus,
+        newStatus,
+        jobData: {
+          company: args.company || currentJob.company,
+          position: args.position || currentJob.position,
+          location: args.location || currentJob.location,
+          notes: args.notes || currentJob.notes,
+        },
+      });
+    }
   },
 });
 
@@ -108,5 +133,46 @@ export const remove = mutation({
   handler: async (ctx, args) => {
     await requireAuth(ctx);
     await ctx.db.delete(args.id);
+  },
+});
+
+// Dedicated status update mutation for drag-and-drop
+export const updateStatus = mutation({
+  args: {
+    id: v.id("job_applications"),
+    status: status,
+  },
+  handler: async (ctx, args) => {
+    await requireAuth(ctx);
+    
+    // Get current job to capture old status
+    const currentJob = await ctx.db.get(args.id);
+    if (!currentJob) throw new Error("Job not found");
+    
+    const oldStatus = currentJob.status;
+    const newStatus = args.status;
+    
+    // Update status and appliedAt if needed
+    const update: Record<string, any> = { status: newStatus };
+    if (newStatus === "applied" && !currentJob.appliedAt) {
+      update.appliedAt = Date.now();
+    }
+    
+    await ctx.db.patch(args.id, update);
+    
+    // Trigger workflow if status changed
+    if (oldStatus !== newStatus) {
+      await ctx.scheduler.runAfter(0, internal.workflows.dispatchJobWorkflow, {
+        jobId: args.id,
+        oldStatus,
+        newStatus,
+        jobData: {
+          company: currentJob.company,
+          position: currentJob.position,
+          location: currentJob.location,
+          notes: currentJob.notes,
+        },
+      });
+    }
   },
 });
