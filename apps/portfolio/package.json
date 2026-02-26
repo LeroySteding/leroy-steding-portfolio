@@ -50,6 +50,7 @@
     "convex": "^1.18.3",
     "dotted-map": "^2.2.3",
     "framer-motion": "^12.24.7",
+    "fuse.js": "^7.1.0",
     "hast-util-to-jsx-runtime": "^2.3.6",
     "html-url-attributes": "^3.0.1",
     "html2canvas": "^1.4.1",

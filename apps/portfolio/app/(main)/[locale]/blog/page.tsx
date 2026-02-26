@@ -6,6 +6,7 @@ import { getTranslations } from "@/lib/translations";
 import { formatReadingTime } from "@/lib/utils/reading-time";
 import BlogContent from "./BlogContent";
 import BlogHero from "./BlogHero";
+import BlogSearch from "@/components/blog/BlogSearch";
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -112,6 +113,9 @@ export default async function BlogPage() {
 
   return (
     <main className="min-h-screen bg-primary-bg">
+      {/* Global Blog Search (Cmd+K) */}
+      <BlogSearch posts={posts} language={locale as "en" | "nl"} />
+
       {/* Hero Section */}
       <BlogHero
         title={t.blog.page.title}

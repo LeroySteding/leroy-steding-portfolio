@@ -8,6 +8,7 @@ import {
 import { getBlogPostSchema, getBreadcrumbSchema } from "@/lib/structured-data";
 import { formatReadingTime } from "@/lib/utils/reading-time";
 import BlogPostClient from "./BlogPostClient";
+import BlogSearch from "@/components/blog/BlogSearch";
 
 interface SanityPost {
   _id: string;
@@ -173,6 +174,7 @@ export default async function BlogPostPage({ params }: PageProps) {
   return (
     <>
       <JsonLd data={[blogPostSchema, breadcrumbSchema]} />
+      <BlogSearch posts={allPosts} language={locale as "en" | "nl"} />
       <BlogPostClient post={post} allPosts={allPosts} language={locale as "en" | "nl"} />
     </>
   );
