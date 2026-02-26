@@ -74,15 +74,16 @@ export default function BlogPostClient({
       .map((item) => item.post);
   }, [post, language]);
 
-  // Extract headings for table of contents
+  // Extract headings for table of contents (H2 and H3)
   const headings = useMemo(() => {
     if (!post?.content) return [];
-    const matches = post.content.match(/^##\s+(.+)$/gm);
+    const matches = post.content.match(/^#{2,3}\s+(.+)$/gm);
     if (!matches) return [];
     return matches.map((match: string) => {
-      const text = match.replace(/^##\s+/, "");
+      const level = match.startsWith("###") ? 3 : 2;
+      const text = match.replace(/^#{2,3}\s+/, "");
       const id = text.toLowerCase().replace(/[^a-z0-9]+/g, "-");
-      return { text, id };
+      return { text, id, level };
     });
   }, [post]);
 
@@ -98,7 +99,7 @@ export default function BlogPostClient({
 
       // Update active heading
       const headingElements = headings
-        .map((h: { text: string; id: string }) => document.getElementById(h.id))
+        .map((h: { text: string; id: string; level: number }) => document.getElementById(h.id))
         .filter(Boolean);
       for (let i = headingElements.length - 1; i >= 0; i--) {
         const element = headingElements[i];
@@ -289,11 +290,18 @@ export default function BlogPostClient({
                       </h2>
                     );
                   },
-                  h3: ({ children }) => (
-                    <h3 className="text-3xl font-display font-bold mb-4 mt-10 text-text-primary">
-                      {children}
-                    </h3>
-                  ),
+                  h3: ({ children }) => {
+                    const text = String(children);
+                    const id = text.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+                    return (
+                      <h3
+                        id={id}
+                        className="text-3xl font-display font-bold mb-4 mt-10 text-text-primary scroll-mt-24"
+                      >
+                        {children}
+                      </h3>
+                    );
+                  },
                   p: ({ children }) => (
                     <p className="text-text-secondary mb-6 leading-relaxed text-xl">
                       {children}
@@ -485,15 +493,17 @@ export default function BlogPostClient({
                   <h4 className="font-bold text-text-primary mb-4">
                     Table of Contents
                   </h4>
-                  <nav className="space-y-2">
-                    {headings.map((heading: { text: string; id: string }) => (
+                  <nav className="space-y-1">
+                    {headings.map((heading: { text: string; id: string; level: number }) => (
                       <a
                         key={heading.id}
                         href={`#${heading.id}`}
                         className={`block text-sm py-2 px-3 rounded-lg transition-all ${
+                          heading.level === 3 ? "ml-4" : ""
+                        } ${
                           activeHeading === heading.id
-                            ? "bg-accent-primary/20 text-accent-primary font-bold"
-                            : "text-text-secondary hover:text-accent-primary hover:bg-surface"
+                            ? "bg-accent-primary/20 text-accent-primary font-bold border-l-2 border-accent-primary"
+                            : "text-text-secondary hover:text-accent-primary hover:bg-surface border-l-2 border-transparent"
                         }`}
                         onClick={(e) => {
                           e.preventDefault();

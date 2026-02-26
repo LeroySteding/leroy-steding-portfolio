@@ -1,0 +1,58 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "lastUpdated": "2026-02-26T18:05:00+01:00",
+    "project": "leroy-steding-portfolio"
+  },
+  "active": [],
+  "completed": [
+    {
+      "id": "BLOG-03",
+      "title": "Code Syntax Highlighting",
+      "description": "Add beautiful code syntax highlighting for blog posts using Shiki",
+      "priority": "HIGH",
+      "effort": "MEDIUM",
+      "completedAt": "2026-02-26T17:18:00+01:00",
+      "artifacts": [
+        "apps/portfolio/components/ui/CodeBlock.tsx",
+        "apps/portfolio/app/(main)/[locale]/blog/[slug]/BlogPostClient.tsx",
+        "docs/BLOG-CODE-HIGHLIGHTING.md",
+        "apps/portfolio/package.json",
+        "pnpm-lock.yaml"
+      ],
+      "solution": "Implemented Shiki-powered code highlighting with dual theme support, copy button, language badges, and 25+ supported languages. Migrated from react-syntax-highlighter for better performance (pre-rendered HTML). Features include theme-aware rendering, hover interactions, and zero runtime cost. All 47 tests passing.",
+      "commit": "dbcd0d0",
+      "benefits": [
+        "Better performance (pre-rendered HTML vs client-side JS)",
+        "More accurate highlighting (VS Code engine)",
+        "Smaller bundle size",
+        "Native TypeScript support",
+        "Theme consistency with VS Code"
+      ]
+    },
+    {
+      "id": "BLOG-02",
+      "title": "Table of Contents",
+      "description": "Implement auto-generated table of contents with hierarchical structure for blog posts",
+      "priority": "HIGH",
+      "effort": "MEDIUM",
+      "completedAt": "2026-02-26T18:05:00+01:00",
+      "artifacts": [
+        "apps/portfolio/app/(main)/[locale]/blog/[slug]/BlogPostClient.tsx",
+        "docs/BLOG-TABLE-OF-CONTENTS.md"
+      ],
+      "solution": "Enhanced existing TOC to support both H2 and H3 headings with hierarchical structure. Implemented automatic heading extraction from markdown, active section tracking on scroll, smooth scrolling navigation, and visual hierarchy with indentation. Sticky sidebar ensures TOC stays visible. Active section highlighted with accent color and left border indicator.",
+      "features": [
+        "H2 and H3 heading extraction with level detection",
+        "Hierarchical structure with H3 indentation (ml-4)",
+        "Active section tracking using intersection detection",
+        "Smooth scroll behavior on click",
+        "Sticky sidebar positioning (top-32)",
+        "Visual indicators (accent color + left border)",
+        "IDs generated for both H2 and H3 for linking",
+        "scroll-mt-24 to prevent header overlap"
+      ]
+    }
+  ],
+  "backlog": []
+}
