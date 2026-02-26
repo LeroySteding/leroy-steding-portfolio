@@ -19,11 +19,13 @@ export default defineSchema({
     seoDescription: v.optional(v.string()),
     readingTime: v.optional(v.number()),
     featured: v.optional(v.boolean()),
+    translationGroup: v.optional(v.string()), // UUID to link translations
   })
     .index("by_slug", ["slug"])
     .index("by_locale", ["locale"])
     .index("by_status", ["status"])
-    .index("by_published_at", ["publishedAt"]),
+    .index("by_published_at", ["publishedAt"])
+    .index("by_translation_group", ["translationGroup"]),
 
   projects: defineTable({
     title: v.string(),

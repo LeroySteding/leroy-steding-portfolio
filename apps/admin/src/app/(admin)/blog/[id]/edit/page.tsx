@@ -15,6 +15,7 @@ import { ImageUpload } from "@/components/image-upload";
 import { SlugInput } from "@/components/slug-input";
 import { LocaleSelector } from "@/components/locale-selector";
 import { TagInput } from "@/components/tag-input";
+import { TranslationManager } from "@/components/translation-manager";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { toast } from "@/components/ui/use-toast";
@@ -209,6 +210,8 @@ export default function EditBlogPostPage({
             </div>
           </CardContent>
         </Card>
+
+        <TranslationManager postId={id as any} currentLocale={locale} />
 
         <div className="flex gap-2">
           <Button type="submit" disabled={isSubmitting || !title}>
