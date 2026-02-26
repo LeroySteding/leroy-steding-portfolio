@@ -6,6 +6,7 @@
  * Uses ConvexHttpClient for SSR compatibility.
  */
 
+import { calculateReadingTime } from "./utils/reading-time";
 import { queryConvex } from "./convex-client";
 
 // ==================== TYPE DEFINITIONS ====================
@@ -335,6 +336,14 @@ function mapConvexExperience(e: any): SanityExperience {
 }
 
 function mapConvexPost(p: any): SanityPost {
+  // Calculate reading time from content if not provided
+  let readingTimeMinutes = p.readingTime ?? 5;
+  
+  // If no reading time is stored, calculate it from content
+  if (!p.readingTime && p.content) {
+    readingTimeMinutes = calculateReadingTime(p.content);
+  }
+
   return {
     _id: p._id,
     id: p._id,
@@ -349,7 +358,7 @@ function mapConvexPost(p: any): SanityPost {
     publishedAt: p.publishedAt
       ? new Date(p.publishedAt).toISOString()
       : new Date(p._creationTime).toISOString(),
-    readingTime: p.readingTime ?? 5,
+    readingTime: readingTimeMinutes,
     featured: p.featured ?? false,
     language: p.locale,
   };

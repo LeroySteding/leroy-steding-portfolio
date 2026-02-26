@@ -3,6 +3,7 @@ import { getLocale } from "next-intl/server";
 import LayoutContainer from "@/components/ui/LayoutContainer";
 import { getPosts as getConvexPosts } from "@/lib/convex-content";
 import { getTranslations } from "@/lib/translations";
+import { formatReadingTime } from "@/lib/utils/reading-time";
 import BlogContent from "./BlogContent";
 import BlogHero from "./BlogHero";
 
@@ -63,6 +64,11 @@ function transformPost(post: SanityBlogPost) {
   const slugValue =
     typeof post.slug === "string" ? post.slug : post.slug?.current || "";
 
+  // Format reading time: if it's a number, format it; if it's already a string, use it
+  const readingTimeStr = typeof post.readingTime === "string" 
+    ? post.readingTime 
+    : formatReadingTime(parseInt(String(post.readingTime)) || 5);
+
   return {
     id: post._id,
     title: post.title,
@@ -73,7 +79,7 @@ function transformPost(post: SanityBlogPost) {
     tags: post.tags || [],
     author: post.author || "Leroy Steding",
     publishedAt: post.publishedAt || new Date().toISOString(),
-    readingTime: post.readingTime || "5 min read",
+    readingTime: readingTimeStr,
     coverImage: post.coverImage,
     featured: post.featured || false,
   };

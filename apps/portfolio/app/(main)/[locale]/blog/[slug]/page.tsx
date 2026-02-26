@@ -6,6 +6,7 @@ import {
   getPosts as getConvexPosts,
 } from "@/lib/convex-content";
 import { getBlogPostSchema, getBreadcrumbSchema } from "@/lib/structured-data";
+import { formatReadingTime } from "@/lib/utils/reading-time";
 import BlogPostClient from "./BlogPostClient";
 
 interface SanityPost {
@@ -33,6 +34,11 @@ function transformPost(post: SanityPost) {
   const slugValue =
     typeof post.slug === "string" ? post.slug : post.slug?.current || "";
 
+  // Format reading time: handle both number and string inputs
+  const readingTimeStr = typeof post.readingTime === "string"
+    ? post.readingTime
+    : formatReadingTime(parseInt(String(post.readingTime)) || 5);
+
   return {
     id: post._id,
     title: post.title,
@@ -43,7 +49,7 @@ function transformPost(post: SanityPost) {
     tags: post.tags || [],
     author: post.author || "Leroy Steding",
     publishedAt: post.publishedAt || new Date().toISOString(),
-    readingTime: post.readingTime || "5 min read",
+    readingTime: readingTimeStr,
     coverImage: post.coverImage,
     featured: post.featured || false,
   };
