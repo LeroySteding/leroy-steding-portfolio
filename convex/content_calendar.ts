@@ -89,20 +89,21 @@ export const update = mutation({
     await ctx.db.patch(id, update);
     
     // Trigger workflow if status changed
-    if (oldStatus !== newStatus) {
-      await ctx.scheduler.runAfter(0, internal.workflows.dispatchContentWorkflow, {
-        contentId: id,
-        oldStatus,
-        newStatus,
-        contentData: {
-          title: args.title || currentContent.title,
-          type: args.type || currentContent.type,
-          platform: args.platform || currentContent.platform,
-          seoKeywords: args.seoKeywords || currentContent.seoKeywords,
-          notes: args.notes || currentContent.notes,
-        },
-      });
-    }
+    // TODO: Re-enable after fixing internal API generation
+    // if (oldStatus !== newStatus) {
+    //   await ctx.scheduler.runAfter(0, internal.workflows.dispatchContentWorkflow, {
+    //     contentId: id,
+    //     oldStatus,
+    //     newStatus,
+    //     contentData: {
+    //       title: args.title || currentContent.title,
+    //       type: args.type || currentContent.type,
+    //       platform: args.platform || currentContent.platform,
+    //       seoKeywords: args.seoKeywords || currentContent.seoKeywords,
+    //       notes: args.notes || currentContent.notes,
+    //     },
+    //   });
+    // }
   },
 });
 

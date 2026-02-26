@@ -267,22 +267,42 @@ export async function getTechStackSection(
 // ==================== CONTENT FETCHERS ====================
 
 function mapConvexProject(p: any): SanityProject {
+  // Extract text from Tiptap JSON if present
+  let longDesc = "";
+  if (typeof p.content === "string") {
+    longDesc = p.content;
+  } else if (p.content?.type === "doc" && Array.isArray(p.content?.content)) {
+    longDesc = p.content.content
+      .map((node: any) => {
+        if (node.type === "paragraph" && Array.isArray(node.content)) {
+          return node.content.map((c: any) => c.text || "").join("");
+        }
+        return "";
+      })
+      .filter(Boolean)
+      .join("\n\n");
+  }
+
   return {
     _id: p._id,
     title: p.title,
     slug: p.slug,
     id: p._id,
     description: p.description,
-    longDescription:
-      typeof p.content === "string" ? p.content : JSON.stringify(p.content),
+    longDescription: longDesc || p.description,
     image: p.coverImage,
     technologies: p.technologies ?? [],
     liveUrl: p.liveUrl,
     githubUrl: p.githubUrl,
     featured: p.featured ?? false,
-    category: "web", // Convex schema doesn't have category, default
+    category: "product", // Default category (Convex schema doesn't have this field)
     year: p.year ?? new Date().getFullYear(),
     language: p.locale,
+    // Optional fields not in Convex schema
+    challenges: [],
+    solutions: [],
+    impact: undefined,
+    testimonial: undefined,
   };
 }
 

@@ -112,19 +112,20 @@ export const update = mutation({
     await ctx.db.patch(id, update);
     
     // Trigger workflow if status changed
-    if (oldStatus !== newStatus) {
-      await ctx.scheduler.runAfter(0, internal.workflows.dispatchJobWorkflow, {
-        jobId: id,
-        oldStatus,
-        newStatus,
-        jobData: {
-          company: args.company || currentJob.company,
-          position: args.position || currentJob.position,
-          location: args.location || currentJob.location,
-          notes: args.notes || currentJob.notes,
-        },
-      });
-    }
+    // TODO: Re-enable after fixing internal API generation
+    // if (oldStatus !== newStatus) {
+    //   await ctx.scheduler.runAfter(0, internal.workflows.dispatchJobWorkflow, {
+    //     jobId: id,
+    //     oldStatus,
+    //     newStatus,
+    //     jobData: {
+    //       company: args.company || currentJob.company,
+    //       position: args.position || currentJob.position,
+    //       location: args.location || currentJob.location,
+    //       notes: args.notes || currentJob.notes,
+    //     },
+    //   });
+    // }
   },
 });
 
@@ -161,18 +162,19 @@ export const updateStatus = mutation({
     await ctx.db.patch(args.id, update);
     
     // Trigger workflow if status changed
-    if (oldStatus !== newStatus) {
-      await ctx.scheduler.runAfter(0, internal.workflows.dispatchJobWorkflow, {
-        jobId: args.id,
-        oldStatus,
-        newStatus,
-        jobData: {
-          company: currentJob.company,
-          position: currentJob.position,
-          location: currentJob.location,
-          notes: currentJob.notes,
-        },
-      });
-    }
+    // TODO: Re-enable after fixing internal API generation
+    // if (oldStatus !== newStatus) {
+    //   await ctx.scheduler.runAfter(0, internal.workflows.dispatchJobWorkflow, {
+    //     jobId: args.id,
+    //     oldStatus,
+    //     newStatus,
+    //     jobData: {
+    //       company: currentJob.company,
+    //       position: currentJob.position,
+    //       location: currentJob.location,
+    //       notes: currentJob.notes,
+    //     },
+    //   });
+    // }
   },
 });
