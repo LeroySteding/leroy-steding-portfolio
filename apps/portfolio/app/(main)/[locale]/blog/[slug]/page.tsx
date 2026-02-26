@@ -143,6 +143,10 @@ export default async function BlogPostPage({ params }: PageProps) {
 
   const post = transformPost(sanityPost);
 
+  // Fetch all posts for related posts calculation
+  const allConvexPosts = await getConvexPosts(locale);
+  const allPosts = (allConvexPosts as unknown as SanityPost[]).map(transformPost);
+
   // Generate structured data for SEO
   const blogPostSchema = getBlogPostSchema({
     title: post.title,
@@ -169,7 +173,7 @@ export default async function BlogPostPage({ params }: PageProps) {
   return (
     <>
       <JsonLd data={[blogPostSchema, breadcrumbSchema]} />
-      <BlogPostClient post={post} language={locale as "en" | "nl"} />
+      <BlogPostClient post={post} allPosts={allPosts} language={locale as "en" | "nl"} />
     </>
   );
 }

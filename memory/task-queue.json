@@ -7,6 +7,38 @@
   "active": [],
   "completed": [
     {
+      "id": "BLOG-04",
+      "title": "Related Posts Widget",
+      "description": "Add Related Posts widget with intelligent tag-based matching algorithm",
+      "priority": "HIGH",
+      "effort": "MEDIUM",
+      "completedAt": "2026-02-26T19:59:00+01:00",
+      "artifacts": [
+        "apps/portfolio/components/blog/RelatedPosts.tsx",
+        "apps/portfolio/app/(main)/[locale]/blog/[slug]/page.tsx",
+        "apps/portfolio/app/(main)/[locale]/blog/[slug]/BlogPostClient.tsx",
+        "docs/RELATED-POSTS-WIDGET.md"
+      ],
+      "solution": "Created intelligent RelatedPosts component with multi-factor scoring algorithm: same category (+3 points), shared tags (+2 each), featured bonus (+1). Implemented fallback to recent posts when no matches found. Shows 3 related posts with thumbnail, title, date, reading time, and excerpt. Responsive grid (1/2/3 columns). Integrated server-side post fetching in page.tsx and replaced basic implementation in BlogPostClient. Fully memoized for performance.",
+      "features": [
+        "Tag-based similarity matching (2 points per shared tag)",
+        "Category matching bonus (3 points)",
+        "Featured post bonus (1 point)",
+        "Fallback to recent posts when score = 0",
+        "Rich card UI with image, title, date, reading time",
+        "Responsive grid (1 col mobile, 2 tablet, 3 desktop)",
+        "Hover effects and smooth transitions",
+        "Localized UI text (EN/NL)",
+        "Memoized calculations for performance",
+        "SSR-friendly data fetching"
+      ],
+      "algorithm": {
+        "scoring": "Multi-factor relevance scoring",
+        "factors": ["category match", "shared tags", "featured status"],
+        "fallback": "Recent posts when no relevant matches"
+      }
+    },
+    {
       "id": "UX-04",
       "title": "Loading States & Skeleton Screens",
       "description": "Add skeleton loading states for better perceived performance across the site",

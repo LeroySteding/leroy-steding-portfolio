@@ -23,7 +23,7 @@ import ReactMarkdown from "react-markdown";
 import CodeBlock from "@/components/ui/CodeBlock";
 import CTA from "@/components/ui/CTA";
 import NewsletterSubscribe from "@/components/ui/NewsletterSubscribe";
-import { getBlogPosts } from "@/utils/getLocalizedData";
+import RelatedPosts from "@/components/blog/RelatedPosts";
 
 interface BlogPost {
   id: string;
@@ -42,11 +42,13 @@ interface BlogPost {
 
 interface BlogPostClientProps {
   post: BlogPost;
+  allPosts: BlogPost[];
   language?: "en" | "nl";
 }
 
 export default function BlogPostClient({
   post,
+  allPosts,
   language = "en",
 }: BlogPostClientProps) {
   const [readingProgress, setReadingProgress] = useState(0);
@@ -57,22 +59,6 @@ export default function BlogPostClient({
   if (!post) {
     notFound();
   }
-
-  // Get related posts (same category or shared tags)
-  const relatedPosts = useMemo(() => {
-    const allPosts = getBlogPosts(language).filter((p) => p.id !== post.id);
-
-    return allPosts
-      .map((p) => ({
-        post: p,
-        score:
-          (p.category === post.category ? 3 : 0) +
-          p.tags.filter((tag) => post.tags.includes(tag)).length,
-      }))
-      .sort((a, b) => b.score - a.score)
-      .slice(0, 3)
-      .map((item) => item.post);
-  }, [post, language]);
 
   // Extract headings for table of contents (H2 and H3)
   const headings = useMemo(() => {
@@ -387,37 +373,12 @@ export default function BlogPostClient({
             </div>
 
             {/* Related Posts */}
-            {relatedPosts.length > 0 && (
-              <div className="mb-16">
-                <h3 className="text-3xl font-display font-bold mb-8 text-text-primary flex items-center gap-3">
-                  <span>Keep Reading</span>
-                  <ChevronRight className="w-6 h-6 text-accent-primary" />
-                </h3>
-                <div className="grid md:grid-cols-3 gap-6">
-                  {relatedPosts.map((relatedPost) => (
-                    <Link
-                      key={relatedPost.id}
-                      href={
-                        language === "nl"
-                          ? `/nl/blog/${relatedPost.slug}`
-                          : `/blog/${relatedPost.slug}`
-                      }
-                      className="card p-6 hover:scale-105 transition-transform group"
-                    >
-                      <span className="px-3 py-1 text-xs font-bold rounded-full capitalize bg-accent-primary/20 text-accent-primary mb-3 inline-block">
-                        {relatedPost.category}
-                      </span>
-                      <h4 className="text-lg font-bold mb-2 text-text-primary group-hover:text-accent-primary transition-colors line-clamp-2">
-                        {relatedPost.title}
-                      </h4>
-                      <p className="text-sm text-text-secondary line-clamp-2">
-                        {relatedPost.excerpt}
-                      </p>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            )}
+            <RelatedPosts 
+              currentPost={post} 
+              allPosts={allPosts} 
+              language={language}
+              maxPosts={3}
+            />
 
             {/* Navigation */}
             <div className="flex flex-col sm:flex-row justify-between items-center gap-6 pt-12 border-t-2 border-surface">
