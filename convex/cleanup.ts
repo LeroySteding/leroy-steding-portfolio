@@ -15,7 +15,8 @@ const RETENTION_RULES: TableRule[] = [
 ];
 
 export const run = internalMutation({
-  handler: async (ctx): Promise<void> => {
+  args: {},
+  handler: async (ctx) => {
     const now = Date.now();
     const results: string[] = [];
 
@@ -31,7 +32,9 @@ export const run = internalMutation({
       }
 
       if (old.length > 0) {
-        results.push(`${table}: deleted ${old.length} items older than ${maxAgeDays}d`);
+        results.push(
+          `${table}: deleted ${old.length} items older than ${maxAgeDays}d`,
+        );
       }
     }
 

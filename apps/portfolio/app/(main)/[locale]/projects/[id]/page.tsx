@@ -1,94 +1,125 @@
-"use client";
-
 import { motion } from "framer-motion";
 import { ArrowLeft, Calendar, ExternalLink, Github, Tag } from "lucide-react";
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { useParams } from "next/navigation";
-import MetaTags from "@/components/seo/MetaTags";
+import { notFound } from "next/navigation";
+import { getLocale } from "next-intl/server";
 import CTA from "@/components/ui/CTA";
-import { useLanguage } from "@/contexts/LanguageContext";
-import { useTranslation } from "@/hooks/useTranslation";
-import { getProjectById } from "@/utils/getLocalizedData";
+import { getProjectBySlug } from "@/lib/convex-content";
+import { getTranslations } from "@/lib/translations";
 
-export default function ProjectDetailPage() {
-  const params = useParams();
-  const { language } = useLanguage();
-  const t = useTranslation();
-  const project = getProjectById(params.id as string, language);
+interface PageProps {
+  params: Promise<{ locale: string; id: string }>;
+}
 
-  const pageTitle = project
-    ? `${project.title} | Leroy Steding`
-    : t.projects.detail.notFound;
-  const pageDescription = project?.description || "";
-  const pageUrl = `https://leroysteding.nl/projects/${params.id}`;
-
-  // Generate JSON-LD structured data for SEO using CreativeWork schema
-  const jsonLd = project
-    ? {
-        "@context": "https://schema.org",
-        "@type": "CreativeWork",
-        name: project.title,
-        description: project.description,
-        url: pageUrl,
-        image:
-          project.image || "https://www.leroysteding.nl/images/og-default.jpg",
-        creator: {
-          "@type": "Person",
-          name: "Leroy Steding",
-          url: "https://www.leroysteding.nl",
-        },
-        author: {
-          "@type": "Person",
-          name: "Leroy Steding",
-          url: "https://www.leroysteding.nl",
-        },
-        dateCreated: project.year ? `${project.year}-01-01` : undefined,
-        keywords: project.technologies.join(", "),
-        inLanguage: language === "nl" ? "nl-NL" : "en-US",
-        programmingLanguage: project.technologies.filter((t: string) =>
-          [
-            "TypeScript",
-            "JavaScript",
-            "Python",
-            "Go",
-            "Rust",
-            "Java",
-            "PHP",
-          ].includes(t),
-        ),
-        ...(project.liveUrl && { mainEntityOfPage: project.liveUrl }),
-        ...(project.githubUrl && { codeRepository: project.githubUrl }),
-      }
-    : undefined;
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { locale, id } = await params;
+  const project = await getProjectBySlug(id, locale);
 
   if (!project) {
-    return (
-      <div className="min-h-screen bg-primary-bg flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-4xl font-display font-bold text-text-primary mb-4">
-            {t.projects.detail.notFound}
-          </h1>
-          <Link
-            href="/#projects"
-            className="inline-flex items-center gap-2 text-accent-primary hover:text-accent-hover transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            {t.projects.detail.backToProjects}
-          </Link>
-        </div>
-      </div>
-    );
+    return {
+      title: "Project Not Found | Leroy Steding",
+    };
   }
+
+  const isNL = locale === "nl";
+  const ogImageUrl = new URL("/api/og", "https://www.leroysteding.nl");
+  ogImageUrl.searchParams.set("title", project.title);
+  ogImageUrl.searchParams.set("description", project.description);
+  ogImageUrl.searchParams.set("type", "project");
+
+  return {
+    title: `${project.title} | Leroy Steding`,
+    description: project.description,
+    alternates: {
+      canonical: isNL
+        ? `https://leroysteding.nl/projects/${id}`
+        : `https://leroysteding.nl/en/projects/${id}`,
+      languages: {
+        nl: `https://leroysteding.nl/projects/${id}`,
+        en: `https://leroysteding.nl/en/projects/${id}`,
+        "x-default": `https://leroysteding.nl/projects/${id}`,
+      },
+    },
+    openGraph: {
+      title: project.title,
+      description: project.description,
+      locale: isNL ? "nl_NL" : "en_US",
+      images: [
+        {
+          url: project.image || ogImageUrl.toString(),
+          width: 1200,
+          height: 630,
+          alt: project.title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: project.title,
+      description: project.description,
+      images: [project.image || ogImageUrl.toString()],
+    },
+  };
+}
+
+export default async function ProjectDetailPage({ params }: PageProps) {
+  const { locale, id } = await params;
+  const t = getTranslations(locale);
+
+  // Fetch project from Convex
+  const project = await getProjectBySlug(id, locale);
+
+  if (!project) {
+    notFound();
+  }
+
+  const pageUrl = `https://leroysteding.nl/${locale === "nl" ? "" : "en/"}projects/${id}`;
+
+  // Generate JSON-LD structured data for SEO using CreativeWork schema
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    name: project.title,
+    description: project.description,
+    url: pageUrl,
+    image: project.image || "https://www.leroysteding.nl/images/og-default.jpg",
+    creator: {
+      "@type": "Person",
+      name: "Leroy Steding",
+      url: "https://www.leroysteding.nl",
+    },
+    author: {
+      "@type": "Person",
+      name: "Leroy Steding",
+      url: "https://www.leroysteding.nl",
+    },
+    dateCreated: project.year ? `${project.year}-01-01` : undefined,
+    keywords: project.technologies.join(", "),
+    inLanguage: locale === "nl" ? "nl-NL" : "en-US",
+    programmingLanguage: project.technologies.filter((t: string) =>
+      [
+        "TypeScript",
+        "JavaScript",
+        "Python",
+        "Go",
+        "Rust",
+        "Java",
+        "PHP",
+      ].includes(t),
+    ),
+    ...(project.liveUrl && { mainEntityOfPage: project.liveUrl }),
+    ...(project.githubUrl && { codeRepository: project.githubUrl }),
+  };
 
   return (
     <>
-      <MetaTags
-        title={pageTitle}
-        description={pageDescription}
-        url={pageUrl}
-        keywords={project?.technologies || []}
-        jsonLd={jsonLd}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <div className="min-h-screen bg-primary-bg">
         {/* Hero Section with Featured Image */}
@@ -120,28 +151,19 @@ export default function ProjectDetailPage() {
 
           <div className="container relative z-10 mx-auto px-8 lg:px-16 h-full flex flex-col justify-end pb-16">
             {/* Back button */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5 }}
-            >
+            <div className="mb-8">
               <Link
-                href="/#projects"
-                className="inline-flex items-center gap-2 text-text-secondary hover:text-accent-primary transition-colors mb-8 font-semibold"
+                href={`/${locale === "nl" ? "" : "en/"}projects`}
+                className="inline-flex items-center gap-2 text-text-secondary hover:text-accent-primary transition-colors font-semibold"
               >
                 <ArrowLeft className="w-4 h-4" />
                 {t.projects.detail.backToProjects}
               </Link>
-            </motion.div>
+            </div>
 
             {/* Project Header */}
             <div>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                className="mb-6"
-              >
+              <div className="mb-6">
                 <div className="flex flex-wrap items-center gap-4 mb-6">
                   <span className="px-5 py-2.5 rounded-full bg-accent-primary/10 border-2 border-accent-primary text-accent-primary text-sm font-bold">
                     {project.category === "product"
@@ -163,15 +185,10 @@ export default function ProjectDetailPage() {
                 <p className="text-lg sm:text-xl text-text-secondary leading-relaxed max-w-3xl">
                   {project.description}
                 </p>
-              </motion.div>
+              </div>
 
               {/* Action buttons */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="flex flex-wrap gap-4"
-              >
+              <div className="flex flex-wrap gap-4">
                 {project.liveUrl && (
                   <Link
                     href={project.liveUrl}
@@ -194,7 +211,7 @@ export default function ProjectDetailPage() {
                     View on GitHub
                   </Link>
                 )}
-              </motion.div>
+              </div>
             </div>
           </div>
         </section>
@@ -204,13 +221,7 @@ export default function ProjectDetailPage() {
           <div className="container relative z-10 mx-auto px-8 lg:px-16">
             <div className="mx-auto">
               {/* Technologies */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                viewport={{ once: true }}
-                className="mb-20"
-              >
+              <div className="mb-20">
                 <h2 className="text-4xl md:text-5xl font-display font-black mb-8 flex items-center gap-4">
                   <Tag className="w-10 h-10 text-accent-primary" />
                   {t.projects.detail.technologies}
@@ -225,42 +236,32 @@ export default function ProjectDetailPage() {
                     </span>
                   ))}
                 </div>
-              </motion.div>
+              </div>
 
               {/* Long Description */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                viewport={{ once: true }}
-                className="mb-20"
-              >
-                <h2 className="text-4xl md:text-5xl font-display font-black mb-8">
-                  Overview
-                </h2>
-                <div className="prose prose-invert max-w-none">
-                  {project.longDescription
-                    .split("\n\n")
-                    .map((paragraph, index) => (
-                      <p
-                        key={index}
-                        className="text-lg text-text-secondary leading-relaxed mb-6"
-                      >
-                        {paragraph}
-                      </p>
-                    ))}
+              {project.longDescription && (
+                <div className="mb-20">
+                  <h2 className="text-4xl md:text-5xl font-display font-black mb-8">
+                    Overview
+                  </h2>
+                  <div className="prose prose-invert max-w-none">
+                    {project.longDescription
+                      .split("\n\n")
+                      .map((paragraph, index) => (
+                        <p
+                          key={index}
+                          className="text-lg text-text-secondary leading-relaxed mb-6"
+                        >
+                          {paragraph}
+                        </p>
+                      ))}
+                  </div>
                 </div>
-              </motion.div>
+              )}
 
               {/* Challenges */}
               {project.challenges && project.challenges.length > 0 && (
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6 }}
-                  viewport={{ once: true }}
-                  className="mb-20"
-                >
+                <div className="mb-20">
                   <h2 className="text-4xl md:text-5xl font-display font-black mb-8">
                     {t.projects.detail.challenges}
                   </h2>
@@ -276,18 +277,12 @@ export default function ProjectDetailPage() {
                       </li>
                     ))}
                   </ul>
-                </motion.div>
+                </div>
               )}
 
               {/* Solutions */}
               {project.solutions && project.solutions.length > 0 && (
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6 }}
-                  viewport={{ once: true }}
-                  className="mb-20"
-                >
+                <div className="mb-20">
                   <h2 className="text-4xl md:text-5xl font-display font-black mb-8">
                     {t.projects.detail.solutions}
                   </h2>
@@ -303,62 +298,35 @@ export default function ProjectDetailPage() {
                       </li>
                     ))}
                   </ul>
-                </motion.div>
+                </div>
               )}
 
               {/* Impact */}
-              {project.impact && project.impact.length > 0 && (
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6 }}
-                  viewport={{ once: true }}
-                  className="mb-20"
-                >
+              {project.impact && (
+                <div className="mb-20">
                   <h2 className="text-4xl md:text-5xl font-display font-black mb-8">
                     {t.projects.detail.impact}
                   </h2>
                   <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {project.impact.map((item, index) => (
-                      <div
-                        key={index}
-                        className="card p-8 hover:border-accent-primary/50 transition-all duration-300"
-                      >
-                        <div className="text-5xl mb-4">📈</div>
-                        <p className="text-text-secondary text-base leading-relaxed">
-                          {item}
-                        </p>
-                      </div>
-                    ))}
+                    <div className="card p-8 hover:border-accent-primary/50 transition-all duration-300">
+                      <div className="text-5xl mb-4">📈</div>
+                      <p className="text-text-secondary text-base leading-relaxed">
+                        {project.impact}
+                      </p>
+                    </div>
                   </div>
-                </motion.div>
+                </div>
               )}
 
               {/* Testimonial */}
               {project.testimonial && (
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6 }}
-                  viewport={{ once: true }}
-                  className="mb-20"
-                >
+                <div className="mb-20">
                   <div className="card p-10 border-l-8 border-accent-primary">
                     <p className="text-2xl text-text-secondary italic mb-6 leading-relaxed">
-                      "{project.testimonial.quote}"
+                      "{project.testimonial}"
                     </p>
-                    <div className="flex items-center gap-4">
-                      <div>
-                        <div className="font-bold text-text-primary text-lg">
-                          {project.testimonial.author}
-                        </div>
-                        <div className="text-base text-text-muted font-medium">
-                          {project.testimonial.role}
-                        </div>
-                      </div>
-                    </div>
                   </div>
-                </motion.div>
+                </div>
               )}
 
               {/* CTA */}
