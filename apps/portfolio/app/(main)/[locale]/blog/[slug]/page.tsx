@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import JsonLd from "@/components/JsonLd";
 import { locales } from "@/i18n/config";
 import {
-  getPostBySlug as getConvexPostBySlug,
+  getPostByIdOrSlug as getConvexPostByIdOrSlug,
   getPosts as getConvexPosts,
 } from "@/lib/convex-content";
 import { getBlogPostSchema, getBreadcrumbSchema } from "@/lib/structured-data";
@@ -70,7 +70,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps) {
   const { slug, locale } = await params;
-  const convexPost = await getConvexPostBySlug(slug, locale);
+  const convexPost = await getConvexPostByIdOrSlug(slug, locale);
   const post: SanityPost | null = convexPost as unknown as SanityPost | null;
 
   if (!post) {
@@ -126,7 +126,7 @@ export async function generateMetadata({ params }: PageProps) {
 
 export default async function BlogPostPage({ params }: PageProps) {
   const { slug, locale } = await params;
-  const sanityPost: SanityPost | null = (await getConvexPostBySlug(
+  const sanityPost: SanityPost | null = (await getConvexPostByIdOrSlug(
     slug,
     locale,
   )) as unknown as SanityPost | null;

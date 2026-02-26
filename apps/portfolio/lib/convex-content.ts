@@ -440,6 +440,22 @@ export async function getPosts(locale: string): Promise<SanityPost[]> {
   return posts.map(mapConvexPost);
 }
 
+export async function getPostById(
+  id: string,
+  locale: string,
+): Promise<SanityPost | null> {
+  try {
+    const post = await queryConvex<any | null>("portfolio:getPostById", {
+      id,
+      locale: toConvexLocale(locale),
+    });
+    return post ? mapConvexPost(post) : null;
+  } catch (error) {
+    // Invalid ID format, return null
+    return null;
+  }
+}
+
 export async function getPostBySlug(
   slug: string,
   locale: string,
@@ -449,6 +465,20 @@ export async function getPostBySlug(
     locale: toConvexLocale(locale),
   });
   return post ? mapConvexPost(post) : null;
+}
+
+export async function getPostByIdOrSlug(
+  idOrSlug: string,
+  locale: string,
+): Promise<SanityPost | null> {
+  // Try ID lookup first (IDs are longer and alphanumeric)
+  if (idOrSlug.length > 20) {
+    const byId = await getPostById(idOrSlug, locale);
+    if (byId) return byId;
+  }
+  
+  // Fallback to slug lookup
+  return getPostBySlug(idOrSlug, locale);
 }
 
 export async function getFeaturedPosts(locale: string): Promise<SanityPost[]> {

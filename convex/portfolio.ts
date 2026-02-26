@@ -213,6 +213,24 @@ export const getFeaturedPosts = query({
   },
 });
 
+export const getPostById = query({
+  args: {
+    id: v.id("blog_posts"),
+    locale: v.optional(v.union(v.literal("en"), v.literal("nl"))),
+  },
+  handler: async (ctx, args) => {
+    const post = await ctx.db.get(args.id);
+    if (!post) return null;
+    
+    // Check locale match if specified
+    if (args.locale && post.locale !== args.locale) {
+      return null;
+    }
+    
+    return post;
+  },
+});
+
 export const getPostBySlug = query({
   args: {
     slug: v.string(),
