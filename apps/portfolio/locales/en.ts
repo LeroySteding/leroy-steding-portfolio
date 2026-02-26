@@ -195,12 +195,24 @@ export const en = {
     },
     filter: {
       all: "All Projects",
+      category: "Category",
+      technologies: "Technologies",
+      sortBy: "Sort by",
+      clearAll: "Clear all",
+      results: "projects",
+    },
+    sort: {
+      dateDesc: "Newest first",
+      dateAsc: "Oldest first",
+      titleAsc: "A to Z",
+      titleDesc: "Z to A",
     },
     categories: {
       product: "Product",
       client: "Client",
       internal: "Internal",
     },
+    empty: "No projects found matching your filters.",
     detail: {
       backToProjects: "Back to Projects",
       notFound: "Project Not Found",

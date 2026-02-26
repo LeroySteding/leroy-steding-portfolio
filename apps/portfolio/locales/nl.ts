@@ -196,12 +196,24 @@ export const nl: Translations = {
     },
     filter: {
       all: "Alle Projecten",
+      category: "Categorie",
+      technologies: "Technologieën",
+      sortBy: "Sorteren op",
+      clearAll: "Alles wissen",
+      results: "projecten",
+    },
+    sort: {
+      dateDesc: "Nieuwste eerst",
+      dateAsc: "Oudste eerst",
+      titleAsc: "A tot Z",
+      titleDesc: "Z tot A",
     },
     categories: {
       product: "Product",
       client: "Klant",
       internal: "Intern",
     },
+    empty: "Geen projecten gevonden die overeenkomen met uw filters.",
     detail: {
       backToProjects: "Terug naar Projecten",
       notFound: "Project Niet Gevonden",

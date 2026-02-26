@@ -7,6 +7,47 @@
   "active": [],
   "completed": [
     {
+      "id": "PORT-01",
+      "title": "Project Filtering & Sorting",
+      "description": "Implement category and tech stack filtering with URL parameters for projects page",
+      "priority": "HIGH",
+      "effort": "MEDIUM",
+      "completedAt": "2026-02-26T21:32:00+01:00",
+      "artifacts": [
+        "apps/portfolio/components/projects/ProjectFilters.tsx",
+        "apps/portfolio/app/(main)/[locale]/projects/ProjectsGridClient.tsx",
+        "apps/portfolio/app/(main)/[locale]/projects/page.tsx",
+        "apps/portfolio/locales/en.ts",
+        "apps/portfolio/locales/nl.ts",
+        "docs/PROJECT-FILTERING-SORTING.md"
+      ],
+      "solution": "Created comprehensive filtering and sorting system with URL parameter persistence. Implemented ProjectFilters component for UI controls and ProjectsGridClient for filter logic. Supports category filtering (Product/Client/Internal), multi-select tech stack filters, and 4 sorting options (date/title, asc/desc). All filter state persists in URL query parameters for shareable, bookmarkable URLs. Added active filter chips, results count, clear all functionality, and smooth animations. Fully responsive and accessible.",
+      "features": [
+        "Category filtering (Product, Client, Internal)",
+        "Multi-select technology stack filtering",
+        "Sorting options (date desc/asc, title A-Z/Z-A)",
+        "URL parameter persistence (?category=&tech=&sort=)",
+        "Active filter chips with × remove buttons",
+        "Results count display",
+        "Clear all filters button",
+        "Mobile-responsive filter panel",
+        "Smooth Framer Motion animations",
+        "Accessible keyboard navigation",
+        "Localized UI (EN/NL)",
+        "Empty state handling"
+      ],
+      "urlSchema": {
+        "category": "product|client|internal",
+        "tech": "array of technology names",
+        "sort": "date-desc|date-asc|title-asc|title-desc"
+      },
+      "examples": [
+        "/projects?category=product",
+        "/projects?tech=React&tech=TypeScript",
+        "/projects?category=client&tech=Next.js&sort=date-desc"
+      ]
+    },
+    {
       "id": "BLOG-05",
       "title": "Blog Search with Fuse.js",
       "description": "Implement fuzzy search for blog posts with Cmd+K keyboard shortcut",

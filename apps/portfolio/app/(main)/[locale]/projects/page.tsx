@@ -71,7 +71,7 @@ export async function generateMetadata({
   };
 }
 
-import ProjectsGrid from "./ProjectsGrid";
+import ProjectsGridClient from "./ProjectsGridClient";
 
 export interface SanityProject {
   _id: string;
@@ -139,8 +139,8 @@ export default async function ProjectsPage() {
       {/* Projects Grid */}
       <section className="section relative bg-primary-bg">
         <LayoutContainer>
-          <ProjectsGrid
-            projects={featuredProjects}
+          <ProjectsGridClient
+            projects={projects}
             translations={t}
             locale={locale}
           />
