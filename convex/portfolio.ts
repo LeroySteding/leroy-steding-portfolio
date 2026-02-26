@@ -79,6 +79,24 @@ export const getFeaturedProjects = query({
   },
 });
 
+export const getProjectById = query({
+  args: {
+    id: v.id("projects"),
+    locale: v.optional(v.union(v.literal("en"), v.literal("nl"))),
+  },
+  handler: async (ctx, args) => {
+    const project = await ctx.db.get(args.id);
+    if (!project) return null;
+    
+    // Check locale match if specified
+    if (args.locale && project.locale !== args.locale) {
+      return null;
+    }
+    
+    return project;
+  },
+});
+
 export const getProjectBySlug = query({
   args: {
     slug: v.string(),

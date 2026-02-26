@@ -5,7 +5,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getLocale } from "next-intl/server";
 import CTA from "@/components/ui/CTA";
-import { getProjectBySlug } from "@/lib/convex-content";
+import { getProjectByIdOrSlug } from "@/lib/convex-content";
 import { getTranslations } from "@/lib/translations";
 
 interface PageProps {
@@ -16,7 +16,7 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { locale, id } = await params;
-  const project = await getProjectBySlug(id, locale);
+  const project = await getProjectByIdOrSlug(id, locale);
 
   if (!project) {
     return {
@@ -69,8 +69,8 @@ export default async function ProjectDetailPage({ params }: PageProps) {
   const { locale, id } = await params;
   const t = getTranslations(locale);
 
-  // Fetch project from Convex
-  const project = await getProjectBySlug(id, locale);
+  // Fetch project from Convex (handles both IDs and slugs)
+  const project = await getProjectByIdOrSlug(id, locale);
 
   if (!project) {
     notFound();

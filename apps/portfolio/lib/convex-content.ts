@@ -362,6 +362,22 @@ export async function getProjects(locale: string): Promise<SanityProject[]> {
   return projects.map(mapConvexProject);
 }
 
+export async function getProjectById(
+  id: string,
+  locale: string,
+): Promise<SanityProject | null> {
+  try {
+    const project = await queryConvex<any | null>("portfolio:getProjectById", {
+      id,
+      locale: toConvexLocale(locale),
+    });
+    return project ? mapConvexProject(project) : null;
+  } catch (error) {
+    // Invalid ID format, return null
+    return null;
+  }
+}
+
 export async function getProjectBySlug(
   slug: string,
   locale: string,
@@ -371,6 +387,20 @@ export async function getProjectBySlug(
     locale: toConvexLocale(locale),
   });
   return project ? mapConvexProject(project) : null;
+}
+
+export async function getProjectByIdOrSlug(
+  idOrSlug: string,
+  locale: string,
+): Promise<SanityProject | null> {
+  // Try ID lookup first (IDs are longer and alphanumeric)
+  if (idOrSlug.length > 20) {
+    const byId = await getProjectById(idOrSlug, locale);
+    if (byId) return byId;
+  }
+
+  // Fallback to slug lookup
+  return getProjectBySlug(idOrSlug, locale);
 }
 
 export async function getFeaturedProjects(
