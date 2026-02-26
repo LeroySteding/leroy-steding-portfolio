@@ -20,8 +20,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import ReactMarkdown from "react-markdown";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
+import CodeBlock from "@/components/ui/CodeBlock";
 import CTA from "@/components/ui/CTA";
 import NewsletterSubscribe from "@/components/ui/NewsletterSubscribe";
 import { getBlogPosts } from "@/utils/getLocalizedData";
@@ -259,24 +258,14 @@ export default function BlogPostClient({
                 components={{
                   code({ className, children }) {
                     const match = /language-(\w+)/.exec(className || "");
+                    const codeString = String(children).replace(/\n$/, "");
+
                     return match ? (
-                      <div className="my-8 rounded-xl overflow-x-auto">
-                        <SyntaxHighlighter
-                          style={vscDarkPlus}
-                          language={match[1]}
-                          PreTag="div"
-                          customStyle={{
-                            margin: 0,
-                            padding: "1.5rem",
-                            fontSize: "0.875rem",
-                            lineHeight: "1.6",
-                            borderRadius: "0.75rem",
-                          }}
-                          wrapLongLines={true}
-                        >
-                          {String(children).replace(/\n$/, "")}
-                        </SyntaxHighlighter>
-                      </div>
+                      <CodeBlock
+                        code={codeString}
+                        language={match[1]}
+                        showLineNumbers={false}
+                      />
                     ) : (
                       <code className="px-2 py-1 rounded-lg bg-surface text-accent-primary font-mono text-sm break-words">
                         {children}
