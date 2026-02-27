@@ -47,3 +47,6 @@ export const remove = mutation({
   args: { id: v.id("analytics_log") },
   handler: async (ctx, args) => { await ctx.db.delete(args.id); },
 });
+
+// Alias for 'log' - used by scrapers and other automated systems
+export const push = log;

@@ -33,6 +33,7 @@
     "@sanity/document-internationalization": "^4.1.0",
     "@swc/helpers": "^0.5.18",
     "convex": "^1.18.3",
+    "puppeteer": "^24.37.5",
     "sanity-plugin-markdown": "^6.0.0"
   },
   "pnpm": {

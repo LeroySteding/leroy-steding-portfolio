@@ -1,6 +1,33 @@
+/**
+ * Convex Cron Jobs
+ * 
+ * Scheduled tasks that run automatically via Convex's cron system.
+ */
+
 import { cronJobs } from "convex/server";
 import { internal } from "./_generated/api";
 
 const crons = cronJobs();
-crons.daily("cleanup old data", { hourUTC: 3, minuteUTC: 0 }, internal.cleanup.run, {});
+
+// ProLinker job scraper - runs every 4 hours
+crons.interval(
+  "scrape-prolinker-jobs",
+  { hours: 4 },
+  internal.cron_tasks.scrapeProLinkerJobs
+);
+
+// Archive old scraped jobs - runs daily at 3 AM
+crons.daily(
+  "archive-old-jobs",
+  { hourUTC: 3, minuteUTC: 0 },
+  internal.cron_tasks.archiveOldScrapedJobs
+);
+
+// Clean up expired job applications - runs daily at 4 AM
+crons.daily(
+  "cleanup-expired-jobs",
+  { hourUTC: 4, minuteUTC: 0 },
+  internal.cron_tasks.cleanupExpiredJobApplications
+);
+
 export default crons;

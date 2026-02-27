@@ -565,4 +565,27 @@ export default defineSchema({
     .index("by_lead_score", ["leadScore"])
     .index("by_tier", ["tier"])
     .index("by_created_at", ["createdAt"]),
+
+  // Scraped jobs from external platforms (ProLinker, etc.)
+  scraped_jobs: defineTable({
+    title: v.string(),
+    company: v.string(),
+    location: v.optional(v.string()),
+    description: v.string(),
+    salary: v.optional(v.string()),
+    url: v.string(),
+    technologies: v.array(v.string()),
+    postedAt: v.optional(v.number()),
+    scrapedAt: v.number(),
+    source: v.string(), // e.g., "prolinker", "linkedin", etc.
+    remote: v.optional(v.boolean()),
+    employmentType: v.optional(v.string()), // full-time, part-time, contract
+    experienceLevel: v.optional(v.string()), // junior, mid, senior
+    archived: v.optional(v.boolean()), // For soft deletion
+  })
+    .index("by_url", ["url"])
+    .index("by_company", ["company"])
+    .index("by_source", ["source"])
+    .index("by_scraped_at", ["scrapedAt"])
+    .index("by_url_source", ["url", "source"]),
 });
