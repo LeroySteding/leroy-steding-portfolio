@@ -1,12 +1,12 @@
 "use client";
 
 import { useQuery } from "convex/react";
-import { api } from "../../convex/_generated/api";
+import { api } from "../../../../convex/_generated/api";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Badge } from "./ui/badge";
 import { Brain } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
-import { type Id } from "../../convex/_generated/dataModel";
+import { type Id } from "../../../../convex/_generated/dataModel";
 
 const categoryEmojis: Record<string, string> = {
   decision: "⚖️", learning: "📚", context: "🔗", reference: "📎", insight: "💡",

@@ -1,7 +1,7 @@
 "use client";
 
 import { useMutation } from "convex/react";
-import { api } from "../../convex/_generated/api";
+import { api } from "../../../../convex/_generated/api";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Users, Check } from "lucide-react";
-import type { Id } from "../../convex/_generated/dataModel";
+import type { Id } from "../../../../convex/_generated/dataModel";
 
 const AGENTS = [
   { id: "orchestrator", name: "Orchestrator", icon: "🎯" },

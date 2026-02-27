@@ -3,7 +3,7 @@
 import { useState, useRef } from "react";
 import { useQuery, useMutation } from "convex/react";
 import { useUser } from "@clerk/nextjs";
-import { api } from "../../../../convex/_generated/api";
+import { api } from "../../../../../../convex/_generated/api";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Upload, Copy, Trash2, Loader2, Image as ImageIcon } from "lucide-react";

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useQuery, useMutation } from "convex/react";
-import { api } from "../../convex/_generated/api";
+import { api } from "../../../../convex/_generated/api";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -16,7 +16,7 @@ import {
 import { Languages, Plus, Link as LinkIcon, Unlink, ExternalLink } from "lucide-react";
 import Link from "next/link";
 import { toast } from "@/components/ui/use-toast";
-import { Id } from "../../convex/_generated/dataModel";
+import { Id } from "../../../../convex/_generated/dataModel";
 
 interface TranslationManagerProps {
   postId: Id<"blog_posts">;
