@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { useQuery, useMutation } from "convex/react";
-import { api } from "../../../../convex/_generated/api";
-import type { Id } from "../../../../convex/_generated/dataModel";
+import { api } from "../../../../../convex/_generated/api";
+import type { Id } from "../../../../../convex/_generated/dataModel";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -13,8 +13,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Plus, FileText, Video, MessageSquare, Lightbulb, Check, Archive } from "lucide-react";
+import { Plus, FileText, Video, MessageSquare, Lightbulb, Check, Archive, Grid3x3, Calendar as CalendarIcon } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
+import ContentCalendar from "@/components/content-calendar";
 
 type ContentStatus = "idea" | "outline" | "drafting" | "review" | "scheduled" | "published";
 type ContentType = "blog_post" | "social_post" | "newsletter" | "video" | "podcast" | "case_study";
@@ -42,6 +43,9 @@ export default function ContentPage() {
   const [typeFilter, setTypeFilter] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [isAddingContent, setIsAddingContent] = useState(false);
+  const [viewType, setViewType] = useState<"grid" | "calendar">("grid");
+  const [selectedContent, setSelectedContent] = useState<any>(null);
+  const [prefilledDate, setPrefilledDate] = useState<Date | null>(null);
 
   const content = useQuery(api.contentCalendar.list);
   const stats = useQuery(api.contentCalendar.stats);
@@ -92,31 +96,71 @@ export default function ContentPage() {
     }
   };
 
+  const handleAddContentForDate = (date: Date) => {
+    setPrefilledDate(date);
+    setIsAddingContent(true);
+  };
+
+  const handleContentClick = (content: any) => {
+    setSelectedContent(content);
+  };
+
   return (
     <div className="container py-6 space-y-6">
       {/* Header */}
-      <header className="flex items-center justify-between">
+      <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Content Calendar</h1>
           <p className="text-muted-foreground mt-1">
             {stats?.ideas || 0} ideas • {stats?.inProgress || 0} in progress • {stats?.publishedThisWeek || 0} published this week
           </p>
         </div>
-        <Dialog open={isAddingContent} onOpenChange={setIsAddingContent}>
-          <DialogTrigger asChild>
-            <Button>
-              <Plus className="h-4 w-4 mr-2" />
-              Add Content
+        <div className="flex items-center gap-2">
+          {/* View Toggle */}
+          <div className="flex items-center gap-1 border rounded-lg p-1">
+            <Button
+              variant={viewType === "grid" ? "default" : "ghost"}
+              size="sm"
+              onClick={() => setViewType("grid")}
+            >
+              <Grid3x3 className="h-4 w-4 mr-2" />
+              Grid
             </Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Create Content</DialogTitle>
-              <DialogDescription>Add a new content idea or piece</DialogDescription>
-            </DialogHeader>
-            <AddContentForm onSubmit={handleCreateContent} onCancel={() => setIsAddingContent(false)} />
-          </DialogContent>
-        </Dialog>
+            <Button
+              variant={viewType === "calendar" ? "default" : "ghost"}
+              size="sm"
+              onClick={() => setViewType("calendar")}
+            >
+              <CalendarIcon className="h-4 w-4 mr-2" />
+              Calendar
+            </Button>
+          </div>
+          <Dialog open={isAddingContent} onOpenChange={(open) => {
+            setIsAddingContent(open);
+            if (!open) setPrefilledDate(null);
+          }}>
+            <DialogTrigger asChild>
+              <Button>
+                <Plus className="h-4 w-4 mr-2" />
+                Add Content
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Create Content</DialogTitle>
+                <DialogDescription>Add a new content idea or piece</DialogDescription>
+              </DialogHeader>
+              <AddContentForm 
+                onSubmit={handleCreateContent} 
+                onCancel={() => {
+                  setIsAddingContent(false);
+                  setPrefilledDate(null);
+                }}
+                prefilledDate={prefilledDate}
+              />
+            </DialogContent>
+          </Dialog>
+        </div>
       </header>
 
       {/* Stats Cards */}
@@ -127,57 +171,78 @@ export default function ContentPage() {
         <StatCard label="Total Published" value={stats?.totalPublished || 0} icon={<Archive className="h-4 w-4" />} />
       </div>
 
-      {/* Filters & Search */}
-      <div className="flex flex-col sm:flex-row gap-4">
-        <Input
-          placeholder="Search by title, keywords, or notes..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="max-w-sm"
-        />
-        <Select value={statusFilter} onValueChange={setStatusFilter}>
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Status" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All Statuses</SelectItem>
-            {STATUS_OPTIONS.map((status) => (
-              <SelectItem key={status.value} value={status.value}>
-                {status.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-        <Select value={typeFilter} onValueChange={setTypeFilter}>
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Type" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All Types</SelectItem>
-            {TYPE_OPTIONS.map((type) => (
-              <SelectItem key={type.value} value={type.value}>
-                {type.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
+      {/* Conditional View: Grid or Calendar */}
+      {viewType === "grid" ? (
+        <>
+          {/* Filters & Search */}
+          <div className="flex flex-col sm:flex-row gap-4">
+            <Input
+              placeholder="Search by title, keywords, or notes..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="max-w-sm"
+            />
+            <Select value={statusFilter} onValueChange={setStatusFilter}>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Status" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Statuses</SelectItem>
+                {STATUS_OPTIONS.map((status) => (
+                  <SelectItem key={status.value} value={status.value}>
+                    {status.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <Select value={typeFilter} onValueChange={setTypeFilter}>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Type" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Types</SelectItem>
+                {TYPE_OPTIONS.map((type) => (
+                  <SelectItem key={type.value} value={type.value}>
+                    {type.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
 
-      {/* Content Grid */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {filtered.length === 0 ? (
-          <Card className="col-span-full">
-            <CardContent className="py-12 text-center">
-              <Lightbulb className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
-              <p className="text-muted-foreground">No content found. Create your first piece!</p>
-            </CardContent>
-          </Card>
-        ) : (
-          filtered.map((item: any) => (
-            <ContentCard key={item._id} content={item} onStatusChange={handleStatusChange} />
-          ))
-        )}
-      </div>
+          {/* Content Grid */}
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {filtered.length === 0 ? (
+              <Card className="col-span-full">
+                <CardContent className="py-12 text-center">
+                  <Lightbulb className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
+                  <p className="text-muted-foreground">No content found. Create your first piece!</p>
+                </CardContent>
+              </Card>
+            ) : (
+              filtered.map((item: any) => (
+                <ContentCard key={item._id} content={item} onStatusChange={handleStatusChange} />
+              ))
+            )}
+          </div>
+        </>
+      ) : (
+        <ContentCalendar
+          content={content}
+          onContentClick={handleContentClick}
+          onAddContent={handleAddContentForDate}
+        />
+      )}
+
+      {/* Content Detail Dialog */}
+      {selectedContent && (
+        <ContentDetailDialog
+          content={selectedContent}
+          isOpen={!!selectedContent}
+          onClose={() => setSelectedContent(null)}
+          onStatusChange={handleStatusChange}
+        />
+      )}
     </div>
   );
 }
@@ -286,12 +351,21 @@ function ContentCard({
   );
 }
 
-function AddContentForm({ onSubmit, onCancel }: { onSubmit: (data: any) => void; onCancel: () => void }) {
+function AddContentForm({ 
+  onSubmit, 
+  onCancel,
+  prefilledDate 
+}: { 
+  onSubmit: (data: any) => void; 
+  onCancel: () => void;
+  prefilledDate?: Date | null;
+}) {
   const [formData, setFormData] = useState({
     title: "",
     type: "blog_post" as ContentType,
     status: "idea" as ContentStatus,
     platform: "",
+    targetDate: prefilledDate ? prefilledDate.toISOString().split("T")[0] : "",
     notes: "",
     seoKeywords: "",
   });
@@ -300,6 +374,7 @@ function AddContentForm({ onSubmit, onCancel }: { onSubmit: (data: any) => void;
     e.preventDefault();
     onSubmit({
       ...formData,
+      targetDate: formData.targetDate ? new Date(formData.targetDate).getTime() : undefined,
       seoKeywords: formData.seoKeywords.split(",").map((k) => k.trim()).filter(Boolean),
       createdAt: Date.now(),
     });
@@ -351,14 +426,25 @@ function AddContentForm({ onSubmit, onCancel }: { onSubmit: (data: any) => void;
         </div>
       </div>
 
-      <div>
-        <Label htmlFor="platform">Platform</Label>
-        <Input
-          id="platform"
-          value={formData.platform}
-          onChange={(e) => setFormData({ ...formData, platform: e.target.value })}
-          placeholder="LinkedIn, Blog, YouTube"
-        />
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <Label htmlFor="platform">Platform</Label>
+          <Input
+            id="platform"
+            value={formData.platform}
+            onChange={(e) => setFormData({ ...formData, platform: e.target.value })}
+            placeholder="LinkedIn, Blog, YouTube"
+          />
+        </div>
+        <div>
+          <Label htmlFor="targetDate">Target Date</Label>
+          <Input
+            id="targetDate"
+            type="date"
+            value={formData.targetDate}
+            onChange={(e) => setFormData({ ...formData, targetDate: e.target.value })}
+          />
+        </div>
       </div>
 
       <div>
@@ -389,5 +475,130 @@ function AddContentForm({ onSubmit, onCancel }: { onSubmit: (data: any) => void;
         <Button type="submit">Create Content</Button>
       </div>
     </form>
+  );
+}
+
+function ContentDetailDialog({
+  content,
+  isOpen,
+  onClose,
+  onStatusChange,
+}: {
+  content: any;
+  isOpen: boolean;
+  onClose: () => void;
+  onStatusChange: (id: Id<"content_calendar">, status: ContentStatus) => void;
+}) {
+  const [status, setStatus] = useState(content.status);
+  const statusConfig = STATUS_OPTIONS.find((s) => s.value === content.status);
+  const typeConfig = TYPE_OPTIONS.find((t) => t.value === content.type);
+
+  const handleStatusChange = async (newStatus: ContentStatus) => {
+    try {
+      await onStatusChange(content._id, newStatus);
+      setStatus(newStatus);
+    } catch (error) {
+      console.error("Failed to update status:", error);
+    }
+  };
+
+  return (
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle>{content.title}</DialogTitle>
+          <DialogDescription>
+            {typeConfig?.label} {content.platform && `• ${content.platform}`}
+          </DialogDescription>
+        </DialogHeader>
+        <div className="space-y-4">
+          {/* Status */}
+          <div>
+            <Label className="text-sm font-medium">Status</Label>
+            <Select value={status} onValueChange={handleStatusChange}>
+              <SelectTrigger className="mt-1">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {STATUS_OPTIONS.map((status) => (
+                  <SelectItem key={status.value} value={status.value}>
+                    {status.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          {/* Details Grid */}
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <Label className="text-xs text-muted-foreground">Type</Label>
+              <p className="text-sm mt-1">{typeConfig?.label}</p>
+            </div>
+            {content.platform && (
+              <div>
+                <Label className="text-xs text-muted-foreground">Platform</Label>
+                <p className="text-sm mt-1">{content.platform}</p>
+              </div>
+            )}
+            {content.targetDate && (
+              <div>
+                <Label className="text-xs text-muted-foreground">Target Date</Label>
+                <p className="text-sm mt-1">
+                  {new Date(content.targetDate).toLocaleDateString()}
+                </p>
+              </div>
+            )}
+            {content.publishedAt && (
+              <div>
+                <Label className="text-xs text-muted-foreground">Published</Label>
+                <p className="text-sm mt-1">
+                  {new Date(content.publishedAt).toLocaleDateString()}
+                </p>
+              </div>
+            )}
+          </div>
+
+          {/* Notes */}
+          {content.notes && (
+            <div>
+              <Label className="text-sm font-medium">Notes</Label>
+              <p className="text-sm mt-1 whitespace-pre-wrap">{content.notes}</p>
+            </div>
+          )}
+
+          {/* SEO Keywords */}
+          {content.seoKeywords && content.seoKeywords.length > 0 && (
+            <div>
+              <Label className="text-sm font-medium">SEO Keywords</Label>
+              <div className="flex flex-wrap gap-2 mt-1">
+                {content.seoKeywords.map((keyword: string) => (
+                  <Badge key={keyword} variant="outline">
+                    {keyword}
+                  </Badge>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Related Blog Post */}
+          {content.relatedBlogPostId && (
+            <div>
+              <Label className="text-sm font-medium">Related Blog Post</Label>
+              <p className="text-sm mt-1 text-muted-foreground">
+                ID: {content.relatedBlogPostId}
+              </p>
+            </div>
+          )}
+
+          {/* Actions */}
+          <div className="flex gap-2 pt-4 border-t">
+            <Button onClick={onClose} className="flex-1">
+              Close
+            </Button>
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
   );
 }
