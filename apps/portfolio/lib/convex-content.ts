@@ -102,12 +102,16 @@ export interface SanityProject {
   description: string;
   longDescription?: string;
   image?: string;
+  galleryImages?: string[];
   technologies: string[];
   liveUrl?: string;
   githubUrl?: string;
   featured: boolean;
   category: string;
   year: number;
+  duration?: string;
+  role?: string;
+  client?: string;
   challenges?: string[];
   solutions?: string[];
   impact?: string;
@@ -292,12 +296,16 @@ function mapConvexProject(p: any): SanityProject {
     description: p.description,
     longDescription: longDesc || p.description,
     image: p.coverImage,
+    galleryImages: p.galleryImages ?? [],
     technologies: p.technologies ?? [],
     liveUrl: p.liveUrl,
     githubUrl: p.githubUrl,
     featured: p.featured ?? false,
     category: "product", // Default category (Convex schema doesn't have this field)
     year: p.year ?? new Date().getFullYear(),
+    duration: p.duration,
+    role: p.role,
+    client: p.client,
     language: p.locale,
     // Optional fields not in Convex schema
     challenges: [],

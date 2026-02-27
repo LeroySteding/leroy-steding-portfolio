@@ -1,9 +1,19 @@
-import { ArrowLeft, Calendar, ExternalLink, Github, Tag } from "lucide-react";
+import {
+  ArrowLeft,
+  Briefcase,
+  Calendar,
+  Clock,
+  ExternalLink,
+  Github,
+  Tag,
+  User,
+} from "lucide-react";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getLocale } from "next-intl/server";
+import ProjectGallery from "@/components/projects/ProjectGallery";
 import CTA from "@/components/ui/CTA";
 import { getProjectByIdOrSlug } from "@/lib/convex-content";
 import { getTranslations } from "@/lib/translations";
@@ -114,6 +124,8 @@ export default async function ProjectDetailPage({ params }: PageProps) {
     ...(project.githubUrl && { codeRepository: project.githubUrl }),
   };
 
+  const hasDetails = project.role || project.duration || project.client;
+
   return (
     <>
       <script
@@ -218,117 +230,208 @@ export default async function ProjectDetailPage({ params }: PageProps) {
         {/* Content Section */}
         <section className="py-24">
           <div className="container relative z-10 mx-auto px-8 lg:px-16">
-            <div className="mx-auto">
-              {/* Technologies */}
-              <div className="mb-20">
-                <h2 className="text-4xl md:text-5xl font-display font-black mb-8 flex items-center gap-4">
-                  <Tag className="w-10 h-10 text-accent-primary" />
-                  {t.projects.detail.technologies}
-                </h2>
-                <div className="flex flex-wrap gap-3">
-                  {project.technologies.map((tech) => (
-                    <span
-                      key={tech}
-                      className="px-5 py-2.5 text-base font-bold rounded-xl bg-surface border-2 border-surface-light text-text-secondary hover:border-accent-primary hover:text-accent-primary hover:bg-surface-light transition-all duration-300"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              {/* Long Description */}
-              {project.longDescription && (
-                <div className="mb-20">
-                  <h2 className="text-4xl md:text-5xl font-display font-black mb-8">
-                    Overview
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+              {/* Main Content - 2/3 width on desktop */}
+              <div className="lg:col-span-2 space-y-20">
+                {/* Technologies */}
+                <div>
+                  <h2 className="text-3xl md:text-4xl font-display font-black mb-8 flex items-center gap-4">
+                    <Tag className="w-8 h-8 text-accent-primary" />
+                    {t.projects.detail.technologies}
                   </h2>
-                  <div className="prose prose-invert max-w-none">
-                    {project.longDescription
-                      .split("\n\n")
-                      .map((paragraph, index) => (
-                        <p
-                          key={index}
-                          className="text-lg text-text-secondary leading-relaxed mb-6"
-                        >
-                          {paragraph}
-                        </p>
-                      ))}
+                  <div className="flex flex-wrap gap-3">
+                    {project.technologies.map((tech) => (
+                      <span
+                        key={tech}
+                        className="px-5 py-2.5 text-base font-bold rounded-xl bg-surface border-2 border-surface-light text-text-secondary hover:border-accent-primary hover:text-accent-primary hover:bg-surface-light transition-all duration-300"
+                      >
+                        {tech}
+                      </span>
+                    ))}
                   </div>
                 </div>
-              )}
 
-              {/* Challenges */}
-              {project.challenges && project.challenges.length > 0 && (
-                <div className="mb-20">
-                  <h2 className="text-4xl md:text-5xl font-display font-black mb-8">
-                    {t.projects.detail.challenges}
-                  </h2>
-                  <ul className="space-y-4">
-                    {project.challenges.map((challenge, index) => (
-                      <li key={index} className="card flex gap-4 p-6">
-                        <span className="text-accent-secondary font-bold text-2xl">
-                          ⚠️
-                        </span>
-                        <span className="text-text-secondary text-base leading-relaxed">
-                          {challenge}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
+                {/* Overview */}
+                {project.longDescription && (
+                  <div>
+                    <h2 className="text-3xl md:text-4xl font-display font-black mb-8">
+                      {t.projects.detail.overview}
+                    </h2>
+                    <div className="prose prose-invert max-w-none">
+                      {project.longDescription
+                        .split("\n\n")
+                        .map((paragraph, index) => (
+                          <p
+                            key={index}
+                            className="text-lg text-text-secondary leading-relaxed mb-6"
+                          >
+                            {paragraph}
+                          </p>
+                        ))}
+                    </div>
+                  </div>
+                )}
 
-              {/* Solutions */}
-              {project.solutions && project.solutions.length > 0 && (
-                <div className="mb-20">
-                  <h2 className="text-4xl md:text-5xl font-display font-black mb-8">
-                    {t.projects.detail.solutions}
-                  </h2>
-                  <ul className="space-y-4">
-                    {project.solutions.map((solution, index) => (
-                      <li key={index} className="card flex gap-4 p-6">
-                        <span className="text-accent-primary font-bold text-2xl">
-                          ✅
-                        </span>
-                        <span className="text-text-secondary text-base leading-relaxed">
-                          {solution}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
+                {/* Challenge → Solution → Results Narrative */}
+                {project.challenges && project.challenges.length > 0 && (
+                  <div className="space-y-16">
+                    {/* The Challenge */}
+                    <div>
+                      <div className="flex items-center gap-4 mb-8">
+                        <div className="w-12 h-12 rounded-full bg-red-500/10 border-2 border-red-500 flex items-center justify-center">
+                          <span className="text-2xl">🎯</span>
+                        </div>
+                        <h2 className="text-3xl md:text-4xl font-display font-black">
+                          {t.projects.detail.theChallenge}
+                        </h2>
+                      </div>
+                      <ul className="space-y-4">
+                        {project.challenges.map((challenge, index) => (
+                          <li key={index} className="card flex gap-4 p-6">
+                            <span className="text-red-500 font-bold text-2xl">
+                              ⚠️
+                            </span>
+                            <span className="text-text-secondary text-base leading-relaxed">
+                              {challenge}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
 
-              {/* Impact */}
-              {project.impact && (
-                <div className="mb-20">
-                  <h2 className="text-4xl md:text-5xl font-display font-black mb-8">
-                    {t.projects.detail.impact}
-                  </h2>
-                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div className="card p-8 hover:border-accent-primary/50 transition-all duration-300">
-                      <div className="text-5xl mb-4">📈</div>
-                      <p className="text-text-secondary text-base leading-relaxed">
-                        {project.impact}
+                    {/* The Solution */}
+                    {project.solutions && project.solutions.length > 0 && (
+                      <div>
+                        <div className="flex items-center gap-4 mb-8">
+                          <div className="w-12 h-12 rounded-full bg-accent-primary/10 border-2 border-accent-primary flex items-center justify-center">
+                            <span className="text-2xl">💡</span>
+                          </div>
+                          <h2 className="text-3xl md:text-4xl font-display font-black">
+                            {t.projects.detail.theSolution}
+                          </h2>
+                        </div>
+                        <ul className="space-y-4">
+                          {project.solutions.map((solution, index) => (
+                            <li key={index} className="card flex gap-4 p-6">
+                              <span className="text-accent-primary font-bold text-2xl">
+                                ✅
+                              </span>
+                              <span className="text-text-secondary text-base leading-relaxed">
+                                {solution}
+                              </span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+
+                    {/* The Results */}
+                    {project.impact && (
+                      <div>
+                        <div className="flex items-center gap-4 mb-8">
+                          <div className="w-12 h-12 rounded-full bg-green-500/10 border-2 border-green-500 flex items-center justify-center">
+                            <span className="text-2xl">🚀</span>
+                          </div>
+                          <h2 className="text-3xl md:text-4xl font-display font-black">
+                            {t.projects.detail.theResults}
+                          </h2>
+                        </div>
+                        <div className="card p-8 hover:border-accent-primary/50 transition-all duration-300">
+                          <div className="text-5xl mb-4">📈</div>
+                          <p className="text-lg text-text-secondary leading-relaxed">
+                            {project.impact}
+                          </p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* Gallery */}
+                {project.galleryImages && project.galleryImages.length > 0 && (
+                  <div>
+                    <h2 className="text-3xl md:text-4xl font-display font-black mb-8">
+                      {t.projects.detail.gallery}
+                    </h2>
+                    <ProjectGallery
+                      images={project.galleryImages}
+                      projectTitle={project.title}
+                    />
+                  </div>
+                )}
+
+                {/* Testimonial */}
+                {project.testimonial && (
+                  <div>
+                    <h2 className="text-3xl md:text-4xl font-display font-black mb-8">
+                      {t.projects.detail.testimonial}
+                    </h2>
+                    <div className="card p-10 border-l-8 border-accent-primary">
+                      <p className="text-2xl text-text-secondary italic mb-6 leading-relaxed">
+                        "{project.testimonial}"
                       </p>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Sidebar - 1/3 width on desktop */}
+              {hasDetails && (
+                <div className="lg:col-span-1">
+                  <div className="lg:sticky lg:top-24 space-y-8">
+                    <div className="card p-8">
+                      <h3 className="text-2xl font-display font-black mb-6">
+                        {t.projects.detail.projectDetails}
+                      </h3>
+                      <div className="space-y-6">
+                        {project.role && (
+                          <div>
+                            <div className="flex items-center gap-3 mb-2">
+                              <User className="w-5 h-5 text-accent-primary" />
+                              <h4 className="text-sm font-bold text-text-secondary uppercase tracking-wider">
+                                {t.projects.detail.role}
+                              </h4>
+                            </div>
+                            <p className="text-base text-text-primary font-semibold pl-8">
+                              {project.role}
+                            </p>
+                          </div>
+                        )}
+                        {project.duration && (
+                          <div>
+                            <div className="flex items-center gap-3 mb-2">
+                              <Clock className="w-5 h-5 text-accent-primary" />
+                              <h4 className="text-sm font-bold text-text-secondary uppercase tracking-wider">
+                                {t.projects.detail.duration}
+                              </h4>
+                            </div>
+                            <p className="text-base text-text-primary font-semibold pl-8">
+                              {project.duration}
+                            </p>
+                          </div>
+                        )}
+                        {project.client && (
+                          <div>
+                            <div className="flex items-center gap-3 mb-2">
+                              <Briefcase className="w-5 h-5 text-accent-primary" />
+                              <h4 className="text-sm font-bold text-text-secondary uppercase tracking-wider">
+                                {t.projects.detail.client}
+                              </h4>
+                            </div>
+                            <p className="text-base text-text-primary font-semibold pl-8">
+                              {project.client}
+                            </p>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
               )}
+            </div>
 
-              {/* Testimonial */}
-              {project.testimonial && (
-                <div className="mb-20">
-                  <div className="card p-10 border-l-8 border-accent-primary">
-                    <p className="text-2xl text-text-secondary italic mb-6 leading-relaxed">
-                      "{project.testimonial}"
-                    </p>
-                  </div>
-                </div>
-              )}
-
-              {/* CTA */}
+            {/* CTA */}
+            <div className="mt-20">
               <CTA variant="project" />
             </div>
           </div>
