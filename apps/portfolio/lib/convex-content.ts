@@ -6,8 +6,8 @@
  * Uses ConvexHttpClient for SSR compatibility.
  */
 
-import { calculateReadingTime } from "./utils/reading-time";
 import { queryConvex } from "./convex-client";
+import { calculateReadingTime } from "./utils/reading-time";
 
 // ==================== TYPE DEFINITIONS ====================
 // Re-exported with same names for backward compatibility
@@ -338,7 +338,7 @@ function mapConvexExperience(e: any): SanityExperience {
 function mapConvexPost(p: any): SanityPost {
   // Calculate reading time from content if not provided
   let readingTimeMinutes = p.readingTime ?? 5;
-  
+
   // If no reading time is stored, calculate it from content
   if (!p.readingTime && p.content) {
     readingTimeMinutes = calculateReadingTime(p.content);
@@ -402,11 +402,9 @@ export async function getProjectByIdOrSlug(
   idOrSlug: string,
   locale: string,
 ): Promise<SanityProject | null> {
-  // Try ID lookup first (IDs are longer and alphanumeric)
-  if (idOrSlug.length > 20) {
-    const byId = await getProjectById(idOrSlug, locale);
-    if (byId) return byId;
-  }
+  // Try ID lookup first (safe - returns null if not a valid ID)
+  const byId = await getProjectById(idOrSlug, locale);
+  if (byId) return byId;
 
   // Fallback to slug lookup
   return getProjectBySlug(idOrSlug, locale);
@@ -480,12 +478,10 @@ export async function getPostByIdOrSlug(
   idOrSlug: string,
   locale: string,
 ): Promise<SanityPost | null> {
-  // Try ID lookup first (IDs are longer and alphanumeric)
-  if (idOrSlug.length > 20) {
-    const byId = await getPostById(idOrSlug, locale);
-    if (byId) return byId;
-  }
-  
+  // Try ID lookup first (safe - returns null if not a valid ID)
+  const byId = await getPostById(idOrSlug, locale);
+  if (byId) return byId;
+
   // Fallback to slug lookup
   return getPostBySlug(idOrSlug, locale);
 }
