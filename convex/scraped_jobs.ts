@@ -17,7 +17,7 @@ export const list = query({
   handler: async (ctx, args) => {
     let jobs = await ctx.db
       .query("scraped_jobs")
-      .order("desc", "scrapedAt")
+      .order("desc")
       .collect();
 
     if (args.source) {
