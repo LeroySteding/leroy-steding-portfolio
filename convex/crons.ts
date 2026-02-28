@@ -30,4 +30,11 @@ crons.daily(
   internal.cron_tasks.cleanupExpiredJobApplications
 );
 
+// Send daily job digest - runs daily at 8 AM CET (7 AM UTC)
+crons.daily(
+  "send-daily-job-digest",
+  { hourUTC: 7, minuteUTC: 0 },
+  internal.cron_tasks.sendDailyJobDigest
+);
+
 export default crons;

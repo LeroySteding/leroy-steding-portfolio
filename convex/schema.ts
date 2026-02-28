@@ -18,6 +18,7 @@ export default defineSchema({
     seoTitle: v.optional(v.string()),
     seoDescription: v.optional(v.string()),
     readingTime: v.optional(v.number()),
+    translationGroup: v.optional(v.string()),
     featured: v.optional(v.boolean()),
   })
     .index("by_slug", ["slug"])
@@ -211,11 +212,36 @@ export default defineSchema({
     nextActionDate: v.optional(v.number()),
     tags: v.array(v.string()),
     createdAt: v.number(),
+    // Auto-apply tracking fields
+    appliedVia: v.optional(v.union(
+      v.literal("manual"),
+      v.literal("auto-apply"),
+      v.literal("one-click")
+    )),
+    matchScore: v.optional(v.number()), // 0-100 match score
+    applicationMode: v.optional(v.union(
+      v.literal("manual"),
+      v.literal("semi-auto"),
+      v.literal("full-auto")
+    )),
+    dryRun: v.optional(v.boolean()), // Was this a dry-run application?
+    applicationLog: v.optional(v.array(v.object({
+      timestamp: v.number(),
+      action: v.string(),
+      status: v.union(v.literal("success"), v.literal("error"), v.literal("info")),
+      message: v.string(),
+    }))),
+    confirmationUrl: v.optional(v.string()), // Confirmation page URL
+    confirmationScreenshot: v.optional(v.string()), // Screenshot storage ID
+    withdrawnAt: v.optional(v.number()),
+    withdrawReason: v.optional(v.string()),
   })
     .index("by_status", ["status"])
     .index("by_company", ["company"])
     .index("by_company_position", ["company", "position"])
-    .index("by_created_at", ["createdAt"]),
+    .index("by_created_at", ["createdAt"])
+    .index("by_applied_via", ["appliedVia"])
+    .index("by_match_score", ["matchScore"]),
 
   seo_tracking: defineTable({
     url: v.string(),
@@ -588,4 +614,135 @@ export default defineSchema({
     .index("by_source", ["source"])
     .index("by_scraped_at", ["scrapedAt"])
     .index("by_url_source", ["url", "source"]),
+
+  // User job preferences for intelligent matching
+  job_preferences: defineTable({
+    userId: v.string(), // Clerk user ID or "leroy" for default profile
+    // Location preferences
+    preferredLocations: v.array(v.string()), // ["Amsterdam", "Remote", "Netherlands"]
+    remotePreference: v.union(
+      v.literal("required"),
+      v.literal("preferred"),
+      v.literal("acceptable"),
+      v.literal("no_preference")
+    ),
+    // Salary preferences
+    minSalary: v.optional(v.number()),
+    maxSalary: v.optional(v.number()),
+    salaryCurrency: v.optional(v.string()), // "EUR", "USD"
+    // Tech stack (skill names with proficiency weights)
+    techStackPreferences: v.array(
+      v.object({
+        skill: v.string(), // Skill name (links to skills table)
+        proficiency: v.number(), // 1-100 (from skills table)
+        importance: v.union(
+          v.literal("required"),
+          v.literal("preferred"),
+          v.literal("nice_to_have")
+        ),
+      })
+    ),
+    // Company preferences
+    targetCompanies: v.array(v.string()), // Company names to prioritize
+    avoidCompanies: v.array(v.string()), // Companies to skip
+    // Keywords and titles
+    preferredTitles: v.array(v.string()), // ["Full Stack Developer", "Frontend Engineer"]
+    requiredKeywords: v.array(v.string()), // Must appear in job description
+    avoidKeywords: v.array(v.string()), // Skip if these appear
+    // Experience level
+    targetExperienceLevel: v.array(v.string()), // ["mid", "senior"]
+    // Employment type
+    employmentTypes: v.array(v.string()), // ["full-time", "contract"]
+    // Metadata
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  })
+    .index("by_user_id", ["userId"]),
+
+  // Job match scores and history
+  job_matches: defineTable({
+    jobId: v.id("scraped_jobs"),
+    userId: v.string(), // Clerk user ID or "leroy"
+    score: v.number(), // Overall match score (0-100)
+    // Breakdown of scoring components
+    techStackScore: v.number(), // 0-40 (40% weight)
+    locationScore: v.number(), // 0-20 (20% weight)
+    salaryScore: v.number(), // 0-15 (15% weight)
+    companyScore: v.number(), // 0-10 (10% weight)
+    keywordScore: v.number(), // 0-10 (10% weight)
+    experienceScore: v.number(), // 0-5 (5% weight)
+    // Match metadata
+    matchDetails: v.object({
+      matchedTechnologies: v.array(v.string()),
+      missingTechnologies: v.array(v.string()),
+      matchedKeywords: v.array(v.string()),
+      flags: v.array(v.string()), // ["remote_match", "salary_range_match", etc.]
+    }),
+    // Tracking
+    notifiedAt: v.optional(v.number()), // When user was notified
+    viewedAt: v.optional(v.number()), // When user viewed the match
+    actionTaken: v.optional(
+      v.union(
+        v.literal("applied"),
+        v.literal("saved"),
+        v.literal("dismissed"),
+        v.literal("no_action")
+      )
+    ),
+    createdAt: v.number(),
+  })
+    .index("by_job_id", ["jobId"])
+    .index("by_user_id", ["userId"])
+    .index("by_score", ["score"])
+    .index("by_user_score", ["userId", "score"])
+    .index("by_created_at", ["createdAt"]),
+
+  // Auto-apply settings and safety controls
+  auto_apply_settings: defineTable({
+    mode: v.union(
+      v.literal("manual"),      // Review each job, one-click apply
+      v.literal("semi-auto"),   // Auto-apply to high-match jobs (score >80%)
+      v.literal("full-auto")    // Auto-apply to all jobs above threshold
+    ),
+    enabled: v.boolean(),
+    dailyLimit: v.number(),
+    scoreThreshold: v.number(), // Minimum score to auto-apply (0-100)
+    companyCooldownDays: v.number(), // Days before re-applying to same company
+    blacklistCompanies: v.array(v.string()),
+    blacklistKeywords: v.array(v.string()),
+    whitelistCompanies: v.array(v.string()),
+    requiredKeywords: v.array(v.string()),
+    dryRun: v.boolean(), // Test mode - don't actually submit applications
+    notifyOnApply: v.boolean(),
+    autoWithdrawOnBetter: v.boolean(), // Withdraw from lower-score jobs when better match found
+    weeklyReportEnabled: v.boolean(),
+    createdAt: v.optional(v.number()),
+    updatedAt: v.optional(v.number()),
+  }),
+
+  // Application templates for pre-filled data
+  application_templates: defineTable({
+    name: v.string(),
+    isDefault: v.boolean(),
+    // Personal information
+    fullName: v.string(),
+    email: v.string(),
+    phone: v.string(),
+    location: v.string(),
+    linkedinUrl: v.optional(v.string()),
+    githubUrl: v.optional(v.string()),
+    portfolioUrl: v.optional(v.string()),
+    // Application materials
+    cvUrl: v.optional(v.string()), // URL to CV file
+    cvStorageId: v.optional(v.id("_storage")), // Convex storage ID for CV
+    coverLetterTemplate: v.optional(v.string()), // Template with {company}, {position} placeholders
+    // Additional fields
+    availability: v.optional(v.string()), // "Immediately", "2 weeks notice", etc.
+    salaryExpectation: v.optional(v.string()),
+    rightsToWork: v.optional(v.string()), // "EU Citizen", "Work permit required", etc.
+    customFields: v.optional(v.object({})), // Platform-specific fields
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  })
+    .index("by_is_default", ["isDefault"]),
 });

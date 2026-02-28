@@ -1,9 +1,13 @@
 {
-  "extends": "../tsconfig.json",
   "compilerOptions": {
+    "target": "ES2021",
+    "lib": ["ES2021"],
     "module": "esnext",
     "moduleResolution": "bundler",
-    "types": ["node"]
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
   },
   "include": ["./**/*"]
 }

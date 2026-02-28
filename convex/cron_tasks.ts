@@ -130,5 +130,81 @@ export const cleanupExpiredJobApplications = internalAction({
   },
 });
 
+/**
+ * Send daily job digest
+ * Triggered daily at 8 AM CET (7 AM UTC)
+ */
+export const sendDailyJobDigest = internalAction({
+  args: {},
+  handler: async (ctx) => {
+    console.log("[CRON] Generating daily job digest...");
+    
+    try {
+      const userId = "leroy";
+      
+      // Generate digest
+      const digest = await ctx.runQuery(internal.job_matching.generateDailyDigest, {
+        userId,
+        limit: 10,
+      });
+      
+      console.log(`[CRON] Generated digest: ${digest.message}`);
+      
+      // Format digest for Telegram
+      if (digest.jobs.length === 0) {
+        console.log("[CRON] No new matches found, skipping notification");
+        return {
+          success: true,
+          message: "No new matches, no notification sent",
+        };
+      }
+      
+      // Format message
+      let message = `🎯 *Daily Job Digest*\n\n`;
+      message += `Found *${digest.jobs.length} new matches* from ${digest.totalScraped} jobs scraped in the last 24h\n\n`;
+      message += `Top ${Math.min(10, digest.jobs.length)} matches:\n\n`;
+      
+      for (let i = 0; i < Math.min(10, digest.jobs.length); i++) {
+        const job = digest.jobs[i];
+        const score = Math.round(job.matchScore);
+        const scoreEmoji = score >= 80 ? "🔥" : score >= 70 ? "⭐" : "✅";
+        
+        message += `${scoreEmoji} *${job.title}* (${score}%)\n`;
+        message += `   ${job.company}`;
+        if (job.location) message += ` • ${job.location}`;
+        if (job.remote) message += ` • 🏠 Remote`;
+        message += `\n`;
+        
+        // Show top matched tech
+        const topTech = job.matchDetails?.matchedTechnologies?.slice(0, 3).join(", ");
+        if (topTech) message += `   💻 ${topTech}\n`;
+        
+        if (job.salary) message += `   💰 ${job.salary}\n`;
+        message += `   🔗 [View Job](${job.url})\n\n`;
+      }
+      
+      message += `\n_View all matches at admin.leroysteding.nl/jobs_`;
+      
+      // Log the message (in production, this would send via Telegram)
+      console.log("[CRON] Digest message:", message);
+      console.log("[CRON] Note: Telegram sending should be done via OpenClaw cron job");
+      console.log("[CRON] Add to OpenClaw: openclaw cron add --name prolinker-digest --schedule '0 8 * * *' --command 'node send-digest.js'");
+      
+      return {
+        success: true,
+        message: digest.message,
+        matchCount: digest.jobs.length,
+        telegramMessage: message,
+      };
+    } catch (error) {
+      console.error("[CRON] Error generating digest:", error);
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : "Unknown error",
+      };
+    }
+  },
+});
+
 // Import internal API
 import { api } from "./_generated/api";

@@ -194,5 +194,90 @@ export const saveScrapedJob = action({
   },
 });
 
+/**
+ * Public push mutation for scrapers (no auth required)
+ * Deduplicates by URL + source
+ */
+export const push = mutation({
+  args: {
+    title: v.string(),
+    company: v.string(),
+    location: v.optional(v.string()),
+    description: v.string(),
+    salary: v.optional(v.string()),
+    url: v.string(),
+    technologies: v.array(v.string()),
+    postedAt: v.optional(v.number()),
+    source: v.string(),
+    remote: v.optional(v.boolean()),
+    employmentType: v.optional(v.string()),
+    experienceLevel: v.optional(v.string()),
+  },
+  handler: async (ctx, args) => {
+    const existing = await ctx.db
+      .query("scraped_jobs")
+      .withIndex("by_url_source", (q) => q.eq("url", args.url).eq("source", args.source))
+      .first();
+
+    const scrapedAt = Date.now();
+
+    if (existing) {
+      await ctx.db.patch(existing._id, { ...args, scrapedAt, archived: existing.archived });
+      return existing._id;
+    }
+
+    return await ctx.db.insert("scraped_jobs", { ...args, scrapedAt, archived: false });
+  },
+});
+
+/**
+ * Batch push for efficient bulk inserts with deduplication
+ */
+export const pushBatch = mutation({
+  args: {
+    jobs: v.array(
+      v.object({
+        title: v.string(),
+        company: v.string(),
+        location: v.optional(v.string()),
+        description: v.string(),
+        salary: v.optional(v.string()),
+        url: v.string(),
+        technologies: v.array(v.string()),
+        postedAt: v.optional(v.number()),
+        source: v.string(),
+        remote: v.optional(v.boolean()),
+        employmentType: v.optional(v.string()),
+        experienceLevel: v.optional(v.string()),
+      })
+    ),
+  },
+  handler: async (ctx, args) => {
+    const results = { created: 0, updated: 0, errors: [] as string[] };
+    const scrapedAt = Date.now();
+
+    for (const job of args.jobs) {
+      try {
+        const existing = await ctx.db
+          .query("scraped_jobs")
+          .withIndex("by_url_source", (q) => q.eq("url", job.url).eq("source", job.source))
+          .first();
+
+        if (existing) {
+          await ctx.db.patch(existing._id, { ...job, scrapedAt, archived: existing.archived });
+          results.updated++;
+        } else {
+          await ctx.db.insert("scraped_jobs", { ...job, scrapedAt, archived: false });
+          results.created++;
+        }
+      } catch (error) {
+        results.errors.push(`Failed: ${job.title} - ${error}`);
+      }
+    }
+
+    return results;
+  },
+});
+
 // Import api for self-reference
 import { api } from "./_generated/api";
