@@ -52,4 +52,18 @@ crons.daily(
   { keywords: ["hiring", "we're hiring", "join our team", "careers"] }
 );
 
+// GitHub intelligence - scan open issues daily at 2 AM UTC
+crons.daily(
+  "github-scan-issues",
+  { hourUTC: 2, minuteUTC: 0 },
+  internal.github_intelligence.scanOpenIssues
+);
+
+// Daily standup digest - runs every morning at 8 AM CET (7 AM UTC)
+crons.daily(
+  "daily-standup-digest",
+  { hourUTC: 7, minuteUTC: 0 },
+  internal.daily_digest_simple.generateDailyDigest
+);
+
 export default crons;
