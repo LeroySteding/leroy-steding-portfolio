@@ -28,19 +28,20 @@ import { api } from "../../../convex/_generated/api";
 
 // Configuration
 const CONFIG = {
-  // ProLinker URL - Update this with the actual URL
-  baseUrl: process.env.PROLINKER_URL || "https://www.prolinker.nl/vacatures",
-  maxPages: parseInt(process.env.MAX_PAGES || "10"),
+  // ProLinker URL - ⚠️ VERIFY THIS IS CORRECT! Site was timing out on 2026-03-03
+  // Alternative URLs to try: https://prolinker.nl/opdrachten or https://prolinker.nl/vacatures
+  baseUrl: process.env.PROLINKER_URL || "https://prolinker.nl/opdrachten",
+  maxPages: parseInt(process.env.MAX_PAGES || "5"), // Reduced from 10 to fail faster
   headless: process.env.HEADLESS !== "false",
   
-  // Rate limiting
-  requestDelay: 2000, // 2 seconds between pages
+  // Rate limiting (increased to be more polite and avoid blocks)
+  requestDelay: 3000, // 3 seconds between pages
   maxRetries: 3,
   retryDelay: 5000, // 5 seconds initial retry delay
   
-  // Timeouts
-  navigationTimeout: 30000,
-  selectorTimeout: 10000,
+  // Timeouts (INCREASED - some sites are slow)
+  navigationTimeout: 60000, // 60 seconds (was 30s, too short for slow sites)
+  selectorTimeout: 15000, // 15 seconds (was 10s)
 };
 
 // Initialize Convex client
@@ -94,17 +95,49 @@ async function scrapeProLinker(): Promise<ScrapeStats> {
   console.log(`📍 Base URL: ${CONFIG.baseUrl}`);
   console.log(`📄 Max pages: ${CONFIG.maxPages}`);
   console.log(`⏱️  Request delay: ${CONFIG.requestDelay}ms`);
+  console.log(`⏰ Navigation timeout: ${CONFIG.navigationTimeout}ms`);
+  console.log("⚠️  If all pages timeout, the URL may be wrong or site is blocking us");
+  console.log("💡 Try manually visiting the URL to verify it works");
 
   let browser: Browser | null = null;
 
   try {
+    // Test URL accessibility before launching browser
+    console.log("\n🔍 Testing URL accessibility...");
+    try {
+      const testResponse = await fetch(CONFIG.baseUrl, {
+        method: "HEAD",
+        headers: {
+          "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36",
+        },
+        signal: AbortSignal.timeout(10000), // 10 second timeout
+      });
+      console.log(`✅ URL responded with status: ${testResponse.status}`);
+      if (testResponse.status >= 400) {
+        console.warn(`⚠️  Warning: HTTP ${testResponse.status} - URL may not be accessible`);
+      }
+    } catch (testError) {
+      console.error(`❌ URL test failed: ${testError}`);
+      console.error("⚠️  This will likely fail - consider updating CONFIG.baseUrl");
+      console.error("💡 Try: https://prolinker.nl/opdrachten or manually check the URL");
+    }
+
     // Launch browser
+    console.log("\n🌐 Launching browser...");
     browser = await puppeteer.launch({
       headless: CONFIG.headless,
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+      args: [
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--disable-dev-shm-usage", // Overcome limited resource problems
+        "--disable-accelerated-2d-canvas",
+        "--no-first-run",
+        "--no-zygote",
+        "--disable-gpu",
+      ],
     });
 
-    console.log("🌐 Browser launched");
+    console.log("✅ Browser launched");
 
     const page = await browser.newPage();
     
@@ -149,15 +182,28 @@ async function scrapeProLinker(): Promise<ScrapeStats> {
           await sleep(CONFIG.requestDelay);
         }
       } catch (error) {
-        console.error(`❌ Error scraping page ${pageNum}:`, error);
+        const errorMsg = error instanceof Error ? error.message : String(error);
+        console.error(`❌ Error scraping page ${pageNum}: ${errorMsg}`);
         stats.errors++;
         
-        // Log error to Convex
-        await logError("page_scrape_error", {
-          page: pageNum,
-          url: pageNum === 1 ? CONFIG.baseUrl : `${CONFIG.baseUrl}?page=${pageNum}`,
-          error: String(error),
-        });
+        // Log error to Convex (only if Convex is accessible)
+        try {
+          await logError("page_scrape_error", {
+            page: pageNum,
+            url: pageNum === 1 ? CONFIG.baseUrl : `${CONFIG.baseUrl}?page=${pageNum}`,
+            error: errorMsg,
+          });
+        } catch (logErr) {
+          console.warn(`⚠️  Could not log error to Convex: ${logErr}`);
+        }
+        
+        // If first page fails, stop immediately (URL is wrong)
+        if (pageNum === 1) {
+          console.error("❌ First page failed - stopping scraper");
+          console.error("💡 This usually means the URL is wrong or site is blocking us");
+          console.error("💡 Update CONFIG.baseUrl in the scraper script");
+          break;
+        }
       }
     }
 
