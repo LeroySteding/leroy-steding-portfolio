@@ -41,7 +41,10 @@ import type * as site_settings from "../site_settings.js";
 import type * as skills from "../skills.js";
 import type * as tasks from "../tasks.js";
 import type * as templates from "../templates.js";
-import type * as workflows from "../workflows.js";
+import type * as workflow_engine from "../workflow_engine.js";
+import type * as workflow_engine_executor from "../workflow_engine_executor.js";
+import type * as workflow_engine_templates from "../workflow_engine_templates.js";
+import type * as workflows_old from "../workflows_old.js";
 
 import type {
   ApiFromModules,
@@ -83,7 +86,10 @@ declare const fullApi: ApiFromModules<{
   skills: typeof skills;
   tasks: typeof tasks;
   templates: typeof templates;
-  workflows: typeof workflows;
+  workflow_engine: typeof workflow_engine;
+  workflow_engine_executor: typeof workflow_engine_executor;
+  workflow_engine_templates: typeof workflow_engine_templates;
+  workflows_old: typeof workflows_old;
 }>;
 
 /**

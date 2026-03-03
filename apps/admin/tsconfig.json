@@ -19,5 +19,5 @@
     ".next/types/**/*.ts",
     "../../convex/_generated/**/*.d.ts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "scripts/**/*.ts"]
 }

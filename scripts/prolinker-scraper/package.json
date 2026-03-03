@@ -1,7 +1,7 @@
 {
   "name": "prolinker-scraper",
   "version": "1.0.0",
-  "description": "Puppeteer scraper for ProLinker freelance projects → Convex",
+  "description": "Firecrawl-based scraper for ProLinker freelance projects → Convex",
   "type": "module",
   "scripts": {
     "scrape": "node scraper.mjs",
@@ -9,7 +9,6 @@
     "test": "node scraper.mjs --test"
   },
   "dependencies": {
-    "convex": "^1.21.0",
-    "puppeteer": "^24.0.0"
+    "convex": "^1.21.0"
   }
 }

@@ -13,10 +13,19 @@ import { formatDistanceToNow } from "date-fns";
 
 export default function IntelligencePage() {
   const [filter, setFilter] = useState<string>("all");
-  const feed = useQuery(api.intelligence.recentFeed, { limit: 100 });
-  const stats = useQuery(api.intelligence.stats);
-  const markRead = useMutation(api.intelligence.markRead);
-  const createContent = useMutation(api.intelligence.createContentFromFeed);
+  const feed = useQuery(api.agent_feed.list, { limit: 100 });
+  const unreadCount = useQuery(api.agent_feed.unreadCount);
+  const markRead = useMutation(api.agent_feed.markRead);
+  
+  // Calculate stats from feed
+  const stats = feed ? {
+    totalFeedItems: feed.length,
+    unreadFeed: unreadCount || 0,
+    trends: feed.filter((f: any) => f.type === "trend").length,
+    news: feed.filter((f: any) => f.type === "news").length,
+    jobs: feed.filter((f: any) => f.type === "task_update" && f.tags.includes("job")).length,
+    contentIdeas: feed.filter((f: any) => f.type === "insight").length,
+  } : null;
   
   if (!feed) {
     return (
@@ -36,8 +45,9 @@ export default function IntelligencePage() {
   
   const handleCreateContent = async (feedId: Id<"agent_feed">) => {
     try {
-      await createContent({ feedId });
-      // TODO: Show success toast
+      // TODO: Implement content creation workflow
+      console.log("Create content from feed item:", feedId);
+      alert("Content creation workflow coming soon!");
     } catch (error) {
       console.error("Failed to create content:", error);
     }

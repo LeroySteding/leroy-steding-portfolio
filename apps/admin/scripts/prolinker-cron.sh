@@ -40,7 +40,9 @@ cd "$PROJECT_DIR" || {
 
 # Load environment variables
 if [ -f ".env.local" ]; then
-    export $(grep -v '^#' .env.local | xargs)
+    set -a
+    source .env.local
+    set +a
 fi
 
 # Check if CONVEX_URL is set
@@ -51,7 +53,7 @@ fi
 
 # Run scraper
 echo "Running scraper..." | tee -a "$LOG_FILE"
-tsx apps/admin/scripts/scrape-prolinker.ts 2>&1 | tee -a "$LOG_FILE"
+./node_modules/.bin/tsx apps/admin/scripts/scrape-prolinker.ts 2>&1 | tee -a "$LOG_FILE"
 
 EXIT_CODE=$?
 

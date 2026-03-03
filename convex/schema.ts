@@ -745,4 +745,151 @@ export default defineSchema({
     updatedAt: v.number(),
   })
     .index("by_is_default", ["isDefault"]),
+
+  // ============================================================================
+  // WORKFLOW ENGINE
+  // ============================================================================
+
+  workflows: defineTable({
+    name: v.string(),
+    description: v.optional(v.string()),
+    templateId: v.optional(v.string()), // Links to predefined template
+    status: v.union(
+      v.literal("pending"),
+      v.literal("running"),
+      v.literal("paused"),
+      v.literal("completed"),
+      v.literal("failed"),
+      v.literal("cancelled")
+    ),
+    priority: v.union(
+      v.literal("low"),
+      v.literal("medium"),
+      v.literal("high"),
+      v.literal("critical")
+    ),
+    // Context data passed between steps
+    context: v.any(), // JSON object with workflow state
+    // Metadata
+    createdBy: v.string(), // Agent that created the workflow
+    assignedAgents: v.array(v.string()), // Agents involved
+    // Timing
+    startedAt: v.optional(v.number()),
+    completedAt: v.optional(v.number()),
+    pausedAt: v.optional(v.number()),
+    estimatedDurationMs: v.optional(v.number()),
+    // Error handling
+    error: v.optional(v.string()),
+    retryCount: v.number(),
+    maxRetries: v.number(),
+    // Links
+    linearIssueId: v.optional(v.string()),
+    caseFileId: v.optional(v.id("case_files")),
+    // Audit
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  })
+    .index("by_status", ["status"])
+    .index("by_priority", ["priority"])
+    .index("by_created_by", ["createdBy"])
+    .index("by_template_id", ["templateId"])
+    .index("by_created_at", ["createdAt"]),
+
+  workflow_steps: defineTable({
+    workflowId: v.id("workflows"),
+    stepId: v.string(), // Unique within workflow (e.g., "step-1", "scrape-jobs")
+    name: v.string(),
+    description: v.optional(v.string()),
+    agent: v.string(), // Which agent executes this step
+    status: v.union(
+      v.literal("pending"),
+      v.literal("running"),
+      v.literal("completed"),
+      v.literal("failed"),
+      v.literal("skipped"),
+      v.literal("blocked")
+    ),
+    // Dependencies
+    dependencies: v.array(v.string()), // stepIds that must complete first
+    // Input/Output
+    input: v.optional(v.any()), // JSON input data
+    output: v.optional(v.any()), // JSON output data
+    // Execution
+    command: v.optional(v.string()), // Command to execute (for orchestrator)
+    timeoutMs: v.optional(v.number()),
+    // Error handling
+    error: v.optional(v.string()),
+    retries: v.number(),
+    maxRetries: v.number(),
+    // Timing
+    startedAt: v.optional(v.number()),
+    completedAt: v.optional(v.number()),
+    durationMs: v.optional(v.number()),
+    // Metadata
+    order: v.number(), // Display order
+    canRunInParallel: v.boolean(), // Can run concurrently with other steps
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  })
+    .index("by_workflow_id", ["workflowId"])
+    .index("by_workflow_status", ["workflowId", "status"])
+    .index("by_status", ["status"])
+    .index("by_agent", ["agent"]),
+
+  workflow_templates: defineTable({
+    templateId: v.string(), // e.g., "feature-development", "job-application"
+    name: v.string(),
+    description: v.string(),
+    category: v.string(), // "development", "content", "automation"
+    // Template definition
+    steps: v.array(
+      v.object({
+        stepId: v.string(),
+        name: v.string(),
+        agent: v.string(),
+        dependencies: v.array(v.string()),
+        timeoutMs: v.optional(v.number()),
+        maxRetries: v.number(),
+        command: v.optional(v.string()),
+        canRunInParallel: v.boolean(),
+      })
+    ),
+    // Default configuration
+    defaultPriority: v.union(
+      v.literal("low"),
+      v.literal("medium"),
+      v.literal("high"),
+      v.literal("critical")
+    ),
+    estimatedDurationMs: v.number(),
+    requiredContext: v.array(v.string()), // Required fields in context
+    // Metadata
+    version: v.number(),
+    active: v.boolean(),
+    usageCount: v.number(), // Times this template has been used
+    createdBy: v.string(),
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  })
+    .index("by_template_id", ["templateId"])
+    .index("by_category", ["category"])
+    .index("by_active", ["active"]),
+
+  workflow_executions: defineTable({
+    workflowId: v.id("workflows"),
+    stepId: v.string(),
+    agent: v.string(),
+    action: v.union(
+      v.literal("started"),
+      v.literal("completed"),
+      v.literal("failed"),
+      v.literal("retried"),
+      v.literal("skipped")
+    ),
+    details: v.optional(v.string()),
+    metadata: v.optional(v.any()),
+    timestamp: v.number(),
+  })
+    .index("by_workflow_id", ["workflowId"])
+    .index("by_timestamp", ["timestamp"]),
 });
