@@ -351,20 +351,22 @@ export default function JobsPage() {
                   </Badge>
                 </div>
                 {/* Trending indicator */}
-                {column.id !== "rejected" && analytics.trending[column.id as keyof typeof analytics.trending] !== 0 && (
+                {column.id !== "rejected" && 
+                 analytics.trending[column.id as keyof typeof analytics.trending] !== undefined &&
+                 analytics.trending[column.id as keyof typeof analytics.trending] !== 0 && (
                   <div className="flex items-center gap-1 mt-2 text-xs">
-                    {analytics.trending[column.id as keyof typeof analytics.trending] > 0 ? (
+                    {(analytics.trending[column.id as keyof typeof analytics.trending] || 0) > 0 ? (
                       <>
                         <TrendingUp className="h-3 w-3 text-green-600" />
                         <span className="text-green-600 font-medium">
-                          +{analytics.trending[column.id as keyof typeof analytics.trending].toFixed(0)}%
+                          +{(analytics.trending[column.id as keyof typeof analytics.trending] || 0).toFixed(0)}%
                         </span>
                       </>
                     ) : (
                       <>
                         <TrendingDown className="h-3 w-3 text-red-600" />
                         <span className="text-red-600 font-medium">
-                          {analytics.trending[column.id as keyof typeof analytics.trending].toFixed(0)}%
+                          {(analytics.trending[column.id as keyof typeof analytics.trending] || 0).toFixed(0)}%
                         </span>
                       </>
                     )}
