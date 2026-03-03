@@ -52,6 +52,13 @@ crons.daily(
   { keywords: ["hiring", "we're hiring", "join our team", "careers"] }
 );
 
+// Freelance.nl scraper - runs every 6 hours (Dutch focus)
+crons.interval(
+  "freelance-nl-scraper",
+  { hours: 6 },
+  internal.cron_tasks.scrapeFreelanceNLJobs
+);
+
 // GitHub intelligence - scan open issues daily at 2 AM UTC
 crons.daily(
   "github-scan-issues",

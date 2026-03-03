@@ -38,6 +38,34 @@ export const scrapeProLinkerJobs = internalAction({
 });
 
 /**
+ * Scrape Freelance.nl jobs
+ * Triggered every 6 hours by cron
+ */
+export const scrapeFreelanceNLJobs = internalAction({
+  args: {},
+  handler: async (ctx) => {
+    const executor = new ScraperExecutor(ctx, "Freelance.nl");
+    
+    return await executor.execute(async () => {
+      // Get current stats
+      const stats = await ctx.runQuery(internal.scraped_jobs.stats, {
+        source: "freelance_nl",
+      });
+      
+      console.log("[Freelance.nl] Current job count:", stats.total);
+      
+      // TODO: Trigger actual scraping via:
+      // 1. External API call to scraper service
+      // 2. Serverless function (Vercel/AWS Lambda)
+      // 3. GitHub Actions workflow
+      // Command: tsx scripts/scrape-freelance-nl.ts
+      
+      return stats;
+    });
+  },
+});
+
+/**
  * Archive old scraped jobs
  * Triggered daily at 3 AM UTC
  */

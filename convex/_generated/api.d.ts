@@ -26,6 +26,7 @@ import type * as crons from "../crons.js";
 import type * as daily_digest_simple from "../daily_digest_simple.js";
 import type * as deployments from "../deployments.js";
 import type * as experiences from "../experiences.js";
+import type * as freelance_nl_scraper from "../freelance_nl_scraper.js";
 import type * as freep_automation from "../freep_automation.js";
 import type * as freep_scraper from "../freep_scraper.js";
 import type * as github_activity from "../github_activity.js";
@@ -79,6 +80,7 @@ declare const fullApi: ApiFromModules<{
   daily_digest_simple: typeof daily_digest_simple;
   deployments: typeof deployments;
   experiences: typeof experiences;
+  freelance_nl_scraper: typeof freelance_nl_scraper;
   freep_automation: typeof freep_automation;
   freep_scraper: typeof freep_scraper;
   github_activity: typeof github_activity;
