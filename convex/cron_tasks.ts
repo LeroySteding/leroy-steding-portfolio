@@ -206,5 +206,56 @@ export const sendDailyJobDigest = internalAction({
   },
 });
 
+/**
+ * Manual trigger for scrapers (from admin dashboard)
+ */
+export const manualTrigger = internalAction({
+  args: {
+    scraperId: v.string(),
+  },
+  handler: async (ctx, args) => {
+    console.log(`[MANUAL] Triggering ${args.scraperId} scraper...`);
+    
+    try {
+      switch (args.scraperId) {
+        case "prolinker":
+          return await ctx.runAction(internal.cron_tasks.scrapeProLinkerJobs, {});
+          
+        case "freep":
+          console.log("[MANUAL] Freep scraper would run here");
+          // In production: trigger freep scraper
+          return {
+            success: true,
+            message: "Freep scraper triggered (placeholder)",
+          };
+          
+        case "medium":
+          console.log("[MANUAL] Medium scraper would run here");
+          return {
+            success: true,
+            message: "Medium scraper triggered (placeholder)",
+          };
+          
+        case "reddit":
+          console.log("[MANUAL] Reddit scraper would run here");
+          return {
+            success: true,
+            message: "Reddit scraper triggered (placeholder)",
+          };
+          
+        default:
+          throw new Error(`Unknown scraper: ${args.scraperId}`);
+      }
+    } catch (error) {
+      console.error(`[MANUAL] Error triggering ${args.scraperId}:`, error);
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : "Unknown error",
+      };
+    }
+  },
+});
+
 // Import internal API
 import { api } from "./_generated/api";
+import { v } from "convex/values";

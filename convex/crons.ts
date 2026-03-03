@@ -44,4 +44,12 @@ crons.daily(
   internal.cron_tasks.sendDailyJobDigest
 );
 
+// Medium job scraper - runs daily at 10 AM UTC
+crons.daily(
+  "scrape-medium-jobs",
+  { hourUTC: 10, minuteUTC: 0 },
+  internal.medium_scraper.scrapePublications,
+  { keywords: ["hiring", "we're hiring", "join our team", "careers"] }
+);
+
 export default crons;
