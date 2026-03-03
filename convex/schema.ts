@@ -139,6 +139,21 @@ export default defineSchema({
     .index("by_read", ["read"])
     .index("by_title_source", ["title", "source"]),
 
+  cost_logs: defineTable({
+    agent: v.string(),
+    model: v.string(),
+    task: v.string(),
+    inputTokens: v.number(),
+    outputTokens: v.number(),
+    duration: v.number(),
+    cost: v.number(),
+    timestamp: v.number(),
+  })
+    .index("by_agent", ["agent"])
+    .index("by_model", ["model"])
+    .index("by_timestamp", ["timestamp"])
+    .index("by_agent_timestamp", ["agent", "timestamp"]),
+
   tasks: defineTable({
     title: v.string(),
     description: v.optional(v.string()),

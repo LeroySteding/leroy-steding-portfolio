@@ -9,6 +9,7 @@
  */
 
 import type * as _helpers from "../_helpers.js";
+import type * as _scraper_utils from "../_scraper_utils.js";
 import type * as agentCoordination from "../agentCoordination.js";
 import type * as agentHeartbeat from "../agentHeartbeat.js";
 import type * as agent_feed from "../agent_feed.js";
@@ -19,6 +20,7 @@ import type * as auto_apply_settings from "../auto_apply_settings.js";
 import type * as blog_posts from "../blog_posts.js";
 import type * as cleanup from "../cleanup.js";
 import type * as content_calendar from "../content_calendar.js";
+import type * as cost_tracking from "../cost_tracking.js";
 import type * as cron_tasks from "../cron_tasks.js";
 import type * as crons from "../crons.js";
 import type * as daily_digest_simple from "../daily_digest_simple.js";
@@ -60,6 +62,7 @@ import type {
 
 declare const fullApi: ApiFromModules<{
   _helpers: typeof _helpers;
+  _scraper_utils: typeof _scraper_utils;
   agentCoordination: typeof agentCoordination;
   agentHeartbeat: typeof agentHeartbeat;
   agent_feed: typeof agent_feed;
@@ -70,6 +73,7 @@ declare const fullApi: ApiFromModules<{
   blog_posts: typeof blog_posts;
   cleanup: typeof cleanup;
   content_calendar: typeof content_calendar;
+  cost_tracking: typeof cost_tracking;
   cron_tasks: typeof cron_tasks;
   crons: typeof crons;
   daily_digest_simple: typeof daily_digest_simple;

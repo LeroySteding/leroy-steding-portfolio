@@ -1,11 +1,12 @@
 /**
  * Cron Task Implementations
  * 
- * Internal actions triggered by cron jobs.
+ * Internal actions triggered by cron jobs with robust error handling.
  */
 
 import { internalAction } from "./_generated/server";
 import { internal } from "./_generated/api";
+import { ScraperExecutor } from "./_scraper_utils";
 
 /**
  * Scrape ProLinker jobs
@@ -14,38 +15,25 @@ import { internal } from "./_generated/api";
 export const scrapeProLinkerJobs = internalAction({
   args: {},
   handler: async (ctx) => {
-    console.log("[CRON] Starting ProLinker job scrape...");
+    const executor = new ScraperExecutor(ctx, "ProLinker");
     
-    try {
-      // In production, this would trigger the scraper script
-      // For now, we'll just log that it ran
-      // The actual scraping can be done via:
-      // 1. External service calling the script
-      // 2. Serverless function (Vercel/AWS Lambda)
-      // 3. GitHub Actions workflow
-      
-      console.log("[CRON] ProLinker scrape would run here");
-      console.log("[CRON] In production, trigger: tsx scripts/scrape-prolinker.ts");
-      
-      // Get current stats
+    return await executor.execute(async () => {
+      // In production, this would trigger the actual scraper
+      // For now, get current stats to verify system is working
       const stats = await ctx.runQuery(internal.scraped_jobs.stats, {
         source: "prolinker",
       });
       
-      console.log("[CRON] Current ProLinker jobs:", stats);
+      console.log("[ProLinker] Current job count:", stats.total);
       
-      return {
-        success: true,
-        message: "Cron job executed (placeholder)",
-        stats,
-      };
-    } catch (error) {
-      console.error("[CRON] Error in ProLinker scrape:", error);
-      return {
-        success: false,
-        error: error instanceof Error ? error.message : "Unknown error",
-      };
-    }
+      // TODO: Trigger actual scraping via:
+      // 1. External API call to scraper service
+      // 2. Serverless function (Vercel/AWS Lambda)
+      // 3. GitHub Actions workflow
+      // Command: tsx scripts/scrape-prolinker.ts
+      
+      return stats;
+    });
   },
 });
 
