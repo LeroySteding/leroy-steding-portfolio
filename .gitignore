@@ -56,3 +56,5 @@ Thumbs.db
 dist/
 *.turbo/
 convex/*.js
+convex/*.js.map
+convex/_generated/

@@ -1,0 +1,10 @@
+# Compiled JavaScript files - should never be committed
+*.js
+*.js.map
+
+# Keep TypeScript source files
+!*.ts
+
+# Generated API types are fine
+!_generated/**/*.d.ts
+!_generated/**/*.js

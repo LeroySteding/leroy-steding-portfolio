@@ -11,6 +11,8 @@
     "typecheck": "turbo run typecheck",
     "test": "turbo run test",
     "test:e2e": "turbo run test:e2e",
+    "convex:clean": "bash scripts/clean-convex.sh",
+    "convex:deploy": "pnpm convex:clean && npx convex deploy --yes --typecheck=disable",
     "prepare": "husky || true"
   },
   "devDependencies": {
@@ -32,7 +34,7 @@
     "@linear/sdk": "^75.0.0",
     "@sanity/document-internationalization": "^4.1.0",
     "@swc/helpers": "^0.5.18",
-    "convex": "^1.18.3",
+    "convex": "^1.32.0",
     "puppeteer": "^24.37.5",
     "sanity-plugin-markdown": "^6.0.0"
   },
