@@ -21,6 +21,7 @@ import {
   BarChart3,
   Search,
   Bot,
+  DollarSign,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -33,6 +34,7 @@ const navigation = [
   { name: "Jobs", href: "/jobs", icon: Building2 },
   { name: "Content", href: "/content", icon: Calendar },
   { name: "Analytics", href: "/analytics", icon: BarChart3 },
+  { name: "Costs", href: "/costs", icon: DollarSign },
   { name: "SEO", href: "/seo", icon: Search },
   { name: "Blog Posts", href: "/blog", icon: FileText },
   { name: "Projects", href: "/projects", icon: Briefcase },
