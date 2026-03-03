@@ -16,6 +16,13 @@ crons.interval(
   internal.cron_tasks.scrapeProLinkerJobs
 );
 
+// Freep job scraper + auto-match - runs every 6 hours (staggered from ProLinker)
+crons.interval(
+  "freep-automation",
+  { hours: 6 },
+  internal.freep_automation.scrapeAndMatch
+);
+
 // Archive old scraped jobs - runs daily at 3 AM
 crons.daily(
   "archive-old-jobs",
