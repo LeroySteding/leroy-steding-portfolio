@@ -130,7 +130,7 @@ export const dispatchJobWorkflow = internalMutation({
     console.log(`[workflow] Created task ${taskId} for agent ${rule.agent}: ${transition}`);
 
     // Schedule async execution
-    await ctx.scheduler.runAfter(0, internal.workflows.executeAgentTask, {
+    await ctx.scheduler.runAfter(0, internal.workflows_old.executeAgentTask, {
       taskId,
       agent: rule.agent,
     });
@@ -194,7 +194,7 @@ export const dispatchContentWorkflow = internalMutation({
     console.log(`[workflow] Created task ${taskId} for agent ${rule.agent}: ${transition}`);
 
     // Schedule async execution
-    await ctx.scheduler.runAfter(0, internal.workflows.executeAgentTask, {
+    await ctx.scheduler.runAfter(0, internal.workflows_old.executeAgentTask, {
       taskId,
       agent: rule.agent,
     });
@@ -212,7 +212,7 @@ export const executeAgentTask = internalAction({
   },
   handler: async (ctx, args) => {
     // Fetch task details
-    const task = await ctx.runQuery(internal.workflows.getTask, { taskId: args.taskId });
+    const task = await ctx.runQuery(internal.workflows_old.getTask, { taskId: args.taskId });
     if (!task) {
       console.error(`[workflow] Task ${args.taskId} not found`);
       return;
@@ -220,7 +220,7 @@ export const executeAgentTask = internalAction({
 
     try {
       // Update task status to in_progress
-      await ctx.runMutation(internal.workflows.updateTaskStatus, {
+      await ctx.runMutation(internal.workflows_old.updateTaskStatus, {
         taskId: args.taskId,
         status: "in_progress",
       });
@@ -236,7 +236,7 @@ export const executeAgentTask = internalAction({
       // For now, we log the command that would be executed
 
       // Log to agent feed
-      await ctx.runMutation(internal.workflows.logToFeed, {
+      await ctx.runMutation(internal.workflows_old.logToFeed, {
         type: "task_update",
         title: `Agent ${args.agent} assigned task`,
         content: task.title || "Untitled task",
@@ -245,14 +245,14 @@ export const executeAgentTask = internalAction({
       });
 
       // Mark task as completed (in real system, wait for agent response)
-      await ctx.runMutation(internal.workflows.updateTaskStatus, {
+      await ctx.runMutation(internal.workflows_old.updateTaskStatus, {
         taskId: args.taskId,
         status: "completed",
       });
 
     } catch (error) {
       console.error(`[workflow] Error executing task ${args.taskId}:`, error);
-      await ctx.runMutation(internal.workflows.updateTaskStatus, {
+      await ctx.runMutation(internal.workflows_old.updateTaskStatus, {
         taskId: args.taskId,
         status: "blocked",
       });
