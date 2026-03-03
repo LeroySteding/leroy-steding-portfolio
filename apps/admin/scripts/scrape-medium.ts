@@ -100,14 +100,17 @@ async function scrapeMedium() {
         const post = posts.find(p => p.title.includes(job.position) || p.content.includes(job.company));
         
         await convex.mutation(api.medium_scraper.storeJob, {
+          title: job.position,
           company: job.company,
-          position: job.position,
+          description: job.description || "",
           url: post?.url || `https://medium.com/search?q=${encodeURIComponent(job.company)}`,
-          description: job.description,
           location: job.location,
           salary: job.salary,
           remote: job.remote,
-          requiredSkills: job.skills,
+          technologies: job.skills || [],
+          postedAt: post?.publishedAt,
+          employmentType: undefined,
+          experienceLevel: undefined,
           metadata: post ? {
             mediumPostUrl: post.url,
             author: post.author,

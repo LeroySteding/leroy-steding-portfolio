@@ -66,14 +66,10 @@ export default function JobSourcesPage() {
       const jobs7d = sourceJobs.filter(j => j.scrapedAt >= now - 7 * day).length;
       const jobs30d = sourceJobs.filter(j => j.scrapedAt >= now - 30 * day).length;
       
-      const jobsWithMatch = sourceJobs.filter(j => j.matchScore !== undefined);
-      const avgMatchScore = jobsWithMatch.length > 0
-        ? jobsWithMatch.reduce((sum, j) => sum + (j.matchScore || 0), 0) / jobsWithMatch.length
-        : 0;
-      
-      const matchRate = sourceJobs.length > 0
-        ? (jobsWithMatch.filter(j => (j.matchScore || 0) >= 70).length / sourceJobs.length) * 100
-        : 0;
+      // Note: matchScore is in job_matches table, not scraped_jobs
+      // For now, show 0 until we query job_matches
+      const avgMatchScore = 0;
+      const matchRate = 0;
       
       return { jobs24h, jobs7d, jobs30d, matchRate, avgMatchScore, successRate: 100 };
     };

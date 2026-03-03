@@ -50,17 +50,21 @@ export const getStats = query({
 
 /**
  * Store scraped Medium job
+ * Uses standard scraped_jobs schema
  */
 export const storeJob = internalMutation({
   args: {
+    title: v.string(), // Position title
     company: v.string(),
-    position: v.string(),
+    description: v.string(),
     url: v.string(),
-    description: v.optional(v.string()),
     location: v.optional(v.string()),
     salary: v.optional(v.string()),
     remote: v.optional(v.boolean()),
-    requiredSkills: v.optional(v.array(v.string())),
+    technologies: v.array(v.string()), // Skills/tech stack
+    postedAt: v.optional(v.number()), // Original post date
+    employmentType: v.optional(v.string()),
+    experienceLevel: v.optional(v.string()),
     metadata: v.optional(v.object({
       mediumPostUrl: v.string(),
       author: v.string(),
@@ -71,38 +75,25 @@ export const storeJob = internalMutation({
     })),
   },
   handler: async (ctx, args) => {
-    // Check if job already exists (deduplication)
-    const existing = await ctx.db
-      .query("scraped_jobs")
-      .filter((q) => 
-        q.and(
-          q.eq(q.field("source"), "medium"),
-          q.eq(q.field("url"), args.url)
-        )
-      )
-      .first();
-    
-    if (existing) {
-      console.log(`[Medium] Job already exists: ${args.company} - ${args.position}`);
-      return existing._id;
-    }
-    
-    // Store new job
+    // Use standard push mutation with deduplication
     const jobId = await ctx.db.insert("scraped_jobs", {
       source: "medium",
+      title: args.title,
       company: args.company,
-      title: args.position,
-      url: args.url,
       description: args.description,
+      url: args.url,
       location: args.location,
       salary: args.salary,
       remote: args.remote,
-      requiredSkills: args.requiredSkills,
+      technologies: args.technologies,
+      postedAt: args.postedAt,
+      employmentType: args.employmentType,
+      experienceLevel: args.experienceLevel,
       scrapedAt: Date.now(),
-      metadata: args.metadata,
+      archived: false,
     });
     
-    console.log(`[Medium] Stored job: ${args.company} - ${args.position}`);
+    console.log(`[Medium] Stored job: ${args.company} - ${args.title}`);
     return jobId;
   },
 });
@@ -156,14 +147,17 @@ export const scrapePublications = action({
         
         if (jobData) {
           const jobId = await ctx.runMutation(internal.medium_scraper.storeJob, {
+            title: jobData.position,
             company: jobData.company,
-            position: jobData.position,
+            description: jobData.description || result.content,
             url: jobData.url,
-            description: jobData.description,
             location: jobData.location,
             salary: jobData.salary,
             remote: jobData.remote,
-            requiredSkills: jobData.skills,
+            technologies: jobData.skills || result.tags || [],
+            postedAt: result.publishedAt,
+            employmentType: jobData.employmentType,
+            experienceLevel: jobData.experienceLevel,
             metadata: {
               mediumPostUrl: result.url,
               author: result.author,
@@ -263,11 +257,11 @@ async function extractJobDetails(post: any) {
   //   max_tokens: 1024,
   //   messages: [{
   //     role: "user",
-  //     content: `Extract job details from this Medium post:\n\nTitle: ${post.title}\nContent: ${post.content}\n\nReturn JSON with: company, position, location, salary, remote (boolean), skills (array), description`
+  //     content: `Extract job details from this Medium post:\n\nTitle: ${post.title}\nContent: ${post.content}\n\nReturn JSON with: company, position, location, salary, remote (boolean), skills (array), description, employmentType, experienceLevel`
   //   }]
   // });
   
-  // For now, return mock data
+  // For now, return mock data matching schema
   return {
     company: post.company || "Unknown Company",
     position: post.position || "Software Engineer",
@@ -277,6 +271,8 @@ async function extractJobDetails(post: any) {
     salary: undefined,
     remote: true,
     skills: post.tags || [],
+    employmentType: "full-time",
+    experienceLevel: undefined,
   };
 }
 
