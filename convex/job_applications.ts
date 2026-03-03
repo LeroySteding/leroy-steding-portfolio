@@ -41,11 +41,58 @@ export const push = mutation({
     const existing = await ctx.db.query("job_applications")
       .withIndex("by_company_position", (q) => q.eq("company", args.company).eq("position", args.position))
       .first();
+    
     if (existing) {
-      await ctx.db.patch(existing._id, { ...args, status: args.status ?? existing.status, tags: args.tags ?? existing.tags });
+      const oldStatus = existing.status;
+      const newStatus = args.status ?? existing.status;
+      
+      await ctx.db.patch(existing._id, { ...args, status: newStatus, tags: args.tags ?? existing.tags });
+      
+      // Trigger workflow if status changed
+      if (oldStatus !== newStatus) {
+        await ctx.scheduler.runAfter(0, internal.workflows_old.dispatchJobWorkflow, {
+          jobId: existing._id,
+          oldStatus,
+          newStatus,
+          jobData: {
+            company: args.company,
+            position: args.position,
+            location: args.location,
+            notes: args.notes,
+          },
+        });
+      }
+      
       return existing._id;
     }
-    return await ctx.db.insert("job_applications", { ...args, status: args.status ?? "discovered", tags: args.tags ?? [], createdAt: Date.now() });
+    
+    const jobStatus = args.status ?? "discovered";
+    const jobId = await ctx.db.insert("job_applications", { 
+      ...args, 
+      status: jobStatus, 
+      tags: args.tags ?? [], 
+      createdAt: Date.now() 
+    });
+    
+    // Auto-transition discovered jobs to researching (triggers autonomous workflow)
+    if (jobStatus === "discovered") {
+      // Immediately transition to researching to trigger the researcher agent
+      await ctx.db.patch(jobId, { status: "researching" });
+      
+      await ctx.scheduler.runAfter(0, internal.workflows_old.dispatchJobWorkflow, {
+        jobId,
+        oldStatus: "discovered",
+        newStatus: "researching",
+        jobData: {
+          company: args.company,
+          position: args.position,
+          location: args.location,
+          notes: args.notes,
+        },
+      });
+    }
+    
+    return jobId;
   },
 });
 
@@ -66,12 +113,34 @@ export const create = mutation({
   },
   handler: async (ctx, args) => {
     await requireAuth(ctx);
-    return await ctx.db.insert("job_applications", {
+    const jobStatus = args.status ?? "discovered";
+    
+    const jobId = await ctx.db.insert("job_applications", {
       ...args,
-      status: args.status ?? "discovered",
+      status: jobStatus,
       tags: args.tags ?? [],
       createdAt: Date.now(),
     });
+    
+    // Auto-transition discovered jobs to researching (triggers autonomous workflow)
+    if (jobStatus === "discovered") {
+      // Immediately transition to researching to trigger the researcher agent
+      await ctx.db.patch(jobId, { status: "researching" });
+      
+      await ctx.scheduler.runAfter(0, internal.workflows_old.dispatchJobWorkflow, {
+        jobId,
+        oldStatus: "discovered",
+        newStatus: "researching",
+        jobData: {
+          company: args.company,
+          position: args.position,
+          location: args.location,
+          notes: args.notes,
+        },
+      });
+    }
+    
+    return jobId;
   },
 });
 
@@ -112,20 +181,19 @@ export const update = mutation({
     await ctx.db.patch(id, update);
     
     // Trigger workflow if status changed
-    // TODO: Re-enable after fixing internal API generation
-    // if (oldStatus !== newStatus) {
-    //   await ctx.scheduler.runAfter(0, internal.workflows.dispatchJobWorkflow, {
-    //     jobId: id,
-    //     oldStatus,
-    //     newStatus,
-    //     jobData: {
-    //       company: args.company || currentJob.company,
-    //       position: args.position || currentJob.position,
-    //       location: args.location || currentJob.location,
-    //       notes: args.notes || currentJob.notes,
-    //     },
-    //   });
-    // }
+    if (oldStatus !== newStatus) {
+      await ctx.scheduler.runAfter(0, internal.workflows_old.dispatchJobWorkflow, {
+        jobId: id,
+        oldStatus,
+        newStatus,
+        jobData: {
+          company: args.company || currentJob.company,
+          position: args.position || currentJob.position,
+          location: args.location || currentJob.location,
+          notes: args.notes || currentJob.notes,
+        },
+      });
+    }
   },
 });
 
@@ -162,19 +230,18 @@ export const updateStatus = mutation({
     await ctx.db.patch(args.id, update);
     
     // Trigger workflow if status changed
-    // TODO: Re-enable after fixing internal API generation
-    // if (oldStatus !== newStatus) {
-    //   await ctx.scheduler.runAfter(0, internal.workflows.dispatchJobWorkflow, {
-    //     jobId: args.id,
-    //     oldStatus,
-    //     newStatus,
-    //     jobData: {
-    //       company: currentJob.company,
-    //       position: currentJob.position,
-    //       location: currentJob.location,
-    //       notes: currentJob.notes,
-    //     },
-    //   });
-    // }
+    if (oldStatus !== newStatus) {
+      await ctx.scheduler.runAfter(0, internal.workflows_old.dispatchJobWorkflow, {
+        jobId: args.id,
+        oldStatus,
+        newStatus,
+        jobData: {
+          company: currentJob.company,
+          position: currentJob.position,
+          location: currentJob.location,
+          notes: currentJob.notes,
+        },
+      });
+    }
   },
 });
