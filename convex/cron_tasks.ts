@@ -89,7 +89,7 @@ export const fetchRemoteOKJobs = internalAction({
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
       }
       
-      const data = await response.json();
+      const data = await response.json() as any[];
       
       // First item is metadata, skip it
       const jobs = data.slice(1);
