@@ -124,7 +124,7 @@ export const stats: any = query({
   },
 });
 
-export const governmentInsights = query({
+export const governmentInsights: any = query({
   handler: async (ctx) => {
     const jobs = await ctx.db
       .query("scraped_jobs")
