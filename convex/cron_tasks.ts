@@ -66,6 +66,94 @@ export const scrapeFreelanceNLJobs = internalAction({
 });
 
 /**
+ * Fetch RemoteOK jobs via JSON API
+ * Triggered every 6 hours by cron
+ * Uses clean public API - no scraping needed
+ */
+export const fetchRemoteOKJobs = internalAction({
+  args: {},
+  handler: async (ctx): Promise<any> => {
+    const executor = new ScraperExecutor(ctx, "RemoteOK");
+    
+    return await executor.execute(async () => {
+      console.log("[RemoteOK] Fetching jobs from API...");
+      
+      // Fetch from RemoteOK public API
+      const response = await fetch("https://remoteok.com/api", {
+        headers: {
+          "User-Agent": "Mozilla/5.0 (compatible; JobBot/1.0)",
+        },
+      });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+      
+      const data = await response.json();
+      
+      // First item is metadata, skip it
+      const jobs = data.slice(1);
+      
+      console.log(`[RemoteOK] Fetched ${jobs.length} total jobs`);
+      
+      // Filter for relevant jobs (React, TypeScript, Next.js, Full-stack)
+      const relevantJobs = jobs.filter((job: any) => {
+        const tags = job.tags?.map((t: string) => t.toLowerCase()) || [];
+        const position = (job.position || "").toLowerCase();
+        
+        return (
+          tags.includes("react") ||
+          tags.includes("typescript") ||
+          tags.includes("nextjs") ||
+          tags.includes("next.js") ||
+          tags.includes("fullstack") ||
+          tags.includes("full-stack") ||
+          tags.includes("frontend") ||
+          tags.includes("full stack") ||
+          position.includes("full stack") ||
+          position.includes("fullstack") ||
+          position.includes("react") ||
+          position.includes("typescript") ||
+          position.includes("next.js")
+        );
+      });
+      
+      console.log(`[RemoteOK] Found ${relevantJobs.length} relevant jobs`);
+      
+      // Map to scraped job format
+      const scrapedJobs = relevantJobs.map((job: any) => ({
+        title: job.position,
+        company: job.company,
+        location: job.location || "Remote",
+        description: job.description || job.position,
+        salary: job.salary_min && job.salary_max 
+          ? `$${job.salary_min}-${job.salary_max}`
+          : undefined,
+        url: job.url,
+        technologies: job.tags || [],
+        postedAt: job.date ? new Date(job.date).getTime() : Date.now(),
+        source: "remoteok",
+        remote: true, // RemoteOK is all remote jobs
+      }));
+      
+      // Save to Convex using batch push
+      const result = await ctx.runMutation(internal.scraped_jobs.pushBatch, {
+        jobs: scrapedJobs,
+      });
+      
+      console.log(`[RemoteOK] Saved ${result.created} new jobs, updated ${result.updated}`);
+      
+      return {
+        total: jobs.length,
+        relevant: relevantJobs.length,
+        created: result.created,
+        updated: result.updated,
+      };
+    });
+  },
+});
+
+/**
  * Archive old scraped jobs
  * Triggered daily at 3 AM UTC
  */

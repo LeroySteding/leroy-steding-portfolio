@@ -59,6 +59,14 @@ crons.interval(
   internal.cron_tasks.scrapeFreelanceNLJobs
 );
 
+// RemoteOK job scraper - runs every 6 hours
+// Uses clean JSON API, no scraping needed
+crons.interval(
+  "fetch-remoteok-jobs",
+  { hours: 6 },
+  internal.cron_tasks.fetchRemoteOKJobs
+);
+
 // GitHub intelligence - scan open issues daily at 2 AM UTC
 crons.daily(
   "github-scan-issues",
