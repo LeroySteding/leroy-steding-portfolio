@@ -2,6 +2,9 @@
   "compilerOptions": {
     "target": "ES2021",
     "lib": ["ES2021"],
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "types": ["node"],
     "skipLibCheck": true,
     "strict": false,
     "noImplicitAny": false
