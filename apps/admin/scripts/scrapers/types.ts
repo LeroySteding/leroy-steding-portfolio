@@ -26,6 +26,7 @@ export type JobSource =
   | "glassdoor"
   | "remoteok"
   | "weworkremotely"
+  | "adzuna"
   | "prolinker";
 
 export interface ScraperConfig {

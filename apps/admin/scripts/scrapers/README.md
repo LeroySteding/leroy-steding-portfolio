@@ -9,6 +9,14 @@ Unified job scraping system for aggregating listings from multiple platforms.
   - Uses public JSON API
   - No browser required
   - Highly reliable
+  - No API key needed
+
+- **Adzuna NL** - 🇳🇱 Netherlands-focused API scraper
+  - Official Adzuna API
+  - 50-200 jobs per run
+  - Requires free API key (250 calls/month)
+  - Multiple tech queries (React, TypeScript, Fullstack)
+  - See: [ADZUNA_SETUP.md](./ADZUNA_SETUP.md)
 
 ### ⚠️ In Development
 - **WeWorkRemotely** - HTML scraper needs selector fixes
