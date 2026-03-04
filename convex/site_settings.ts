@@ -3,7 +3,7 @@ import { mutation, query } from "./_generated/server";
 import { requireAuth } from "./_helpers";
 
 // List all settings with optional locale filter
-export const list = query({
+export const list: any = query({
   args: {
     locale: v.optional(v.union(v.literal("en"), v.literal("nl"))),
   },
@@ -21,7 +21,7 @@ export const list = query({
 });
 
 // Get a setting by key
-export const getByKey = query({
+export const getByKey: any = query({
   args: {
     key: v.string(),
     locale: v.optional(v.union(v.literal("en"), v.literal("nl"))),
@@ -45,7 +45,7 @@ export const getByKey = query({
 });
 
 // Get a single setting by ID
-export const getById = query({
+export const getById: any = query({
   args: { id: v.id("site_settings") },
   handler: async (ctx, args) => {
     return await ctx.db.get(args.id);

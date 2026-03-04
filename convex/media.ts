@@ -3,7 +3,7 @@ import { mutation, query } from "./_generated/server";
 import { requireAuth } from "./_helpers";
 
 // List all media files
-export const list = query({
+export const list: any = query({
   args: {
     mimeType: v.optional(v.string()),
     limit: v.optional(v.number()),
@@ -26,7 +26,7 @@ export const list = query({
 });
 
 // Get a single media item by ID
-export const getById = query({
+export const getById: any = query({
   args: { id: v.id("media") },
   handler: async (ctx, args) => {
     return await ctx.db.get(args.id);
@@ -34,7 +34,7 @@ export const getById = query({
 });
 
 // Get media by storage ID
-export const getByStorageId = query({
+export const getByStorageId: any = query({
   args: { storageId: v.id("_storage") },
   handler: async (ctx, args) => {
     const media = await ctx.db
@@ -123,7 +123,7 @@ export const remove = mutation({
 });
 
 // Get URL for a media file
-export const getUrl = query({
+export const getUrl: any = query({
   args: { storageId: v.id("_storage") },
   handler: async (ctx, args) => {
     return await ctx.storage.getUrl(args.storageId);

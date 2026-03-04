@@ -3,7 +3,7 @@ import { mutation, query } from "./_generated/server";
 import { requireAuth } from "./_helpers";
 
 // List all skills with optional filters
-export const list = query({
+export const list: any = query({
   args: {
     locale: v.optional(v.union(v.literal("en"), v.literal("nl"))),
     category: v.optional(v.string()),
@@ -31,7 +31,7 @@ export const list = query({
 });
 
 // Get a single skill by ID
-export const getById = query({
+export const getById: any = query({
   args: { id: v.id("skills") },
   handler: async (ctx, args) => {
     return await ctx.db.get(args.id);
@@ -39,7 +39,7 @@ export const getById = query({
 });
 
 // Get a skill by name
-export const getByName = query({
+export const getByName: any = query({
   args: { name: v.string() },
   handler: async (ctx, args) => {
     const skills = await ctx.db

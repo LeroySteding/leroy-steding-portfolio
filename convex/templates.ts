@@ -2,7 +2,7 @@ import { v } from "convex/values";
 import { query, mutation } from "./_generated/server";
 
 // List all published templates
-export const list = query({
+export const list: any = query({
   args: {
     category: v.optional(v.string()),
     sortBy: v.optional(v.union(
@@ -45,7 +45,7 @@ export const list = query({
 });
 
 // Get single template by slug
-export const getBySlug = query({
+export const getBySlug: any = query({
   args: { slug: v.string() },
   handler: async (ctx, args) => {
     return await ctx.db
@@ -56,7 +56,7 @@ export const getBySlug = query({
 });
 
 // Get template by ID
-export const get = query({
+export const get: any = query({
   args: { id: v.id("templates") },
   handler: async (ctx, args) => {
     return await ctx.db.get(args.id);

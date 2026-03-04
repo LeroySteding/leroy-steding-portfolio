@@ -351,7 +351,7 @@ export const initializeTemplates = mutation({
 /**
  * List all workflow templates
  */
-export const listTemplates = query({
+export const listTemplates: any = query({
   args: {
     category: v.optional(v.string()),
   },
@@ -373,7 +373,7 @@ export const listTemplates = query({
 /**
  * Get template by ID
  */
-export const getTemplate = query({
+export const getTemplate: any = query({
   args: {
     templateId: v.string(),
   },

@@ -8,7 +8,7 @@ import { v } from "convex/values";
 import { mutation, query, action } from "./_generated/server";
 
 // List scraped jobs with optional filters
-export const list = query({
+export const list: any = query({
   args: {
     source: v.optional(v.string()),
     archived: v.optional(v.boolean()),
@@ -37,13 +37,13 @@ export const list = query({
 });
 
 // Get single job by ID
-export const get = query({
+export const get: any = query({
   args: { id: v.id("scraped_jobs") },
   handler: async (ctx, args) => ctx.db.get(args.id),
 });
 
 // Get job by URL and source (for deduplication)
-export const getByUrl = query({
+export const getByUrl: any = query({
   args: { url: v.string(), source: v.string() },
   handler: async (ctx, args) => {
     const jobs = await ctx.db
@@ -115,7 +115,7 @@ export const archiveOldJobs = mutation({
 });
 
 // Get statistics
-export const stats = query({
+export const stats: any = query({
   args: { source: v.optional(v.string()) },
   handler: async (ctx, args) => {
     let jobs = await ctx.db.query("scraped_jobs").collect();

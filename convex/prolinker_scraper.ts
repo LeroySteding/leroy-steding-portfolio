@@ -12,7 +12,7 @@ import { v } from "convex/values";
 /**
  * Get the last scrape run stats
  */
-export const lastRun = query({
+export const lastRun: any = query({
   args: {},
   handler: async (ctx) => {
     const logs = await ctx.db
@@ -28,7 +28,7 @@ export const lastRun = query({
 /**
  * Get scraper run history
  */
-export const history = query({
+export const history: any = query({
   args: { limit: v.optional(v.number()) },
   handler: async (ctx, args) => {
     const logs = await ctx.db
@@ -44,7 +44,7 @@ export const history = query({
 /**
  * Get scraper errors
  */
-export const errors = query({
+export const errors: any = query({
   args: { limit: v.optional(v.number()) },
   handler: async (ctx, args) => {
     const logs = await ctx.db
@@ -88,7 +88,7 @@ export const logTrigger = action({
 /**
  * Get scraper statistics
  */
-export const stats = query({
+export const stats: any = query({
   args: {},
   handler: async (ctx) => {
     const jobs = await ctx.db.query("scraped_jobs").collect();

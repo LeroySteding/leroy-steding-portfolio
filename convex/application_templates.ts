@@ -9,7 +9,7 @@ import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 import { requireAuth } from "./_helpers";
 
-export const list = query({
+export const list: any = query({
   args: {},
   handler: async (ctx) => {
     await requireAuth(ctx);
@@ -17,7 +17,7 @@ export const list = query({
   },
 });
 
-export const get = query({
+export const get: any = query({
   args: { id: v.id("application_templates") },
   handler: async (ctx, args) => {
     await requireAuth(ctx);
@@ -25,7 +25,7 @@ export const get = query({
   },
 });
 
-export const getDefault = query({
+export const getDefault: any = query({
   args: {},
   handler: async (ctx) => {
     await requireAuth(ctx);
@@ -138,7 +138,7 @@ export const remove = mutation({
 });
 
 // Render cover letter with placeholders replaced
-export const renderCoverLetter = query({
+export const renderCoverLetter: any = query({
   args: {
     templateId: v.id("application_templates"),
     company: v.string(),

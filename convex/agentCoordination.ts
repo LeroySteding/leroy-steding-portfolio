@@ -112,7 +112,7 @@ export const updateAgentTask = mutation({
   },
 });
 
-export const getAgentTasks = query({
+export const getAgentTasks: any = query({
   args: {
     agentName: v.optional(v.string()),
     status: v.optional(
@@ -176,7 +176,7 @@ export const createAgentMemory = mutation({
   },
 });
 
-export const searchAgentMemory = query({
+export const searchAgentMemory: any = query({
   args: {
     searchTerm: v.string(),
     agentName: v.optional(v.string()),
@@ -219,7 +219,7 @@ export const searchAgentMemory = query({
   },
 });
 
-export const getAgentMemories = query({
+export const getAgentMemories: any = query({
   args: {
     agentName: v.optional(v.string()),
     category: v.optional(
@@ -372,7 +372,7 @@ export const addResourceToCaseFile = mutation({
   },
 });
 
-export const getCaseFiles = query({
+export const getCaseFiles: any = query({
   args: {
     status: v.optional(
       v.union(
@@ -401,7 +401,7 @@ export const getCaseFiles = query({
   },
 });
 
-export const getCaseFileById = query({
+export const getCaseFileById: any = query({
   args: { caseFileId: v.id("case_files") },
   handler: async (ctx, args) => {
     return await ctx.db.get(args.caseFileId);
@@ -453,7 +453,7 @@ export const updateAgentSession = mutation({
   },
 });
 
-export const getAgentSessions = query({
+export const getAgentSessions: any = query({
   args: {
     status: v.optional(
       v.union(
@@ -478,7 +478,7 @@ export const getAgentSessions = query({
 // AGENT FEED
 // ============================================================================
 
-export const getAgentFeed = query({
+export const getAgentFeed: any = query({
   args: {
     type: v.optional(
       v.union(

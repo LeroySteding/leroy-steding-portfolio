@@ -2,7 +2,7 @@ import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 import { requireAuth } from "./_helpers";
 
-export const list = query({
+export const list: any = query({
   args: { domain: v.optional(v.string()), keyword: v.optional(v.string()), limit: v.optional(v.number()) },
   handler: async (ctx, args) => {
     let items = await ctx.db.query("seo_tracking").order("desc").collect();
@@ -12,7 +12,7 @@ export const list = query({
   },
 });
 
-export const get = query({
+export const get: any = query({
   args: { id: v.id("seo_tracking") },
   handler: async (ctx, args) => ctx.db.get(args.id),
 });

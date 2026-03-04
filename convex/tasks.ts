@@ -6,7 +6,7 @@ const status = v.union(v.literal("backlog"), v.literal("todo"), v.literal("in_pr
 const priority = v.union(v.literal("low"), v.literal("medium"), v.literal("high"), v.literal("critical"));
 const category = v.union(v.literal("development"), v.literal("devops"), v.literal("content"), v.literal("seo"), v.literal("design"), v.literal("marketing"), v.literal("job_hunting"), v.literal("other"));
 
-export const list = query({
+export const list: any = query({
   args: {
     status: v.optional(status),
     priority: v.optional(priority),
@@ -23,12 +23,12 @@ export const list = query({
   },
 });
 
-export const get = query({
+export const get: any = query({
   args: { id: v.id("tasks") },
   handler: async (ctx, args) => ctx.db.get(args.id),
 });
 
-export const countByStatus = query({
+export const countByStatus: any = query({
   args: {},
   handler: async (ctx) => {
     const all = await ctx.db.query("tasks").collect();

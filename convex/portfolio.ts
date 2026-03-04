@@ -9,7 +9,7 @@ import { query } from "./_generated/server";
 // ==================== SECTION QUERIES ====================
 // Sections are stored in site_settings with keys like "section:hero", "section:about", etc.
 
-export const getSection = query({
+export const getSection: any = query({
   args: {
     key: v.string(),
     locale: v.optional(v.union(v.literal("en"), v.literal("nl"))),
@@ -33,7 +33,7 @@ export const getSection = query({
 
 // ==================== PUBLISHED CONTENT QUERIES ====================
 
-export const getPublishedProjects = query({
+export const getPublishedProjects: any = query({
   args: {
     locale: v.optional(v.union(v.literal("en"), v.literal("nl"))),
   },
@@ -58,7 +58,7 @@ export const getPublishedProjects = query({
   },
 });
 
-export const getFeaturedProjects = query({
+export const getFeaturedProjects: any = query({
   args: {
     locale: v.optional(v.union(v.literal("en"), v.literal("nl"))),
   },
@@ -79,7 +79,7 @@ export const getFeaturedProjects = query({
   },
 });
 
-export const getProjectById = query({
+export const getProjectById: any = query({
   args: {
     id: v.id("projects"),
     locale: v.optional(v.union(v.literal("en"), v.literal("nl"))),
@@ -97,7 +97,7 @@ export const getProjectById = query({
   },
 });
 
-export const getProjectBySlug = query({
+export const getProjectBySlug: any = query({
   args: {
     slug: v.string(),
     locale: v.optional(v.union(v.literal("en"), v.literal("nl"))),
@@ -120,7 +120,7 @@ export const getProjectBySlug = query({
   },
 });
 
-export const getPublishedExperiences = query({
+export const getPublishedExperiences: any = query({
   args: {
     locale: v.optional(v.union(v.literal("en"), v.literal("nl"))),
   },
@@ -142,7 +142,7 @@ export const getPublishedExperiences = query({
   },
 });
 
-export const getExperienceBySlug = query({
+export const getExperienceBySlug: any = query({
   args: {
     slug: v.string(),
     locale: v.optional(v.union(v.literal("en"), v.literal("nl"))),
@@ -169,7 +169,7 @@ export const getExperienceBySlug = query({
   },
 });
 
-export const getPublishedPosts = query({
+export const getPublishedPosts: any = query({
   args: {
     locale: v.optional(v.union(v.literal("en"), v.literal("nl"))),
   },
@@ -190,7 +190,7 @@ export const getPublishedPosts = query({
   },
 });
 
-export const getFeaturedPosts = query({
+export const getFeaturedPosts: any = query({
   args: {
     locale: v.optional(v.union(v.literal("en"), v.literal("nl"))),
   },
@@ -213,7 +213,7 @@ export const getFeaturedPosts = query({
   },
 });
 
-export const getPostById = query({
+export const getPostById: any = query({
   args: {
     id: v.id("blog_posts"),
     locale: v.optional(v.union(v.literal("en"), v.literal("nl"))),
@@ -231,7 +231,7 @@ export const getPostById = query({
   },
 });
 
-export const getPostBySlug = query({
+export const getPostBySlug: any = query({
   args: {
     slug: v.string(),
     locale: v.optional(v.union(v.literal("en"), v.literal("nl"))),
@@ -254,7 +254,7 @@ export const getPostBySlug = query({
   },
 });
 
-export const getPublishedSkills = query({
+export const getPublishedSkills: any = query({
   args: {
     locale: v.optional(v.union(v.literal("en"), v.literal("nl"))),
     category: v.optional(v.string()),

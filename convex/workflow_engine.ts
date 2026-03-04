@@ -185,7 +185,7 @@ export const createCustom = mutation({
 // QUERIES
 // ============================================================================
 
-export const getDetails = query({
+export const getDetails: any = query({
   args: { workflowId: v.id("workflows") },
   handler: async (ctx, args) => {
     const workflow = await ctx.db.get(args.workflowId);
@@ -223,7 +223,7 @@ export const getDetails = query({
   },
 });
 
-export const list = query({
+export const list: any = query({
   args: {
     status: v.optional(
       v.union(
@@ -258,7 +258,7 @@ export const list = query({
   },
 });
 
-export const getStats = query({
+export const getStats: any = query({
   args: {
     period: v.optional(v.union(v.literal("day"), v.literal("week"), v.literal("month"))),
   },

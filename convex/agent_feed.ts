@@ -43,7 +43,7 @@ export const push = mutation({
   },
 });
 
-export const list = query({
+export const list: any = query({
   args: {
     type: v.optional(feedType),
     priority: v.optional(priority),
@@ -59,12 +59,12 @@ export const list = query({
   },
 });
 
-export const get = query({
+export const get: any = query({
   args: { id: v.id("agent_feed") },
   handler: async (ctx, args) => ctx.db.get(args.id),
 });
 
-export const unreadCount = query({
+export const unreadCount: any = query({
   args: {},
   handler: async (ctx) => {
     const items = await ctx.db.query("agent_feed").withIndex("by_read", (q) => q.eq("read", false)).collect();

@@ -3,7 +3,7 @@ import { mutation, query } from "./_generated/server";
 import { requireAuth } from "./_helpers";
 
 // List all blog posts with optional locale filter
-export const list = query({
+export const list: any = query({
   args: {
     locale: v.optional(v.union(v.literal("en"), v.literal("nl"))),
     status: v.optional(v.union(v.literal("draft"), v.literal("published"))),
@@ -28,7 +28,7 @@ export const list = query({
 });
 
 // Get a single blog post by ID
-export const get = query({
+export const get: any = query({
   args: { id: v.id("blog_posts") },
   handler: async (ctx, args) => {
     return await ctx.db.get(args.id);
@@ -38,7 +38,7 @@ export const get = query({
 export const getById = get;
 
 // Get a single blog post by slug
-export const getBySlug = query({
+export const getBySlug: any = query({
   args: {
     slug: v.string(),
     locale: v.optional(v.union(v.literal("en"), v.literal("nl"))),

@@ -6,7 +6,7 @@ import { requireAuth } from "./_helpers";
 const contentType = v.union(v.literal("blog_post"), v.literal("social_post"), v.literal("newsletter"), v.literal("video"), v.literal("podcast"), v.literal("case_study"));
 const contentStatus = v.union(v.literal("idea"), v.literal("outline"), v.literal("drafting"), v.literal("review"), v.literal("scheduled"), v.literal("published"));
 
-export const list = query({
+export const list: any = query({
   args: { type: v.optional(contentType), status: v.optional(contentStatus) },
   handler: async (ctx, args) => {
     let items = await ctx.db.query("content_calendar").order("desc").collect();
@@ -16,12 +16,12 @@ export const list = query({
   },
 });
 
-export const get = query({
+export const get: any = query({
   args: { id: v.id("content_calendar") },
   handler: async (ctx, args) => ctx.db.get(args.id),
 });
 
-export const upcomingCount = query({
+export const upcomingCount: any = query({
   args: {},
   handler: async (ctx) => {
     const all = await ctx.db.query("content_calendar").collect();

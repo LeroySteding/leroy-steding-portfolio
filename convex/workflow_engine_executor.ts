@@ -460,7 +460,7 @@ export const retryWorkflow = mutation({
 /**
  * Get workflow with steps
  */
-export const getWorkflow = query({
+export const getWorkflow: any = query({
   args: {
     workflowId: v.id("workflows"),
   },
@@ -490,7 +490,7 @@ export const getWorkflow = query({
 /**
  * List active workflows
  */
-export const listActiveWorkflows = query({
+export const listActiveWorkflows: any = query({
   args: {},
   handler: async (ctx) => {
     const workflows = await ctx.db

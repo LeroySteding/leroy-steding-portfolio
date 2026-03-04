@@ -14,7 +14,7 @@ export const mode = v.union(
   v.literal("full-auto")    // Auto-apply to all jobs above threshold
 );
 
-export const get = query({
+export const get: any = query({
   args: {},
   handler: async (ctx) => {
     await requireAuth(ctx);
@@ -110,7 +110,7 @@ export const reset = mutation({
 });
 
 // Get stats for dashboard
-export const getStats = query({
+export const getStats: any = query({
   args: {},
   handler: async (ctx) => {
     await requireAuth(ctx);

@@ -23,7 +23,7 @@ export const log = mutation({
   },
 });
 
-export const list = query({
+export const list: any = query({
   args: { event: v.optional(v.string()), agent: v.optional(v.string()), model: v.optional(v.string()), limit: v.optional(v.number()) },
   handler: async (ctx, args) => {
     let items = await ctx.db.query("analytics_log").order("desc").collect();
@@ -34,7 +34,7 @@ export const list = query({
   },
 });
 
-export const summary = query({
+export const summary: any = query({
   args: {},
   handler: async (ctx) => {
     const all = await ctx.db.query("analytics_log").collect();

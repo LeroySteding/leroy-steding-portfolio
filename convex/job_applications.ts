@@ -5,7 +5,7 @@ import { requireAuth } from "./_helpers";
 
 const status = v.union(v.literal("discovered"), v.literal("researching"), v.literal("applying"), v.literal("applied"), v.literal("interviewing"), v.literal("offer"), v.literal("rejected"), v.literal("withdrawn"));
 
-export const list = query({
+export const list: any = query({
   args: { status: v.optional(status) },
   handler: async (ctx, args) => {
     let items = await ctx.db.query("job_applications").order("desc").collect();
@@ -14,12 +14,12 @@ export const list = query({
   },
 });
 
-export const get = query({
+export const get: any = query({
   args: { id: v.id("job_applications") },
   handler: async (ctx, args) => ctx.db.get(args.id),
 });
 
-export const activeCount = query({
+export const activeCount: any = query({
   args: {},
   handler: async (ctx) => {
     const all = await ctx.db.query("job_applications").collect();

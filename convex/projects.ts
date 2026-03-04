@@ -3,7 +3,7 @@ import { mutation, query } from "./_generated/server";
 import { requireAuth } from "./_helpers";
 
 // List all projects with optional locale filter
-export const list = query({
+export const list: any = query({
   args: {
     locale: v.optional(v.union(v.literal("en"), v.literal("nl"))),
     published: v.optional(v.boolean()),
@@ -33,7 +33,7 @@ export const list = query({
 });
 
 // Get a single project by ID
-export const getById = query({
+export const getById: any = query({
   args: { id: v.id("projects") },
   handler: async (ctx, args) => {
     return await ctx.db.get(args.id);
@@ -41,7 +41,7 @@ export const getById = query({
 });
 
 // Get a single project by slug
-export const getBySlug = query({
+export const getBySlug: any = query({
   args: {
     slug: v.string(),
     locale: v.optional(v.union(v.literal("en"), v.literal("nl"))),

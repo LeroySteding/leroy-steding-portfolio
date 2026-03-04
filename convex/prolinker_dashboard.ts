@@ -13,7 +13,7 @@ import { requireAuth } from "./_helpers";
  * Overview Stats
  * Returns high-level metrics for the dashboard
  */
-export const overviewStats = query({
+export const overviewStats: any = query({
   args: {},
   handler: async (ctx) => {
     await requireAuth(ctx);
@@ -60,7 +60,7 @@ export const overviewStats = query({
 /**
  * Get all scraped jobs with optional filters and sorting
  */
-export const listJobs = query({
+export const listJobs: any = query({
   args: {
     location: v.optional(v.string()),
     techStack: v.optional(v.array(v.string())),
@@ -166,7 +166,7 @@ export const listJobs = query({
 /**
  * Get single job with full details
  */
-export const getJob = query({
+export const getJob: any = query({
   args: { id: v.id("scraped_jobs") },
   handler: async (ctx, args) => {
     await requireAuth(ctx);
@@ -185,7 +185,7 @@ export const getJob = query({
 /**
  * Get match score distribution for chart
  */
-export const scoreDistribution = query({
+export const scoreDistribution: any = query({
   args: {},
   handler: async (ctx) => {
     await requireAuth(ctx);
@@ -212,7 +212,7 @@ export const scoreDistribution = query({
 /**
  * Get top matched jobs
  */
-export const topMatches = query({
+export const topMatches: any = query({
   args: { limit: v.optional(v.number()) },
   handler: async (ctx, args) => {
     await requireAuth(ctx);
@@ -238,7 +238,7 @@ export const topMatches = query({
 /**
  * Application history for auto-apply dashboard
  */
-export const applicationHistory = query({
+export const applicationHistory: any = query({
   args: { 
     limit: v.optional(v.number()),
     appliedVia: v.optional(v.union(v.literal("manual"), v.literal("auto-apply"))),
@@ -266,7 +266,7 @@ export const applicationHistory = query({
 /**
  * Weekly performance data for chart
  */
-export const weeklyPerformance = query({
+export const weeklyPerformance: any = query({
   args: {},
   handler: async (ctx) => {
     await requireAuth(ctx);
@@ -303,7 +303,7 @@ export const weeklyPerformance = query({
 /**
  * Scraper health metrics
  */
-export const scraperHealth = query({
+export const scraperHealth: any = query({
   args: {},
   handler: async (ctx) => {
     await requireAuth(ctx);
@@ -360,7 +360,7 @@ export const scraperHealth = query({
 /**
  * Get unique technologies from scraped jobs for filter dropdown
  */
-export const getTechnologies = query({
+export const getTechnologies: any = query({
   args: {},
   handler: async (ctx) => {
     await requireAuth(ctx);
@@ -383,7 +383,7 @@ export const getTechnologies = query({
 /**
  * Get unique locations from scraped jobs for filter dropdown
  */
-export const getLocations = query({
+export const getLocations: any = query({
   args: {},
   handler: async (ctx) => {
     await requireAuth(ctx);

@@ -4,7 +4,7 @@ import { mutation, query } from "./_generated/server";
 const environment = v.union(v.literal("production"), v.literal("preview"), v.literal("development"));
 const status = v.union(v.literal("building"), v.literal("ready"), v.literal("error"), v.literal("cancelled"));
 
-export const list = query({
+export const list: any = query({
   args: { project: v.optional(v.string()), status: v.optional(status), limit: v.optional(v.number()) },
   handler: async (ctx, args) => {
     let items = await ctx.db.query("deployments").order("desc").collect();
@@ -14,7 +14,7 @@ export const list = query({
   },
 });
 
-export const get = query({
+export const get: any = query({
   args: { id: v.id("deployments") },
   handler: async (ctx, args) => ctx.db.get(args.id),
 });

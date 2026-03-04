@@ -3,7 +3,7 @@ import { mutation, query } from "./_generated/server";
 import { requireAuth } from "./_helpers";
 
 // List all experiences with optional filters
-export const list = query({
+export const list: any = query({
   args: {
     locale: v.optional(v.union(v.literal("en"), v.literal("nl"))),
     type: v.optional(v.union(v.literal("work"), v.literal("education"))),
@@ -31,7 +31,7 @@ export const list = query({
 });
 
 // Get a single experience by ID
-export const getById = query({
+export const getById: any = query({
   args: { id: v.id("experiences") },
   handler: async (ctx, args) => {
     return await ctx.db.get(args.id);

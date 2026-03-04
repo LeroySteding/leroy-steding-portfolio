@@ -334,7 +334,7 @@ export const logToFeed = internalMutation({
 
 // ==================== PUBLIC QUERIES ====================
 
-export const getActiveWorkflows = query({
+export const getActiveWorkflows: any = query({
   args: {
     workflowType: v.optional(v.union(v.literal("job"), v.literal("content"))),
   },
@@ -361,7 +361,7 @@ export const getActiveWorkflows = query({
   },
 });
 
-export const getWorkflowsForEntity = query({
+export const getWorkflowsForEntity: any = query({
   args: {
     entityId: v.string(),
     entityType: v.union(v.literal("job"), v.literal("content")),

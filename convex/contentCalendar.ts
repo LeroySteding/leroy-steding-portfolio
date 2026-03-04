@@ -1,14 +1,14 @@
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 
-export const list = query({
+export const list: any = query({
   args: {},
   handler: async (ctx) => {
     return await ctx.db.query("content_calendar").collect();
   },
 });
 
-export const getById = query({
+export const getById: any = query({
   args: { id: v.id("content_calendar") },
   handler: async (ctx, args) => {
     return await ctx.db.get(args.id);

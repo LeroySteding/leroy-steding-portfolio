@@ -3,7 +3,7 @@ import { mutation, query } from "./_generated/server";
 
 const ghType = v.union(v.literal("pr"), v.literal("issue"), v.literal("review"), v.literal("merge"), v.literal("release"));
 
-export const list = query({
+export const list: any = query({
   args: { repo: v.optional(v.string()), type: v.optional(ghType), limit: v.optional(v.number()) },
   handler: async (ctx, args) => {
     let items = await ctx.db.query("github_activity").order("desc").collect();
@@ -13,7 +13,7 @@ export const list = query({
   },
 });
 
-export const get = query({
+export const get: any = query({
   args: { id: v.id("github_activity") },
   handler: async (ctx, args) => ctx.db.get(args.id),
 });

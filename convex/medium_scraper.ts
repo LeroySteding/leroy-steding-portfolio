@@ -15,7 +15,7 @@ import { internal, api } from "./_generated/api";
 /**
  * Get Medium scraper statistics
  */
-export const getStats = query({
+export const getStats: any = query({
   args: {},
   handler: async (ctx) => {
     const jobs = await ctx.db

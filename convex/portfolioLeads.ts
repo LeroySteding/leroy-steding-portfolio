@@ -102,7 +102,7 @@ function calculateLeadScore(lead: any): number {
 }
 
 // Get lead by email
-export const getByEmail = query({
+export const getByEmail: any = query({
   args: { email: v.string() },
   handler: async (ctx, args) => {
     return await ctx.db
@@ -286,7 +286,7 @@ export const upsert = mutation({
 });
 
 // List leads (for admin dashboard)
-export const list = query({
+export const list: any = query({
   args: {
     status: v.optional(v.string()),
     source: v.optional(v.string()),

@@ -134,7 +134,7 @@ interface AgentScore {
   estimatedTime: number;
 }
 
-export const findBestAgent = query({
+export const findBestAgent: any = query({
   args: {
     taskType: v.string(),
     priority: v.string(),
@@ -230,7 +230,7 @@ function calculateAgentScore(
 
 // ==================== AGENT STATUS ====================
 
-export const getAgentStatus = query({
+export const getAgentStatus: any = query({
   args: { agentId: v.optional(v.string()) },
   handler: async (ctx, args) => {
     if (args.agentId) {
@@ -283,7 +283,7 @@ export const getAgentStatus = query({
 
 // ==================== COST TRACKING ====================
 
-export const estimateTaskCost = query({
+export const estimateTaskCost: any = query({
   args: {
     taskType: v.string(),
     agentId: v.optional(v.string()),

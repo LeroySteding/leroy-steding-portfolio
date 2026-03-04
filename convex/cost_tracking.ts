@@ -55,7 +55,7 @@ function calculateCost(
 
 // ==================== QUERIES ====================
 
-export const getDailyUsage = query({
+export const getDailyUsage: any = query({
   args: { days: v.optional(v.number()) },
   handler: async (ctx, args) => {
     const days = args.days || 30;
@@ -80,7 +80,7 @@ export const getDailyUsage = query({
   },
 });
 
-export const getMonthlyTotal = query({
+export const getMonthlyTotal: any = query({
   args: {},
   handler: async (ctx): Promise<number> => {
     const now = Date.now();
@@ -99,7 +99,7 @@ export const getMonthlyTotal = query({
   },
 });
 
-export const getBreakdownByAgent = query({
+export const getBreakdownByAgent: any = query({
   args: {},
   handler: async (ctx) => {
     const thirtyDaysAgo = Date.now() - 30 * 24 * 60 * 60 * 1000;
@@ -129,7 +129,7 @@ export const getBreakdownByAgent = query({
   },
 });
 
-export const getBreakdownByModel = query({
+export const getBreakdownByModel: any = query({
   args: {},
   handler: async (ctx) => {
     const thirtyDaysAgo = Date.now() - 30 * 24 * 60 * 60 * 1000;
@@ -166,7 +166,7 @@ export const getBreakdownByModel = query({
   },
 });
 
-export const getSavingsFromLocal = query({
+export const getSavingsFromLocal: any = query({
   args: {},
   handler: async (ctx) => {
     const thirtyDaysAgo = Date.now() - 30 * 24 * 60 * 60 * 1000;
@@ -198,7 +198,7 @@ export const getSavingsFromLocal = query({
   },
 });
 
-export const getStats = query({
+export const getStats: any = query({
   args: {},
   handler: async (ctx) => {
     // Calculate monthly total
