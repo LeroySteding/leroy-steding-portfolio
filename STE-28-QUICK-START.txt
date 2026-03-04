@@ -1,0 +1,143 @@
+================================================================================
+STE-28: Google Search Console Setup - QUICK START GUIDE
+================================================================================
+Priority: 🔴 URGENT
+Status: IN PROGRESS - Code template ready, awaiting verification code
+Timeline: 25-30 minutes total
+Deadline: Within 24 hours
+
+================================================================================
+PHASE 1: GET YOUR VERIFICATION CODE (5 min) - YOU DO THIS NOW
+================================================================================
+
+1. Go to: https://search.google.com/search-console
+2. Click: "Add Property" (top-left button)
+3. Choose: "Domain" (not URL prefix)
+4. Type: leroysteding.nl (no http/www)
+5. Click: "Continue"
+6. Select: "HTML tag" verification method
+7. You'll see: <meta name="google-site-verification" content="ABC123..." />
+8. COPY the code between quotes (e.g., abc123def456ghi789jkl)
+
+⚠️ KEEP THIS GSC WINDOW OPEN - You'll need it after deployment
+
+================================================================================
+PHASE 2: ADD CODE TO WEBSITE (5 min) - CODER/YOU DO THIS
+================================================================================
+
+File: ~/Projects/personal/leroy-steding-portfolio/apps/portfolio/app/layout.tsx
+Line: ~39
+
+Current (with placeholder):
+  verification: {
+    google: "PASTE_YOUR_VERIFICATION_CODE_HERE",
+  },
+
+Change to (paste your code from Phase 1, Step 8):
+  verification: {
+    google: "abc123def456ghi789jkl",
+  },
+
+Then run:
+  cd ~/Projects/personal/leroy-steding-portfolio
+  git add apps/portfolio/app/layout.tsx
+  git commit -m "feat(seo): Add Google Search Console verification - STE-28"
+  git push origin main
+
+================================================================================
+PHASE 3: VERIFY DEPLOYMENT (5 min) - AUTOMATED
+================================================================================
+
+Vercel auto-deploys when you push. Monitor at:
+  https://vercel.com/leroysteding/portfolio
+
+Wait for: ✓ Production Deployment Ready
+
+Takes: 3-5 minutes
+
+================================================================================
+PHASE 4: VERIFY META TAG IS LIVE (2 min) - YOU DO THIS
+================================================================================
+
+Option A (Browser):
+  1. Go to: https://www.leroysteding.nl
+  2. Right-click → View Page Source (Ctrl+U / Cmd+U)
+  3. Search: google-site-verification
+  4. Confirm you see your code
+
+Option B (Terminal):
+  curl https://www.leroysteding.nl | grep google-site-verification
+
+Should output:
+  <meta name="google-site-verification" content="abc123def456ghi789jkl" />
+
+If not found:
+  - Wait 5 minutes
+  - Check Vercel deployment is ✓ Ready
+  - Refresh and try again
+
+================================================================================
+PHASE 5: CLICK VERIFY IN GSC (1 min) - YOU DO THIS
+================================================================================
+
+Go back to the GSC window from Phase 1.
+Click the blue "Verify" button.
+
+Wait for: ✓ Verification successful
+
+If it fails:
+  - Make sure meta tag is live (Phase 4)
+  - Wait 5 minutes
+  - Try again
+
+================================================================================
+PHASE 6: SUBMIT SITEMAP (3 min) - YOU DO THIS
+================================================================================
+
+In GSC:
+  1. Left sidebar → "Sitemaps"
+  2. Click "Add a sitemap"
+  3. Enter: sitemap.xml
+  4. Submit
+
+You should see: ✓ Success (with URL count)
+
+================================================================================
+DONE ✅
+================================================================================
+
+After completing all phases, you'll have:
+  ✓ leroysteding.nl verified in Google Search Console
+  ✓ Sitemap submitted
+  ✓ SEO tracking enabled
+  ✓ Performance reports active
+  ✓ Coverage reports showing indexed pages
+
+================================================================================
+FILE LOCATIONS
+================================================================================
+
+Full Implementation Guide:
+  docs/STE-28-COMPLETE-IMPLEMENTATION.md
+  (Contains full details, troubleshooting, commands)
+
+Code to Update:
+  apps/portfolio/app/layout.tsx
+  (Search for "verification:" section)
+
+Live Website:
+  https://www.leroysteding.nl
+
+Vercel Dashboard:
+  https://vercel.com/leroysteding/portfolio
+
+================================================================================
+NEXT IMMEDIATE ACTION
+================================================================================
+
+👉 Go to Phase 1 and get your verification code from Google Search Console
+   Then follow phases 2-6 in order.
+
+Questions? See: docs/STE-28-COMPLETE-IMPLEMENTATION.md
+
+================================================================================
