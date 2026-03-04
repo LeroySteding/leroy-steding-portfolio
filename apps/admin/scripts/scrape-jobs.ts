@@ -27,6 +27,7 @@ import { api } from "../../../convex/_generated/api";
 import { IndeedScraper } from "./scrapers/IndeedScraper";
 import { RemoteOKScraper } from "./scrapers/RemoteOKScraper";
 import { WeWorkRemotelyScraper } from "./scrapers/WeWorkRemotelyScraper";
+import { AdzunaScraper } from "./scrapers/AdzunaScraper";
 import type { Job, JobSource, BaseScraper as IBaseScraper } from "./scrapers/types";
 
 // Parse CLI arguments
@@ -49,6 +50,7 @@ const convex = convexUrl ? new ConvexHttpClient(convexUrl) : null;
 const SCRAPERS: Record<JobSource, () => IBaseScraper> = {
   remoteok: () => new RemoteOKScraper(),
   weworkremotely: () => new WeWorkRemotelyScraper(),
+  adzuna: () => new AdzunaScraper(),
   
   // TODO: Fix Indeed scraper (HTML structure changed)
   indeed: () => new IndeedScraper(),
@@ -61,7 +63,7 @@ const SCRAPERS: Record<JobSource, () => IBaseScraper> = {
     throw new Error("Glassdoor scraper not yet implemented");
   },
   prolinker: () => {
-    throw new Error("ProLinker scraper deprecated - use RemoteOK/WeWorkRemotely instead");
+    throw new Error("ProLinker scraper deprecated - use RemoteOK/Adzuna instead");
   },
 };
 
@@ -69,8 +71,13 @@ const SCRAPERS: Record<JobSource, () => IBaseScraper> = {
 let sourcesToRun: JobSource[] = [];
 
 if (sourceArg === "all") {
-  // Only run working scrapers
-  sourcesToRun = ["remoteok", "weworkremotely"];
+  // Only run working scrapers (RemoteOK is free, Adzuna requires API key)
+  sourcesToRun = ["remoteok"];
+  
+  // Add Adzuna if API key is available
+  if (process.env.ADZUNA_APP_ID && process.env.ADZUNA_API_KEY) {
+    sourcesToRun.push("adzuna");
+  }
 } else {
   const source = sourceArg as JobSource;
   if (!SCRAPERS[source]) {
