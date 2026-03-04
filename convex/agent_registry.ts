@@ -237,9 +237,10 @@ export const getAgentStatus = query({
       if (!agent) return null;
       
       // Get current tasks for this agent
+      const agentId = args.agentId; // Store in variable for type narrowing
       const tasks = await ctx.db
         .query("agent_tasks")
-        .filter((q) => q.eq(q.field("assignedTo"), [args.agentId]))
+        .filter((q) => q.eq(q.field("assignedTo"), [agentId]))
         .collect();
       
       const activeTasks = tasks.filter(t => t.status === "pending" || t.status === "in_progress");
