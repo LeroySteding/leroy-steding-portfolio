@@ -7,11 +7,12 @@ echo "🧹 Cleaning Convex compiled files..."
 cd "$(dirname "$0")/.." || exit 1
 
 # Remove compiled JS files from convex directory (but not _generated)
-find convex -maxdepth 1 -name "*.js" -delete 2>/dev/null
-find convex -maxdepth 1 -name "*.js.map" -delete 2>/dev/null
+find convex -name "*.js" -not -path "*/node_modules/*" -not -path "*/_generated/*" -delete 2>/dev/null
+find convex -name "*.js.map" -not -path "*/node_modules/*" -not -path "*/_generated/*" -delete 2>/dev/null
 
-# Clear Convex cache
+# Clear Convex cache and output directories
 rm -rf .convex 2>/dev/null
 rm -rf node_modules/.convex 2>/dev/null
+rm -rf convex/_generated/out 2>/dev/null
 
 echo "✅ Convex files cleaned successfully"
