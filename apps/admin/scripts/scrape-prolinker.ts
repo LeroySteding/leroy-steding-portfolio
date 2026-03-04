@@ -28,9 +28,9 @@ import { api } from "../../../convex/_generated/api";
 
 // Configuration
 const CONFIG = {
-  // ProLinker URL - ⚠️ VERIFY THIS IS CORRECT! Site was timing out on 2026-03-03
-  // Alternative URLs to try: https://prolinker.nl/opdrachten or https://prolinker.nl/vacatures
-  baseUrl: process.env.PROLINKER_URL || "https://prolinker.nl/opdrachten",
+  // ProLinker URL - FIXED 2026-03-04: correct domain is nl.prolinker.com (not prolinker.nl)
+  // Alternative: https://prolinker.com/nl or https://nl.prolinker.com/vacature
+  baseUrl: process.env.PROLINKER_URL || "https://nl.prolinker.com/opdrachten",
   maxPages: parseInt(process.env.MAX_PAGES || "5"), // Reduced from 10 to fail faster
   headless: process.env.HEADLESS !== "false",
   
