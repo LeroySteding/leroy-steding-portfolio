@@ -444,8 +444,10 @@ export const retryWorkflow = mutation({
       updatedAt: Date.now(),
     });
 
-    // Restart
-    await startWorkflow(ctx, { workflowId: args.workflowId });
+    // Schedule workflow restart
+    await ctx.scheduler.runAfter(0, internal.workflow_engine_executor.startWorkflow, {
+      workflowId: args.workflowId,
+    });
 
     return { success: true };
   },

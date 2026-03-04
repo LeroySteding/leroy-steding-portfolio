@@ -34,16 +34,10 @@ export const getStats = query({
     // Find last scrape time
     const lastScrape = Math.max(...jobs.map(j => j.scrapedAt));
     
-    // Calculate average match score
-    const jobsWithScores = jobs.filter(j => j.matchScore !== undefined);
-    const avgMatchScore = jobsWithScores.length > 0
-      ? jobsWithScores.reduce((sum, j) => sum + (j.matchScore || 0), 0) / jobsWithScores.length
-      : 0;
-    
     return {
       totalJobs: jobs.length,
       lastScrape,
-      avgMatchScore: Math.round(avgMatchScore),
+      avgMatchScore: 0, // Match scores are in job_matches table
     };
   },
 });

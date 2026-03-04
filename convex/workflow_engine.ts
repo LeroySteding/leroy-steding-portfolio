@@ -239,13 +239,16 @@ export const list = query({
     limit: v.optional(v.number()),
   },
   handler: async (ctx, args) => {
-    let query = ctx.db.query("workflows");
-
-    if (args.status) {
-      query = query.withIndex("by_status", (q) => q.eq("status", args.status));
-    }
-
-    const workflows = await query.order("desc").take(args.limit || 50);
+    const workflows = args.status
+      ? await ctx.db
+          .query("workflows")
+          .withIndex("by_status", (q) => q.eq("status", args.status))
+          .order("desc")
+          .take(args.limit || 50)
+      : await ctx.db
+          .query("workflows")
+          .order("desc")
+          .take(args.limit || 50);
 
     if (args.createdBy) {
       return workflows.filter((w) => w.createdBy === args.createdBy);

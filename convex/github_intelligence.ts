@@ -151,7 +151,7 @@ function shouldAutoAssign(issue: any, complexity: IssueComplexity): boolean {
 
 // ==================== REPOSITORY HEALTH ====================
 
-export const getRepoHealth = query({
+export const getRepoHealth: any = query({
   handler: async (ctx): Promise<any> => {
     // In production, aggregate from stored scans
     return {
