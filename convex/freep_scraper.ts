@@ -66,36 +66,52 @@ export const storeJob = mutation({
 export const lastRun = query({
   handler: async (ctx) => {
     const logs = await ctx.db
-      .query("scraper_logs")
-      .filter((q) => q.eq(q.field("scraper"), "freep"))
+      .query("analytics_log")
+      .withIndex("by_agent", (q) => q.eq("agent", "freep_scraper"))
       .order("desc")
       .take(1);
     
-    return logs[0] || null;
+    return logs[0] ? {
+      scraper: "freep",
+      success: logs[0].metadata?.success,
+      jobsFound: logs[0].metadata?.jobsFound,
+      duration: logs[0].durationMs,
+      error: logs[0].metadata?.error,
+      timestamp: logs[0].createdAt,
+    } : null;
   },
 });
 
 export const history = query({
   args: { limit: v.optional(v.number()) },
   handler: async (ctx, args) => {
-    return await ctx.db
-      .query("scraper_logs")
-      .filter((q) => q.eq(q.field("scraper"), "freep"))
+    const logs = await ctx.db
+      .query("analytics_log")
+      .withIndex("by_agent", (q) => q.eq("agent", "freep_scraper"))
       .order("desc")
       .take(args.limit || 10);
+    
+    return logs.map((log) => ({
+      scraper: "freep",
+      success: log.metadata?.success,
+      jobsFound: log.metadata?.jobsFound,
+      duration: log.durationMs,
+      error: log.metadata?.error,
+      timestamp: log.createdAt,
+    }));
   },
 });
 
 export const stats = query({
   handler: async (ctx) => {
     const logs = await ctx.db
-      .query("scraper_logs")
-      .filter((q) => q.eq(q.field("scraper"), "freep"))
+      .query("analytics_log")
+      .withIndex("by_agent", (q) => q.eq("agent", "freep_scraper"))
       .order("desc")
       .take(30);
     
-    const successCount = logs.filter((l) => l.success).length;
-    const totalJobs = logs.reduce((sum, l) => sum + l.jobsFound, 0);
+    const successCount = logs.filter((l) => l.metadata?.success).length;
+    const totalJobs = logs.reduce((sum, l) => sum + (l.metadata?.jobsFound || 0), 0);
     const avgJobs = logs.length > 0 ? Math.round(totalJobs / logs.length) : 0;
     
     return {

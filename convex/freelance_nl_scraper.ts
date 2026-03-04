@@ -20,10 +20,18 @@ export const logTrigger = internalMutation({
     timestamp: v.number(),
   },
   handler: async (ctx, args): Promise<any> => {
-    // Store scraper run log
-    await ctx.db.insert("scraper_logs", {
-      scraper: "freelance_nl",
-      ...args,
+    // Store scraper run log in analytics_log
+    await ctx.db.insert("analytics_log", {
+      event: "scraper_run",
+      agent: "freelance_nl_scraper",
+      durationMs: args.duration,
+      metadata: {
+        success: args.success,
+        jobsFound: args.jobsFound,
+        error: args.error,
+        scraper: "freelance_nl",
+      },
+      createdAt: args.timestamp,
     });
   },
 });
@@ -31,12 +39,19 @@ export const logTrigger = internalMutation({
 export const lastRun = query({
   handler: async (ctx): Promise<any> => {
     const logs = await ctx.db
-      .query("scraper_logs")
-      .filter((q) => q.eq(q.field("scraper"), "freelance_nl"))
+      .query("analytics_log")
+      .withIndex("by_agent", (q) => q.eq("agent", "freelance_nl_scraper"))
       .order("desc")
       .take(1);
     
-    return logs[0] || null;
+    return logs[0] ? {
+      scraper: "freelance_nl",
+      success: logs[0].metadata?.success,
+      jobsFound: logs[0].metadata?.jobsFound,
+      duration: logs[0].durationMs,
+      error: logs[0].metadata?.error,
+      timestamp: logs[0].createdAt,
+    } : null;
   },
 });
 
@@ -45,11 +60,20 @@ export const history = query({
   handler: async (ctx, args): Promise<any> => {
     const limit = args.limit || 10;
     
-    return await ctx.db
-      .query("scraper_logs")
-      .filter((q) => q.eq(q.field("scraper"), "freelance_nl"))
+    const logs = await ctx.db
+      .query("analytics_log")
+      .withIndex("by_agent", (q) => q.eq("agent", "freelance_nl_scraper"))
       .order("desc")
       .take(limit);
+    
+    return logs.map((log) => ({
+      scraper: "freelance_nl",
+      success: log.metadata?.success,
+      jobsFound: log.metadata?.jobsFound,
+      duration: log.durationMs,
+      error: log.metadata?.error,
+      timestamp: log.createdAt,
+    }));
   },
 });
 
