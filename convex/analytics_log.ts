@@ -4,16 +4,22 @@ import { mutation, query } from "./_generated/server";
 // Public log mutation for agents (no auth required)
 export const log = mutation({
   args: {
-    event: v.string(), agent: v.optional(v.string()), model: v.optional(v.string()),
-    tokensIn: v.optional(v.number()), tokensOut: v.optional(v.number()),
-    cost: v.optional(v.number()), durationMs: v.optional(v.number()),
+    event: v.string(),
+    agent: v.optional(v.string()),
+    model: v.optional(v.string()),
+    tokensIn: v.optional(v.number()),
+    tokensOut: v.optional(v.number()),
+    cost: v.optional(v.number()),
+    durationMs: v.optional(v.number()),
     metadata: v.optional(v.any()),
     createdAt: v.optional(v.number()), // Allow explicit createdAt for historical entries
   },
   handler: async (ctx, args) => {
     // Use provided createdAt or default to now
     const createdAt = args.createdAt ?? Date.now();
-    return await ctx.db.insert("analytics_log", { ...args, createdAt });
+    // Remove createdAt from args before spreading to avoid duplicate
+    const { createdAt: _, ...dataWithoutCreatedAt } = args;
+    return await ctx.db.insert("analytics_log", { ...dataWithoutCreatedAt, createdAt });
   },
 });
 
