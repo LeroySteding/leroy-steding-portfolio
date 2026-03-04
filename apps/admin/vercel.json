@@ -1,8 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "cd ../.. && pnpm turbo run build --filter=@steding/admin",
+  "buildCommand": "pnpm build",
   "installCommand": "cd ../.. && pnpm install --frozen-lockfile",
-  "outputDirectory": "../../apps/admin/.next",
   "framework": "nextjs",
   "headers": [
     {
