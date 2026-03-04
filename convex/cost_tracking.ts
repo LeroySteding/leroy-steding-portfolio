@@ -6,6 +6,7 @@
 
 import { v } from "convex/values";
 import { internalMutation, query } from "./_generated/server";
+import { internal } from "./_generated/api";
 
 // ==================== COST LOGGING ====================
 
@@ -80,7 +81,8 @@ export const getDailyUsage = query({
 });
 
 export const getMonthlyTotal = query({
-  handler: async (ctx) => {
+  args: {},
+  handler: async (ctx): Promise<number> => {
     const now = Date.now();
     const startOfMonth = new Date(
       new Date(now).getFullYear(),
@@ -98,6 +100,7 @@ export const getMonthlyTotal = query({
 });
 
 export const getBreakdownByAgent = query({
+  args: {},
   handler: async (ctx) => {
     const thirtyDaysAgo = Date.now() - 30 * 24 * 60 * 60 * 1000;
     
@@ -127,6 +130,7 @@ export const getBreakdownByAgent = query({
 });
 
 export const getBreakdownByModel = query({
+  args: {},
   handler: async (ctx) => {
     const thirtyDaysAgo = Date.now() - 30 * 24 * 60 * 60 * 1000;
     
@@ -163,6 +167,7 @@ export const getBreakdownByModel = query({
 });
 
 export const getSavingsFromLocal = query({
+  args: {},
   handler: async (ctx) => {
     const thirtyDaysAgo = Date.now() - 30 * 24 * 60 * 60 * 1000;
     
@@ -194,10 +199,42 @@ export const getSavingsFromLocal = query({
 });
 
 export const getStats = query({
+  args: {},
   handler: async (ctx) => {
-    const monthlyTotal = await ctx.runQuery(internal.cost_tracking.getMonthlyTotal);
-    const savingsData = await ctx.runQuery(internal.cost_tracking.getSavingsFromLocal);
-    const breakdown = await ctx.runQuery(internal.cost_tracking.getBreakdownByAgent);
+    // Calculate monthly total
+    const now = Date.now();
+    const startOfMonth = new Date(
+      new Date(now).getFullYear(),
+      new Date(now).getMonth(),
+      1
+    ).getTime();
+    
+    const monthlyLogs = await ctx.db
+      .query("cost_logs")
+      .filter((q) => q.gte(q.field("timestamp"), startOfMonth))
+      .collect();
+    
+    const monthlyTotal = monthlyLogs.reduce((sum, log) => sum + log.cost, 0);
+    
+    // Calculate savings from local models
+    const thirtyDaysAgo = Date.now() - 30 * 24 * 60 * 60 * 1000;
+    const recentLogs = await ctx.db
+      .query("cost_logs")
+      .filter((q) => q.gte(q.field("timestamp"), thirtyDaysAgo))
+      .collect();
+    
+    const ollamaLogs = recentLogs.filter((log) => log.model === "ollama");
+    let savings = 0;
+    for (const log of ollamaLogs) {
+      savings += calculateCost("claude-haiku-4.5", log.inputTokens, log.outputTokens);
+    }
+    
+    // Get top agent
+    const agentCosts = new Map<string, number>();
+    for (const log of recentLogs) {
+      agentCosts.set(log.agent, (agentCosts.get(log.agent) || 0) + log.cost);
+    }
+    const sortedAgents = Array.from(agentCosts.entries()).sort((a, b) => b[1] - a[1]);
     
     const MONTHLY_BUDGET = 50; // USD
     const percentOfBudget = (monthlyTotal / MONTHLY_BUDGET) * 100;
@@ -207,9 +244,9 @@ export const getStats = query({
       monthlyBudget: MONTHLY_BUDGET,
       percentOfBudget,
       overBudget: monthlyTotal > MONTHLY_BUDGET,
-      savings: savingsData.savings,
-      topAgent: breakdown[0]?.agent || "none",
-      topAgentCost: breakdown[0]?.cost || 0,
+      savings,
+      topAgent: sortedAgents[0]?.[0] || "none",
+      topAgentCost: sortedAgents[0]?.[1] || 0,
     };
   },
 });

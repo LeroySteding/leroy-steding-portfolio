@@ -9,7 +9,7 @@ import { internal } from "./_generated/api";
 
 export const generateDailyDigest = internalAction({
   args: {},
-  handler: async (ctx) => {
+  handler: async (ctx): Promise<any> => {
     console.log("[daily-digest] Generating morning standup...");
     
     const now = Date.now();
@@ -24,23 +24,23 @@ export const generateDailyDigest = internalAction({
     
     // Calculate stats
     const taskStats = {
-      completed: tasks.filter(t => t.status === "completed" && (t.updatedAt || t.createdAt) > yesterday).length,
-      failed: tasks.filter(t => t.status === "failed" && (t.updatedAt || t.createdAt) > yesterday).length,
-      pending: tasks.filter(t => t.status === "pending").length,
-      highPriority: tasks.filter(t => t.status === "pending" && (t.priority === "high" || t.priority === "critical")).length,
-      critical: tasks.filter(t => t.priority === "critical").length,
+      completed: tasks.filter((t: any) => t.status === "completed" && (t.updatedAt || t.createdAt) > yesterday).length,
+      failed: tasks.filter((t: any) => t.status === "failed" && (t.updatedAt || t.createdAt) > yesterday).length,
+      pending: tasks.filter((t: any) => t.status === "pending").length,
+      highPriority: tasks.filter((t: any) => t.status === "pending" && (t.priority === "high" || t.priority === "critical")).length,
+      critical: tasks.filter((t: any) => t.priority === "critical").length,
     };
     
     const jobStats = {
-      applied: jobs.filter(j => j.status === "applied" && (j.appliedAt || j.createdAt) > yesterday).length,
-      discovered: jobs.filter(j => j.status === "discovered" && j.createdAt > yesterday).length,
+      applied: jobs.filter((j: any) => j.status === "applied" && (j.appliedAt || j.createdAt) > yesterday).length,
+      discovered: jobs.filter((j: any) => j.status === "discovered" && j.createdAt > yesterday).length,
     };
     
     const scraperStats = {
-      total: scrapedJobs.filter(j => j.scrapedAt > yesterday).length,
-      prolinker: scrapedJobs.filter(j => j.source === "prolinker" && j.scrapedAt > yesterday).length,
-      freep: scrapedJobs.filter(j => j.source === "freep" && j.scrapedAt > yesterday).length,
-      medium: scrapedJobs.filter(j => j.source === "medium" && j.scrapedAt > yesterday).length,
+      total: scrapedJobs.filter((j: any) => j.scrapedAt > yesterday).length,
+      prolinker: scrapedJobs.filter((j: any) => j.source === "prolinker" && j.scrapedAt > yesterday).length,
+      freep: scrapedJobs.filter((j: any) => j.source === "freep" && j.scrapedAt > yesterday).length,
+      medium: scrapedJobs.filter((j: any) => j.source === "medium" && j.scrapedAt > yesterday).length,
     };
     
     // Build digest
@@ -67,7 +67,7 @@ export const generateDailyDigest = internalAction({
     };
     
     // Add blockers
-    const stuckTasks = tasks.filter(t => t.status === "pending" && now - t.createdAt > 86400000);
+    const stuckTasks = tasks.filter((t: any) => t.status === "pending" && now - t.createdAt > 86400000);
     if (stuckTasks.length > 0) {
       digest.blockers.push(`${stuckTasks.length} tasks pending >24h`);
     }

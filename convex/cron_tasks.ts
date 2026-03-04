@@ -14,7 +14,7 @@ import { ScraperExecutor } from "./_scraper_utils";
  */
 export const scrapeProLinkerJobs = internalAction({
   args: {},
-  handler: async (ctx) => {
+  handler: async (ctx): Promise<any> => {
     const executor = new ScraperExecutor(ctx, "ProLinker");
     
     return await executor.execute(async () => {
@@ -43,7 +43,7 @@ export const scrapeProLinkerJobs = internalAction({
  */
 export const scrapeFreelanceNLJobs = internalAction({
   args: {},
-  handler: async (ctx) => {
+  handler: async (ctx): Promise<any> => {
     const executor = new ScraperExecutor(ctx, "Freelance.nl");
     
     return await executor.execute(async () => {
@@ -71,7 +71,7 @@ export const scrapeFreelanceNLJobs = internalAction({
  */
 export const archiveOldScrapedJobs = internalAction({
   args: {},
-  handler: async (ctx) => {
+  handler: async (ctx): Promise<any> => {
     console.log("[CRON] Archiving old scraped jobs...");
     
     try {
@@ -106,7 +106,7 @@ export const archiveOldScrapedJobs = internalAction({
  */
 export const cleanupExpiredJobApplications = internalAction({
   args: {},
-  handler: async (ctx) => {
+  handler: async (ctx): Promise<any> => {
     console.log("[CRON] Cleaning up expired job applications...");
     
     try {
@@ -152,7 +152,7 @@ export const cleanupExpiredJobApplications = internalAction({
  */
 export const sendDailyJobDigest = internalAction({
   args: {},
-  handler: async (ctx) => {
+  handler: async (ctx): Promise<any> => {
     console.log("[CRON] Generating daily job digest...");
     
     try {
@@ -229,7 +229,7 @@ export const manualTrigger = internalAction({
   args: {
     scraperId: v.string(),
   },
-  handler: async (ctx, args) => {
+  handler: async (ctx, args): Promise<any> => {
     console.log(`[MANUAL] Triggering ${args.scraperId} scraper...`);
     
     try {

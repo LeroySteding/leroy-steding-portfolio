@@ -18,7 +18,7 @@ import { v } from "convex/values";
  */
 export const scrapeAndMatch = internalAction({
   args: {},
-  handler: async (ctx) => {
+  handler: async (ctx): Promise<any> => {
     console.log("[freep-automation] Starting scrape and match...");
 
     // 1. Run the scraper (you'll need to call your script)
@@ -106,7 +106,7 @@ export const scrapeAndMatch = internalAction({
  */
 export const runNow = internalAction({
   args: {},
-  handler: async (ctx) => {
+  handler: async (ctx): Promise<any> => {
     return await ctx.runAction(internal.freep_automation.scrapeAndMatch, {});
   },
 });

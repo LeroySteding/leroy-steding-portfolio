@@ -23,7 +23,7 @@ interface IssueComplexity {
 
 export const scanOpenIssues = internalAction({
   args: {},
-  handler: async (ctx) => {
+  handler: async (ctx): Promise<any> => {
     console.log("[github-intelligence] Scanning open issues...");
     
     // In production, use Octokit to fetch real issues
@@ -49,7 +49,7 @@ export const logScan = internalMutation({
     tasksCreated: v.number(),
     highPriority: v.number(),
   },
-  handler: async (ctx, args) => {
+  handler: async (ctx, args): Promise<any> => {
     // Log to agent feed
     await ctx.db.insert("agent_feed", {
       title: "GitHub Issues Scanned",
@@ -152,7 +152,7 @@ function shouldAutoAssign(issue: any, complexity: IssueComplexity): boolean {
 // ==================== REPOSITORY HEALTH ====================
 
 export const getRepoHealth = query({
-  handler: async (ctx) => {
+  handler: async (ctx): Promise<any> => {
     // In production, aggregate from stored scans
     return {
       lastScan: Date.now() - 86400000, // 1 day ago

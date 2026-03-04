@@ -19,7 +19,7 @@ export const logTrigger = internalMutation({
     error: v.optional(v.string()),
     timestamp: v.number(),
   },
-  handler: async (ctx, args) => {
+  handler: async (ctx, args): Promise<any> => {
     // Store scraper run log
     await ctx.db.insert("scraper_logs", {
       scraper: "freelance_nl",
@@ -29,7 +29,7 @@ export const logTrigger = internalMutation({
 });
 
 export const lastRun = query({
-  handler: async (ctx) => {
+  handler: async (ctx): Promise<any> => {
     const logs = await ctx.db
       .query("scraper_logs")
       .filter((q) => q.eq(q.field("scraper"), "freelance_nl"))
@@ -42,7 +42,7 @@ export const lastRun = query({
 
 export const history = query({
   args: { limit: v.optional(v.number()) },
-  handler: async (ctx, args) => {
+  handler: async (ctx, args): Promise<any> => {
     const limit = args.limit || 10;
     
     return await ctx.db
@@ -54,7 +54,7 @@ export const history = query({
 });
 
 export const stats = query({
-  handler: async (ctx) => {
+  handler: async (ctx): Promise<any> => {
     const logs = await ctx.db
       .query("scraper_logs")
       .filter((q) => q.eq(q.field("scraper"), "freelance_nl"))
@@ -94,7 +94,7 @@ export const storeJob = internalMutation({
     postedDate: v.optional(v.string()),
     category: v.optional(v.string()),
   },
-  handler: async (ctx, args) => {
+  handler: async (ctx, args): Promise<any> => {
     // Check if already exists
     const existing = await ctx.db
       .query("scraped_jobs")
@@ -157,7 +157,7 @@ export const receiveScrapedJobs = internalAction({
       category: v.optional(v.string()),
     })),
   },
-  handler: async (ctx, args) => {
+  handler: async (ctx, args): Promise<any> => {
     const stored: string[] = [];
     
     for (const job of args.jobs) {
@@ -182,7 +182,7 @@ export const receiveScrapedJobs = internalAction({
  * Get insights about freelance.nl jobs
  */
 export const getInsights = query({
-  handler: async (ctx) => {
+  handler: async (ctx): Promise<any> => {
     const jobs = await ctx.db
       .query("scraped_jobs")
       .filter((q) => q.eq(q.field("source"), "freelance_nl"))

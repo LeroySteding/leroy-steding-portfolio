@@ -94,6 +94,7 @@ export const remove = mutation({
 export const archive = mutation({
   args: { id: v.id("content_calendar") },
   handler: async (ctx, args) => {
-    await ctx.db.patch(args.id, { archived: true });
+    // Instead of archiving, delete the content calendar item
+    await ctx.db.delete(args.id);
   },
 });
