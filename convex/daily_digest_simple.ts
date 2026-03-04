@@ -62,8 +62,8 @@ export const generateDailyDigest = internalAction({
         freep: { count: scraperStats.freep, status: scraperStats.freep > 0 ? "healthy" : "warning" },
         medium: { count: scraperStats.medium, status: scraperStats.medium > 0 ? "healthy" : "warning" },
       },
-      blockers: [],
-      suggestions: [],
+      blockers: [] as string[],
+      suggestions: [] as string[],
     };
     
     // Add blockers
