@@ -33,7 +33,6 @@ import type * as freep_scraper from "../freep_scraper.js";
 import type * as github_activity from "../github_activity.js";
 import type * as github_intelligence from "../github_intelligence.js";
 import type * as job_applications from "../job_applications.js";
-import type * as job_matching from "../job_matching.js";
 import type * as jobs from "../jobs.js";
 import type * as linearQueries from "../linearQueries.js";
 import type * as linearSync from "../linearSync.js";
@@ -88,7 +87,6 @@ declare const fullApi: ApiFromModules<{
   github_activity: typeof github_activity;
   github_intelligence: typeof github_intelligence;
   job_applications: typeof job_applications;
-  job_matching: typeof job_matching;
   jobs: typeof jobs;
   linearQueries: typeof linearQueries;
   linearSync: typeof linearSync;

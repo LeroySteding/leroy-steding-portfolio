@@ -36,7 +36,7 @@ export const logTrigger = internalMutation({
   },
 });
 
-export const lastRun = query({
+export const lastRun: any = query({
   handler: async (ctx): Promise<any> => {
     const logs = await ctx.db
       .query("analytics_log")
@@ -55,7 +55,7 @@ export const lastRun = query({
   },
 });
 
-export const history = query({
+export const history: any = query({
   args: { limit: v.optional(v.number()) },
   handler: async (ctx, args): Promise<any> => {
     const limit = args.limit || 10;
@@ -77,16 +77,16 @@ export const history = query({
   },
 });
 
-export const stats = query({
+export const stats: any = query({
   handler: async (ctx): Promise<any> => {
     const logs = await ctx.db
-      .query("scraper_logs")
-      .filter((q) => q.eq(q.field("scraper"), "freelance_nl"))
+      .query("analytics_log")
+      .withIndex("by_agent", (q) => q.eq("agent", "freelance_nl_scraper"))
       .order("desc")
       .take(30);
     
-    const successCount = logs.filter((l) => l.success).length;
-    const totalJobs = logs.reduce((sum, l) => sum + l.jobsFound, 0);
+    const successCount = logs.filter((l) => l.metadata?.success).length;
+    const totalJobs = logs.reduce((sum, l) => sum + (l.metadata?.jobsFound || 0), 0);
     const avgJobs = logs.length > 0 ? Math.round(totalJobs / logs.length) : 0;
     
     return {
@@ -94,7 +94,7 @@ export const stats = query({
       successRate: logs.length > 0 ? successCount / logs.length : 0,
       avgJobsPerRun: avgJobs,
       totalJobsScraped: totalJobs,
-      lastRun: logs[0]?.timestamp || null,
+      lastRun: logs[0]?.createdAt || null,
     };
   },
 });
@@ -205,7 +205,7 @@ export const receiveScrapedJobs = internalAction({
 /**
  * Get insights about freelance.nl jobs
  */
-export const getInsights = query({
+export const getInsights: any = query({
   handler: async (ctx): Promise<any> => {
     const jobs = await ctx.db
       .query("scraped_jobs")

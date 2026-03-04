@@ -54,7 +54,7 @@ export const logScan = internalMutation({
     await ctx.db.insert("agent_feed", {
       title: "GitHub Issues Scanned",
       content: `Scanned ${args.issuesScanned} issues, created ${args.tasksCreated} tasks (${args.highPriority} high priority)`,
-      type: "system_update",
+      type: "briefing",
       source: "github-intelligence",
       priority: "low",
       read: false,

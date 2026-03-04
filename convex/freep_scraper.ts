@@ -63,7 +63,7 @@ export const storeJob = mutation({
 
 // ==================== STATS & TRACKING ====================
 
-export const lastRun = query({
+export const lastRun: any = query({
   handler: async (ctx) => {
     const logs = await ctx.db
       .query("analytics_log")
@@ -82,7 +82,7 @@ export const lastRun = query({
   },
 });
 
-export const history = query({
+export const history: any = query({
   args: { limit: v.optional(v.number()) },
   handler: async (ctx, args) => {
     const logs = await ctx.db
@@ -102,7 +102,7 @@ export const history = query({
   },
 });
 
-export const stats = query({
+export const stats: any = query({
   handler: async (ctx) => {
     const logs = await ctx.db
       .query("analytics_log")
@@ -119,7 +119,7 @@ export const stats = query({
       successRate: logs.length > 0 ? successCount / logs.length : 0,
       avgJobsPerRun: avgJobs,
       totalJobsScraped: totalJobs,
-      lastRun: logs[0]?.timestamp || null,
+      lastRun: logs[0]?.createdAt || null,
     };
   },
 });
