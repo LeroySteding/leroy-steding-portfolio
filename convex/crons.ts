@@ -24,11 +24,12 @@ crons.interval(
 );
 
 // Archive old scraped jobs - runs daily at 3 AM
-crons.daily(
-  "archive-old-jobs",
-  { hourUTC: 3, minuteUTC: 0 },
-  internal.cron_tasks.archiveOldScrapedJobs
-);
+// DISABLED 2026-03-05: Data loss incident - investigate before re-enabling
+// crons.daily(
+//   "archive-old-jobs",
+//   { hourUTC: 3, minuteUTC: 0 },
+//   internal.cron_tasks.archiveOldScrapedJobs
+// );
 
 // Clean up expired job applications - runs daily at 4 AM
 crons.daily(
