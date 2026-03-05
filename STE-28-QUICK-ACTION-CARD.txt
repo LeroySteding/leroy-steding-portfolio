@@ -1,0 +1,190 @@
+================================================================================
+STE-28: GOOGLE SEARCH CONSOLE SETUP - QUICK ACTION CARD
+================================================================================
+Priority: HIGH | Time: 25-30 min | Status: Ready Now
+================================================================================
+
+THE EXACT META TAG FORMAT
+================================================================================
+
+HTML Format:
+  <meta name="google-site-verification" content="YOUR_CODE_HERE" />
+
+Next.js Format (layout.tsx line 39):
+  verification: {
+    google: "YOUR_CODE_HERE",
+  },
+
+Your code will look like:
+  dGVzdC1jb2RlLWZvcmstcmVmZXJlbmNlLW9ubHk=
+  (40-50 character alphanumeric string)
+
+================================================================================
+GET YOUR UNIQUE CODE FROM GOOGLE SEARCH CONSOLE (5 min)
+================================================================================
+
+1. Go to: https://search.google.com/search-console
+2. Click: "Add Property"
+3. Choose: "Domain" option
+4. Type: leroysteding.nl (just the domain, no http/www)
+5. Click: Continue
+6. Select: "HTML tag" verification method
+7. Google shows: <meta name="google-site-verification" content="YOUR_CODE" />
+8. Copy: The code between quotes (content="...")
+9. Keep: This GSC window open (you'll use it later)
+
+IMPORTANT: You CANNOT reuse someone else's code - this code is unique to YOUR domain
+
+================================================================================
+IMPLEMENT: Add Code to Website (5 min)
+================================================================================
+
+File: ~/Projects/personal/leroy-steding-portfolio/apps/portfolio/app/layout.tsx
+Line: ~39
+
+Current:
+  verification: {
+    google: "PASTE_YOUR_VERIFICATION_CODE_HERE",
+  },
+
+Replace with (use YOUR code from step 8 above):
+  verification: {
+    google: "dGVzdC1jb2RlLWZvcmstcmVmZXJlbmNlLW9ubHk=",
+  },
+
+Quick terminal method:
+  cd ~/Projects/personal/leroy-steding-portfolio
+  CODE="YOUR_CODE_HERE"  # paste your code
+  sed -i '' "s/PASTE_YOUR_VERIFICATION_CODE_HERE/$CODE/g" \
+    apps/portfolio/app/layout.tsx
+
+================================================================================
+DEPLOY (5 min + auto)
+================================================================================
+
+  cd ~/Projects/personal/leroy-steding-portfolio
+  git add apps/portfolio/app/layout.tsx
+  git commit -m "feat(seo): Add Google Search Console verification"
+  git push origin main
+
+Wait for: https://vercel.com/leroysteding/portfolio
+Status: ✓ Production Deployment Ready (takes 3-5 min)
+
+================================================================================
+VERIFY META TAG IS LIVE (2 min)
+================================================================================
+
+Check in browser:
+  1. Go to: https://www.leroysteding.nl
+  2. Right-click → View Page Source
+  3. Search (Ctrl+F): google-site-verification
+  4. Should see: <meta name="google-site-verification" content="YOUR_CODE" />
+
+Or check via terminal:
+  curl -s https://www.leroysteding.nl | grep google-site-verification
+
+Should output:
+  <meta name="google-site-verification" content="YOUR_CODE" />
+
+If you see the placeholder text, wait 5 min and try again.
+
+================================================================================
+COMPLETE IN GSC (5 min)
+================================================================================
+
+1. Return to GSC window from step 9 above
+2. Click: "Verify" button (blue button)
+3. Wait: 10-30 seconds
+4. See: ✓ Verification successful
+
+Then:
+
+5. In GSC left sidebar → "Sitemaps"
+6. Click: "Add a sitemap"
+7. Enter: sitemap.xml
+8. See: ✓ Success
+
+Then:
+
+9. Check: Coverage (left sidebar) → Shows indexed pages
+10. Access: Performance, Mobile Usability, Core Web Vitals reports
+
+================================================================================
+VERIFICATION COMMANDS
+================================================================================
+
+Check code was added to file:
+  grep "google:" ~/Projects/personal/leroy-steding-portfolio/apps/portfolio/app/layout.tsx
+
+Check meta tag on live site:
+  curl -s https://www.leroysteding.nl | grep google-site-verification
+
+Extract just the code from live site:
+  curl -s https://www.leroysteding.nl | \
+    grep google-site-verification | \
+    sed 's/.*content="\([^"]*\)".*/\1/'
+
+All should show YOUR code, NOT the placeholder text
+
+================================================================================
+TIMELINE
+================================================================================
+
+Get code from GSC:           5 min  ✓
+Add to code & commit:        5 min  ✓
+Vercel auto-deploy:          5 min  ✓
+Verify meta tag on site:     2 min  ✓
+Complete GSC verification:   2 min  ✓
+Submit sitemap:              3 min  ✓
+Check reports:               2 min  ✓
+────────────────────────────────
+TOTAL:                    ~25 min
+
+================================================================================
+SUCCESS CHECKLIST
+================================================================================
+
+✓ Got YOUR verification code from GSC
+✓ Added code to layout.tsx (line 39)
+✓ Code is NOT the placeholder text
+✓ Committed and pushed changes
+✓ Vercel shows ✓ Ready status
+✓ curl shows meta tag on live site
+✓ Clicked "Verify" in GSC
+✓ Saw ✓ Verification successful
+✓ Submitted sitemap
+✓ Coverage shows indexed pages
+
+================================================================================
+IF STUCK
+================================================================================
+
+Read full guide: docs/STE-28-GSC-VERIFICATION-GUIDE.md
+Coder ticket: STE-28-CODER-TICKET.md
+SEO audit: docs/STE-28-SEO-META-TAG-AUDIT.md
+
+Common issues:
+- Meta tag not showing: Wait 5 min, Vercel might still be deploying
+- Placeholder text visible: Check Vercel ✓ Ready, file was saved correctly
+- GSC verification fails: Meta tag must be live first, wait 5 min, try again
+
+================================================================================
+START NOW
+================================================================================
+
+👉 Step 1: Go to Google Search Console
+   https://search.google.com/search-console
+
+👉 Step 2: Follow steps 1-9 above to get YOUR code
+
+👉 Step 3: When you have your code, add it to layout.tsx line 39
+
+👉 Step 4: Deploy (git push origin main)
+
+👉 Step 5: Complete GSC verification
+
+Estimated total time: 25-30 minutes
+
+Ready? Let's go! 🚀
+
+================================================================================
