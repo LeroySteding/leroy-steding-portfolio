@@ -9,19 +9,23 @@ import { internal } from "./_generated/api";
 
 const crons = cronJobs();
 
-// ProLinker job scraper - runs every 4 hours
-crons.interval(
-  "scrape-prolinker-jobs",
-  { hours: 4 },
-  internal.cron_tasks.scrapeProLinkerJobs
-);
+// ProLinker job scraper - DISABLED 2026-03-06 (STE-32)
+// Reason: Stub implementation (never worked)
+// TODO: Implement real scraper or remove completely
+// crons.interval(
+//   "scrape-prolinker-jobs",
+//   { hours: 4 },
+//   internal.cron_tasks.scrapeProLinkerJobs
+// );
 
-// Freep job scraper + auto-match - runs every 6 hours (staggered from ProLinker)
-crons.interval(
-  "freep-automation",
-  { hours: 6 },
-  internal.freep_automation.scrapeAndMatch
-);
+// Freep job scraper + auto-match - DISABLED 2026-03-06 (STE-32)
+// Reason: Stub implementation (never worked)
+// TODO: Implement real scraper or remove completely
+// crons.interval(
+//   "freep-automation",
+//   { hours: 6 },
+//   internal.freep_automation.scrapeAndMatch
+// );
 
 // Archive old scraped jobs - runs daily at 3 AM
 // DISABLED 2026-03-05: Data loss incident - investigate before re-enabling
@@ -56,20 +60,24 @@ crons.daily(
 //   { keywords: ["hiring", "we're hiring", "join our team", "careers"] }
 // );
 
-// Freelance.nl scraper - runs every 6 hours (Dutch focus)
-crons.interval(
-  "freelance-nl-scraper",
-  { hours: 6 },
-  internal.cron_tasks.scrapeFreelanceNLJobs
-);
+// Freelance.nl scraper - DISABLED 2026-03-06 (STE-32)
+// Reason: Stub implementation (never worked)
+// TODO: Implement real scraper or remove completely
+// crons.interval(
+//   "freelance-nl-scraper",
+//   { hours: 6 },
+//   internal.cron_tasks.scrapeFreelanceNLJobs
+// );
 
-// RemoteOK job scraper - runs every 6 hours
-// Uses clean JSON API, no scraping needed
-crons.interval(
-  "fetch-remoteok-jobs",
-  { hours: 6 },
-  internal.cron_tasks.fetchRemoteOKJobs
-);
+// RemoteOK job scraper - DISABLED 2026-03-06 (STE-32)
+// Reason: Convex IPs blocked by RemoteOK (HTTP 403)
+// Moved to GitHub Actions workflow (bypasses IP block)
+// See: .github/workflows/scrape-jobs.yml
+// crons.interval(
+//   "fetch-remoteok-jobs",
+//   { hours: 6 },
+//   internal.cron_tasks.fetchRemoteOKJobs
+// );
 
 // GitHub intelligence - scan open issues daily at 2 AM UTC
 crons.daily(
