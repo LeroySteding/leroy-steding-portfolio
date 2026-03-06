@@ -41,8 +41,8 @@ const statusFlow: Record<string, string[]> = {
 export default function ContentDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
   const router = useRouter();
-  const item = useQuery(api.content_calendar.get, { id: id as Id<"content_calendar"> });
-  const updateItem = useMutation(api.content_calendar.update);
+  const item = useQuery(api.contentCalendar.get, { id: id as Id<"content_calendar"> });
+  const updateItem = useMutation(api.contentCalendar.update);
 
   const [editing, setEditing] = useState(false);
   const [form, setForm] = useState({

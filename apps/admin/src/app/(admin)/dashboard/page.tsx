@@ -30,7 +30,7 @@ export default function DashboardPage() {
   const media = useQuery(api.media.list, { limit: 100 });
   const taskCounts = useQuery(api.tasks.countByStatus, {});
   const unreadFeed = useQuery(api.agent_feed.unreadCount, {});
-  const upcomingContent = useQuery(api.content_calendar.upcomingCount, {});
+  const upcomingContent = useQuery(api.contentCalendar.upcomingCount, {});
   const activeJobs = useQuery(api.job_applications.activeCount, {});
   const recentDeploys = useQuery(api.deployments.list, { limit: 5 });
   const feedItems = useQuery(api.agent_feed.list, { limit: 10 });
