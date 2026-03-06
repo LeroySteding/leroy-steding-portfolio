@@ -72,40 +72,37 @@ async function checkJobFetchHealth(): Promise<HealthCheck> {
 
 async function checkJobMatchingHealth(): Promise<HealthCheck> {
   try {
-    // Check if user preferences exist
-    const preferences = await convex.query(api.job_matching.getUserPreferences, {
-      userId: "leroy",
-    });
-    
-    if (!preferences) {
-      return {
-        name: "Job Matching",
-        status: "warning",
-        message: `⚠️  WARNING: No job preferences configured`,
-      };
-    }
-    
-    // Check if matches were generated recently
-    const matches = await convex.query(api.job_matching.getMatchedJobs, {
+    // Generate digest using optimized v2 algorithm (uses pre-computed scores)
+    const digest = await convex.query(api.job_matching_v2.generateDailyDigestV2, {
       userId: "leroy",
       minScore: 50,
       limit: 10,
+      hoursBack: 24,
     });
     
-    if (!matches || matches.length === 0) {
+    if (!digest || !digest.jobs || digest.jobs.length === 0) {
       return {
         name: "Job Matching",
         status: "warning",
         message: `⚠️  WARNING: No job matches found (score >= 50)`,
-        details: { matchCount: 0 },
+        details: { 
+          matchCount: 0,
+          totalScraped: digest?.totalScraped || 0,
+          message: digest?.message || "No digest generated"
+        },
       };
     }
     
     return {
       name: "Job Matching",
       status: "ok",
-      message: `✅ ${matches.length} job matches (score >= 50)`,
-      details: { matchCount: matches.length, topScore: matches[0]?.score },
+      message: `✅ ${digest.jobs.length} job matches (score >= 50)`,
+      details: { 
+        matchCount: digest.jobs.length,
+        topScore: digest.jobs[0]?.matchScore || digest.jobs[0]?.metadata?.matchScore || 0,
+        totalScraped: digest.totalScraped,
+        message: digest.message
+      },
     };
   } catch (error: any) {
     return {
