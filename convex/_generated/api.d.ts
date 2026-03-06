@@ -20,7 +20,6 @@ import type * as auto_apply_settings from "../auto_apply_settings.js";
 import type * as blog_posts from "../blog_posts.js";
 import type * as cleanup from "../cleanup.js";
 import type * as contentCalendar from "../contentCalendar.js";
-import type * as content_calendar from "../content_calendar.js";
 import type * as cost_tracking from "../cost_tracking.js";
 import type * as cron_tasks from "../cron_tasks.js";
 import type * as crons from "../crons.js";
@@ -77,7 +76,6 @@ declare const fullApi: ApiFromModules<{
   blog_posts: typeof blog_posts;
   cleanup: typeof cleanup;
   contentCalendar: typeof contentCalendar;
-  content_calendar: typeof content_calendar;
   cost_tracking: typeof cost_tracking;
   cron_tasks: typeof cron_tasks;
   crons: typeof crons;

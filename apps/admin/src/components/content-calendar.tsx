@@ -60,7 +60,7 @@ interface ContentCalendarProps {
 
 export default function ContentCalendar({ content, onContentClick, onAddContent }: ContentCalendarProps) {
   const [currentMonth, setCurrentMonth] = useState(new Date());
-  const updateContent = useMutation(api.content_calendar.update);
+  const updateContent = useMutation(api.contentCalendar.update);
 
   // Generate calendar days
   const { monthStart, monthEnd, calendarDays } = useMemo(() => {
