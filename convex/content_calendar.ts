@@ -29,6 +29,37 @@ export const upcomingCount: any = query({
   },
 });
 
+export const stats: any = query({
+  args: {},
+  handler: async (ctx) => {
+    const all = await ctx.db.query("content_calendar").collect();
+    const now = Date.now();
+    const oneWeekAgo = now - 7 * 24 * 60 * 60 * 1000;
+    
+    return {
+      ideas: all.filter((c) => c.status === "idea").length,
+      inProgress: all.filter((c) => ["outline", "drafting", "review", "scheduled"].includes(c.status)).length,
+      publishedThisWeek: all.filter((c) => c.status === "published" && c.publishedAt && c.publishedAt >= oneWeekAgo).length,
+      totalPublished: all.filter((c) => c.status === "published").length,
+    };
+  },
+});
+
+export const updateStatus = mutation({
+  args: {
+    id: v.id("content_calendar"),
+    status: contentStatus,
+  },
+  handler: async (ctx, args) => {
+    await requireAuth(ctx);
+    const update: Record<string, any> = { status: args.status };
+    if (args.status === "published") {
+      update.publishedAt = Date.now();
+    }
+    await ctx.db.patch(args.id, update);
+  },
+});
+
 // Public push mutation for agents (no auth required)
 export const push = mutation({
   args: {

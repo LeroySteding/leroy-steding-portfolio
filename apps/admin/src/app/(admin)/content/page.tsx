@@ -47,10 +47,10 @@ export default function ContentPage() {
   const [selectedContent, setSelectedContent] = useState<any>(null);
   const [prefilledDate, setPrefilledDate] = useState<Date | null>(null);
 
-  const content = useQuery(api.contentCalendar.list);
-  const stats = useQuery(api.contentCalendar.stats);
-  const updateStatus = useMutation(api.contentCalendar.updateStatus);
-  const createContent = useMutation(api.contentCalendar.create);
+  const content = useQuery(api.content_calendar.list);
+  const stats = useQuery(api.content_calendar.stats);
+  const updateStatus = useMutation(api.content_calendar.updateStatus);
+  const createContent = useMutation(api.content_calendar.create);
 
   if (!content) {
     return (

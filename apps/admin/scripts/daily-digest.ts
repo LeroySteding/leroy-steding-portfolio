@@ -76,7 +76,7 @@ function sendTelegram(message: string): void {
       .replace(/`/g, '\\`');
     
     execSync(
-      `openclaw message send --action send --channel telegram --message "${escapedMessage}"`,
+      `openclaw message send --action send --channel telegram --target leroy --message "${escapedMessage}"`,
       { stdio: "inherit" }
     );
   } catch (error) {
