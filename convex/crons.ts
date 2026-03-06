@@ -45,13 +45,16 @@ crons.daily(
   internal.cron_tasks.sendDailyJobDigest
 );
 
-// Medium job scraper - runs daily at 10 AM UTC
-crons.daily(
-  "scrape-medium-jobs",
-  { hourUTC: 10, minuteUTC: 0 },
-  internal.medium_scraper.scrapePublications,
-  { keywords: ["hiring", "we're hiring", "join our team", "careers"] }
-);
+// Medium job scraper - DISABLED 2026-03-06
+// Reason: Stub implementation, no real scraping logic
+// Medium is not a good job source (informal posts, no API)
+// Use RemoteOK/Adzuna instead for quality job listings
+// crons.daily(
+//   "scrape-medium-jobs",
+//   { hourUTC: 10, minuteUTC: 0 },
+//   internal.medium_scraper.scrapePublications,
+//   { keywords: ["hiring", "we're hiring", "join our team", "careers"] }
+// );
 
 // Freelance.nl scraper - runs every 6 hours (Dutch focus)
 crons.interval(
