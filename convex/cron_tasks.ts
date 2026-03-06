@@ -246,8 +246,14 @@ export const sendDailyJobDigest = internalAction({
     try {
       const userId = "leroy";
       
-      // Generate digest
-      const digest = await ctx.runQuery(internal.job_matching.generateDailyDigest, {
+      // STEP 1: Score any unscored jobs first (fast)
+      console.log("[CRON] Pre-computing match scores for new jobs...");
+      await ctx.runMutation(internal.job_matching_v2.scoreRecentJobs, {
+        hoursBack: 24,
+      });
+      
+      // STEP 2: Generate digest using PRE-COMPUTED scores (fast)
+      const digest = await ctx.runQuery(internal.job_matching_v2.generateDailyDigestV2, {
         userId,
         limit: 10,
       });

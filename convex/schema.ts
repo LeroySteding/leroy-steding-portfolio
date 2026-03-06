@@ -623,7 +623,7 @@ export default defineSchema({
     employmentType: v.optional(v.string()), // full-time, part-time, contract
     experienceLevel: v.optional(v.string()), // junior, mid, senior
     archived: v.optional(v.boolean()), // For soft deletion
-    metadata: v.optional(v.any()), // Flexible metadata for scraper-specific data
+    metadata: v.optional(v.any()), // Flexible metadata including matchScore, matchBreakdown
   })
     .index("by_url", ["url"])
     .index("by_company", ["company"])
